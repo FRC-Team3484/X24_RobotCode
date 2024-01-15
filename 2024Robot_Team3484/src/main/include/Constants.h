@@ -10,6 +10,9 @@
 
 #include <ctre/Phoenix.h>
 
+
+#include <FRC3484_Lib/utils/SC_ControllerMaps.h>
+
 using namespace units;
 
 namespace ShooterConstants {}
@@ -27,6 +30,14 @@ namespace SwerveConstants {
     namespace ControllerConstants {
     constexpr int DRIVER_CONTROLLER_PORT = 0;
     constexpr double JOYSTICK_DEADBAND = 0.02;
+    #define Throttle XBOX_LS_Y 
+    #define Straife XBOX_LS_X
+    #define Rotate XBOX_RS_X
+    #define ResetHeading XBOX_BACK
+    #define Brake XBOX_X
+    #define StraightenWheels XBOX_START
+    #define BrakeMode XBOX_RB
+    #define DisableBrakeMode XBOX_LB
     }
 
     namespace DrivetrainConstants {
@@ -42,9 +53,8 @@ namespace SwerveConstants {
         constexpr bool STEER_MOTOR_REVERSED = false;
         constexpr bool ENCODER_REVERSED = false;
 
-
-        const motorcontrol::supplycurrentlimitconfiguration DRIVE_CURRENT_LIMIT{true, 35, 60, 0.1};
-        const motorcontrol::supplycurrentlimitconfiguration STEER_CURRENT_LIMIT{true, 25, 40, 0.1};
+        const motorcontrol::SupplyCurrentLimitConfiguration DRIVE_CURRENT_LIMIT{true, 35, 60, 0.1};
+        const motorcontrol::SupplyCurrentLimitConfiguration STEER_CURRENT_LIMIT{true, 25, 40, 0.1};
 
         constexpr double ENCODER_OFFSET[] = {4.394, 71.630, -26.103, -71.455};
 
@@ -57,7 +67,7 @@ namespace SwerveConstants {
         constexpr inch_t WHEEL_RADIUS = 2_in;
 
         constexpr feet_per_second_t MAX_WHEEL_SPEED = 8_fps;
-        constexpr feet_per_second_squared_t MAX_WHEEL_ACCELARATION = 4_fps_sq;
+        constexpr feet_per_second_squared_t MAX_WHEEL_ACCELERATION = 4_fps_sq;
 
         namespace DrivePIDConstants {
             constexpr double P = 1.0;
@@ -74,7 +84,7 @@ namespace SwerveConstants {
             constexpr double I = 0.0;
             constexpr double D = 0.0;
             constexpr radians_per_second_t MAX_SPEED = 12_rad_per_s;
-            constexpr radians_per_second_squared_t MAX_ACCELRATION  = 100_rad_per_s_sq;
+            constexpr radians_per_second_squared_t MAX_ACCELARATION  = 100_rad_per_s_sq;
         }
     }
 

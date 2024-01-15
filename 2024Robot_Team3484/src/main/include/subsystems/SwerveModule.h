@@ -14,12 +14,12 @@
 class SwerveModule {
     public:
         SwerveModule(const int module_location);
-        void SetDesiredState(const frc::SwerveModuleState state, bool open_loop, bool optimize=true);
+        void SetDesiredState(frc::SwerveModuleState state, bool open_loop, bool optimize=true);
         frc::SwerveModuleState GetState();
         frc::SwerveModulePosition GetPosition();
         void ResetEncoder();
         void StopMotors();
-        void SetCoastMoad();
+        void SetCoastMode();
         void SetBrakeMode();
 
         
@@ -28,6 +28,7 @@ class SwerveModule {
         WPI_TalonFX _steer_motor;
         WPI_CANCoder _steer_encoder;
 
+
         frc::PIDController _drive_pid_controller{SwerveConstants::DrivetrainConstants::DrivePIDConstants::P, SwerveConstants::DrivetrainConstants::DrivePIDConstants::I, SwerveConstants::DrivetrainConstants::DrivePIDConstants::D};
         frc::ProfiledPIDController<units::radians> _steer_pid_controller{SwerveConstants::DrivetrainConstants::SteerPIDConstants::P, SwerveConstants::DrivetrainConstants::SteerPIDConstants::I, SwerveConstants::DrivetrainConstants::SteerPIDConstants::D,
                 {SwerveConstants::DrivetrainConstants::SteerPIDConstants::MAX_SPEED, SwerveConstants::DrivetrainConstants::SteerPIDConstants::MAX_ACCELRATION}};
@@ -35,7 +36,7 @@ class SwerveModule {
         units::inch_t _GetWheelPosition();
         units::degree_t _GetSteerAngle();
 
-        frc::SimpleMotorFeedforward<units::meters> _dirve_feed_forward{SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::S,SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::V,SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::A};
+        frc::SimpleMotorFeedforward<units::meters> _drive_feed_forward{SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::S,SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::V,SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::A};
 };
 
 #endif

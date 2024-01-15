@@ -9,6 +9,7 @@
 #include <frc/geometry/Rotation2d.h>
 
 
+
 using namespace SwerveConstants::DrivetrainConstants;
 using namespace units;
 using namespace frc;
@@ -26,8 +27,8 @@ SwerveModule::SwerveModule(const int module_location)
 
     _steer_motor.ConfigFactoryDefault();
     _drive_motor.ConfigSupplyCurrentLimit(STEER_CURRENT_LIMIT);
-    _steer_motor.SetNeutralMode(motorcontrol::Brake);
-    _steer_motor.SetInverted(STEER_MOTOR_REVERSED[module_location]);
+    // _steer_motor.SetNeutralMode(motorcontrol::Brake);
+    _steer_motor.SetInverted(STEER_MOTOR_REVERSED);
 
     _steer_encoder.ConfigFactoryDefault();
     _steer_encoder.SetPositionToAbsolute();
@@ -41,7 +42,7 @@ SwerveModule::SwerveModule(const int module_location)
     SetDesiredState({0_mps, GetState().angle}, true);
 }
 
-void SwerveModule::SetDesiredState(const SwerveModuleState state, bool open_loop, bool optimize) {
+void SwerveModule::SetDesiredState(SwerveModuleState state, bool open_loop, bool optimize) {
     // State is a velocity annd a direction
     Rotation2d encoder_rotation{_GetSteerAngle()}; // what current durection (angle)
 
@@ -55,7 +56,7 @@ void SwerveModule::SetDesiredState(const SwerveModuleState state, bool open_loop
     //dampener when changing; prevents wheel from accelarating when facing the proper direction
 
     if (open_loop) {
-        _drive_motor.Set(ControlMode::PercentOutput, state.speed / MAX_LINEAR_SPEED);
+        _drive_motor.Set(ControlMode::PercentOutput, state.speed / MAX_WHEEL_SPEED);
         // for converting open loops to straight power level
     } else {
         const volt_t drive_PID_output = volt_t{_drive_pid_controller.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
@@ -70,6 +71,23 @@ void SwerveModule::SetDesiredState(const SwerveModuleState state, bool open_loop
 
 void SwerveModule::ResetEncoder() {
     _drive_motor.SetSelectedSensorPosition(0);
+}
+
+void SwerveModule::StopMotors() {
+    _drive_motor.Set(0);
+    _steer_motor.Set(0);
+}
+
+void SwerveModule::ResetEncoder() {
+    _drive_motor.SetSelectedSensorPosition(0);
+}
+
+void SwerveModule::SetCoastMode() {
+    _drive_motor.SetNeutralMode(motorcontrol::Coast);
+}
+
+void SwerveModule::SetBrakeMode() {
+    _drive_motor.SetNeutralMode(motorcontrol::Brake);
 }
 
 SwerveModuleState SwerveModule::GetState() {
