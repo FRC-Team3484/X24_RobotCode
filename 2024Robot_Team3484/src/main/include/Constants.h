@@ -2,11 +2,16 @@
 #define CONSTANTS_H
 
 namespace ShooterConstants {
-    #define MOTOR_LEFT_PORT 0
-    #define MOTOR_RIGHT_PORT 1
-    #define P 0
-    #define I 0
-    #define D 0
+    constexpr bool MOTER_LEFT_INVERTED = true;
+    constexpr int MOTOR_LEFT_PORT = 0;
+    constexpr int MOTOR_RIGHT_PORT = 1;
+    constexpr double P = 0;
+    constexpr double I = 0;
+    constexpr double D = 0;
+    constexpr double FF = 0;
+    constexpr double RPM = 2000;
+    constexpr double RPM_Window = 50;
+
 
 }
 namespace IntakeConstants {}

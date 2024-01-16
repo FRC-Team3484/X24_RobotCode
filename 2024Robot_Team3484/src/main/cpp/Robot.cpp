@@ -4,7 +4,8 @@
 
 #include "Robot.h"
 
-#include <frc2/command/CommandScheduler.h>
+#include <frc2/command/CommandScheduler.h> 
+
 
 void Robot::RobotInit() {}
 
@@ -36,7 +37,10 @@ void Robot::TeleopInit() {
   }
 }
 
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic(){
+ /* if (This is for contoller input) */
+  
+}
 
 void Robot::TeleopExit() {}
 
