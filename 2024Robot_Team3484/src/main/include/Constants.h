@@ -12,7 +12,7 @@
 
 #include <FRC3484_Lib/utils/SC_ControllerMaps.h>
 
-using namespace units;
+
 
 namespace ShooterConstants {}
 namespace IntakeConstants {}
@@ -71,16 +71,16 @@ namespace SwerveConstants {
         constexpr double STEER_CURRENT_LIMIT = 25;
         constexpr double STEER_CURRENT_TIME = 0.1;
 
-        constexpr inch_t DRIVETRAIN_WIDTH = 24_in;
-        constexpr inch_t DRIVETRAIN_LENGTH = 24_in;
+        constexpr units::inch_t DRIVETRAIN_WIDTH = 24_in;
+        constexpr units::inch_t DRIVETRAIN_LENGTH = 24_in;
         constexpr double DRIVE_GEAR_RATIO = 36000.0/5880.0;
         constexpr double STEER_GEAR_RATIO = 12.8;
         constexpr int DRIVE_TICKS_PER_REVOLUTION =2048;
         constexpr int STEER_TICKS_PER_REVOLUTION = 2048;
-        constexpr inch_t WHEEL_RADIUS = 2_in;
+        constexpr units::inch_t WHEEL_RADIUS = 2_in;
 
-        constexpr feet_per_second_t MAX_WHEEL_SPEED = 8_fps;
-        constexpr feet_per_second_squared_t MAX_WHEEL_ACCELERATION = 4_fps_sq;
+        constexpr units::feet_per_second_t MAX_WHEEL_SPEED = 8_fps;
+        constexpr units::feet_per_second_squared_t MAX_WHEEL_ACCELERATION = 4_fps_sq;
 
         namespace DrivePIDConstants {
             constexpr double P = 1.0;
@@ -88,7 +88,7 @@ namespace SwerveConstants {
             constexpr double D = 0.0;
         }
         namespace DriveFeedForwardConstants { //Future Check
-            constexpr volt_t S = 1.0_V;
+            constexpr units::volt_t S = 1.0_V;
             constexpr auto V = 0.8_V / 1.0_mps;
             constexpr auto A = 0.15_V / 1.0_mps_sq;
         }
@@ -96,8 +96,8 @@ namespace SwerveConstants {
             constexpr double P = 0.5;
             constexpr double I = 0.0;
             constexpr double D = 0.0;
-            constexpr radians_per_second_t MAX_SPEED = 12_rad_per_s;
-            constexpr radians_per_second_squared_t MAX_ACCELERATION  = 100_rad_per_s_sq;
+            constexpr units::radians_per_second_t MAX_SPEED = 12_rad_per_s;
+            constexpr units::radians_per_second_squared_t MAX_ACCELERATION  = 100_rad_per_s_sq;
         }
     }
 
@@ -107,13 +107,13 @@ namespace SwerveConstants {
 
     namespace AutonDriveConstants {
         // How fast the robot can move in autons
-        constexpr feet_per_second_t MAX_LINEAR_SPEED = 8_fps;
-        constexpr feet_per_second_squared_t MAX_LINEAR_ACCELERATION = 4_fps_sq;
-        constexpr radians_per_second_t MAX_ROTATION_SPEED = 5.431_rad_per_s;
-        constexpr radians_per_second_squared_t MAX_ROTATION_ACCELERATION = 2_rad_per_s_sq;
+        constexpr units::feet_per_second_t MAX_LINEAR_SPEED = 8_fps;
+        constexpr units::feet_per_second_squared_t MAX_LINEAR_ACCELERATION = 4_fps_sq;
+        constexpr units::radians_per_second_t MAX_ROTATION_SPEED = 5.431_rad_per_s;
+        constexpr units::radians_per_second_squared_t MAX_ROTATION_ACCELERATION = 2_rad_per_s_sq;
 
-        constexpr inch_t POSITION_TOLERANCE = 2_in; // Drive to a position, when safe to quit
-        constexpr degree_t ANGLE_TOLERANCE = 2_deg;
+        constexpr units::inch_t POSITION_TOLERANCE = 2_in; // Drive to a position, when safe to quit
+        constexpr units::degree_t ANGLE_TOLERANCE = 2_deg;
 
         namespace PathDrivePIDConstants {
             constexpr double P = 5.0;
