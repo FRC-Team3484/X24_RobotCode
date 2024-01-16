@@ -8,7 +8,6 @@
 #include <units/angular_velocity.h>
 #include <units/angular_acceleration.h> 
 
-#include <ctre/Phoenix.h>
 
 
 #include <FRC3484_Lib/utils/SC_ControllerMaps.h>
@@ -27,17 +26,24 @@ namespace HookConstants {}
 
 
 namespace SwerveConstants {
+    namespace AutonNames {
+    const std::string AUTON_NONE = "Nothing";
+    const std::string AUTON_DISTANCE = "Drive 5 feet";
+    const std::string AUTON_ANGLE = "Turn 90 degrees";
+    const std::string AUTON_SEQUENCE = "Drive Sequence";
+    }
+
     namespace ControllerConstants {
     constexpr int DRIVER_CONTROLLER_PORT = 0;
     constexpr double JOYSTICK_DEADBAND = 0.02;
-    #define Throttle XBOX_LS_Y 
-    #define Straife XBOX_LS_X
-    #define Rotate XBOX_RS_X
-    #define ResetHeading XBOX_BACK
-    #define Brake XBOX_X
-    #define StraightenWheels XBOX_START
-    #define BrakeMode XBOX_RB
-    #define DisableBrakeMode XBOX_LB
+    #define THROTTLE XBOX_LS_Y 
+    #define STRAIFE XBOX_LS_X
+    #define ROTATION XBOX_RS_X
+    #define RESET_HEADING XBOX_BACK
+    #define BRAKE XBOX_X
+    #define STRAIGHTEN_WHEELS XBOX_START
+    #define BRAKE_MODE XBOX_RB
+    #define DISABLE_BRAKE_MODE XBOX_LB
     }
 
     namespace DrivetrainConstants {
@@ -53,10 +59,17 @@ namespace SwerveConstants {
         constexpr bool STEER_MOTOR_REVERSED = false;
         constexpr bool ENCODER_REVERSED = false;
 
-        const motorcontrol::SupplyCurrentLimitConfiguration DRIVE_CURRENT_LIMIT{true, 35, 60, 0.1};
-        const motorcontrol::SupplyCurrentLimitConfiguration STEER_CURRENT_LIMIT{true, 25, 40, 0.1};
+        // const motorcontrol::SupplyCurrentLimitConfiguration DRIVE_CURRENT_LIMIT{true, 35, 60, 0.1};
+        // const motorcontrol::SupplyCurrentLimitConfiguration STEER_CURRENT_LIMIT{true, 25, 40, 0.1};
 
         constexpr double ENCODER_OFFSET[] = {4.394, 71.630, -26.103, -71.455};
+
+        constexpr double DRIVE_CURRENT_THRESHOLD = 60;
+        constexpr double DRIVE_CURRENT_LIMIT = 35;
+        constexpr double DRIVE_CURRENT_TIME = 0.1;
+        constexpr double STEER_CURRENT_THRESHOLD = 40;
+        constexpr double STEER_CURRENT_LIMIT = 25;
+        constexpr double STEER_CURRENT_TIME = 0.1;
 
         constexpr inch_t DRIVETRAIN_WIDTH = 24_in;
         constexpr inch_t DRIVETRAIN_LENGTH = 24_in;
@@ -84,7 +97,7 @@ namespace SwerveConstants {
             constexpr double I = 0.0;
             constexpr double D = 0.0;
             constexpr radians_per_second_t MAX_SPEED = 12_rad_per_s;
-            constexpr radians_per_second_squared_t MAX_ACCELARATION  = 100_rad_per_s_sq;
+            constexpr radians_per_second_squared_t MAX_ACCELERATION  = 100_rad_per_s_sq;
         }
     }
 
@@ -95,9 +108,9 @@ namespace SwerveConstants {
     namespace AutonDriveConstants {
         // How fast the robot can move in autons
         constexpr feet_per_second_t MAX_LINEAR_SPEED = 8_fps;
-        constexpr feet_per_second_squared_t MAX_LINEAR_ACCELARATION = 4_fps_sq;
+        constexpr feet_per_second_squared_t MAX_LINEAR_ACCELERATION = 4_fps_sq;
         constexpr radians_per_second_t MAX_ROTATION_SPEED = 5.431_rad_per_s;
-        constexpr radians_per_second_squared_t MAX_ROTATION_ACCELARATION = 2_rad_per_s_sq;
+        constexpr radians_per_second_squared_t MAX_ROTATION_ACCELERATION = 2_rad_per_s_sq;
 
         constexpr inch_t POSITION_TOLERANCE = 2_in; // Drive to a position, when safe to quit
         constexpr degree_t ANGLE_TOLERANCE = 2_deg;

@@ -4,6 +4,8 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
+// #include <pathplanner/lib/path/PathPlannerPath.h>
+
 using namespace frc;
 using namespace units;
 using namespace SwerveConstants::DrivetrainConstants;
@@ -28,7 +30,7 @@ void DrivetrainSubsystem::Drive(meters_per_second_t x_speed, meters_per_second_t
 }
 
 void DrivetrainSubsystem::SetModuleStates(wpi::array<SwerveModuleState, 4> desired_states, bool open_loop, bool optimize) {
-    kinematics.DesaturateWheelSpeeds(&desired_states, MAX_WHEEL_SPEED); // Note for this
+    kinematics.DesaturateWheelSpeeds(&desired_states, MAX_WHEEL_SPEED);
     for (int i = 0; i < 4; i++) {
         _modules[i].SetDesiredState(desired_states[i], open_loop, optimize);
     }
@@ -39,14 +41,15 @@ Rotation2d DrivetrainSubsystem::GetHeading() {
         fmt::print("Error: gyro accessed in GetHeading before initialization");
         return Rotation2d{0_deg};
     } else {
-        return degree_t{-_gyro->GetAngle()};
+        return degree_t{-_gyro->GetAngle()} + _gyro_offset;
     }
 }
 
-void DrivetrainSubsystem::ZeroHeading() {
+void DrivetrainSubsystem::SetHeading(degree_t heading) {
     if (_gyro == NULL) {
         fmt::print("Error: gyro accessed in ZeroHeading before initialization");
     } else {
+        _gyro_offset = heading;
         _gyro->ZeroYaw();
         ResetOdometry(GetPose());
     }

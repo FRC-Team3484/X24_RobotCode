@@ -1,8 +1,6 @@
 #include "commands/StraightenWheelsCommand.h"
-#include "Constants.h"
 
 using namespace frc;
-using namespace SwerveConstants::DrivetrainConstants;
 
 StraightenWheelsCommand::StraightenWheelsCommand(DrivetrainSubsystem* drivetrain)
     : _drivetrain{drivetrain} {}

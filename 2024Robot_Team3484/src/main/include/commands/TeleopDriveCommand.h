@@ -4,10 +4,10 @@
 #include "OI.h"
 #include "subsystems/DrivetrainSubsystem.h"
 
-#include <frc2/command/CommandBase.h>
+#include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 
-class TeleopDriveCommand: public frc2::CommandHelper<frc2::CommandBase, TeleopDriveCommand> {
+class TeleopDriveCommand: public frc2::CommandHelper<frc2::Command, TeleopDriveCommand> {
     public:
         explicit TeleopDriveCommand(DrivetrainSubsystem* drivetrain, OI* oi);
 

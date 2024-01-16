@@ -1,18 +1,17 @@
-#include "AutonGenerator.h"
+#include "subsystems/AutonGenerator.h"
 #include "Constants.h"
 #include "commands/GoToPoseCommand.h"
 #include "commands/DriveSequenceCommand.h"
 
-#include <pathplanner/lib/PathPlannerTrajectory.h>
-#include <pathplanner/lib/PathPlanner.h>
-#include <pathplanner/lib/commands/FollowPathWithEvents.h>
+//#include <pathplanner/lib/PathPlannerTrajectory.h>
+//#include <pathplanner/lib/PathPlanner.h>
+//#include <pathplanner/lib/commands/FollowPathWithEvents.h>
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace frc;
-using namespace pathplanner;
-using namespace AutonNames;
-using namespace DrivetrainConstants;
+//using namespace pathplanner;
+using namespace SwerveConstants::AutonNames;
 
 AutonGenerator::AutonGenerator(DrivetrainSubsystem* drivetrain) 
     : _drivetrain{drivetrain} {
@@ -25,7 +24,7 @@ AutonGenerator::AutonGenerator(DrivetrainSubsystem* drivetrain)
 
     //_event_map.emplace("test", std::make_shared<frc2::PrintCommand>("test"));
 
-    _auton_builder = new SwerveAutoBuilder{
+    /*_auton_builder = new SwerveAutoBuilder{
         [this](){return _drivetrain->GetPose();},
         [this](Pose2d pose){_drivetrain->ResetOdometry(pose);},
         _drivetrain->kinematics,
@@ -35,7 +34,7 @@ AutonGenerator::AutonGenerator(DrivetrainSubsystem* drivetrain)
         _event_map,
         {_drivetrain},
         true
-    };
+    };*/
 }
 
 frc2::CommandPtr AutonGenerator::GetAutonomousCommand() {
@@ -53,8 +52,8 @@ frc2::CommandPtr AutonGenerator::GetAutonomousCommand() {
   return frc2::cmd::None();
 }
 
-frc2::CommandPtr AutonGenerator::_BuildPathCommand(std::string path_name) {
+/*frc2::CommandPtr AutonGenerator::_BuildPathCommand(std::string path_name) {
     PathPlannerTrajectory path = PathPlanner::loadPath(path_name, PathConstraints(MAX_LINEAR_SPEED, MAX_LINEAR_ACCELERATION));
     
     return _auton_builder->fullAuto(path);
-}
+}*/

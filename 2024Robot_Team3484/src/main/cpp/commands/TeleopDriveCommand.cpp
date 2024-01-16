@@ -4,7 +4,7 @@
 #include <units/angular_velocity.h>
 
 using namespace units;
-using namespace SwerveConstants::DrivetrainConstants;
+using namespace SwerveConstants::AutonDriveConstants;
 
 TeleopDriveCommand::TeleopDriveCommand(DrivetrainSubsystem* drivetrain, OI* oi) 
     : _drivetrain{drivetrain}, _oi{oi} {
@@ -15,7 +15,7 @@ void TeleopDriveCommand::Initialize() {}
 
 void TeleopDriveCommand::Execute() {
     if (_oi->GetResetHeading()) {
-        _drivetrain->ZeroHeading();
+        _drivetrain->SetHeading();
     }
 
     if (_oi->GetSetBrakeMode()) {
@@ -25,7 +25,7 @@ void TeleopDriveCommand::Execute() {
         _drivetrain->SetCoastMode();
     }
     
-    const meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEEDi; // from MAX_LINEAR_SPEED
+    const meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED;
     const meters_per_second_t y_speed = -_oi->GetStraife() * MAX_LINEAR_SPEED;
     const radians_per_second_t rotation = -_oi->GetRotation() * MAX_ROTATION_SPEED;
     

@@ -8,7 +8,7 @@
 #include <units/angular_velocity.h>
 
 #include <AHRS.h>
-#include <ctre/Phoenix.h>
+#include <ctre/phoenix6/TalonFX.hpp>
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc/geometry/Pose2d.h>
@@ -26,7 +26,7 @@ class DrivetrainSubsystem : public frc2::SubsystemBase {
         void Drive(units::meters_per_second_t x_speed, units::meters_per_second_t y_speed, units::radians_per_second_t rotation, bool open_loop=false);
         void SetModuleStates(wpi::array<frc::SwerveModuleState, 4> desired_states, bool open_loop=false, bool optimize=true);
         frc::Rotation2d GetHeading();
-        void ZeroHeading();
+        void SetHeading(units::degree_t heading=0_deg);
         units::degrees_per_second_t GetTurnRate();
         frc::Pose2d GetPose();
         void ResetOdometry(frc::Pose2d pose);
@@ -53,6 +53,7 @@ class DrivetrainSubsystem : public frc2::SubsystemBase {
         };
 
         AHRS* _gyro;
+        units::degree_t _gyro_offset = 0_deg;
 
         frc::SwerveDriveOdometry<4>* _odometry;
 };

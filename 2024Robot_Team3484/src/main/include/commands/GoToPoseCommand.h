@@ -10,10 +10,10 @@
 #include <frc/geometry/Pose2d.h>
 #include <frc/trajectory/TrapezoidProfile.h>
 
-#include <frc2/command/CommandBase.h>
+#include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 
-class GoToPoseCommand: public frc2::CommandHelper<frc2::CommandBase, GoToPoseCommand> {
+class GoToPoseCommand: public frc2::CommandHelper<frc2::Command, GoToPoseCommand> {
     public:
         GoToPoseCommand(DrivetrainSubsystem* drivetrain, frc::Pose2d target);
 
@@ -28,10 +28,21 @@ class GoToPoseCommand: public frc2::CommandHelper<frc2::CommandBase, GoToPoseCom
         frc::Pose2d _target_pose;
         frc::Pose2d _pose_delta;
 
-        frc::TrapezoidProfile<units::meters>::Constraints _linear_constraints{
-                DrivetrainConstants::MAX_LINEAR_SPEED, DrivetrainConstants::MAX_LINEAR_ACCELERATION};
-        frc::TrapezoidProfile<units::radians>::Constraints _rotation_constraints{
-                DrivetrainConstants::MAX_ROTATION_SPEED, DrivetrainConstants::MAX_ROTATION_ACCELERATION};
+        /*frc::TrapezoidProfile<units::meters> _linear_profile{
+            frc::TrapezoidProfile<units::meters>::Constraints{
+                SwerveConstants::AutonDriveConstants::MAX_LINEAR_SPEED, 
+                SwerveConstants::AutonDriveConstants::MAX_LINEAR_ACCELERATION
+            }
+        };*/
+        frc::TrapezoidProfile<units::meters> _linear_profile{{
+                SwerveConstants::AutonDriveConstants::MAX_LINEAR_SPEED, 
+                SwerveConstants::AutonDriveConstants::MAX_LINEAR_ACCELERATION
+        }};
+
+        frc::TrapezoidProfile<units::radians> _rotation_profile{{
+                SwerveConstants::AutonDriveConstants::MAX_ROTATION_SPEED, 
+                SwerveConstants::AutonDriveConstants::MAX_ROTATION_ACCELERATION
+        }};
 };
 
 

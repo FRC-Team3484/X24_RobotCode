@@ -3,11 +3,11 @@
 
 #include "subsystems/DrivetrainSubsystem.h"
 
-#include <frc2/command/CommandBase.h>
+#include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 #include <frc/kinematics/SwerveModulePosition.h>
 
-class DynamicBrakeCommand: public frc2::CommandHelper<frc2::CommandBase, DynamicBrakeCommand> {
+class DynamicBrakeCommand: public frc2::CommandHelper<frc2::Command, DynamicBrakeCommand> {
     public:
         explicit DynamicBrakeCommand(DrivetrainSubsystem* drivetrain);
 
