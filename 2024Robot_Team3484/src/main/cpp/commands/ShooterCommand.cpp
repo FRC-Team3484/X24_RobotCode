@@ -11,17 +11,22 @@ ShooterCommand::ShooterCommand(ShooterSubsystem* shooter_subsytem)
     AddRequirements(_shooter);
 }
 void ShooterCommand::Initialize(){
+    _shooting = false;
     _shooter->setSHRPM(RPM);
 }
 void ShooterCommand::Execute(){
- if(_shooter->atPoint()){//when intake is done replace with if(_shooter->atPoint() and _intake->finshed angle()(**replace filler names with real ones**))   
-    //run intake
- }
- 
+    if(_shooting){ //here is where we would have our run intake
+
+    }
+    else{
+        if(_shooter->atPoint()){//when intake is done replace with if(_shooter->atPoint() and _intake->finshed angle()(**replace filler names with real ones**))   
+            _shooting = true;
+        }
+    }
 }
 void ShooterCommand::End(bool interrupted){
     _shooter->setSHRPM(0_rpm);
 }
 bool ShooterCommand::IsFinished(){
-
+ return false;
 }

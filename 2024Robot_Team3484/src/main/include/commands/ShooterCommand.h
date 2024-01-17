@@ -21,6 +21,7 @@ class ShooterCommand: public frc2::CommandHelper<frc2::Command, ShooterCommand>{
     
     private:
         ShooterSubsystem* _shooter;
+        bool _shooting;
 
 };
 
