@@ -3,7 +3,10 @@
 
 namespace ShooterConstants {}
 namespace IntakeConstants {}
-namespace HookConstants {}
+namespace HookConstants {
+    constexpr int MOTOR_PORT = 1;
+    constexpr int SENSOR_PORT = 1;
+}
 
 
 
