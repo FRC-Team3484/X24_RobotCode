@@ -5,6 +5,9 @@ namespace ShooterConstants {}
 namespace IntakeConstants {}
 namespace HookConstants {}
 
+namespace VisionConstants {}
+
+
 
 
 

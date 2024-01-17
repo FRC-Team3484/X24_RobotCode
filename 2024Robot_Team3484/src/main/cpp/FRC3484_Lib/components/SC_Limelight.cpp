@@ -40,14 +40,18 @@ double SC_Limelight::GetTargetArea()
 	return this->inst->GetNumber("ta", 0.0);
 }
 
-double SC_Limelight::GetSkew()
-{
-	return this->inst->GetNumber("ts", 0.0);
-}
+// double SC_Limelight::GetSkew()
+// {
+// 	return this->inst->GetNumber("ts", 0.0);
+// }
 
 double SC_Limelight::GetPipelineLatency()
 {
 	return this->inst->GetNumber("tl", 0.0);
+}
+
+double SC_Limelight::GetTotalLatency() {
+	return this->GetPipelineLatency()+this->inst->GetNumber("cl", 0.0);
 }
 
 double SC_Limelight::GetBBShort()
@@ -70,14 +74,14 @@ double SC_Limelight::GetBBHeight()
 	return this->inst->GetNumber("tvert", 0.0);
 }
 
-// double SC_Limelight::GetDistanceFromTarget()
-// {
-// 	return (this->targetHeight - this->lensHeight) / tan((this->angle + this->GetOffsetY()) * (wpi::numbers::pi_v<double> / 180.0));
-// }
+double SC_Limelight::GetDistanceFromTarget()
+{
+	return (this->targetHeight - this->lensHeight) / tan((this->angle + this->GetOffsetY()) * ( std::numbers::pi/ 180.0));
+}
 
 double SC_Limelight::GetDistanceFromTarget()
 {
-	return (this->targetHeight - this->lensHeight) / tan((this->angle + this->GetOffsetY()) * (std::numbers::pi_v<double> / 180.0));
+	return (this->targetHeight - this->lensHeight) / tan((this->angle + this->GetOffsetY()) * (std::numbers::pi/ 180.0));
 }
 
 int SC_Limelight::GetActivePipeline()
@@ -123,4 +127,8 @@ void SC_Limelight::SetLensHeight(double Height)
 void SC_Limelight::SetTargetHeight(double Height)
 {
 	this->targetHeight = Height;
+}
+
+void SC_Limelight::TakeSnapShot(SC::SC_Snapshot Snapshot) {
+	this->inst->PutNumber("snapshot", Snapshot);
 }

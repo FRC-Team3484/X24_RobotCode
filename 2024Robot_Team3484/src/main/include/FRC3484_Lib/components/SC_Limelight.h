@@ -7,6 +7,7 @@ namespace SC
 {
 	enum SC_StreamMode { STANDARD, PIP_MAIN, PIP_SECONDARY };
 	enum SC_LEDMode	{ AUTO = 0 , LED_OFF = 1, BLINK = 2, LED_ON = 3 };
+	enum SC_Snapshot {TAKE = 1, NOTAKE = 0};
 
 	class SC_Limelight
 	{
@@ -33,15 +34,22 @@ namespace SC
 		 */
 		double GetTargetArea();
 
-		/**
-		 * @brief Returns the skew (rotation) of the target area in the image (-90° to 0°).
-		 */
-		double GetSkew();
+		// /**
+		//  * @brief Returns the skew (rotation) of the target area in the image (-90° to 0°).
+		//  */
+		// double GetSkew();
+		
 
 		/**
 		 * @brief Returns the pipeline's latency in ms. Add at least 11ms for image capture latency
 		 */
 		double GetPipelineLatency();
+
+		/**
+		 * Captures pipeline latency (ms); Time between the end of the exposure of the middle row
+		 * of the sensor to the beginning of the tracking pipelien
+		*/
+		double GetTotalLatency();
 
 		/**
 		 * @brief Returns the length of the shortest side of the bounding box in pixels
@@ -90,6 +98,14 @@ namespace SC
 		 * @brief Sets the height of the vision target relative to the floor.
 		 */
 		void SetTargetHeight(double Height);
+
+		/**
+		 * Allows users to take snapshots during a match
+		*/
+		void TakeSnapShot(SC::SC_Snapshot Snapshot);
+
+
+
 
 	private:
 		std::shared_ptr<nt::NetworkTable> inst;
