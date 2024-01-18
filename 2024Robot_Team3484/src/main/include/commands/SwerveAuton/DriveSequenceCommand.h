@@ -2,7 +2,7 @@
 #define DRIVESEQUENCECOMMAND_H
 
 #include "subsystems/DrivetrainSubsystem.h"
-#include "commands/GoToPoseCommand.h"
+#include "commands/SwerveAuton/GoToPoseCommand.h"
 
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/SequentialCommandGroup.h>

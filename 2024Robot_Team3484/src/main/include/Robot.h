@@ -11,9 +11,9 @@
 
 // Swerve Stuff
 #include "subsystems/DrivetrainSubsystem.h"
-#include "commands/TeleopDriveCommand.h"
-#include "commands/DynamicBrakeCommand.h"
-#include "commands/StraightenWheelsCommand.h"
+#include "commands/SwerveTeleop/TeleopDriveCommand.h"
+#include "commands/SwerveTeleop/DynamicBrakeCommand.h"
+#include "commands/SwerveTeleop/StraightenWheelsCommand.h"
 #include "subsystems/AutonGenerator.h"
 
 

@@ -6,7 +6,9 @@
 #include <frc/XboxController.h>
 
 class OI {
+    
     public:
+        //  Swerve Controllers
         double GetThrottle();
         double GetStraife();
         double GetRotation();
@@ -15,6 +17,9 @@ class OI {
         bool GetStraightenWheels();
         bool GetSetBrakeMode();
         bool GetDisableBrakeMode();
+        void SetRumble(double Rumble);
+
+        // Operator Controllers
 
     private:
         frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::DRIVER_CONTROLLER_PORT};

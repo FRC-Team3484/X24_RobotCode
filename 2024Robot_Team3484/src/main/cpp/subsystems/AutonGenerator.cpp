@@ -1,7 +1,7 @@
 #include "subsystems/AutonGenerator.h"
 #include "Constants.h"
-#include "commands/GoToPoseCommand.h"
-#include "commands/DriveSequenceCommand.h"
+#include "commands/SwerveAuton/GoToPoseCommand.h"
+#include "commands/SwerveAuton/DriveSequenceCommand.h"
 
 //#include <pathplanner/lib/PathPlannerTrajectory.h>
 //#include <pathplanner/lib/PathPlanner.h>

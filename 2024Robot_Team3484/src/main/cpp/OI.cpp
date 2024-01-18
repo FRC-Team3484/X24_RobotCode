@@ -5,6 +5,7 @@
 
 using namespace SwerveConstants::ControllerConstants;
 
+
 double OI::GetThrottle() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(THROTTLE), JOYSTICK_DEADBAND);}
 double OI::GetStraife() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(STRAIFE), JOYSTICK_DEADBAND);}
 double OI::GetRotation() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(ROTATION), JOYSTICK_DEADBAND);}
@@ -14,3 +15,9 @@ bool OI::GetBrake() {return _driver_controller.GetRawButton(BRAKE);}
 bool OI::GetStraightenWheels() {return _driver_controller.GetRawButton(STRAIGHTEN_WHEELS);}
 bool OI::GetSetBrakeMode() {return _driver_controller.GetRawButtonPressed(BRAKE_MODE);}
 bool OI::GetDisableBrakeMode() {return _driver_controller.GetRawButtonPressed(DISABLE_BRAKE_MODE);}
+void OI::SetRumble(double Rumble) {
+    _driver_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
+}
+
+
+

@@ -17,6 +17,13 @@
   "C_Cpp.default.configurationProvider": "vscode-wpilib",
   "files.associations": {
     "matrixfunctions": "cpp",
-    "cfloat": "cpp"
+    "cfloat": "cpp",
+    "array": "cpp",
+    "compare": "cpp",
+    "functional": "cpp",
+    "ratio": "cpp",
+    "tuple": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp"
   }
 }
