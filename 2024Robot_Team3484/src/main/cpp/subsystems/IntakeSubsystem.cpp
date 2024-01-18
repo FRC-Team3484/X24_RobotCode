@@ -1,7 +1,8 @@
 //
 // Intake Subsystem
 //
-// -Aidan & Noah
+// -Noah, Aidan  & Ethan
+//
 
 #include <subsystems/IntakeSubsystem.h>
 #include <units/angle.h>
@@ -11,6 +12,8 @@ using namespace IntakeConstants;
 IntakeSubsystem::IntakeSubsystem() {
     _pivot_motor.RestoreFactoryDefaults();
     _drive_motor.RestoreFactoryDefaults();
+
+    _drive_motor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
     _pivot_pid_controller.SetFeedbackDevice(_pivot_encoder);
 
