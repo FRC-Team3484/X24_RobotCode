@@ -45,11 +45,17 @@ class DrivetrainSubsystem : public frc2::SubsystemBase {
         };
 
     private:
+    // Check if can be placed in constants
+            SC::SC_SwerveConfigs _swerve_front_left{10,11,20, 4.394};
+            SC::SC_SwerveConfigs _swerve_front_right{12,13,21,71.630};
+            SC::SC_SwerveConfigs _swerve_back_left{14,15,22,-26.103};
+            SC::SC_SwerveConfigs _swerve_back_right{16,17,23,-71.455};
+
         SwerveModule _modules[4] = {
-            SwerveModule{FL},
-            SwerveModule{FR},
-            SwerveModule{BL},
-            SwerveModule{BR}
+            SwerveModule{_swerve_front_left},
+            SwerveModule{_swerve_front_right},
+            SwerveModule{_swerve_back_left},
+            SwerveModule{_swerve_back_right}
         };
 
         AHRS* _gyro;

@@ -43,8 +43,8 @@ class Robot : public frc::TimedRobot {
   enum State {drive, brake, straighten};
   State _robot_state = drive;
 
-  OI _oi{};
-  
+  Driver_Interface _oi{};
+
   DrivetrainSubsystem _drivetrain{};
 
   TeleopDriveCommand _drive_command{&_drivetrain, &_oi};

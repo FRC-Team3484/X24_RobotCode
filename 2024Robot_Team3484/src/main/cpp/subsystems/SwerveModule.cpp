@@ -12,12 +12,15 @@ using namespace frc;
 using namespace units;
 // using namespace ctre::phoenix6;
 using namespace ctre;
+using namespace SC;
 using namespace SwerveConstants::DrivetrainConstants;
+using namespace ctre::phoenix::sensors;
+using namespace ctre::phoenix;
 
-SwerveModule::SwerveModule(const int module_location) 
-        : _drive_motor(DRIVE_MOTOR_PORTS[module_location]),
-          _steer_motor(STEER_MOTOR_PORTS[module_location]),
-          _steer_encoder(ENCODER_PORTS[module_location])
+SwerveModule::SwerveModule(SC_SwerveConfigs corner) 
+        : _drive_motor(corner.CAN_ID),
+          _steer_motor(corner.SteerMotorPort),
+          _steer_encoder(corner.EncoderPort)
         {
 
     // configs::CurrentLimitsConfigs drive_motor_current_limit{};
@@ -31,14 +34,15 @@ SwerveModule::SwerveModule(const int module_location)
     // _drive_motor.GetConfigurator().Apply(_drive_motor_config);
     // ResetEncoder();
     // SetCoastMode();
+
     _drive_motor.ConfigFactoryDefault();
-    _drive_motor.ConfigSupplyCurrentLimit(DRIVE_CURRENT_LIMIT);
+    _drive_motor.ConfigSupplyCurrentLimit(_drive_currrent_limit);
     ResetEncoder();
 
     _steer_motor.ConfigFactoryDefault();
     _steer_motor.SetNeutralMode(motorcontrol::Brake);
-    _steer_motor.ConfigSupplyCurrentLimit(STEER_CURRENT_LIMIT);
-    _steer_motor.SetInverted(STEER_MOTOR_REVERSED);
+    _steer_motor.ConfigSupplyCurrentLimit(_steer_current_limit);
+    _steer_motor.SetInverted(_swerve_current_constants.Steer_Motor_Reversed);
 
 
     // Change to Phoenix 5
@@ -56,15 +60,15 @@ SwerveModule::SwerveModule(const int module_location)
     // _steer_motor.GetConfigurator().Apply(steer_motor_config);
     _steer_motor.ConfigFactoryDefault();
     _steer_motor.SetNeutralMode(motorcontrol::Brake);
-    _steer_motor.ConfigSupplyCurrentLimit(STEER_CURRENT_LIMIT);
-    _steer_motor.SetInverted(STEER_MOTOR_REVERSED);
+    _steer_motor.ConfigSupplyCurrentLimit(_steer_current_limit);
+    _steer_motor.SetInverted(_swerve_current_constants.Steer_Motor_Reversed);
 
     _steer_encoder.ConfigFactoryDefault();
     _steer_encoder.SetPositionToAbsolute();
     _steer_encoder.ConfigAbsoluteSensorRange(sensors::AbsoluteSensorRange::Signed_PlusMinus180);
     _steer_encoder.ConfigSensorInitializationStrategy(SensorInitializationStrategy::BootToAbsolutePosition);
-    _steer_encoder.ConfigMagnetOffset(ENCODER_OFFSET[module_location]);
-    _steer_encoder.ConfigSensorDirection(ENCODER_REVERSED);
+    _steer_encoder.ConfigMagnetOffset(corner.EncoderOffset);
+    _steer_encoder.ConfigSensorDirection(_swerve_current_constants.Encoder_Reversed);
 
     // Change all the way to Cancoder
     // configs::MagnetSensorConfigs encoder_magnet_config{};

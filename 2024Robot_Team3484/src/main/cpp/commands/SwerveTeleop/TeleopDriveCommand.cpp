@@ -6,7 +6,7 @@
 using namespace units;
 using namespace SwerveConstants::AutonDriveConstants;
 
-TeleopDriveCommand::TeleopDriveCommand(DrivetrainSubsystem* drivetrain, OI* oi) 
+TeleopDriveCommand::TeleopDriveCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi) 
     : _drivetrain{drivetrain}, _oi{oi} {
     AddRequirements(_drivetrain);
 }
@@ -26,7 +26,7 @@ void TeleopDriveCommand::Execute() {
     }
     
     const meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED;
-    const meters_per_second_t y_speed = -_oi->GetStraife() * MAX_LINEAR_SPEED;
+    const meters_per_second_t y_speed = -_oi->GetStrafe() * MAX_LINEAR_SPEED;
     const radians_per_second_t rotation = -_oi->GetRotation() * MAX_ROTATION_SPEED;
     
     _drivetrain->Drive(x_speed, y_speed, rotation, true);

@@ -11,9 +11,13 @@
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/kinematics/SwerveModulePosition.h>
 
+#include "ctre/phoenix/sensors/WPI_CANCoder.h"
+#include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
+// #include "ctre/Phoenix.h"
+
 class SwerveModule {
     public:
-        SwerveModule(const int module_location);
+        SwerveModule(SC::SC_SwerveConfigs corner);
         void SetDesiredState(frc::SwerveModuleState state, bool open_loop, bool optimize=true);
         frc::SwerveModuleState GetState();
         frc::SwerveModulePosition GetPosition();
@@ -28,9 +32,33 @@ class SwerveModule {
         // ctre::phoenix6::hardware::TalonFX _drive_motor;
         // ctre::phoenix6::hardware::TalonFX _steer_motor;
         // ctre::phoenix6::hardware::CANcoder _steer_encoder;
-        WPI_TalonFX _drive_motor;
-        WPI_TalonFX _steer_motor;
-        WPI_CANCoder _steer_encoder;
+        // Check for proper path declaration
+
+        ctre::phoenix::motorcontrol::can::WPI_TalonFX _drive_motor;
+        ctre::phoenix::motorcontrol::can::WPI_TalonFX _steer_motor;
+        ctre::phoenix::sensors::WPI_CANCoder _steer_encoder;
+
+
+        // WPI_TalonFX _drive_motor;
+        // WPI_TalonFX _steer_motor;
+        // WPI_CANCoder _steer_encoder;
+
+        SC::SC_SwerveCurrents _swerve_current_constants;
+
+        ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration _drive_currrent_limit{
+                                            _swerve_current_constants.Current_Limit_Enable,
+                                            _swerve_current_constants.Current_Limit_Drive,
+                                            _swerve_current_constants.Drive_Current_Threshold,
+                                            _swerve_current_constants.Drive_Current_Time
+                                        };
+        ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration _steer_current_limit{
+                                            _swerve_current_constants.Current_Limit_Enable,
+                                            _swerve_current_constants.Current_Limit_Steer,
+                                            _swerve_current_constants.Steer_Current_Threshold,
+                                            _swerve_current_constants.Steer_Current_Time
+                                        };
+
+
 
 
         frc::PIDController _drive_pid_controller{SwerveConstants::DrivetrainConstants::DrivePIDConstants::Kp_Drive, SwerveConstants::DrivetrainConstants::DrivePIDConstants::Ki_Drive, SwerveConstants::DrivetrainConstants::DrivePIDConstants::Kd_Drive};

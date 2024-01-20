@@ -5,12 +5,12 @@
 #include "Constants.h"
 #include <frc/XboxController.h>
 
-class OI {
+class Driver_Interface {
     
     public:
         //  Swerve Controllers
         double GetThrottle();
-        double GetStraife();
+        double GetStrafe();
         double GetRotation();
         bool GetResetHeading();
         bool GetBrake();

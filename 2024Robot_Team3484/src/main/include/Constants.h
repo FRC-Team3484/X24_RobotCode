@@ -7,11 +7,11 @@
 #include <units/acceleration.h>
 #include <units/angular_velocity.h>
 #include <units/angular_acceleration.h>
-#include <ctre/Phoenix.h>
-
+// #include <ctre/Phoenix.h>
 
 
 #include <FRC3484_Lib/utils/SC_ControllerMaps.h>
+#include <FRC3484_Lib/utils/SC_Datatypes.h>
 
 
 
@@ -38,14 +38,14 @@ namespace SwerveConstants {
         namespace Driver {
             constexpr int DRIVER_CONTROLLER_PORT = 0;
             constexpr double JOYSTICK_DEADBAND = 0.02;
-            #define THROTTLE XBOX_LS_Y 
-            #define STRAFE XBOX_LS_X
-            #define ROTATION XBOX_RS_X
-            #define RESET_HEADING XBOX_BACK
-            #define BRAKE XBOX_X
-            #define STRAIGHTEN_WHEELS XBOX_START
-            #define BRAKE_MODE XBOX_RB
-            #define DISABLE_BRAKE_MODE XBOX_LB
+            constexpr int THROTTLE =  XBOX_LS_Y;
+            constexpr int STRAFE = XBOX_LS_X;
+            constexpr int ROTATION = XBOX_RS_X;
+            constexpr int RESET_HEADING = XBOX_BACK;
+            constexpr int BRAKE = XBOX_X;
+            constexpr int STRAIGHTEN_WHEELS = XBOX_START;
+            constexpr int BRAKE_MODE = XBOX_RB;
+            constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
         }
     }
 
@@ -55,15 +55,22 @@ namespace SwerveConstants {
         #define BL 2
         #define BR 3
 
-        constexpr int DRIVE_MOTOR_PORTS[] = {9, 1, 4, 5}; //9, 1, 4, 5
-        constexpr int STEER_MOTOR_PORTS[] = {8, 3, 2, 0}; //8, 3, 2, 0
-        constexpr int ENCODER_PORTS[] = {2, 3, 0, 1};
+        // constexpr int DRIVE_MOTOR_PORTS[] = {9, 1, 4, 5}; //9, 1, 4, 5
+        // constexpr int STEER_MOTOR_PORTS[] = {8, 3, 2, 0}; //8, 3, 2, 0
+        // constexpr int ENCODER_PORTS[] = {2, 3, 0, 1};
+
+        
+        // SC::SC_SwerveConfigs _swerve_front_left{10,11,2, 4.394};
+        // SC::SC_SwerveConfigs _swerve_front_right{12,13,3,71.630};
+        // SC::SC_SwerveConfigs _swerve_back_left{14,15,0,-26.103};
+        // SC::SC_SwerveConfigs _swerve_back_right{16,17,1,-71.455};
 
         constexpr bool STEER_MOTOR_REVERSED = false;
         constexpr bool ENCODER_REVERSED = false;
 
-        const motorcontrol::SupplyCurrentLimitConfiguration DRIVE_CURRENT_LIMIT{true, 35, 60, 0.1};
-        const motorcontrol::SupplyCurrentLimitConfiguration STEER_CURRENT_LIMIT{true, 25, 40, 0.1};
+        // Check for placing into struct
+        // const motorcontrol::SupplyCurrentLimitConfiguration DRIVE_CURRENT_LIMIT{true, 35, 60, 0.1};
+        // const motorcontrol::SupplyCurrentLimitConfiguration STEER_CURRENT_LIMIT{true, 25, 40, 0.1};
 
         constexpr double ENCODER_OFFSET[] = {4.394, 71.630, -26.103, -71.455};
 

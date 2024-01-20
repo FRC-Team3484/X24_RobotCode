@@ -9,7 +9,7 @@
 
 class TeleopDriveCommand: public frc2::CommandHelper<frc2::Command, TeleopDriveCommand> {
     public:
-        explicit TeleopDriveCommand(DrivetrainSubsystem* drivetrain, OI* oi);
+        explicit TeleopDriveCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi);
 
         void Initialize() override;
         void Execute() override;
@@ -18,7 +18,7 @@ class TeleopDriveCommand: public frc2::CommandHelper<frc2::Command, TeleopDriveC
 
     private:
         DrivetrainSubsystem* _drivetrain;
-        OI* _oi;
+        Driver_Interface* _oi;
 };
 
 #endif
