@@ -6,7 +6,7 @@
 
 #include <frc/XboxController.h>
 
-class Operator_OI{
+class Operator_Interface{
     public:
         bool DeployIntake();
         bool Launch();
