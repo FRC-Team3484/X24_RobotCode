@@ -12,7 +12,7 @@ class AutonIntakeCommand
     :public frc2::CommandHelper<frc2::CommandBase, AutonIntakeCommand> {
 
     public:
-        explicit AutonIntakeCommand(IntakeSubsystem* intake_subsystem, OI *oi);
+        explicit AutonIntakeCommand(IntakeSubsystem* intake_subsystem);
 
         void Initialize() override;
         void Execute() override;
@@ -21,7 +21,6 @@ class AutonIntakeCommand
 
     private:
         IntakeSubsystem* _intake_subsystem;
-        OI* _oi;
 
 };
 

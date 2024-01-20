@@ -14,11 +14,11 @@ void TeleopIntakeCommand::Execute() {
     if (_oi->__) { // TODO: Set button
         if (!_intake_subsystem->HasPiece() || _oi->__) { // TODO: Set button
             _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
-            _intake_subsystem->SetRollerPower(1);
+            _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER);
 
         } else {
             _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
-            _intake_subsystem->SetRollerPower(0);
+            _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
         }
 
         if (_intake_subsystem->HasPiece()) {
@@ -30,7 +30,7 @@ void TeleopIntakeCommand::Execute() {
         _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
 
         if (_intake_subsystem->ArmExtended()) {
-            _intake_subsystem->SetRollerPower(-1);
+            _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_REVERSE);
 
         }
 

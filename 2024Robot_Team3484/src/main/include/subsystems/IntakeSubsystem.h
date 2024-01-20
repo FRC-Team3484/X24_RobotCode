@@ -14,25 +14,40 @@
 
 class IntakeSubsystem : public frc2::SubsystemBase {
     public:
-        IntakeSubsystem();
+        IntakeSubsystem(
+            int PIVOT_MOTOR_CAN_ID, 
+            int DRIVE_MOTOR_CAN_ID, 
+            int PIECE_SENSOR_DI_CH, 
+            int ARM_SENSOR_DI_CH,
+            
+            double PID_P,
+            int PID_I,
+            int PID_D,
+            int PID_IZ_ZONE,
+            int PID_FF,
+            int PID_OUTPUTRANGE_MIN,
+            int PID_OUTPUTRANGE_MAX
+        );
+
         void Periodic() override;
         void SetIntakeAngle(units::degree_t angle);
         void SetRollerPower(double power);
         bool HasPiece();
         bool ArmExtended();
         units::turn_t GetIntakePosition();
+        units::revolutions_per_minute_t GetEncoderVelocity();
 
     private:
         bool _arm_sensor_hit = false;
         
-        rev::CANSparkMax _pivot_motor{IntakeConstants::PIVOT_MOTOR_PORT, rev::CANSparkMax::MotorType::kBrushless};
-        rev::CANSparkMax _drive_motor{IntakeConstants::DRIVE_MOTOR_PORT, rev::CANSparkMax::MotorType::kBrushed};
+        rev::CANSparkMax _pivot_motor;
+        rev::CANSparkMax _drive_motor;
 
-        frc::DigitalInput _piece_sensor{IntakeConstants::PIECE_SENSOR_PORT};
-        frc::DigitalInput _arm_sensor{IntakeConstants::ARM_SENSOR_PORT};
+        frc::DigitalInput _piece_sensor;
+        frc::DigitalInput _arm_sensor;
 
-        rev::SparkRelativeEncoder _pivot_encoder = _pivot_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kQuadrature, 4096);
-        rev::SparkPIDController _pivot_pid_controller = _pivot_motor.GetPIDController();
+        rev::SparkRelativeEncoder* _pivot_encoder;
+        rev::SparkPIDController* _pivot_pid_controller;
 
         frc::TrapezoidProfile<units::degrees> _intake_trapezoid{{IntakeConstants::MAX_VELOCITY, IntakeConstants::MAX_ACCELERATION}};
         units::degree_t _target_position;
