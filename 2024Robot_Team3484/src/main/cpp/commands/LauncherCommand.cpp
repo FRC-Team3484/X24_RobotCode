@@ -12,7 +12,7 @@ LauncherCommand::LauncherCommand(LauncherSubsystem* Launcher_subsytem)
 }
 void LauncherCommand::Initialize(){
     _Launching = false;
-    _Launcher->setLauncherRPM(RPM);
+    _Launcher->setLauncherRPM(Trget_RPM);
 }
 void LauncherCommand::Execute(){
     if(_Launcher){ //here is where we would have our run intake

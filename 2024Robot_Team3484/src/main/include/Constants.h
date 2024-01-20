@@ -12,10 +12,10 @@ namespace LauncherConstants {
     constexpr double RPM_Window_Launcher = 50;
 
     //constexpr bool IsLoaded = true;
-    constexpr bool MOTER_INVERTED = true;
+    constexpr bool MOTOR_INVERTED = true;
 
 
-    constexpr units::revolutions_per_minute_t RPM/*place holder*/ = 2000_rpm;
+    constexpr units::revolutions_per_minute_t Trget_RPM/*place holder*/ = 2000_rpm;
 }
 namespace IntakeConstants {}
 namespace HookConstants {}

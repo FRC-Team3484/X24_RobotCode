@@ -24,31 +24,31 @@ LauncherSubsystem::LauncherSubsystem(
     Launcher_Encoder_Left = new SparkRelativeEncoder(_left_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kQuadrature, 4096 ));
     Launcher_Encoder_Right = new SparkRelativeEncoder(_right_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kQuadrature, 4096 ));
 
-    Launcher_m_Left_pidController = _left_motor.GetPIDController();
-    Launcher_m_Right_pidController = _right_motor.GetPIDController();
+    Launcher_m_Left_pidController = new SparkPIDController(_left_motor.GetPIDController());
+    Launcher_m_Right_pidController = new SparkPIDController(_right_motor.GetPIDController());
 
-    Launcher_m_Left_pidController.SetFeedbackDevice(*Launcher_Encoder_Left);
-    Launcher_m_Right_pidController.SetFeedbackDevice(*Launcher_Encoder_Right);
+    Launcher_m_Left_pidController->SetFeedbackDevice(*Launcher_Encoder_Left);
+    Launcher_m_Right_pidController->SetFeedbackDevice(*Launcher_Encoder_Right);
 
     _left_motor.RestoreFactoryDefaults();
     _right_motor.RestoreFactoryDefaults();
 
-    _left_motor.SetInverted(MOTER_INVERTED);
-    _right_motor.SetInverted(!MOTER_INVERTED);
+    _left_motor.SetInverted(MOTOR_INVERTED);
+    _right_motor.SetInverted(!MOTOR_INVERTED);
 
-    Launcher_m_Left_pidController.SetP(P_Launcher);
-    Launcher_m_Left_pidController.SetI(I_Launcher);
-    Launcher_m_Left_pidController.SetD(D_Launcher);
-    Launcher_m_Left_pidController.SetIZone(0);
-    Launcher_m_Left_pidController.SetFF(FF_Launcher);
-    Launcher_m_Left_pidController.SetOutputRange(0, 1);
+    Launcher_m_Left_pidController->SetP(P_Launcher);
+    Launcher_m_Left_pidController->SetI(I_Launcher);
+    Launcher_m_Left_pidController->SetD(D_Launcher);
+    Launcher_m_Left_pidController->SetIZone(0);
+    Launcher_m_Left_pidController->SetFF(FF_Launcher);
+    Launcher_m_Left_pidController->SetOutputRange(0, 1);
 
-    Launcher_m_Right_pidController.SetP(P_Launcher);
-    Launcher_m_Right_pidController.SetD(D_Launcher);
-    Launcher_m_Right_pidController.SetI(I_Launcher);
-    Launcher_m_Right_pidController.SetIZone(0);
-    Launcher_m_Right_pidController.SetFF(FF_Launcher);
-    Launcher_m_Right_pidController.SetOutputRange(0, 1);
+    Launcher_m_Right_pidController->SetP(P_Launcher);
+    Launcher_m_Right_pidController->SetD(D_Launcher);
+    Launcher_m_Right_pidController->SetI(I_Launcher);
+    Launcher_m_Right_pidController->SetIZone(0);
+    Launcher_m_Right_pidController->SetFF(FF_Launcher);
+    Launcher_m_Right_pidController->SetOutputRange(0, 1);
 }
 
 void LauncherSubsystem::setLauncherRPM(units::revolutions_per_minute_t speed){
@@ -56,8 +56,8 @@ void LauncherSubsystem::setLauncherRPM(units::revolutions_per_minute_t speed){
 }
 
 void LauncherSubsystem::Periodic() {
-    Launcher_m_Right_pidController.SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
-    Launcher_m_Left_pidController.SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
+    Launcher_m_Right_pidController->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
+    Launcher_m_Left_pidController->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
 }
 
 bool LauncherSubsystem::atTargetRPM(){

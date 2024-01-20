@@ -35,8 +35,8 @@ class LauncherSubsystem : public frc2::SubsystemBase {
 
         rev::SparkRelativeEncoder* Launcher_Encoder_Left;
         rev::SparkRelativeEncoder* Launcher_Encoder_Right;
-        rev::SparkPIDController Launcher_m_Left_pidController = _left_motor.GetPIDController();
-        rev::SparkPIDController Launcher_m_Right_pidController = _right_motor.GetPIDController();
+        rev::SparkPIDController* Launcher_m_Left_pidController;
+        rev::SparkPIDController* Launcher_m_Right_pidController;
 
         double _target_speed;
 
