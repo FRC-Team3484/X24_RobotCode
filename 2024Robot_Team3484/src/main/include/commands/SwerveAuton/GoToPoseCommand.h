@@ -25,6 +25,20 @@ class GoToPoseCommand: public frc2::CommandHelper<frc2::Command, GoToPoseCommand
     private:
         DrivetrainSubsystem* _drivetrain;
 
+        frc::ChassisSpeeds chassis_speeds;
+        units::meters_per_second_t linear_speed;
+        frc::Translation2d linear_delta;
+        frc::TrapezoidProfile<units::meters>::State current_linear_state;
+        frc::TrapezoidProfile<units::meters>::State target_linear_state;
+        units::meters_per_second_t linear_velocity;
+        units::meters_per_second_t x_velocity;
+        units::meters_per_second_t y_velocity;
+
+        frc::Rotation2d rotation_delta;
+
+        units::radians_per_second_t rotation_velocity;
+
+
         frc::Pose2d _target_pose;
         frc::Pose2d _pose_delta;
 

@@ -22,7 +22,7 @@ class OI {
         // Operator Controllers
 
     private:
-        frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::DRIVER_CONTROLLER_PORT};
+        frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
 };
 
 

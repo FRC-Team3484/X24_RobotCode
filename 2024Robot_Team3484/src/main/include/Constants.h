@@ -6,7 +6,8 @@
 #include <units/velocity.h>
 #include <units/acceleration.h>
 #include <units/angular_velocity.h>
-#include <units/angular_acceleration.h> 
+#include <units/angular_acceleration.h>
+#include <ctre/Phoenix.h>
 
 
 
@@ -34,16 +35,18 @@ namespace SwerveConstants {
     }
 
     namespace ControllerConstants {
-    constexpr int DRIVER_CONTROLLER_PORT = 0;
-    constexpr double JOYSTICK_DEADBAND = 0.02;
-    #define THROTTLE XBOX_LS_Y 
-    #define STRAIFE XBOX_LS_X
-    #define ROTATION XBOX_RS_X
-    #define RESET_HEADING XBOX_BACK
-    #define BRAKE XBOX_X
-    #define STRAIGHTEN_WHEELS XBOX_START
-    #define BRAKE_MODE XBOX_RB
-    #define DISABLE_BRAKE_MODE XBOX_LB
+        namespace Driver {
+            constexpr int DRIVER_CONTROLLER_PORT = 0;
+            constexpr double JOYSTICK_DEADBAND = 0.02;
+            #define THROTTLE XBOX_LS_Y 
+            #define STRAFE XBOX_LS_X
+            #define ROTATION XBOX_RS_X
+            #define RESET_HEADING XBOX_BACK
+            #define BRAKE XBOX_X
+            #define STRAIGHTEN_WHEELS XBOX_START
+            #define BRAKE_MODE XBOX_RB
+            #define DISABLE_BRAKE_MODE XBOX_LB
+        }
     }
 
     namespace DrivetrainConstants {
@@ -59,16 +62,16 @@ namespace SwerveConstants {
         constexpr bool STEER_MOTOR_REVERSED = false;
         constexpr bool ENCODER_REVERSED = false;
 
-        // const motorcontrol::SupplyCurrentLimitConfiguration DRIVE_CURRENT_LIMIT{true, 35, 60, 0.1};
-        // const motorcontrol::SupplyCurrentLimitConfiguration STEER_CURRENT_LIMIT{true, 25, 40, 0.1};
+        const motorcontrol::SupplyCurrentLimitConfiguration DRIVE_CURRENT_LIMIT{true, 35, 60, 0.1};
+        const motorcontrol::SupplyCurrentLimitConfiguration STEER_CURRENT_LIMIT{true, 25, 40, 0.1};
 
         constexpr double ENCODER_OFFSET[] = {4.394, 71.630, -26.103, -71.455};
 
         constexpr double DRIVE_CURRENT_THRESHOLD = 60;
-        constexpr double DRIVE_CURRENT_LIMIT = 35;
+        // constexpr double DRIVE_CURRENT_LIMIT = 35;
         constexpr double DRIVE_CURRENT_TIME = 0.1;
         constexpr double STEER_CURRENT_THRESHOLD = 40;
-        constexpr double STEER_CURRENT_LIMIT = 25;
+        // constexpr double STEER_CURRENT_LIMIT = 25;
         constexpr double STEER_CURRENT_TIME = 0.1;
 
         constexpr units::inch_t DRIVETRAIN_WIDTH = 24_in;
@@ -83,9 +86,9 @@ namespace SwerveConstants {
         constexpr units::feet_per_second_squared_t MAX_WHEEL_ACCELERATION = 4_fps_sq;
 
         namespace DrivePIDConstants {
-            constexpr double P = 1.0;
-            constexpr double I = 0.0;
-            constexpr double D = 0.0;
+            constexpr double Kp_Drive = 1.0;
+            constexpr double Ki_Drive = 0.0;
+            constexpr double Kd_Drive = 0.0;
         }
         namespace DriveFeedForwardConstants { //Future Check
             constexpr units::volt_t S = 1.0_V;
@@ -93,9 +96,9 @@ namespace SwerveConstants {
             constexpr auto A = 0.15_V / 1.0_mps_sq;
         }
         namespace SteerPIDConstants {
-            constexpr double P = 0.5;
-            constexpr double I = 0.0;
-            constexpr double D = 0.0;
+            constexpr double Kp_Drive = 0.5;
+            constexpr double Ki_Drive = 0.0;
+            constexpr double Kd_Drive = 0.0;
             constexpr units::radians_per_second_t MAX_SPEED = 12_rad_per_s;
             constexpr units::radians_per_second_squared_t MAX_ACCELERATION  = 100_rad_per_s_sq;
         }

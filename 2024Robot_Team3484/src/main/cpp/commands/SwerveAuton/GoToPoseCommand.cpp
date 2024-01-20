@@ -24,20 +24,28 @@ void GoToPoseCommand::Execute() {
     _pose_delta = _target_pose.RelativeTo(_drivetrain->GetPose());
 
     //Get the robot speed
-    const ChassisSpeeds chassis_speeds = _drivetrain->GetChassisSpeeds();
-    const meters_per_second_t linear_speed = units::math::sqrt(chassis_speeds.vx * chassis_speeds.vx + chassis_speeds.vy * chassis_speeds.vy);
+    chassis_speeds = _drivetrain->GetChassisSpeeds();
+    linear_speed = units::math::sqrt(chassis_speeds.vx * chassis_speeds.vx + chassis_speeds.vy * chassis_speeds.vy);
 
     //Calculate the xy distance to the target
-    const Translation2d linear_delta = _pose_delta.Translation();
-    //Create trapezoid state for current direction (assumes velocity direction is towards target)
-    const TrapezoidProfile<meters>::State current_linear_state{0_m, linear_speed};
-    //Create trapezoid state for target position
-    const TrapezoidProfile<meters>::State target_linear_state{linear_delta.Norm(), 0_mps};
+    linear_delta = _pose_delta.Translation();
     //Use the trapezoid to calculate the next velocity
-    const meters_per_second_t linear_velocity = _linear_profile.Calculate(20_ms, current_linear_state, target_linear_state).velocity;
+    linear_velocity = _linear_profile.Calculate(20_ms, current_linear_state, target_linear_state).velocity;
+
+    // Faulty
+    // current_linear_state{0_m, linear_speed};
+    // target_linear_state{linear_delta.Norm(), 0_mps};
+
+    //Create trapezoid state for current direction (assumes velocity direction is towards target)
+    frc::TrapezoidProfile<units::meters>::State current_linear_state{0_m, linear_speed};
+
+    //Create trapezoid state for target position
+    frc::TrapezoidProfile<units::meters>::State target_linear_state{linear_delta.Norm(), 0_mps};
+    
+
     //Split the velocity into x and y components
-    const meters_per_second_t x_velocity = linear_velocity * linear_delta.Angle().Cos();
-    const meters_per_second_t y_velocity = linear_velocity * linear_delta.Angle().Sin();
+    x_velocity = linear_velocity * linear_delta.Angle().Cos();
+    y_velocity = linear_velocity * linear_delta.Angle().Sin();
     
     //Repeat above steps for angle
     const Rotation2d rotation_delta = _pose_delta.Rotation();

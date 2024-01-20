@@ -3,8 +3,8 @@
 
 #include "Constants.h"
 
-#include <ctre/phoenix6/TalonFX.hpp>
-#include <ctre/phoenix6/CANcoder.hpp>
+// #include <ctre/phoenix6/TalonFX.hpp>
+// #include <ctre/phoenix6/CANcoder.hpp>
 #include <frc/controller/PIDController.h>
 #include <frc/controller/ProfiledPIDController.h>
 #include <frc/controller/SimpleMotorFeedforward.h>
@@ -23,14 +23,18 @@ class SwerveModule {
         void SetBrakeMode();
 
     private:
-        ctre::phoenix6::configs::TalonFXConfiguration _drive_motor_config{};
+        // ctre::phoenix6::configs::TalonFXConfiguration _drive_motor_config{};
 
-        ctre::phoenix6::hardware::TalonFX _drive_motor;
-        ctre::phoenix6::hardware::TalonFX _steer_motor;
-        ctre::phoenix6::hardware::CANcoder _steer_encoder;
+        // ctre::phoenix6::hardware::TalonFX _drive_motor;
+        // ctre::phoenix6::hardware::TalonFX _steer_motor;
+        // ctre::phoenix6::hardware::CANcoder _steer_encoder;
+        WPI_TalonFX _drive_motor;
+        WPI_TalonFX _steer_motor;
+        WPI_CANCoder _steer_encoder;
 
-        frc::PIDController _drive_pid_controller{SwerveConstants::DrivetrainConstants::DrivePIDConstants::P, SwerveConstants::DrivetrainConstants::DrivePIDConstants::I, SwerveConstants::DrivetrainConstants::DrivePIDConstants::D};
-        frc::ProfiledPIDController<units::radians> _steer_pid_controller{SwerveConstants::DrivetrainConstants::SteerPIDConstants::P, SwerveConstants::DrivetrainConstants::SteerPIDConstants::I, SwerveConstants::DrivetrainConstants::SteerPIDConstants::D, 
+
+        frc::PIDController _drive_pid_controller{SwerveConstants::DrivetrainConstants::DrivePIDConstants::Kp_Drive, SwerveConstants::DrivetrainConstants::DrivePIDConstants::Ki_Drive, SwerveConstants::DrivetrainConstants::DrivePIDConstants::Kd_Drive};
+        frc::ProfiledPIDController<units::radians> _steer_pid_controller{SwerveConstants::DrivetrainConstants::SteerPIDConstants::Kp_Drive, SwerveConstants::DrivetrainConstants::SteerPIDConstants::Ki_Drive, SwerveConstants::DrivetrainConstants::SteerPIDConstants::Kd_Drive, 
                 {SwerveConstants::DrivetrainConstants::SteerPIDConstants::MAX_SPEED, SwerveConstants::DrivetrainConstants::SteerPIDConstants::MAX_ACCELERATION}};
 
         units::feet_per_second_t _GetWheelSpeed();

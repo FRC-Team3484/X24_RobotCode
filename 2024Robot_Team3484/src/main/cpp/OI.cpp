@@ -3,11 +3,11 @@
 
 #include <frc/MathUtil.h>
 
-using namespace SwerveConstants::ControllerConstants;
+using namespace SwerveConstants::ControllerConstants::Driver;
 
 
 double OI::GetThrottle() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(THROTTLE), JOYSTICK_DEADBAND);}
-double OI::GetStraife() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(STRAIFE), JOYSTICK_DEADBAND);}
+double OI::GetStraife() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(STRAFE), JOYSTICK_DEADBAND);}
 double OI::GetRotation() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(ROTATION), JOYSTICK_DEADBAND);}
 
 bool OI::GetResetHeading() {return _driver_controller.GetRawButton(RESET_HEADING);}

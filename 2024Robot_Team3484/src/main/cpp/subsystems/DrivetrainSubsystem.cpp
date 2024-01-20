@@ -112,6 +112,7 @@ void DrivetrainSubsystem::SetCoastMode() {
     _modules[BL].SetCoastMode();
     _modules[BR].SetCoastMode();
 }
+
 void DrivetrainSubsystem::SetBrakeMode() {
     _modules[FL].SetBrakeMode();
     _modules[FR].SetBrakeMode();

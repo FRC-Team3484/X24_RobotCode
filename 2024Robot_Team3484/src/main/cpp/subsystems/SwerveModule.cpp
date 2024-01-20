@@ -10,7 +10,8 @@
 
 using namespace frc;
 using namespace units;
-using namespace ctre::phoenix6;
+// using namespace ctre::phoenix6;
+using namespace ctre;
 using namespace SwerveConstants::DrivetrainConstants;
 
 SwerveModule::SwerveModule(const int module_location) 
@@ -19,42 +20,62 @@ SwerveModule::SwerveModule(const int module_location)
           _steer_encoder(ENCODER_PORTS[module_location])
         {
 
-    configs::CurrentLimitsConfigs drive_motor_current_limit{};
-    drive_motor_current_limit.SupplyCurrentThreshold = DRIVE_CURRENT_THRESHOLD;
-    drive_motor_current_limit.SupplyCurrentLimit = DRIVE_CURRENT_LIMIT;
-    drive_motor_current_limit.SupplyTimeThreshold = DRIVE_CURRENT_TIME;
-    drive_motor_current_limit.SupplyCurrentLimitEnable = true;
+    // configs::CurrentLimitsConfigs drive_motor_current_limit{};
+    // drive_motor_current_limit.SupplyCurrentThreshold = DRIVE_CURRENT_THRESHOLD;
+    // drive_motor_current_limit.SupplyCurrentLimit = DRIVE_CURRENT_LIMIT;
+    // drive_motor_current_limit.SupplyTimeThreshold = DRIVE_CURRENT_TIME;
+    // drive_motor_current_limit.SupplyCurrentLimitEnable = true;
 
-    _drive_motor_config.CurrentLimits = drive_motor_current_limit;
+    // _drive_motor_config.CurrentLimits = drive_motor_current_limit;
 
-    _drive_motor.GetConfigurator().Apply(_drive_motor_config);
+    // _drive_motor.GetConfigurator().Apply(_drive_motor_config);
+    // ResetEncoder();
+    // SetCoastMode();
+    _drive_motor.ConfigFactoryDefault();
+    _drive_motor.ConfigSupplyCurrentLimit(DRIVE_CURRENT_LIMIT);
     ResetEncoder();
-    SetCoastMode();
+
+    _steer_motor.ConfigFactoryDefault();
+    _steer_motor.SetNeutralMode(motorcontrol::Brake);
+    _steer_motor.ConfigSupplyCurrentLimit(STEER_CURRENT_LIMIT);
+    _steer_motor.SetInverted(STEER_MOTOR_REVERSED);
 
 
-    configs::CurrentLimitsConfigs steer_motor_current_limit{};
-    steer_motor_current_limit.SupplyCurrentThreshold = STEER_CURRENT_THRESHOLD;
-    steer_motor_current_limit.SupplyCurrentLimit = STEER_CURRENT_LIMIT;
-    steer_motor_current_limit.SupplyTimeThreshold = STEER_CURRENT_TIME;
-    steer_motor_current_limit.SupplyCurrentLimitEnable = true;
+    // Change to Phoenix 5
+    // configs::CurrentLimitsConfigs steer_motor_current_limit{};
+    // steer_motor_current_limit.SupplyCurrentThreshold = STEER_CURRENT_THRESHOLD;
+    // steer_motor_current_limit.SupplyCurrentLimit = STEER_CURRENT_LIMIT;
+    // steer_motor_current_limit.SupplyTimeThreshold = STEER_CURRENT_TIME;
+    // steer_motor_current_limit.SupplyCurrentLimitEnable = true;
 
-    configs::TalonFXConfiguration steer_motor_config{};
-    steer_motor_config.CurrentLimits = steer_motor_current_limit;
-    steer_motor_config.MotorOutput.Inverted = STEER_MOTOR_REVERSED;
-    steer_motor_config.MotorOutput.NeutralMode = signals::NeutralModeValue::Brake;
+    // configs::TalonFXConfiguration steer_motor_config{};
+    // steer_motor_config.CurrentLimits = steer_motor_current_limit;
+    // steer_motor_config.MotorOutput.Inverted = STEER_MOTOR_REVERSED;
+    // steer_motor_config.MotorOutput.NeutralMode = signals::NeutralModeValue::Brake;
 
-    _steer_motor.GetConfigurator().Apply(steer_motor_config);
+    // _steer_motor.GetConfigurator().Apply(steer_motor_config);
+    _steer_motor.ConfigFactoryDefault();
+    _steer_motor.SetNeutralMode(motorcontrol::Brake);
+    _steer_motor.ConfigSupplyCurrentLimit(STEER_CURRENT_LIMIT);
+    _steer_motor.SetInverted(STEER_MOTOR_REVERSED);
 
+    _steer_encoder.ConfigFactoryDefault();
+    _steer_encoder.SetPositionToAbsolute();
+    _steer_encoder.ConfigAbsoluteSensorRange(sensors::AbsoluteSensorRange::Signed_PlusMinus180);
+    _steer_encoder.ConfigSensorInitializationStrategy(SensorInitializationStrategy::BootToAbsolutePosition);
+    _steer_encoder.ConfigMagnetOffset(ENCODER_OFFSET[module_location]);
+    _steer_encoder.ConfigSensorDirection(ENCODER_REVERSED);
 
-    configs::MagnetSensorConfigs encoder_magnet_config{};
-    encoder_magnet_config.MagnetOffset = ENCODER_OFFSET[module_location] / 360.0;
-    encoder_magnet_config.AbsoluteSensorRange = signals::AbsoluteSensorRangeValue::Signed_PlusMinusHalf;
-    encoder_magnet_config.SensorDirection = ENCODER_REVERSED;
+    // Change all the way to Cancoder
+    // configs::MagnetSensorConfigs encoder_magnet_config{};
+    // encoder_magnet_config.MagnetOffset = ENCODER_OFFSET[module_location] / 360.0;
+    // encoder_magnet_config.AbsoluteSensorRange = signals::AbsoluteSensorRangeValue::Signed_PlusMinusHalf;
+    // encoder_magnet_config.SensorDirection = ENCODER_REVERSED;
 
-    configs::CANcoderConfiguration encoder_config{};
-    encoder_config.MagnetSensor = encoder_magnet_config;
+    // configs::CANcoderConfiguration encoder_config{};
+    // encoder_config.MagnetSensor = encoder_magnet_config;
 
-    _steer_encoder.GetConfigurator().Apply(encoder_config);
+    // _steer_encoder.GetConfigurator().Apply(encoder_config);
 
     _steer_pid_controller.EnableContinuousInput(-180_deg, 180_deg);
 
@@ -78,12 +99,12 @@ void SwerveModule::SetDesiredState(SwerveModuleState state, bool open_loop, bool
     if (open_loop) {
         _drive_motor.Set(state.speed / MAX_WHEEL_SPEED);
     } else {
-        const volt_t drive_output = volt_t{_drive_pid_controller.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
-        const volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);
+        volt_t drive_output = volt_t{_drive_pid_controller.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
+         volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);
         _drive_motor.SetVoltage(drive_output + drive_feed_forward);
     }
 
-    const double steer_output = _steer_pid_controller.Calculate(_GetSteerAngle(), state.angle.Radians());
+    double steer_output = _steer_pid_controller.Calculate(_GetSteerAngle(), state.angle.Radians());
     _steer_motor.Set(steer_output);
 }
 
@@ -96,15 +117,18 @@ SwerveModulePosition SwerveModule::GetPosition() {
 }
 
 feet_per_second_t SwerveModule::_GetWheelSpeed() {
-    return WHEEL_RADIUS * radians_per_second_t{_drive_motor.GetVelocity().GetValue() / DRIVE_GEAR_RATIO} / 1_rad;
+    // return WHEEL_RADIUS * radians_per_second_t{_drive_motor.GetVelocity().GetValue() / DRIVE_GEAR_RATIO} / 1_rad;
+    return WHEEL_RADIUS * radians_per_second_t{_drive_motor.GetSelectedSensorVelocity() * 10.0 * 360.0_deg_per_s / DRIVE_TICKS_PER_REVOLUTION / DRIVE_GEAR_RATIO} / 1_rad;
 }
 
 inch_t SwerveModule::_GetWheelPosition() {
-    return WHEEL_RADIUS * radian_t{_drive_motor.GetPosition().GetValue() / DRIVE_GEAR_RATIO} / 1_rad;
+    // return WHEEL_RADIUS * radian_t{_drive_motor.GetPosition().GetValue() / DRIVE_GEAR_RATIO} / 1_rad;
+    return WHEEL_RADIUS * radian_t{_drive_motor.GetSelectedSensorPosition() * 360.0_deg / DRIVE_TICKS_PER_REVOLUTION / DRIVE_GEAR_RATIO} / 1_rad;
 }
 
 degree_t SwerveModule::_GetSteerAngle() {
-    return _steer_encoder.GetAbsolutePosition().GetValue();
+    // return _steer_encoder.GetAbsolutePosition().GetValue();
+    return degree_t{_steer_encoder.GetAbsolutePosition()};
 }
 
 void SwerveModule::StopMotors() {
@@ -113,15 +137,17 @@ void SwerveModule::StopMotors() {
 }
 
 void SwerveModule::ResetEncoder() {
-    _drive_motor.SetPosition(0_deg);
+    // _drive_motor.SetPosition(0_deg);
+    _drive_motor.SetSelectedSensorPosition(0);
 }
 
+// Change to Set Coast Mode
 void SwerveModule::SetCoastMode() {
-    _drive_motor_config.MotorOutput.NeutralMode = signals::NeutralModeValue::Coast;
-    _drive_motor.GetConfigurator().Apply(_drive_motor_config);
+    _drive_motor.SetNeutralMode(motorcontrol::Coast);
 }
 
 void SwerveModule::SetBrakeMode() {
-    _drive_motor_config.MotorOutput.NeutralMode = signals::NeutralModeValue::Coast;
-    _drive_motor.GetConfigurator().Apply(_drive_motor_config);
+    // _drive_motor_config.MotorOutput.NeutralMode = signals::NeutralModeValue::Coast;
+    // _drive_motor.GetConfigurator().Apply(_drive_motor_config);
+    _drive_motor.SetNeutralMode(motorcontrol::Brake);
 }
