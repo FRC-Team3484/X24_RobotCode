@@ -16,7 +16,7 @@ IntakeSubsystem::IntakeSubsystem(
     int piece_sensor_di_ch, 
     int arm_sensor_di_ch,
 
-    SC:SC_PIDConstants PID_CONSTANTS,
+    SC::SC_PIDConstants PID_CONSTANTS,
     double PID_IZ_ZONE,
     double PID_OUTPUTRANGE_MIN,
     double PID_OUTPUTRANGE_MAX

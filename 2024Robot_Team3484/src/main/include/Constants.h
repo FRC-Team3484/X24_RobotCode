@@ -22,7 +22,7 @@ namespace IntakeConstants {
 
     constexpr units::degrees_per_second_t HOME_VELOCITY = 5_deg_per_s;
 
-    constexpr SC:SC_PIDConstants PID_CONSTANTS = (0.1, 1e-4, 1, 0);
+    constexpr SC::SC_PIDConstants PID_CONSTANTS = (0.1, 1e-4, 1, 0);
     constexpr double PID_IZ_ZONE = 0;
     constexpr double PID_OUTPUTRANGE_MIN = -1;
     constexpr double PID_OUTPUTRANGE_MAX = 1;
