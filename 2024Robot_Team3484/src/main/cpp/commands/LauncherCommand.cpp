@@ -12,20 +12,26 @@ LauncherCommand::LauncherCommand(LauncherSubsystem* Launcher_subsytem)
 }
 void LauncherCommand::Initialize(){
     _Launching = false;
-    _Launcher->setLauncherRPM(Trget_RPM);
+    if (_Launcher !=NULL){
+    _Launcher->setLauncherRPM(Target_RPM);
+    }
 }
 void LauncherCommand::Execute(){
-    if(_Launcher){ //here is where we would have our run intake
+    if (_Launcher !=NULL){
+        if(_Launcher){ //This logic needs more of systems to be done but the logic would be if the intake is ready, chnage Launcher to true then fire
 
     }
-    else{
-        if(_Launcher->atTargetRPM()){//when intake is done replace with if(_Launcher->atPoint() and _intake->finshed angle()(**replace filler names with real ones**))   
-            _Launching = true;
+        else{
+            if(_Launcher->atTargetRPM()){//when intake is done replace with if(_Launcher->atPoint() and _intake->finshed angle()(**replace filler names with real ones**))   
+                _Launching = true;
+            }
         }
     }
 }
 void LauncherCommand::End(bool interrupted){
-    _Launcher->setLauncherRPM(0_rpm);
+    if (_Launcher !=NULL){
+        _Launcher->setLauncherRPM(0_rpm);
+    }
 }
 bool LauncherCommand::IsFinished(){
  return false;
