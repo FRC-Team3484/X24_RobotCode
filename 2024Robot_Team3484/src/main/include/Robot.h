@@ -36,7 +36,7 @@ class Robot : public frc::TimedRobot {
   void TeleopInit() override;
   void TeleopPeriodic() override;
   void TestPeriodic() override;
-  //void SimulationInit() override;
+  //void SimulationInit() override;w
   //void SimulationPeriodic() override;
 
  private:
@@ -45,7 +45,7 @@ class Robot : public frc::TimedRobot {
 
   Driver_Interface _oi{};
 
-  DrivetrainSubsystem _drivetrain{};
+  DrivetrainSubsystem _drivetrain{SwerveConstants::DrivetrainConstants::SWERVE_CONFIGS_ARRAY};
 
   TeleopDriveCommand _drive_command{&_drivetrain, &_oi};
   DynamicBrakeCommand _brake_command{&_drivetrain};

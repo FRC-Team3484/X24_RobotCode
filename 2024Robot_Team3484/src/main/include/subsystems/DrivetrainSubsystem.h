@@ -20,7 +20,7 @@
 
 class DrivetrainSubsystem : public frc2::SubsystemBase {
     public:
-        DrivetrainSubsystem();
+        DrivetrainSubsystem(SC::SC_SwerveConfigs swerve_config_array[4]);
         void Periodic() override;
 
         void Drive(units::meters_per_second_t x_speed, units::meters_per_second_t y_speed, units::radians_per_second_t rotation, bool open_loop=false);
@@ -46,17 +46,9 @@ class DrivetrainSubsystem : public frc2::SubsystemBase {
 
     private:
     // Check if can be placed in constants
-            SC::SC_SwerveConfigs _swerve_front_left{10,11,20, 4.394};
-            SC::SC_SwerveConfigs _swerve_front_right{12,13,21,71.630};
-            SC::SC_SwerveConfigs _swerve_back_left{14,15,22,-26.103};
-            SC::SC_SwerveConfigs _swerve_back_right{16,17,23,-71.455};
+        SwerveModule* _modules[4];
+            
 
-        SwerveModule _modules[4] = {
-            SwerveModule{_swerve_front_left},
-            SwerveModule{_swerve_front_right},
-            SwerveModule{_swerve_back_left},
-            SwerveModule{_swerve_back_right}
-        };
 
         AHRS* _gyro;
         units::degree_t _gyro_offset = 0_deg;

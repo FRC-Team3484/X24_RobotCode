@@ -50,6 +50,20 @@ namespace SwerveConstants {
     }
 
     namespace DrivetrainConstants {
+        // Swerve Module Configurations
+
+        SC::SC_SwerveConfigs SWERVE_FRONT_LEFT{10,11,20, 4.394};
+        SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21,71.630};
+        SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,-26.103};
+        SC::SC_SwerveConfigs SWERVE_BACK_RIGHT{16,17,23,-71.455};
+
+        SC::SC_SwerveConfigs SWERVE_CONFIGS_ARRAY[4] = {
+            SWERVE_FRONT_LEFT,
+            SWERVE_FRONT_RIGHT,
+            SWERVE_BACK_LEFT,
+            SWERVE_FRONT_RIGHT
+        };
+
         #define FL 0
         #define FR 1
         #define BL 2
