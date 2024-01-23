@@ -11,7 +11,9 @@ TeleopDriveCommand::TeleopDriveCommand(DrivetrainSubsystem* drivetrain, Driver_I
     AddRequirements(_drivetrain);
 }
 
-void TeleopDriveCommand::Initialize() {}
+void TeleopDriveCommand::Initialize() {
+        _drivetrain->SetBrakeMode();
+}
 
 void TeleopDriveCommand::Execute() {
     if (_oi->GetResetHeading()) {
