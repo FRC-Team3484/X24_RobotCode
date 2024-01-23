@@ -11,7 +11,7 @@ namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
     constexpr int DRIVE_MOTOR_CAN_ID = 32;
     constexpr int PIECE_SENSOR_DI_CH = 0;
-    constexpr int ARM_SENSOR_DI_CH = 0;
+    constexpr int ARM_SENSOR_DI_CH = 1;
     constexpr double GEAR_RATIO = 62.5;
 
     constexpr units::degrees_per_second_t MAX_VELOCITY = 10_deg_per_s;
