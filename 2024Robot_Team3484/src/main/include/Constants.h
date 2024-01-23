@@ -13,6 +13,7 @@ namespace LauncherConstants {
 
     //constexpr bool IsLoaded = true;
     constexpr bool MOTOR_INVERTED = true;
+    constexpr bool Reverse; // cha cha real smooth
 
 
     constexpr units::revolutions_per_minute_t Target_RPM/*place holder*/ = 2000_rpm;

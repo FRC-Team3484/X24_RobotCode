@@ -17,6 +17,7 @@ void LauncherCommand::Initialize(){
     }
 }
 void LauncherCommand::Execute(){
+    
     if (_Launcher !=NULL){
         if(_Launcher){ //This logic needs more of systems to be done but the logic would be if the intake is ready, chnage Launcher to true then fire
 
