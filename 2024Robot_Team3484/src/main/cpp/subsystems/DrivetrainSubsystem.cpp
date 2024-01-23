@@ -11,7 +11,7 @@ using namespace units;
 using namespace SwerveConstants::DrivetrainConstants;
 using namespace SC;
 
-DrivetrainSubsystem::DrivetrainSubsystem(SC_SwerveConfigs* swerve_config_array) {
+DrivetrainSubsystem::DrivetrainSubsystem(SC_SwerveConfigs swerve_config_array[4]) {
     if (NULL != swerve_config_array) {
         for (int i = 0; i < 4; i++) {
             _modules[i] = new SwerveModule(swerve_config_array[i]);
