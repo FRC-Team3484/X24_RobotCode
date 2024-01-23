@@ -21,7 +21,6 @@ class LauncherCommand: public frc2::CommandHelper<frc2::Command, LauncherCommand
     
     private:
         LauncherSubsystem* _Launcher;
-        LauncherSubsystem* _Reverse; // cha cha real smooth
         bool _Launching; 
 
 };
