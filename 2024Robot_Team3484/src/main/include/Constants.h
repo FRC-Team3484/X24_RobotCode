@@ -11,6 +11,9 @@ namespace ClawConstants {
 
     constexpr bool MOTOR_INVERTED = false;
     constexpr int MOTOR_STOP = 0;
+
+    constexpr double MOTOR_UP_SPEED = 0.5;
+    constexpr double MOTOR_DOWN_SPEED = -0.5;
 }
 
 namespace SwerveConstants {}
