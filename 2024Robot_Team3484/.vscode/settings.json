@@ -24,7 +24,8 @@
     "ratio": "cpp",
     "tuple": "cpp",
     "type_traits": "cpp",
-    "utility": "cpp"
+    "utility": "cpp",
+    "*.inc": "cpp"
   },
   "java.project.sourcePaths": [
     "build"

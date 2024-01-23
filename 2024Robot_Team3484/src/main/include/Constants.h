@@ -52,6 +52,8 @@ namespace SwerveConstants {
     namespace DrivetrainConstants {
         // Swerve Module Configurations
 
+        // For those with static, do not change into constants; it will break the linking
+
         static SC::SC_SwerveConfigs SWERVE_FRONT_LEFT{10,11,20, 4.394};
         static SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21,71.630};
         static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,-26.103};

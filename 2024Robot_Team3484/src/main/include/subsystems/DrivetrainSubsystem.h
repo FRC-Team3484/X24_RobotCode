@@ -37,6 +37,8 @@ class DrivetrainSubsystem : public frc2::SubsystemBase {
         void SetCoastMode();
         void SetBrakeMode();
 
+        int CheckNotNullModule();
+
         frc::SwerveDriveKinematics<4> kinematics{
             frc::Translation2d{SwerveConstants::DrivetrainConstants::DRIVETRAIN_LENGTH/2, SwerveConstants::DrivetrainConstants::DRIVETRAIN_WIDTH/2},
             frc::Translation2d{SwerveConstants::DrivetrainConstants::DRIVETRAIN_LENGTH/2, -SwerveConstants::DrivetrainConstants::DRIVETRAIN_WIDTH/2},

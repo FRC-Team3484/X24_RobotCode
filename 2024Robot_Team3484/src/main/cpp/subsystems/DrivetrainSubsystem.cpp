@@ -38,7 +38,11 @@ void DrivetrainSubsystem::Drive(meters_per_second_t x_speed, meters_per_second_t
 void DrivetrainSubsystem::SetModuleStates(wpi::array<SwerveModuleState, 4> desired_states, bool open_loop, bool optimize) {
     kinematics.DesaturateWheelSpeeds(&desired_states, MAX_WHEEL_SPEED);
     for (int i = 0; i < 4; i++) {
-        _modules[i]->SetDesiredState(desired_states[i], open_loop, optimize);
+        if (_modules[i] == NULL) {
+            fmt::print("Error: Swerve Module accessed in Periodic before initialization");
+        } else {
+            _modules[i]->SetDesiredState(desired_states[i], open_loop, optimize);
+        }
     }
 }
 
@@ -90,38 +94,88 @@ void DrivetrainSubsystem::ResetOdometry(Pose2d pose) {
 }
 
 wpi::array<SwerveModulePosition, 4> DrivetrainSubsystem::GetModulePositions() {
-    return {_modules[FL]->GetPosition(), _modules[FR]->GetPosition(), _modules[BL]->GetPosition(), _modules[BR]->GetPosition()};
+    int checkNull = CheckNotNullModule();
+    if (checkNull == 4)
+        return {_modules[FL]->GetPosition(), _modules[FR]->GetPosition(), _modules[BL]->GetPosition(), _modules[BR]->GetPosition()};
+    else
+        return {SwerveModulePosition(0_m, 0_deg),SwerveModulePosition(0_m, 0_deg),SwerveModulePosition(0_m, 0_deg),SwerveModulePosition(0_m, 0_deg)};
 }
 
 ChassisSpeeds DrivetrainSubsystem::GetChassisSpeeds() {
-    return kinematics.ToChassisSpeeds({_modules[FL]->GetState(), _modules[FR]->GetState(), _modules[BL]->GetState(), _modules[BR]->GetState()});
+    int checkNull = CheckNotNullModule();
+    if (checkNull == 4)
+        return kinematics.ToChassisSpeeds({_modules[FL]->GetState(), _modules[FR]->GetState(), _modules[BL]->GetState(), _modules[BR]->GetState()});
+    else
+        return kinematics.ToChassisSpeeds({SwerveModuleState(0_mps, 0_deg), SwerveModuleState(0_mps, 0_deg), SwerveModuleState(0_mps, 0_deg), SwerveModuleState(0_mps, 0_deg)});
 }
 
 void DrivetrainSubsystem::StopMotors() {
-    _modules[FL]->StopMotors();
-    _modules[FR]->StopMotors();
-    _modules[BL]->StopMotors();
-    _modules[BR]->StopMotors();
+    if (_modules[FL] != NULL) {
+        _modules[FL]->StopMotors();
+    }
+    if (_modules[FR] != NULL) {
+        _modules[FR]->StopMotors();
+    }
+    if (_modules[BL] != NULL) {
+        _modules[BL]->StopMotors();
+    }
+    if (_modules[BR] != NULL) {
+        _modules[BR]->StopMotors();
+    }
 }
 
 void DrivetrainSubsystem::ResetEncoders() {
-    _modules[FL]->ResetEncoder();
-    _modules[FR]->ResetEncoder();
-    _modules[BL]->ResetEncoder();
-    _modules[BR]->ResetEncoder();
+    if (_modules[FL] != NULL) {
+        _modules[FL]->ResetEncoder();
+    }
+    if (_modules[FR] != NULL) {
+        _modules[FR]->ResetEncoder();
+    }
+    if (_modules[BL] != NULL) {
+        _modules[BL]->ResetEncoder();
+    }
+    if (_modules[BR] != NULL) {
+        _modules[BR]->ResetEncoder();
+    }
     ResetOdometry(GetPose());
 }
 
 void DrivetrainSubsystem::SetCoastMode() {
-    _modules[FL]->SetCoastMode();
-    _modules[FR]->SetCoastMode();
-    _modules[BL]->SetCoastMode();
-    _modules[BR]->SetCoastMode();
+    if (_modules[FL] != NULL) {
+        _modules[FL]->SetCoastMode();
+    }
+    if (_modules[FR] != NULL) {
+        _modules[FR]->SetCoastMode();
+    }
+    if (_modules[BL] != NULL) {
+        _modules[BL]->SetCoastMode();
+    }
+    if (_modules[BR] != NULL) {
+        _modules[BR]->SetCoastMode();
+    }
 }
 
 void DrivetrainSubsystem::SetBrakeMode() {
-    _modules[FL]->SetBrakeMode();
-    _modules[FR]->SetBrakeMode();
-    _modules[BL]->SetBrakeMode();
-    _modules[BR]->SetBrakeMode();
+    if (_modules[FL] != NULL) {
+        _modules[FL]->SetBrakeMode();
+    }
+    if (_modules[FR] != NULL) {
+        _modules[FR]->SetBrakeMode();
+    }
+    if (_modules[BL] != NULL) {
+        _modules[BL]->SetBrakeMode();
+    }
+    if (_modules[BR] != NULL) {
+        _modules[BR]->SetBrakeMode();
+    }
+}
+
+int DrivetrainSubsystem::CheckNotNullModule() {
+    int counter = 0;
+    for (int i = 0; i < 4; i++){
+        if (_modules[i] != NULL) {
+            counter++;
+        }
+    }
+    return counter;
 }
