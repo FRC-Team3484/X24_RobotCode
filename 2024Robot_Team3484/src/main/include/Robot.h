@@ -2,14 +2,28 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#pragma once
+#ifndef ROBOT_H
+#define ROBOT_H
 
+#include "OI.h"
+#include "Constants.h"
+
+
+// Swerve Stuff
+#include "subsystems/DrivetrainSubsystem.h"
+#include "commands/SwerveTeleop/TeleopDriveCommand.h"
+#include "commands/SwerveTeleop/DynamicBrakeCommand.h"
+#include "commands/SwerveTeleop/StraightenWheelsCommand.h"
+#include "subsystems/AutonGenerator.h"
+
+
+#include <string>
 #include <optional>
+#include <fmt/core.h>
 
 #include <frc/TimedRobot.h>
 #include <frc2/command/CommandPtr.h>
-
-#include "RobotContainer.h"
+#include <frc2/command/CommandScheduler.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -17,19 +31,29 @@ class Robot : public frc::TimedRobot {
   void RobotPeriodic() override;
   void DisabledInit() override;
   void DisabledPeriodic() override;
-  void DisabledExit() override;
   void AutonomousInit() override;
   void AutonomousPeriodic() override;
-  void AutonomousExit() override;
   void TeleopInit() override;
   void TeleopPeriodic() override;
-  void TeleopExit() override;
-  void TestInit() override;
   void TestPeriodic() override;
-  void TestExit() override;
+  //void SimulationInit() override;w
+  //void SimulationPeriodic() override;
 
  private:
-  std::optional<frc2::CommandPtr> m_autonomousCommand;
+  enum State {drive, brake, straighten};
+  State _robot_state = drive;
 
-  RobotContainer m_container;
+  Driver_Interface _oi{};
+
+  DrivetrainSubsystem _drivetrain{SwerveConstants::DrivetrainConstants::SWERVE_CONFIGS_ARRAY};
+
+  TeleopDriveCommand _drive_command{&_drivetrain, &_oi};
+  DynamicBrakeCommand _brake_command{&_drivetrain};
+  StraightenWheelsCommand _straighten_command{&_drivetrain};
+
+  AutonGenerator _auton_generator{&_drivetrain};
+
+  std::optional<frc2::CommandPtr> _auton_command;
 };
+
+#endif

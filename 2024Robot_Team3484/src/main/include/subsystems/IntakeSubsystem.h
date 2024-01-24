@@ -17,7 +17,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
         IntakeSubsystem(
             int pivot_motor_can_id, 
             int drive_motor_can_id, 
-            int piece_sensor_di_ch
+            int piece_sensor_di_ch,
             int arm_sensor_di_ch,
 
             SC::SC_PIDConstants PID_CONSTANTS,

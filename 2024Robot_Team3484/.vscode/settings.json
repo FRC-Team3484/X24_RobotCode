@@ -16,6 +16,18 @@
   },
   "C_Cpp.default.configurationProvider": "vscode-wpilib",
   "files.associations": {
-    "ratio": "cpp"
-  }
+    "matrixfunctions": "cpp",
+    "cfloat": "cpp",
+    "array": "cpp",
+    "compare": "cpp",
+    "functional": "cpp",
+    "ratio": "cpp",
+    "tuple": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp",
+    "*.inc": "cpp"
+  },
+  "java.project.sourcePaths": [
+    "build"
+  ]
 }

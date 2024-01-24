@@ -5,11 +5,11 @@
 #include "Constants.h"
 #include "subsystems/IntakeSubsystem.h"
 
-#include <frc2/command/CommandBase.h>
+#include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 
 class AutonIntakeCommand
-    :public frc2::CommandHelper<frc2::CommandBase, AutonIntakeCommand> {
+    :public frc2::CommandHelper<frc2::Command, AutonIntakeCommand> {
 
     public:
         explicit AutonIntakeCommand(IntakeSubsystem* intake_subsystem);

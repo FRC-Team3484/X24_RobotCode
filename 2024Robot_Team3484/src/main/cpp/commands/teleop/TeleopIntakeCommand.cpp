@@ -3,7 +3,7 @@
 
 using namespace IntakeConstants;
 
-TeleopIntakeCommand::TeleopIntakeCommand(IntakeSubsystem* intake_subsystem, OI*, oi)
+TeleopIntakeCommand::TeleopIntakeCommand(IntakeSubsystem* intake_subsystem, Driver_Interface* oi)
     : _intake_subsystem{intake_subsystem}, _oi{oi} {
         AddRequirements(_intake_subsystem);
 }
@@ -11,8 +11,8 @@ TeleopIntakeCommand::TeleopIntakeCommand(IntakeSubsystem* intake_subsystem, OI*,
 void TeleopIntakeCommand::Initialize() {}
 
 void TeleopIntakeCommand::Execute() {
-    if (_oi->__) { // TODO: Set button
-        if (!_intake_subsystem->HasPiece() || _oi->__) { // TODO: Set button
+    if (_oi->DummyInput()) { // TODO: Set button
+        if (!_intake_subsystem->HasPiece() || _oi->DummyInput()) { // TODO: Set button
             _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
             _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER);
 
@@ -26,11 +26,11 @@ void TeleopIntakeCommand::Execute() {
 
         }
 
-    } else if (_oi->__) { // TODO: Spit out piece button
+    } else if (_oi->DummyInput()) { // TODO: Spit out piece button
         _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
 
         if (_intake_subsystem->ArmExtended()) {
-            _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_REVERSE);
+            _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
 
         }
 
