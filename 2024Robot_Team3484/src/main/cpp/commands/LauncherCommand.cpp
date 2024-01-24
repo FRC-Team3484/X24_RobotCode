@@ -12,9 +12,6 @@ LauncherCommand::LauncherCommand(LauncherSubsystem* Launcher_subsytem)
 }
 void LauncherCommand::Initialize(){
     _Launching = false;
-    if (REVERSE == true){
-        _Launcher->setLauncherRPM(Reverse_RPM);
-    }
     if (_Launcher !=NULL){
     _Launcher->setLauncherRPM(Target_RPM);
     }
