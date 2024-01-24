@@ -18,6 +18,7 @@ bool Driver_Interface::GetDisableBrakeMode() {return _driver_controller.GetRawBu
 void Driver_Interface::SetRumble(double Rumble) {
     _driver_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
+bool Driver_Interface::DummyInput() {return false;}
 
 
 

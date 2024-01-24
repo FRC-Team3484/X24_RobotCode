@@ -5,14 +5,14 @@
 #include "Constants.h"
 #include "subsystems/ClawSubsystem.h"
 
-#include <frc2/command/CommandBase.h>
+#include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 
 class ClawCommand
-    :public frc2::CommandHelper<frc2::CommandBase, ClawCommand> {
+    :public frc2::CommandHelper<frc2::Command, ClawCommand> {
 
     public:
-        explicit ClawCommand(ClawSubsystem* intake_subsystem, OI *oi);
+        explicit ClawCommand(ClawSubsystem* intake_subsystem, Driver_Interface *oi);
 
         void Initialize() override;
         void Execute() override;
@@ -21,7 +21,7 @@ class ClawCommand
 
     private:
         ClawSubsystem* _claw_subsystem;
-        OI* _oi;
+        Driver_Interface* _oi;
 
 };
 
