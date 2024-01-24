@@ -6,19 +6,62 @@
 #include <tuple>
 #include <algorithm>
 #include <stdexcept>
-
 #include "frc/PneumaticsModuleType.h"
-#include "frc/geometry/Translation2d.h"
-
-#include "ctre/phoenix/motorcontrol/can/TalonFX.h"
-
 #include "units/time.h"
 #include "units/math.h"
 
-#include "SC_Filters.h"
 
 namespace SC
 {
+	typedef struct {double Kp; double Ki; double Kd; double Kf;} SC_PIDConstants;
+
+	typedef struct {int CtrlID; frc::PneumaticsModuleType CtrlType; int Channel;} SC_Solenoid;
+	typedef struct {int CtrlID; frc::PneumaticsModuleType CtrlType; int Fwd_Channel; int Rev_Channel;} SC_DoubleSolenoid;
+
+	// Swerve Configurations
+	typedef struct {
+		double Drive_Current_Threshold = 60;
+		double Drive_Current_Time = 0.1;
+
+		double Steer_Current_Threshold = 40;
+		double Steer_Current_Time = 0.1;
+
+		bool Steer_Motor_Reversed = false;
+		bool Encoder_Reversed = false;
+		bool Current_Limit_Enable = true;
+		double Current_Limit_Drive = 35;
+		double Current_Limit_Steer = 25;
+
+	} SC_SwerveCurrents;
+
+	typedef struct {
+		int CAN_ID;
+		int SteerMotorPort;
+		int EncoderPort;
+		double EncoderOffset;
+	} SC_SwerveConfigs;
+
+	// PID loop Integral Anti-Windup calculation modes
+	enum SC_PID_AW_MODE { OFF, /*
+						BACK_CALCULATION, 
+						CONDITIONAL_INTEGRAL, */
+						INTEGRAL_LIMIT };
+
+	typedef struct {
+		double P;   // Current value of the P term 
+		double I;   // Current value of the I term
+		double D;   // Current value of the D term
+		double E;   // Current error value
+		double Elast; // Last error value
+		SC_PID_AW_MODE AntiWindup_Mode; // Configured Anti-windup method
+		double Kw;  // Anti-Windup Coeff value
+		bool enabled; // Enabled status of PID Controller
+		bool reversed; // Reversed status of PID Controller
+		double SP; // current setpoint
+		double PV;
+		double CV;
+	} SC_PIDStatus;
+
 	template<class T>
 	struct SC_Range 
 	{ 
@@ -50,70 +93,6 @@ namespace SC
 		}
 	};
 
-	/*========================*/
-	/*=== SC_PID Datatypes ===*/
-	/*========================*/
-
-	// PID loop Integral Anti-Windup calculation modes
-	enum SC_PID_AW_MODE { OFF, /*
-						BACK_CALCULATION, 
-						CONDITIONAL_INTEGRAL, */
-						INTEGRAL_LIMIT };
-
-	typedef struct {double Kp; double Ki; double Kd; double Kf;} SC_PIDConstants;
-
-	typedef struct {
-		SC_PIDConstants PIDc; 
-		units::time::second_t ScanTime;		// Update period of the PID loop
-		SC_Range<double> Range_SP;			// Setpoint bounding range
-		SC_Range<double> Range_PV;			// PV (sensor input) bounding range
-		SC_Range<double> Range_CV;			// CV (output) bounding range
-		SC_Range<double> Range_I;			// Integral bounding range
-		SC_Range<double> Range_D; 			// Derivative bouding range
-		double ManRate; 					// Manual mode CV ramp rate
-		SC_PID_AW_MODE AW_Mode = OFF;		// Integral Anti-windup mode (default = OFF)
-	} SC_PIDConfig;
-
-	typedef struct {
-		double P;   // Current value of the P term 
-		double I;   // Current value of the I term
-		double D;   // Current value of the D term
-		double E;   // Current error value
-		double Elast; // Last error value
-		SC_PID_AW_MODE AntiWindup_Mode; // Configured Anti-windup method
-		double Kw;  // Anti-Windup Coeff value
-		bool enabled; // Enabled status of PID Controller
-		bool reversed; // Reversed status of PID Controller
-		double SP; // Current setpoint
-		double PV;
-		double CV;
-	} SC_PIDStatus;
-
-
-	/*==========================================*/
-	/*=== Pneumatic Configuration Structures ===*/
-	/*==========================================*/
-	typedef struct {int CtrlID; frc::PneumaticsModuleType CtrlType; int Channel;} SC_Solenoid;
-	typedef struct {int CtrlID; frc::PneumaticsModuleType CtrlType; int Fwd_Channel; int Rev_Channel;} SC_DoubleSolenoid;
-
-	/*===========================================*/
-	/*=== Drivetrain Configuration Structures ===*/
-	/*===========================================*/
-	typedef struct { int CANId; ctre::phoenix::motorcontrol::TalonFXInvertType InvDir; } SC_Motor_OL; // Open-loop motor definition
-	typedef struct { int CANId; ctre::phoenix::motorcontrol::TalonFXInvertType InvDir; double ScaleFactor; SC_PIDConfig PIDCfg; } SC_Motor_CL; // Closed-loop motor definition
-
-	typedef struct { SC_Motor_CL DriveMotor; SC_Motor_CL RotMotor; frc::Translation2d ModuleLoc; int EncID; } SC_SwerveModuleConfig;
-	typedef struct { SC_SwerveModuleConfig FL_cfg; SC_SwerveModuleConfig FR_cfg; SC_SwerveModuleConfig BL_cfg; SC_SwerveModuleConfig BR_cfg; } SC_SwerveConfig;
-
-	typedef struct {double throttle; double rotation;} SC_DriveInput;
-	
-	enum DriveMode { DEFAULT, TANK, DIFFERENTIAL, MECANUM, SWERVE };
-	enum SC_Wheel { FRONT_LEFT, FRONT_RIGHT, REAR_LEFT, REAR_RIGHT, LEFT_WHEEL, RIGHT_WHEEL };
-
-
-	/*=======================*/
-	/*=== Other Datatypes ===*/
-	/*=======================*/
 	template<class T>
 	class SC_Array
 	{
@@ -189,6 +168,151 @@ namespace SC
 	private:
 		T *values;
 		uint len;
+
+	};
+
+	enum DriveMode { DEFAULT, TANK, DIFFERENTIAL, MECANUM };
+	enum SC_Wheel { FRONT_LEFT, FRONT_RIGHT, REAR_LEFT, REAR_RIGHT, LEFT_WHEEL, RIGHT_WHEEL };
+
+	/**
+	 * Alpha-Beta Filter templated against the units library.
+	 */
+	template<class T>
+	class SC_ABFilterU
+	{
+	public:
+		SC_ABFilterU(units::time::second_t FilterTime, units::time::second_t ScanTime)
+		{
+			this->_tau = FilterTime.value();
+			this->_scanT = ScanTime.value();
+		}
+
+		~SC_ABFilterU()
+		{
+			;
+		}
+
+		T Filter(T PV)
+		{
+			T pvf = PV; // Filtered input value
+
+			if(this->_tau != this->_scanT)
+			{
+				this->_beta = this->_scanT / (this->_tau + this->_scanT);
+				this->_alpha = 1 - this->_beta;
+
+				pvf = (this->_alpha * PV_out) + (this->_beta * PV);
+
+				PV_out = units::math::abs(pvf).value() < 1E-9 ? units::make_unit<T>(0.0) : pvf;
+
+				return PV_out;
+
+			}
+
+			return pvf;
+		}
+	private:
+		double _tau, _scanT;
+		double _alpha, _beta;
+		T PV_out;
+
+	};
+
+	/**
+	 * Alpha-Beta Filter templated against C++ standard library
+	 */
+	template<class T>
+	class SC_ABFilter
+	{
+	public:
+		SC_ABFilter(units::time::second_t FilterTime, units::time::second_t ScanTime)
+		{
+			this->_tau = FilterTime.value();
+			this->_scanT = ScanTime.value();
+		}
+
+		~SC_ABFilter()
+		{
+			;
+		}
+
+		T Filter(T PV)
+		{
+			T pvf = PV; // Filtered input value
+
+			if(this->_tau != this->_scanT)
+			{
+				this->_beta = this->_scanT / (this->_tau + this->_scanT);
+				this->_alpha = 1 - this->_beta;
+
+				pvf = (this->_alpha * PV_out) + (this->_beta * PV);
+
+				PV_out = std::abs(pvf) < 1E-9 ? 0.0 : pvf;
+
+				return PV_out;
+
+			}
+
+			return pvf;
+		}
+	private:
+		double _tau, _scanT;
+		double _alpha, _beta;
+		T PV_out;
+
+	};
+
+		/*
+		Discrete Edge Detection Triggers
+	*/
+
+	/**
+	 * @brief   Rising edge trigger. Takes boolean input signal, CLK,
+	 *          in function call. The output, Q, will be TRUE for a single
+	 *          evaluation when CLK goes from FALSE to TRUE. 
+	 *          
+	 *          Q will return to false on the next subsequent call.
+	 */
+	class R_TRIG
+	{
+	public:
+		R_TRIG() { lastState = false; };
+
+		void Check(bool CLK) 
+		{ 
+			this->Q = CLK && !this->lastState;
+			this->lastState = CLK;
+		}
+
+		bool Q;
+
+	private:
+		bool state, lastState;
+
+	};
+
+	/**
+	 * @brief   Falling edge trigger. Takes boolean input signal, CLK,
+	 *          in function call. The output, Q, will be TRUE for a single
+	 *          evaluation when CLK goes from TRUE to FALSE. 
+	 * 
+	 *          Q will return to false on the next subsequent call.
+	 */
+	class F_TRIG
+	{
+	public:
+		F_TRIG() { lastState = false; };
+
+		void Check(bool CLK) 
+		{ 
+			this->Q = !CLK && this->lastState;
+			this->lastState = CLK;
+		}
+
+		bool Q;
+
+	private:
+		bool lastState;
 
 	};
 }
