@@ -110,3 +110,7 @@ units::revolutions_per_minute_t IntakeSubsystem::GetEncoderVelocity() {
 
     return units::revolutions_per_minute_t{_pivot_encoder->GetVelocity()} / IntakeConstants::GEAR_RATIO;
 }
+
+bool IntakeSubsystem::AtSetPosition() {
+    return units::math::abs(GetIntakePosition() - _target_position) < IntakeConstants::POSITION_TOLERANCE;
+}

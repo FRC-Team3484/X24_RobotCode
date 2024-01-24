@@ -33,6 +33,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
         bool ArmExtended();
         units::turn_t GetIntakePosition();
         units::revolutions_per_minute_t GetEncoderVelocity();
+        bool AtSetPosition();
 
     private:
         bool _arm_sensor_hit = false;

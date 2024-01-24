@@ -29,7 +29,7 @@ void TeleopIntakeCommand::Execute() {
     } else if (_oi->DummyInput()) { // TODO: Spit out piece button
         _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
 
-        if (_intake_subsystem->ArmExtended()) {
+        if (_intake_subsystem->AtSetPosition()) {
             _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
 
         }

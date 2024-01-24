@@ -38,6 +38,8 @@ namespace IntakeConstants {
 
     constexpr int ROLLER_STOP = 0;
     constexpr double ROLLER_POWER = 0.8;
+
+    constexpr units::degree_t POSITION_TOLERANCE = 2_deg;
 }
 
 namespace HookConstants {}
