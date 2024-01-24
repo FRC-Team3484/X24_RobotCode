@@ -18,6 +18,7 @@ class Driver_Interface {
         bool GetSetBrakeMode();
         bool GetDisableBrakeMode();
         void SetRumble(double Rumble);
+        bool DummyInput();
 
         // Operator Controllers
 

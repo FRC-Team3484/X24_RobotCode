@@ -1,26 +1,6 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
-#include <units/angular_velocity.h>
-namespace LauncherConstants {
-    constexpr int Motor_Left_CanID2 = 0;
-    constexpr int Motor_Right_CanID2 = 1;
 
-<<<<<<< HEAD
-    constexpr double P_Launcher = 0;
-    constexpr double I_Launcher = 0;
-    constexpr double D_Launcher = 0;
-    constexpr double FF_Launcher = 0;
-    constexpr double RPM_Window_Launcher = 50;
-
-    //constexpr bool IsLoaded = true;
-    constexpr bool MOTOR_INVERTED = true;
-    constexpr bool REVERSE; // cha cha real smooth
-
-
-    constexpr units::revolutions_per_minute_t Target_RPM/*place holder*/ = 2000_rpm;
-    constexpr units::revolutions_per_minute_t Reverse_RPM = -1000_rpm; // make a command that tuns this value to rue an drunss the command 
-}
-=======
 #include <units/voltage.h>
 #include <units/length.h>
 #include <units/velocity.h>
@@ -36,8 +16,30 @@ namespace LauncherConstants {
 
 
 namespace ShooterConstants {}
->>>>>>> origin/Development
-namespace IntakeConstants {}
+namespace IntakeConstants {
+    constexpr int PIVOT_MOTOR_CAN_ID = 30;
+    constexpr int DRIVE_MOTOR_CAN_ID = 32;
+    constexpr int PIECE_SENSOR_DI_CH = 0;
+    constexpr int ARM_SENSOR_DI_CH = 1;
+    constexpr double GEAR_RATIO = 62.5;
+
+    constexpr units::degrees_per_second_t MAX_VELOCITY = 10_deg_per_s;
+    constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 10_deg_per_s_sq;
+
+    constexpr units::degree_t STOW_POSITION = 0_deg;
+    constexpr units::degree_t INTAKE_POSITION = 180_deg;
+
+    constexpr units::degrees_per_second_t HOME_VELOCITY = 5_deg_per_s;
+
+    constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
+    constexpr double PID_IZ_ZONE = 0;
+    constexpr double PID_OUTPUTRANGE_MIN = -1;
+    constexpr double PID_OUTPUTRANGE_MAX = 1;
+
+    constexpr int ROLLER_STOP = 0;
+    constexpr double ROLLER_POWER = 0.8;
+}
+
 namespace HookConstants {}
 
 
