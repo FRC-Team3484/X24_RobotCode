@@ -6,13 +6,14 @@
 #define LAUNCHERCOMMANDH
 
 #include "subsystems/LauncherSubsystem.h"
+#include "teleop/TeleopIntakeCommand.h"
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 
 class LauncherCommand: public frc2::CommandHelper<frc2::Command, LauncherCommand>{
     public:
-    explicit LauncherCommand(LauncherSubsystem* Launcher_subsytem);
+    explicit LauncherCommand(LauncherSubsystem* Launcher_Subsystem, IntakeSubsystem* intake_subsystem );
     
     void Initialize() override;
     void Execute() override;
@@ -21,7 +22,9 @@ class LauncherCommand: public frc2::CommandHelper<frc2::Command, LauncherCommand
     
     private:
         LauncherSubsystem* _Launcher;
+        IntakeSubsystem* _intake;
         bool _Launching; 
+        bool _Loaded;
 
 };
 

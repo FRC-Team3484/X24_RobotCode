@@ -3,32 +3,38 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/LauncherCommand.h"
+#include "commands/teleop/TeleopIntakeCommand.h"
 
 using namespace LauncherConstants;
+using namespace IntakeConstants;
 
-LauncherCommand::LauncherCommand(LauncherSubsystem* Launcher_subsytem) 
-: _Launcher{Launcher_subsytem}{
-    AddRequirements(_Launcher);
+LauncherCommand::LauncherCommand(LauncherSubsystem* Launcher_subsystem, IntakeSubsystem* intake_subsystem )
+: _Launcher{Launcher_subsystem},_intake{intake_subsystem}{ 
+    AddRequirements(_Launcher), AddRequirements(_intake);
 }
+
+
 void LauncherCommand::Initialize(){
+    _intake->SetIntakeAngle(STOW_POSITION);
+    if(_intake !=NULL){
+        _intake->SetRollerPower(ROLLER_STOP);
+        _Loaded =false;
+    }
+
     _Launching = false;
     if (_Launcher !=NULL){
     _Launcher->setLauncherRPM(Target_RPM);
     }
 
+
 }
 void LauncherCommand::Execute(){
-
     if (_Launcher !=NULL){
-        if(_Launcher){ //This logic needs more of systems to be done but the logic would be if the intake is ready, chnage Launcher to true then fire
+        if(_Launcher->atTargetRPM() && _Loaded == true){
 
-    }
-        else{
-            if(_Launcher->atTargetRPM()){//when intake is done replace with if(_Launcher->atPoint() and _intake->finshed angle()(**replace filler names with real ones**))   
-                _Launching = true;
             }
+        
         }
-    }
 }
 void LauncherCommand::End(bool interrupted){
     if (_Launcher !=NULL){
