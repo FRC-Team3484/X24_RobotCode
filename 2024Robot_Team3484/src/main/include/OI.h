@@ -12,9 +12,11 @@ class Driver_Interface {
         double GetThrottle();
         double GetStrafe();
         double GetRotation();
+        bool StartAim();
         bool GetResetHeading();
         bool GetBrake();
-        bool GetStraightenWheels();
+        bool GetBrakePressed();
+        // bool GetStraightenWheels();
         bool GetSetBrakeMode();
         bool GetDisableBrakeMode();
         void SetRumble(double Rumble);

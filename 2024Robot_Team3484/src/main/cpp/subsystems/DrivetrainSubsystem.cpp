@@ -4,8 +4,6 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
-// #include <pathplanner/lib/path/PathPlannerPath.h>
-
 using namespace frc;
 using namespace units;
 using namespace SwerveConstants::DrivetrainConstants;

@@ -30,6 +30,7 @@ double SC_Limelight::GetOffsetX()
 	return this->inst->GetNumber("tx", 0.0);
 }
 
+// Reports it degress (-29.8, 29.8)
 double SC_Limelight::GetOffsetY()
 {
 	return this->inst->GetNumber("ty", 0.0);

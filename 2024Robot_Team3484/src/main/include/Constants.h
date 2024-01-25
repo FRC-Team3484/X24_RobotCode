@@ -46,6 +46,7 @@ namespace SwerveConstants {
             constexpr int STRAIGHTEN_WHEELS = XBOX_START;
             constexpr int BRAKE_MODE = XBOX_RB;
             constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
+            constexpr int AIM_START = XBOX_A;
         }
     }
 
@@ -53,6 +54,7 @@ namespace SwerveConstants {
         // Swerve Module Configurations
 
         // For those with static, do not change into constants; it will break the linking
+        // DO NOT REMOVE STATIC CALLS
 
         static SC::SC_SwerveConfigs SWERVE_FRONT_LEFT{10,11,20, 4.394};
         static SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21,71.630};
@@ -154,8 +156,16 @@ namespace SwerveConstants {
         }
     }
 
-
-
+}
+namespace VisionConstants {
+    constexpr units::inch_t MAX_LAUNCH_RANGE = 1000_in;
+    constexpr units::inch_t AIM_TOLERANCE_LARGE = 12_in;
+    constexpr units::inch_t AIM_TOLERANCE_SMALL = 6_in;
+    constexpr double CAMERA_ANGLE = 30.0;
+    constexpr double CAMERA_HEIGHT = 9.0;
+    constexpr double STEER_GAIN = -.01;
+    constexpr double TARGET_HEIGHT = 36; // inches
+    // multiplier to give how far off and results to a steer power
 }
 
 #endif
