@@ -6,12 +6,13 @@
 
 #include <frc2/command/CommandScheduler.h>
 
-
 using namespace SwerveConstants::AutonNames;
 
 void Robot::RobotInit() {}
 
 void Robot::RobotPeriodic() {
+  frc::SmartDashboard::PutBoolean("Digital Input: 0",_troubleshoot.Get());
+  // if 1; not on the switch; inverted
   frc2::CommandScheduler::GetInstance().Run();
 }
 

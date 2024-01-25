@@ -25,7 +25,8 @@
 #include <frc/TimedRobot.h>
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/CommandScheduler.h>
-
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DigitalInput.h>
 class Robot : public frc::TimedRobot {
  public:
   void RobotInit() override;
@@ -58,7 +59,8 @@ class Robot : public frc::TimedRobot {
   AimCommand _aim_command{&_drivetrain, &_vision};
   DriveCommand _drive_command{&_drivetrain, &_oi};
   AutonGenerator _auton_generator{&_drivetrain};
-
+  
+  frc::DigitalInput _troubleshoot{0};
 
   std::optional<frc2::CommandPtr> _auton_command;
 };
