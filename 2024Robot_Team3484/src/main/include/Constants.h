@@ -46,7 +46,7 @@ namespace IntakeConstants {
     constexpr units::degree_t STOW_POSITION = 0_deg;
     constexpr units::degree_t INTAKE_POSITION = 180_deg;
 
-    constexpr units::degrees_per_second_t HOME_VELOCITY = 5_deg_per_s;
+    constexpr double HOME_POWER = -0.2;
 
     constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
     constexpr double PID_IZ_ZONE = 0;
@@ -77,6 +77,10 @@ namespace SwerveConstants {
     }
 
     namespace ControllerConstants {
+        constexpr double RUMBLE_HIGH = 0.5;
+        constexpr double RUMBLE_LOW = 0.2;
+        constexpr double RUMBLE_STOP = 0;
+        
         namespace Driver {
             constexpr int DRIVER_CONTROLLER_PORT = 0;
             constexpr double JOYSTICK_DEADBAND = 0.02;

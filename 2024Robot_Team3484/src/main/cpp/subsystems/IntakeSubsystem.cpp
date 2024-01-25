@@ -1,7 +1,7 @@
 //
 // Intake Subsystem
 //
-// -Noah, Aidan  & Ethan
+// -Noah, Aidan & Ethan
 //
 
 #include <subsystems/IntakeSubsystem.h>
@@ -60,19 +60,23 @@ void IntakeSubsystem::Periodic() {
         0_deg_per_s
     };
 
-    const units::turn_t linear_angle = _intake_trapezoid.Calculate(20_ms, current_state, target_state).position;
+    if (_arm_sensor_hit) {
+        const units::turn_t linear_angle = _intake_trapezoid.Calculate(20_ms, current_state, target_state).position;
+        _pivot_pid_controller->SetReference(linear_angle.value(), rev::CANSparkMax::ControlType::kPosition);
 
-    _pivot_pid_controller->SetReference(linear_angle.value(), rev::CANSparkMax::ControlType::kPosition);
+    } else {
+        _pivot_pid_controller->SetReference(IntakeConstants::HOME_POWER, rev::CANSparkMax::ControlType::kDutyCycle);
 
-    if (!ArmExtended() && !_arm_sensor_hit) {
-        _arm_sensor_hit = true;
-        _pivot_encoder->SetPosition(IntakeConstants::STOW_POSITION.value());
+        if (!ArmExtended()) {
+            _arm_sensor_hit = true;
+            _pivot_encoder->SetPosition(IntakeConstants::STOW_POSITION.value());
+        }
     }
 }
 
 void IntakeSubsystem::SetIntakeAngle(units::degree_t angle) {
     // Use the pivot motor and set the angle
-    if (_arm_sensor_hit) _target_position = angle;
+    _target_position = angle;
 }
 
 void IntakeSubsystem::SetRollerPower(double power) {
@@ -100,7 +104,7 @@ units::turn_t IntakeSubsystem::GetIntakePosition() {
         return units::turn_t{_pivot_encoder->GetPosition() / IntakeConstants::GEAR_RATIO};
 
     } else {
-        return HOME_VELOCITY*20_ms;
+        return 0_deg;
 
     }
 }
@@ -112,5 +116,10 @@ units::revolutions_per_minute_t IntakeSubsystem::GetEncoderVelocity() {
 }
 
 bool IntakeSubsystem::AtSetPosition() {
-    return units::math::abs(GetIntakePosition() - _target_position) < IntakeConstants::POSITION_TOLERANCE;
+    if (_arm_sensor_hit) {
+        return units::math::abs(GetIntakePosition() - _target_position) < IntakeConstants::POSITION_TOLERANCE;
+
+    } else {
+        return false;
+    }
 }

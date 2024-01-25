@@ -19,6 +19,8 @@ void Driver_Interface::SetRumble(double Rumble) {
     _driver_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
 bool Driver_Interface::DummyInput() {return false;}
-
-
-
+bool Driver_Interface::ExtendIntakeButton() {return false;}
+bool Driver_Interface::EjectIntakeButton() {return false;}
+bool Driver_Interface::IntakeOverrideButton() {return false;}
+bool Driver_Interface::IntakeThroughShooterButton() {return false;}
+bool Driver_Interface::LaunchButton() {return false;}

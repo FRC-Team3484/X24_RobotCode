@@ -19,6 +19,11 @@ class Driver_Interface {
         bool GetDisableBrakeMode();
         void SetRumble(double Rumble);
         bool DummyInput();
+        bool ExtendIntakeButton();
+        bool EjectIntakeButton();
+        bool IntakeOverrideButton();
+        bool IntakeThroughShooterButton();
+        bool LaunchButton();
 
         // Operator Controllers
 
