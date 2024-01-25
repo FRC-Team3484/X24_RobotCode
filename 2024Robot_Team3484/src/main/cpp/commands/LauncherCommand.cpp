@@ -15,10 +15,11 @@ LauncherCommand::LauncherCommand(LauncherSubsystem* Launcher_subsystem, IntakeSu
 
 
 void LauncherCommand::Initialize(){
-    _intake->SetIntakeAngle(STOW_POSITION);
+
     if(_intake !=NULL){
+        _intake->SetIntakeAngle(STOW_POSITION);
         _intake->SetRollerPower(ROLLER_STOP);
-        _Loaded =false;
+        
     }
 
     _Launching = false;
@@ -29,16 +30,19 @@ void LauncherCommand::Initialize(){
 
 }
 void LauncherCommand::Execute(){
-    if (_Launcher !=NULL){
-        if(_Launcher->atTargetRPM() && _Loaded == true){
-
+    if (_Launcher !=NULL && _intake != NULL){
+        if(_Launcher->atTargetRPM() && _intake->AtSetPosition()){
+            _Launching = true;
             }
-        
+        if(_Launching){
+            _intake->SetRollerPower(-ROLLER_POWER);
+        }
         }
 }
 void LauncherCommand::End(bool interrupted){
-    if (_Launcher !=NULL){
+    if (_Launcher !=NULL && _intake != NULL){
         _Launcher->setLauncherRPM(0_rpm);
+        _intake->SetRollerPower(ROLLER_STOP);
     }
 }
 bool LauncherCommand::IsFinished(){
