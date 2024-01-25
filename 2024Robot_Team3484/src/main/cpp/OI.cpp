@@ -15,12 +15,15 @@ bool Driver_Interface::GetBrake() {return _driver_controller.GetRawButton(BRAKE)
 bool Driver_Interface::GetStraightenWheels() {return _driver_controller.GetRawButton(STRAIGHTEN_WHEELS);}
 bool Driver_Interface::GetSetBrakeMode() {return _driver_controller.GetRawButtonPressed(BRAKE_MODE);}
 bool Driver_Interface::GetDisableBrakeMode() {return _driver_controller.GetRawButtonPressed(DISABLE_BRAKE_MODE);}
-void Driver_Interface::SetRumble(double Rumble) {
+void Driver_Interface::SetDriverRumble(double Rumble) {
     _driver_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
-bool Driver_Interface::DummyInput() {return false;}
-bool Driver_Interface::ExtendIntakeButton() {return false;}
-bool Driver_Interface::EjectIntakeButton() {return false;}
-bool Driver_Interface::IntakeOverrideButton() {return false;}
-bool Driver_Interface::IntakeThroughShooterButton() {return false;}
-bool Driver_Interface::LaunchButton() {return false;}
+bool Operator_Interface::DummyInput() {return false;}
+bool Operator_Interface::ExtendIntakeButton() {return false;}
+bool Operator_Interface::EjectIntakeButton() {return false;}
+bool Operator_Interface::IntakeOverrideButton() {return false;}
+bool Operator_Interface::IntakeThroughShooterButton() {return false;}
+bool Operator_Interface::LaunchButton() {return false;}
+void Operator_Interface::SetOperatorRumble(double Rumble) {
+    _Operator_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
+}

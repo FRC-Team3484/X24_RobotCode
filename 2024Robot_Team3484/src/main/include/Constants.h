@@ -16,6 +16,7 @@
 
 
 namespace LauncherConstants {
+
     constexpr int Motor_Left_CanID2 = 0;
     constexpr int Motor_Right_CanID2 = 1;
 
@@ -80,7 +81,10 @@ namespace SwerveConstants {
         constexpr double RUMBLE_HIGH = 0.5;
         constexpr double RUMBLE_LOW = 0.2;
         constexpr double RUMBLE_STOP = 0;
-        
+
+         namespace Operatiorr_Controler{
+        constexpr int Operatior_CONTROLLER_PORT = 0;
+        }  
         namespace Driver {
             constexpr int DRIVER_CONTROLLER_PORT = 0;
             constexpr double JOYSTICK_DEADBAND = 0.02;
