@@ -56,7 +56,7 @@ class Robot : public frc::TimedRobot {
 
   // StraightenWheelsCommand _straighten_command{&_drivetrain};
 
-  AimCommand _aim_command{&_drivetrain, &_vision};
+  AimCommand _aim_command{&_drivetrain, &_oi, &_vision};
   DriveCommand _drive_command{&_drivetrain, &_oi};
   AutonGenerator _auton_generator{&_drivetrain};
   

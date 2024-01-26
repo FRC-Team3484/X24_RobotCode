@@ -27,5 +27,15 @@ class Driver_Interface {
         frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
 };
 
+class Operator_Interface {
+
+    public:
+        bool IgnoreVision();
+
+    private:
+        frc::XboxController _operator_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
+
+};
+
 
 #endif

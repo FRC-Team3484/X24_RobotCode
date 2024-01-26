@@ -10,14 +10,17 @@ using namespace SwerveConstants::AutonDriveConstants;
 using namespace SwerveConstants::BrakeConstants;
 
 
-AimCommand::AimCommand(DrivetrainSubsystem* drivetrain, Vision* vision)
+AimCommand::AimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision)
     : _drivetrain{drivetrain},
+    _oi_driver{oi_driver},
+    _oi_operator{oi_operator},
     _limelight{vision} {
     AddRequirements(_drivetrain);
 }
 
 
 void AimCommand::Initialize() {
+    _oi_driver->SetRumble(.2);
     // fmt::print("Testing");
     //  Two constants for AIM_TOLERANCE HIGH and LOW
     // natural default is to break
@@ -36,7 +39,7 @@ void AimCommand::Execute() {
     SmartDashboard::PutNumber("Horizontal Angle", _limelight->GetOffsetX());
     if (_aiming){
         _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
-        if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget()){
+        if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()){
             _aiming = false;
             _initial_positions = _drivetrain->GetModulePositions();
         }
@@ -67,6 +70,7 @@ void AimCommand::Execute() {
 void AimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
     _drivetrain->SetCoastMode();
+    _oi_driver->SetRumble(0);
 }
 
 bool AimCommand::IsFinished() {return false;}

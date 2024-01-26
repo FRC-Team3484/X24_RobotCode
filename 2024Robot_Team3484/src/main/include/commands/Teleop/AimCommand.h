@@ -8,13 +8,14 @@
 #include "subsystems/DrivetrainSubsystem.h"
 #include <frc/kinematics/SwerveModulePosition.h>
 #include "subsystems/Vision.h"
+#include "OI.h"
 
 
 
 class AimCommand: public frc2::CommandHelper<frc2::Command, AimCommand>{
 
     public:
-        explicit AimCommand(DrivetrainSubsystem* drivetrain, Vision* vision);
+        explicit AimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision);
         void Initialize() override;
         void Execute() override;
         void End(bool interrupted) override;
@@ -31,6 +32,8 @@ class AimCommand: public frc2::CommandHelper<frc2::Command, AimCommand>{
         };
 
         Vision* _limelight;
+        Driver_Interface* _oi_driver;
+        Operator_Interface* _oi_operator;
         bool _aiming;
 
 
