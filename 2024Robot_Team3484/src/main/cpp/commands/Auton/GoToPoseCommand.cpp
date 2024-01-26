@@ -1,4 +1,4 @@
-#include "commands/SwerveAuton/GoToPoseCommand.h"
+#include "commands/Auton/GoToPoseCommand.h"
 
 #include <units/time.h>
 #include <units/velocity.h>

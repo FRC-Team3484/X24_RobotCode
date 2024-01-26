@@ -1,15 +1,16 @@
-#ifndef DYNAMICBRAKECOMMAND_H
-#define DYNAMICBRAKECOMMAND_H
+#ifndef DRIVECOMMAND_H
+#define DRIVECOMMAND_H
 
+#include "OI.h"
 #include "subsystems/DrivetrainSubsystem.h"
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 #include <frc/kinematics/SwerveModulePosition.h>
 
-class DynamicBrakeCommand: public frc2::CommandHelper<frc2::Command, DynamicBrakeCommand> {
+class DriveCommand: public frc2::CommandHelper<frc2::Command, DriveCommand> {
     public:
-        explicit DynamicBrakeCommand(DrivetrainSubsystem* drivetrain);
+        explicit DriveCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi);
 
         void Initialize() override;
         void Execute() override;
@@ -18,6 +19,7 @@ class DynamicBrakeCommand: public frc2::CommandHelper<frc2::Command, DynamicBrak
 
     private:
         DrivetrainSubsystem* _drivetrain;
+        Driver_Interface* _oi;
         wpi::array<frc::SwerveModulePosition, 4> _initial_positions = {
             frc::SwerveModulePosition{0_m, 0_rad},
             frc::SwerveModulePosition{0_m, 0_rad},
@@ -25,5 +27,6 @@ class DynamicBrakeCommand: public frc2::CommandHelper<frc2::Command, DynamicBrak
             frc::SwerveModulePosition{0_m, 0_rad}
         };
 };
+
 
 #endif

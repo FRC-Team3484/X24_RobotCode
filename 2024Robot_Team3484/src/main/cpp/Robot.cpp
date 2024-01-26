@@ -6,12 +6,13 @@
 
 #include <frc2/command/CommandScheduler.h>
 
-
 using namespace SwerveConstants::AutonNames;
 
 void Robot::RobotInit() {}
 
 void Robot::RobotPeriodic() {
+  frc::SmartDashboard::PutBoolean("Digital Input: 0",_troubleshoot.Get());
+  // if 1; not on the switch; inverted
   frc2::CommandScheduler::GetInstance().Run();
 }
 
@@ -42,29 +43,25 @@ void Robot::TeleopInit() {
   _drive_command.Schedule();
 }
 
+// There are two states that can be done; drive and shoot
+// drive: include logic for x-break using buttons
+// shoot: break and visions
 void Robot::TeleopPeriodic() {
     switch (_robot_state) {
     case drive:
-      if (_oi.GetBrake()) {
+      if (_oi.StartAim()){
+        wpi::outs() << "Testing: drive \n";
         _drive_command.Cancel();
-        _brake_command.Schedule();
-        _robot_state = brake;
-      } else if (_oi.GetStraightenWheels()) {
-        _drive_command.Cancel();
-        _straighten_command.Schedule();
-        _robot_state = straighten;
+        wpi::outs() << "Testing: aim \n";
+        _aim_command.Schedule();
+        _robot_state = shoot;
       }
+
+
       break;
-    case brake:
-      if (!_oi.GetBrake()) {
-        _brake_command.Cancel();
-        _drive_command.Schedule();
-        _robot_state = drive;
-      }
-      break;
-    case straighten:
-      if (!_oi.GetStraightenWheels()) {
-        _straighten_command.Cancel();
+    case shoot:
+      if (!_oi.StartAim()) {
+        _aim_command.Cancel();
         _drive_command.Schedule();
         _robot_state = drive;
       }
