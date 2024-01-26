@@ -7,13 +7,15 @@
 
 #include "subsystems/LauncherSubsystem.h"
 #include "teleop/TeleopIntakeCommand.h"
+#include "subsystems/Vision.h"
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 
+
 class LauncherCommand: public frc2::CommandHelper<frc2::Command, LauncherCommand>{
     public:
-    explicit LauncherCommand(LauncherSubsystem* Launcher_Subsystem, IntakeSubsystem* intake_subsystem );
+    explicit LauncherCommand(LauncherSubsystem* Launcher_Subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* OI );
     
     void Initialize() override;
     void Execute() override;
@@ -23,6 +25,8 @@ class LauncherCommand: public frc2::CommandHelper<frc2::Command, LauncherCommand
     private:
         LauncherSubsystem* _Launcher;
         IntakeSubsystem* _intake;
+        Vision* _limelight;
+        Operator_Interface* _oi;
         bool _Launching; 
         bool _Loaded;
 

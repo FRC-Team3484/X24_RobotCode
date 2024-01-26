@@ -44,7 +44,6 @@ class Operator_Interface{
         bool IntakeThroughShooterButton();
         bool LaunchButton();
         void SetOperatorRumble(double Rumble);
-       
     private:
         frc::XboxController _Operator_controller{SwerveConstants::ControllerConstants::Operatiorr_Controler::Operatior_CONTROLLER_PORT};
 
