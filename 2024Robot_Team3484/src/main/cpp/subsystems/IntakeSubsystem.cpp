@@ -14,15 +14,10 @@ IntakeSubsystem::IntakeSubsystem(
     int pivot_motor_can_id, 
     int drive_motor_can_id, 
     int piece_sensor_di_ch, 
-    int arm_sensor_di_ch,
-    SC::SC_PIDConstants PID_CONSTANTS,
-    double PID_IZ_ZONE,
-    double PID_OUTPUTRANGE_MIN,
-    double PID_OUTPUTRANGE_MAX
-
+    int arm_sensor_di_ch
     ) :
         _pivot_motor{pivot_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
-        _drive_motor{drive_motor_can_id, rev::CANSparkMax::MotorType::kBrushed},
+        _drive_motor{drive_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
         _piece_sensor{piece_sensor_di_ch},
         _arm_sensor{arm_sensor_di_ch}
     {

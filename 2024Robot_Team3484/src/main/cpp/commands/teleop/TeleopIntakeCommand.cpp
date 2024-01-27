@@ -4,15 +4,16 @@
 using namespace IntakeConstants;
 
 TeleopIntakeCommand::TeleopIntakeCommand(IntakeSubsystem* intake_subsystem, LauncherSubsystem* launcher_subsystem, Operator_Interface* oi)
-    : _intake_subsystem{intake_subsystem}, _oi{oi} {
+    : _intake_subsystem{intake_subsystem}, _launcher_subsystem{launcher_subsystem}, _oi{oi} {
         AddRequirements(_intake_subsystem);
+        AddRequirements(_launcher_subsystem);
 }
 
 void TeleopIntakeCommand::Initialize() {}
 
 void TeleopIntakeCommand::Execute() {
     if (_oi->ExtendIntakeButton()) {
-        if (!_intake_subsystem->HasPiece() || _oi->IntakeOverrideButton()) {
+        if ((!_intake_subsystem->HasPiece() || _oi->IntakeOverrideButton()) && _oi != NULL) {
             _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
             _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER);
 
@@ -27,7 +28,7 @@ void TeleopIntakeCommand::Execute() {
         }
 
     } else if (_oi->EjectIntakeButton()) {
-        _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
+        _intake_subsystem->SetIntakeAngle(IntakeConstants::EJECT_POSITION);
 
         if (_intake_subsystem->AtSetPosition()) {
             _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
