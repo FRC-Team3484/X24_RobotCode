@@ -23,7 +23,7 @@ void TeleopIntakeCommand::Execute() {
         }
 
         if (_intake_subsystem->HasPiece()) {
-            _oi->SetOperatorRumble(SwerveConstants::ControllerConstants::RUMBLE_LOW);
+            _oi->SetOperatorRumble(SwerveConstants::ControllerConstants::OPERATOR_RUMBLE_LOW);
 
         }
 

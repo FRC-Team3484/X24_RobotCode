@@ -1,4 +1,4 @@
-#include "commands/Auton/GoToPoseCommand.h"
+#include "commands/auton/GoToPoseCommand.h"
 
 #include <units/time.h>
 #include <units/velocity.h>

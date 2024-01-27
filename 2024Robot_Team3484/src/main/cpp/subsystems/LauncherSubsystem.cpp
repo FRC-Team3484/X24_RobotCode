@@ -56,7 +56,7 @@ LauncherSubsystem::LauncherSubsystem(
 }
 
 void LauncherSubsystem::setLauncherRPM(units::revolutions_per_minute_t speed){
-    _target_speed = speed.value();
+    _target_speed = speed.value()*GEAR_RATIO;
 }
 
 void LauncherSubsystem::Periodic() {

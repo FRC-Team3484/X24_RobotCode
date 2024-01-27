@@ -11,8 +11,8 @@
 
 // Swerve Stuff
 #include "subsystems/DrivetrainSubsystem.h"
-#include "commands/Teleop/AimCommand.h"
-#include "commands/Teleop/DriveCommand.h"
+#include "commands/teleop/AimCommand.h"
+#include "commands/teleop/DriveCommand.h"
 #include "subsystems/Vision.h"
 // #include "commands/Teleop/StraightenWheelsCommand.h"
 #include "subsystems/AutonGenerator.h"

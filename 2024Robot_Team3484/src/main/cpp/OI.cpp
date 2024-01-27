@@ -26,5 +26,5 @@ bool Operator_Interface::IntakeOverrideButton() {return false;}
 bool Operator_Interface::IntakeThroughShooterButton() {return false;}
 bool Operator_Interface::LaunchButton() {return false;}
 void Operator_Interface::SetOperatorRumble(double Rumble) {
-    _Operator_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
+    _operator_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }

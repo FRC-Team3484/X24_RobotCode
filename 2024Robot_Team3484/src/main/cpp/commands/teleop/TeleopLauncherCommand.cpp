@@ -2,21 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/LauncherCommand.h"
-#include "commands/teleop/TeleopIntakeCommand.h"
+#include "commands/teleop/TeleopLauncherCommand.h"
 
 
 using namespace LauncherConstants;
 using namespace IntakeConstants;
 using namespace VisionConstants;
 
-LauncherCommand::LauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* OI )
+TeleopLauncherCommand::TeleopLauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* OI )
 : _Launcher{launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}, _oi{OI} { 
     AddRequirements(_Launcher), AddRequirements(_intake);
 }
 
 
-void LauncherCommand::Initialize(){
+void TeleopLauncherCommand::Initialize(){
 
     if(_intake !=NULL){
         _intake->SetIntakeAngle(STOW_POSITION);
@@ -31,7 +30,7 @@ void LauncherCommand::Initialize(){
 
 
 }
-void LauncherCommand::Execute(){
+void TeleopLauncherCommand::Execute(){
     if (_Launcher !=NULL && _intake != NULL){
         if(_Launcher->atTargetRPM() && _intake->AtSetPosition() && ( _limelight == NULL || (_oi != NULL && _oi->IgnoreVison()) || (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )){
             _Launching = true;
@@ -42,12 +41,12 @@ void LauncherCommand::Execute(){
     }
 
 }
-void LauncherCommand::End(bool interrupted){
+void TeleopLauncherCommand::End(bool interrupted){
     if (_Launcher !=NULL && _intake != NULL){
         _Launcher->setLauncherRPM(0_rpm);
         _intake->SetRollerPower(ROLLER_STOP);
     }
 }
-bool LauncherCommand::IsFinished(){
+bool TeleopLauncherCommand::IsFinished(){
  return false;
 }

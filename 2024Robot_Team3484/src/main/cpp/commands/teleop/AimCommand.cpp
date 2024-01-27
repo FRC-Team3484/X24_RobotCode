@@ -1,4 +1,4 @@
-#include "commands/Teleop/AimCommand.h"
+#include "commands/teleop/AimCommand.h"
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
