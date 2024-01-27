@@ -21,7 +21,9 @@ void Driver_Interface::SetRumble(double Rumble) {
 }
 
 //Operator Stuff
+bool Operator_Interface::ExtendIntakeButton() {return false;}
+bool Operator_Interface::EjectIntakeButton() {return false;}
 bool Operator_Interface::IgnoreVision() {return _operator_controller.GetRawButton(IGNORE_AIM);}
-
-
-
+bool Operator_Interface::IntakeOverrideButton() {return false;}
+bool Operator_Interface::IntakeThroughShooterButton() {return false;}
+bool Operator_Interface::LaunchButton() {return false;}
