@@ -1,4 +1,4 @@
-#include "commands/Teleop/AimCommand.h"
+#include "commands/teleop/TeleopAimCommand.h"
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -10,14 +10,17 @@ using namespace SwerveConstants::AutonDriveConstants;
 using namespace SwerveConstants::BrakeConstants;
 
 
-AimCommand::AimCommand(DrivetrainSubsystem* drivetrain, Vision* vision)
+TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision)
     : _drivetrain{drivetrain},
+    _oi_driver{oi_driver},
+    _oi_operator{oi_operator},
     _limelight{vision} {
     AddRequirements(_drivetrain);
 }
 
 
-void AimCommand::Initialize() {
+void TeleopAimCommand::Initialize() {
+    _oi_driver->SetRumble(.2);
     // fmt::print("Testing");
     //  Two constants for AIM_TOLERANCE HIGH and LOW
     // natural default is to break
@@ -32,6 +35,7 @@ void AimCommand::Initialize() {
     _limelight->SetTargetHeight(TARGET_HEIGHT);
     }
 }
+<<<<<<< HEAD:2024Robot_Team3484/src/main/cpp/commands/Teleop/AimCommand.cpp
 void AimCommand::Execute() {
     if (_limelight == NULL) {
         fmt::print("Limelight is Null");
@@ -46,6 +50,16 @@ void AimCommand::Execute() {
             }
 
 
+=======
+void TeleopAimCommand::Execute() {
+    SmartDashboard::PutNumber("Horizontal Distance", _limelight->GetHorizontalDistance().value());
+    SmartDashboard::PutNumber("Horizontal Angle", _limelight->GetOffsetX());
+    if (_aiming){
+        _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
+        if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()){
+            _aiming = false;
+            _initial_positions = _drivetrain->GetModulePositions();
+>>>>>>> f900388ca1fa47fff4d075bc03edfc27c3953795:2024Robot_Team3484/src/main/cpp/commands/teleop/TeleopAimCommand.cpp
         }
         else{
             wpi::array<SwerveModulePosition, 4> current_positions = _drivetrain->GetModulePositions();
@@ -69,9 +83,10 @@ void AimCommand::Execute() {
 
 
 
-void AimCommand::End(bool interrupted) {
+void TeleopAimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
     _drivetrain->SetCoastMode();
+    _oi_driver->SetRumble(0);
 }
 
-bool AimCommand::IsFinished() {return false;}
+bool TeleopAimCommand::IsFinished() {return false;}
