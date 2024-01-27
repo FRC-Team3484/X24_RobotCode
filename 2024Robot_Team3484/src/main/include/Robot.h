@@ -11,8 +11,8 @@
 
 // Swerve Stuff
 #include "subsystems/DrivetrainSubsystem.h"
-#include "commands/Teleop/AimCommand.h"
-#include "commands/Teleop/DriveCommand.h"
+#include "commands/teleop/TeleopAimCommand.h"
+#include "commands/teleop/TeleopDriveCommand.h"
 #include "subsystems/Vision.h"
 // #include "commands/Teleop/StraightenWheelsCommand.h"
 #include "subsystems/AutonGenerator.h"
@@ -45,7 +45,8 @@ class Robot : public frc::TimedRobot {
   enum State {drive, shoot};
   State _robot_state = drive;
 
-  Driver_Interface _oi{};
+  Driver_Interface _oi_driver{};
+  Operator_Interface _oi_operator{};
 
   Vision _vision{VisionConstants::CAMERA_ANGLE, VisionConstants::CAMERA_HEIGHT, VisionConstants::TARGET_HEIGHT};
 
@@ -56,8 +57,8 @@ class Robot : public frc::TimedRobot {
 
   // StraightenWheelsCommand _straighten_command{&_drivetrain};
 
-  AimCommand _aim_command{&_drivetrain, &_oi, &_vision};
-  DriveCommand _drive_command{&_drivetrain, &_oi};
+  TeleopAimCommand _aim_command{&_drivetrain, &_oi_driver, &_oi_operator, &_vision};
+  TeleopDriveCommand _drive_command{&_drivetrain, &_oi_driver};
   AutonGenerator _auton_generator{&_drivetrain};
   
   frc::DigitalInput _troubleshoot{0};

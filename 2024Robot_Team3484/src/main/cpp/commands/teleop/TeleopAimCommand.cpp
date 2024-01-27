@@ -1,4 +1,4 @@
-#include "commands/Teleop/AimCommand.h"
+#include "commands/teleop/TeleopAimCommand.h"
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -10,7 +10,7 @@ using namespace SwerveConstants::AutonDriveConstants;
 using namespace SwerveConstants::BrakeConstants;
 
 
-AimCommand::AimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision)
+TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision)
     : _drivetrain{drivetrain},
     _oi_driver{oi_driver},
     _oi_operator{oi_operator},
@@ -19,7 +19,7 @@ AimCommand::AimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_dri
 }
 
 
-void AimCommand::Initialize() {
+void TeleopAimCommand::Initialize() {
     _oi_driver->SetRumble(.2);
     // fmt::print("Testing");
     //  Two constants for AIM_TOLERANCE HIGH and LOW
@@ -34,7 +34,7 @@ void AimCommand::Initialize() {
     _limelight->SetLensHeight(CAMERA_HEIGHT);
     _limelight->SetTargetHeight(TARGET_HEIGHT);
 }
-void AimCommand::Execute() {
+void TeleopAimCommand::Execute() {
     SmartDashboard::PutNumber("Horizontal Distance", _limelight->GetHorizontalDistance().value());
     SmartDashboard::PutNumber("Horizontal Angle", _limelight->GetOffsetX());
     if (_aiming){
@@ -67,10 +67,10 @@ void AimCommand::Execute() {
 
 
 
-void AimCommand::End(bool interrupted) {
+void TeleopAimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
     _drivetrain->SetCoastMode();
     _oi_driver->SetRumble(0);
 }
 
-bool AimCommand::IsFinished() {return false;}
+bool TeleopAimCommand::IsFinished() {return false;}
