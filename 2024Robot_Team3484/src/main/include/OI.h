@@ -21,21 +21,27 @@ class Driver_Interface {
         bool GetDisableBrakeMode();
         void SetRumble(double Rumble);
 
+
         // Operator Controllers
 
     private:
         frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
 };
 
-class Operator_Interface {
+#include <frc/XboxController.h>
 
+class Operator_Interface{
     public:
+        bool Climb();
         bool IgnoreVision();
-
+        bool ExtendIntakeButton();
+        bool EjectIntakeButton();
+        bool IntakeThroughShooterButton();
+        bool LaunchButton();
+        void SetRumble(double Rumble);
+       
     private:
-        frc::XboxController _operator_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
+        frc::XboxController _operator_controller{LauncherConstants::OPERATOR_CONTROLLER_PORT};
 
 };
-
-
 #endif

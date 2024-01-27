@@ -20,8 +20,12 @@ void Driver_Interface::SetRumble(double Rumble) {
     _driver_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
 
-//Operator Stuff
+
+bool Operator_Interface::ExtendIntakeButton() {return false;}
+bool Operator_Interface::EjectIntakeButton() {return false;}
 bool Operator_Interface::IgnoreVision() {return _operator_controller.GetRawButton(IGNORE_AIM);}
-
-
-
+bool Operator_Interface::IntakeThroughShooterButton() {return false;}
+bool Operator_Interface::LaunchButton() {return false;}
+void Operator_Interface::SetRumble(double Rumble) {
+    _operator_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
+}
