@@ -1,4 +1,5 @@
 #include "commands/teleop/TeleopAimCommand.h"
+#include "commands/teleop/TeleopAimCommand.h"
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -35,8 +36,7 @@ void TeleopAimCommand::Initialize() {
     _limelight->SetTargetHeight(TARGET_HEIGHT);
     }
 }
-<<<<<<< HEAD:2024Robot_Team3484/src/main/cpp/commands/Teleop/AimCommand.cpp
-void AimCommand::Execute() {
+void TeleopAimCommand::Execute() {
     if (_limelight == NULL) {
         fmt::print("Limelight is Null");
     } else {
@@ -44,22 +44,10 @@ void AimCommand::Execute() {
         SmartDashboard::PutNumber("Horizontal Angle", _limelight->GetOffsetX());
         if (_aiming){
             _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
-            if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget()){
+            if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()){
                 _aiming = false;
                 _initial_positions = _drivetrain->GetModulePositions();
-            }
-
-
-=======
-void TeleopAimCommand::Execute() {
-    SmartDashboard::PutNumber("Horizontal Distance", _limelight->GetHorizontalDistance().value());
-    SmartDashboard::PutNumber("Horizontal Angle", _limelight->GetOffsetX());
-    if (_aiming){
-        _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
-        if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()){
-            _aiming = false;
-            _initial_positions = _drivetrain->GetModulePositions();
->>>>>>> f900388ca1fa47fff4d075bc03edfc27c3953795:2024Robot_Team3484/src/main/cpp/commands/teleop/TeleopAimCommand.cpp
+    }
         }
         else{
             wpi::array<SwerveModulePosition, 4> current_positions = _drivetrain->GetModulePositions();

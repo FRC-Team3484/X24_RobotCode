@@ -23,11 +23,11 @@ class AutonLauncherCommand: public frc2::CommandHelper<frc2::Command, AutonLaunc
     bool IsFinished() override;
     
     private:
-        LauncherSubsystem* _Launcher;
+        LauncherSubsystem* _launcher;
         IntakeSubsystem* _intake;
         Vision* _limelight;
-        bool _Launching; 
-        bool _Loaded;
+        bool _launching; 
+        bool _loaded;
 
 };
 

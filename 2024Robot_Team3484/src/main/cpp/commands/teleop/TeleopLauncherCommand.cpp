@@ -9,9 +9,9 @@ using namespace LauncherConstants;
 using namespace IntakeConstants;
 using namespace VisionConstants;
 
-TeleopLauncherCommand::TeleopLauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* OI )
-: _Launcher{launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}, _oi{OI} { 
-    AddRequirements(_Launcher), AddRequirements(_intake);
+TeleopLauncherCommand::TeleopLauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* oi)
+: _launcher{launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}, _oi{oi} { 
+    AddRequirements(_launcher), AddRequirements(_intake);
 }
 
 
@@ -23,27 +23,27 @@ void TeleopLauncherCommand::Initialize(){
         
     }
 
-    _Launching = false;
-    if (_Launcher !=NULL){
-    _Launcher->setLauncherRPM(TARGET_RPM);
+    _launching = false;
+    if (_launcher !=NULL){
+    _launcher->setLauncherRPM(TARGET_RPM);
     }
 
 
 }
 void TeleopLauncherCommand::Execute(){
-    if (_Launcher !=NULL && _intake != NULL){
-        if(_Launcher->atTargetRPM() && _intake->AtSetPosition() && ( _limelight == NULL || (_oi != NULL && _oi->IgnoreVison()) || (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )){
-            _Launching = true;
+    if (_launcher !=NULL && _intake != NULL){
+        if(_launcher->atTargetRPM() && _intake->AtSetPosition() && ( _limelight == NULL || (_oi != NULL && _oi->IgnoreVision()) || (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )){
+            _launching = true;
         }
-        if(_Launching){
+        if(_launching){
             _intake->SetRollerPower(-ROLLER_POWER);
         }
     }
 
 }
 void TeleopLauncherCommand::End(bool interrupted){
-    if (_Launcher !=NULL && _intake != NULL){
-        _Launcher->setLauncherRPM(0_rpm);
+    if (_launcher !=NULL && _intake != NULL){
+        _launcher->setLauncherRPM(0_rpm);
         _intake->SetRollerPower(ROLLER_STOP);
     }
 }

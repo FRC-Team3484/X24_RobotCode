@@ -11,6 +11,7 @@
 #include <units/angle.h>
 
 #include <Constants.h>
+#include "FRC3484_Lib/utils/SC_Datatypes.h"
 
 class IntakeSubsystem : public frc2::SubsystemBase {
     public:
@@ -18,7 +19,10 @@ class IntakeSubsystem : public frc2::SubsystemBase {
             int pivot_motor_can_id, 
             int drive_motor_can_id, 
             int piece_sensor_di_ch,
-            int arm_sensor_di_ch
+            int arm_sensor_di_ch,
+            SC::SC_PIDConstants pidc,
+            double pid_output_range_max,
+            double pid_output_range_min
         );
 
         void Periodic() override;

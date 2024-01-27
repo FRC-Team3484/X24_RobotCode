@@ -10,11 +10,14 @@
 
 using namespace IntakeConstants;
 
-IntakeSubsystem::IntakeSubsystem(
+IntakeSubsystem::IntakeSubsystem( //Reference constants in Robot.h in the intializer list
     int pivot_motor_can_id, 
     int drive_motor_can_id, 
     int piece_sensor_di_ch, 
-    int arm_sensor_di_ch
+    int arm_sensor_di_ch,
+    SC::SC_PIDConstants pidc,
+    double pid_output_range_max,
+    double pid_output_range_min
     ) :
         _pivot_motor{pivot_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
         _drive_motor{drive_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
@@ -34,12 +37,12 @@ IntakeSubsystem::IntakeSubsystem(
 
     _target_position = STOW_POSITION;
 
-    _pivot_pid_controller->SetP(PID_CONSTANTS.Kp);
-    _pivot_pid_controller->SetI(PID_CONSTANTS.Ki);
-    _pivot_pid_controller->SetD(PID_CONSTANTS.Kd);
+    _pivot_pid_controller->SetP(pidc.Kp);
+    _pivot_pid_controller->SetI(pidc.Ki);
+    _pivot_pid_controller->SetD(pidc.Kd);
     _pivot_pid_controller->SetIZone(PID_IZ_ZONE);
     _pivot_pid_controller->SetFF(PID_CONSTANTS.Kf);
-    _pivot_pid_controller->SetOutputRange(PID_OUTPUTRANGE_MIN, PID_OUTPUTRANGE_MAX);
+    _pivot_pid_controller->SetOutputRange(pid_output_range_min, pid_output_range_max);
 }
 
 void IntakeSubsystem::Periodic() {
@@ -104,4 +107,13 @@ units::revolutions_per_minute_t IntakeSubsystem::GetEncoderVelocity() {
     // Returns the velocity of the encoder
 
     return units::revolutions_per_minute_t{_pivot_encoder->GetVelocity()} / IntakeConstants::GEAR_RATIO;
+}
+
+bool IntakeSubsystem::AtSetPosition() {
+    if (_arm_sensor_hit) {
+        return units::math::abs(GetIntakePosition() - _target_position) < IntakeConstants::POSITION_TOLERANCE;
+
+    } else {
+        return false;
+    }
 }
