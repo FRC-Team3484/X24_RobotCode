@@ -19,7 +19,7 @@ class Driver_Interface {
         // bool GetStraightenWheels();
         bool GetSetBrakeMode();
         bool GetDisableBrakeMode();
-        void SetDriverRumble(double Rumble);
+        void SetRumble(double Rumble);
 
 
         // Operator Controllers
@@ -28,15 +28,14 @@ class Driver_Interface {
         frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
 };
 
-
 class Operator_Interface{
     public:
         bool DeployIntake();
         bool Launch();
+        bool IgnoreVision();
         bool Climb();
         bool IgnoreSensor();
         bool ExtendIntakeButton();
-        bool IgnoreVision();
         bool EjectIntakeButton();
         bool IntakeOverrideButton();
         bool IntakeThroughShooterButton();

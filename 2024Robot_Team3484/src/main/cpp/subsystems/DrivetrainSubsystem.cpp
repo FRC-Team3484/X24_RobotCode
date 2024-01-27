@@ -54,14 +54,7 @@ Rotation2d DrivetrainSubsystem::GetHeading() {
 }
 
 void DrivetrainSubsystem::SetHeading(degree_t heading) {
-    if (_gyro == NULL) {
-        fmt::print("Error: gyro accessed in ZeroHeading before initialization");
-    } else {
-        _gyro_offset = heading;
-        _gyro->ZeroYaw();
-        ResetOdometry(GetPose());
-    }
-    
+    ResetOdometry(Pose2d(_odometry->GetPose().Translation(), Rotation2d(heading)));
 }
 
 degrees_per_second_t DrivetrainSubsystem::GetTurnRate() {
@@ -85,7 +78,11 @@ Pose2d DrivetrainSubsystem::GetPose() {
 void DrivetrainSubsystem::ResetOdometry(Pose2d pose) {
     if (_odometry == NULL) {
         fmt::print("Error: odometry accesed in ResetOdometry before initialization");
+    } else if (_gyro == NULL) {
+        fmt::print("Error: gyro accessed in ZeroHeading before initialization");
     } else {
+        _gyro_offset = pose.Rotation().Degrees();
+        _gyro->ZeroYaw();
         _odometry->ResetPosition(GetHeading(), GetModulePositions(), pose);
     }
     
