@@ -107,6 +107,7 @@ namespace SwerveConstants {
             constexpr int BRAKE_MODE = XBOX_RB;
             constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
             constexpr int AIM_START = XBOX_A;
+            constexpr int IGNORE_AIM = XBOX_B;
         }
     }
 

@@ -16,7 +16,7 @@
 
 class TeleopLauncherCommand: public frc2::CommandHelper<frc2::Command, TeleopLauncherCommand>{
     public:
-    explicit TeleopLauncherCommand(LauncherSubsystem* launcher_Subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* OI );
+    explicit TeleopLauncherCommand(LauncherSubsystem* launcher_Subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* oi );
     
     void Initialize() override;
     void Execute() override;
@@ -24,12 +24,13 @@ class TeleopLauncherCommand: public frc2::CommandHelper<frc2::Command, TeleopLau
     bool IsFinished() override;
     
     private:
-        LauncherSubsystem* _Launcher;
+        // Make sure to use proper naming schemes
+        LauncherSubsystem* _launcher;
         IntakeSubsystem* _intake;
         Vision* _limelight;
         Operator_Interface* _oi;
-        bool _Launching; 
-        bool _Loaded;
+        bool _launching; 
+        bool _loaded;
 
 };
 

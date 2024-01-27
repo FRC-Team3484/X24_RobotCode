@@ -28,7 +28,6 @@ class Driver_Interface {
         frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
 };
 
-#include <frc/XboxController.h>
 
 class Operator_Interface{
     public:
@@ -36,9 +35,8 @@ class Operator_Interface{
         bool Launch();
         bool Climb();
         bool IgnoreSensor();
-        bool IgnoreVison();
-        bool DummyInput();
         bool ExtendIntakeButton();
+        bool IgnoreVision();
         bool EjectIntakeButton();
         bool IntakeOverrideButton();
         bool IntakeThroughShooterButton();
