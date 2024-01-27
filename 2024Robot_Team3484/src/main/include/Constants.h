@@ -84,8 +84,8 @@ namespace SwerveConstants {
         constexpr double RUMBLE_LOW = 0.2;
         constexpr double RUMBLE_STOP = 0;
 
-         namespace Operatiorr_Controler{
-        constexpr int Operatior_CONTROLLER_PORT = 0;
+         namespace Operator_Controler{
+        constexpr int Operatior_CONTROLLER_PORT = 1;
         }  
         namespace Driver {
             constexpr int DRIVER_CONTROLLER_PORT = 0;
