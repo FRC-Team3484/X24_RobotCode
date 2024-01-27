@@ -2,8 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/LauncherCommand.h"
-#include "commands/teleop/TeleopIntakeCommand.h"
+#include "commands/teleop/TeleopLauncherCommand.h"
 
 
 using namespace LauncherConstants;
@@ -26,7 +25,7 @@ void LauncherCommand::Initialize(){
 
     _Launching = false;
     if (_Launcher !=NULL){
-    _Launcher->setLauncherRPM(Target_RPM);
+    _Launcher->setLauncherRPM(TARGET_RPM);
     }
 
 

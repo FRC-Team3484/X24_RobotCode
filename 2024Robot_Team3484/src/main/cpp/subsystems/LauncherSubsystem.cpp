@@ -58,7 +58,7 @@ LauncherSubsystem::LauncherSubsystem(
 }
 
 void LauncherSubsystem::setLauncherRPM(units::revolutions_per_minute_t speed){
-    _target_speed = speed.value();
+    _target_speed = speed.value()*GEAR_RATIO;
 }
 
 void LauncherSubsystem::Periodic() {
@@ -67,7 +67,8 @@ void LauncherSubsystem::Periodic() {
     }
      if (Launcher_m_Right_pidController !=NULL){
         Launcher_m_Right_pidController->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
-     }
+    }
+
 }
 
 bool LauncherSubsystem::atTargetRPM(){

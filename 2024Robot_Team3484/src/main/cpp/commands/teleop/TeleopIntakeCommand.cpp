@@ -22,7 +22,7 @@ void TeleopIntakeCommand::Execute() {
         }
 
         if (_intake_subsystem->HasPiece()) {
-            _oi->SetOperatorRumble(SwerveConstants::ControllerConstants::RUMBLE_LOW);
+            _oi->SetOperatorRumble(SwerveConstants::ControllerConstants::OPERATOR_RUMBLE_LOW);
 
         }
 
@@ -39,7 +39,7 @@ void TeleopIntakeCommand::Execute() {
         if (!_intake_subsystem->HasPiece() || _oi->IntakeOverrideButton()) {
             _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
             _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
-            _launcher_subsystem->setLauncherRPM(LauncherConstants::Reverse_RPM);
+            _launcher_subsystem->setLauncherRPM(LauncherConstants::REVERSE_RPM);
 
         } else {
             _launcher_subsystem->setLauncherRPM(0_rpm);
@@ -52,7 +52,7 @@ void TeleopIntakeCommand::Execute() {
         _oi->SetOperatorRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
 
         if (_oi->LaunchButton()) {
-            _launcher_subsystem->setLauncherRPM(LauncherConstants::Target_RPM);
+            _launcher_subsystem->setLauncherRPM(LauncherConstants::TARGET_RPM);
 
         } else {
             _launcher_subsystem->setLauncherRPM(0_rpm);
