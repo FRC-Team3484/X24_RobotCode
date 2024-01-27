@@ -46,6 +46,7 @@ namespace IntakeConstants {
 
     constexpr units::degree_t STOW_POSITION = 0_deg;
     constexpr units::degree_t INTAKE_POSITION = 180_deg;
+    constexpr units::degree_t EJECT_POSITION = 180_deg;
 
     constexpr double HOME_POWER = -0.2;
 

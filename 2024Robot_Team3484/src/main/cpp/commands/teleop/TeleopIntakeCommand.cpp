@@ -27,7 +27,7 @@ void TeleopIntakeCommand::Execute() {
         }
 
     } else if (_oi->EjectIntakeButton()) {
-        _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
+        _intake_subsystem->SetIntakeAngle(IntakeConstants::EJECT_POSITION);
 
         if (_intake_subsystem->AtSetPosition()) {
             _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
