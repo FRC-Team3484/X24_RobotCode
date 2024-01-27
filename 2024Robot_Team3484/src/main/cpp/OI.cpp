@@ -25,6 +25,8 @@ bool Operator_Interface::IgnoreVision() {return _Operator_controller.GetRawButto
 bool Operator_Interface::IntakeOverrideButton() {return false;}
 bool Operator_Interface::IntakeThroughShooterButton() {return false;}
 bool Operator_Interface::LaunchButton() {return false;}
+bool Operator_Interface::ClimbUp() {return false;}
+bool Operator_Interface::ClimbDown() {return false;}
 void Operator_Interface::SetOperatorRumble(double Rumble) {
     _Operator_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }

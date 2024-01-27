@@ -33,7 +33,8 @@ class Operator_Interface{
         bool DeployIntake();
         bool Launch();
         bool IgnoreVision();
-        bool Climb();
+        bool ClimbUp();
+        bool ClimbDown();
         bool IgnoreSensor();
         bool ExtendIntakeButton();
         bool EjectIntakeButton();
