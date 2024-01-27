@@ -69,13 +69,8 @@ void LauncherSubsystem::Periodic() {
     }
      if (Launcher_m_Right_pidController !=NULL){
         Launcher_m_Right_pidController->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
-<<<<<<< HEAD
-    }
-
-=======
         _counter_null_right++;
      }
->>>>>>> 4036bce18d6b7ead5549b0396ac55f0158c38f26
 }
 
 bool LauncherSubsystem::atTargetRPM(){

@@ -19,7 +19,6 @@ namespace LauncherConstants {
     constexpr int LEFT_MOTOR_CANID = 40;
     constexpr int RIGHT_MOTOR_CANID = 41;
 
-<<<<<<< HEAD
     constexpr int Motor_Left_CanID2 = 0;
     constexpr int Motor_Right_CanID2 = 1;
 
@@ -29,29 +28,16 @@ namespace LauncherConstants {
     constexpr double FF_Launcher = 0;
     constexpr double RPM_Window_Launcher = 50;
     constexpr double GEAR_RATIO = 3;
-=======
     constexpr double RPM_WINDOW_RANGE = 50;
->>>>>>> 4036bce18d6b7ead5549b0396ac55f0158c38f26
 
     //constexpr bool IsLoaded = true;
     constexpr bool MOTOR_INVERTED = true;
 
 
 
-<<<<<<< HEAD
 
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1503_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -(TARGET_RPM/2); // make a command that tuns this value to rue an drunss the command 
-=======
-    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 2000_rpm;
-    constexpr units::revolutions_per_minute_t REVERSE_RPM = -1000_rpm; // make a command that tuns this value to rue an drunss the command 
-    constexpr SC::SC_PIDConstants SHOOTER_PID_CONSTANTS(
-        0.1, // P
-        1e-4, // I
-        1, // D
-        0 // F
-    );
->>>>>>> 4036bce18d6b7ead5549b0396ac55f0158c38f26
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;

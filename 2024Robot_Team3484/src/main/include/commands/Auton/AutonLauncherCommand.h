@@ -13,9 +13,9 @@
 #include <frc2/command/CommandHelper.h>
 
 
-class LauncherCommand: public frc2::CommandHelper<frc2::Command, LauncherCommand>{
+class AutonLauncherCommand: public frc2::CommandHelper<frc2::Command, AutonLauncherCommand>{
     public:
-    explicit LauncherCommand(LauncherSubsystem* Launcher_Subsystem, IntakeSubsystem* intake_subsystem, Vision* vision);
+    explicit AutonLauncherCommand(LauncherSubsystem* Launcher_Subsystem, IntakeSubsystem* intake_subsystem, Vision* vision);
     
     void Initialize() override;
     void Execute() override;

@@ -9,13 +9,13 @@ using namespace LauncherConstants;
 using namespace IntakeConstants;
 using namespace VisionConstants;
 
-LauncherCommand::LauncherCommand(LauncherSubsystem* Launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision)
+AutonLauncherCommand::AutonLauncherCommand(LauncherSubsystem* Launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision)
 : _Launcher{Launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}{ 
     AddRequirements(_Launcher), AddRequirements(_intake);
 }
 
 
-void LauncherCommand::Initialize(){
+void AutonLauncherCommand::Initialize(){
 
     if(_intake !=NULL){
         _intake->SetIntakeAngle(STOW_POSITION);
@@ -30,7 +30,7 @@ void LauncherCommand::Initialize(){
 
 
 }
-void LauncherCommand::Execute(){
+void AutonLauncherCommand::Execute(){
     if (_Launcher !=NULL && _intake != NULL){
         if(_Launcher->atTargetRPM() && _intake->AtSetPosition() && ( _limelight == NULL || (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )){
             _Launching = true;
@@ -41,12 +41,12 @@ void LauncherCommand::Execute(){
     }
 
 }
-void LauncherCommand::End(bool interrupted){
+void  AutonLauncherCommand::End(bool interrupted){
     if (_Launcher !=NULL && _intake != NULL){
         _Launcher->setLauncherRPM(0_rpm);
         _intake->SetRollerPower(ROLLER_STOP);
     }
 }
-bool LauncherCommand::IsFinished(){
+bool  AutonLauncherCommand::IsFinished(){
  return false;
 }
