@@ -17,13 +17,10 @@
 class LauncherSubsystem : public frc2::SubsystemBase {
     public:
         LauncherSubsystem(
-            int MOTOR_LEFT_CAN_ID, 
-            int MOTOR_RIGHT_CAN_ID,
-            double P_Launcher,
-            double I_Launcher,
-            double D_Launcher,
-            double FF_Launcher,
-            double RPM_Window_Launcher 
+            int CAN_ID_Left, 
+            int CAN_ID_Right,
+            SC::SC_PIDConstants pidc,
+            double RPM_InRangeWindow
         );
         void Periodic() override;
         void setLauncherRPM(units::revolutions_per_minute_t speed);
@@ -39,6 +36,9 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         rev::SparkPIDController* Launcher_m_Right_pidController;
 
         double _target_speed;
+        int _counter_null_right;
+        int _counter_null_left;
+
 
 };
 #endif

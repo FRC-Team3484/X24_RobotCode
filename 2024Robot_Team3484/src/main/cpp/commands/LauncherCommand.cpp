@@ -10,8 +10,8 @@ using namespace LauncherConstants;
 using namespace IntakeConstants;
 using namespace VisionConstants;
 
-LauncherCommand::LauncherCommand(LauncherSubsystem* Launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* OI )
-: _Launcher{Launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}, _oi{OI} { 
+LauncherCommand::LauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* OI )
+: _Launcher{launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}, _oi{OI} { 
     AddRequirements(_Launcher), AddRequirements(_intake);
 }
 
@@ -26,14 +26,14 @@ void LauncherCommand::Initialize(){
 
     _Launching = false;
     if (_Launcher !=NULL){
-    _Launcher->setLauncherRPM(Target_RPM);
+    _Launcher->setLauncherRPM(TARGET_RPM);
     }
 
 
 }
 void LauncherCommand::Execute(){
     if (_Launcher !=NULL && _intake != NULL){
-        if(_Launcher->atTargetRPM() && _intake->AtSetPosition() && ( _limelight == NULL || _oi->IgnoreVison() || (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )){
+        if(_Launcher->atTargetRPM() && _intake->AtSetPosition() && ( _limelight == NULL || (_oi != NULL && _oi->IgnoreVison()) || (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )){
             _Launching = true;
         }
         if(_Launching){

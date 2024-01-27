@@ -18,12 +18,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
             int pivot_motor_can_id, 
             int drive_motor_can_id, 
             int piece_sensor_di_ch,
-            int arm_sensor_di_ch,
-
-            SC::SC_PIDConstants PID_CONSTANTS,
-            double PID_IZ_ZONE,
-            double PID_OUTPUTRANGE_MIN,
-            double PID_OUTPUTRANGE_MAX
+            int arm_sensor_di_ch
         );
 
         void Periodic() override;

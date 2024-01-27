@@ -15,7 +15,7 @@
 
 class LauncherCommand: public frc2::CommandHelper<frc2::Command, LauncherCommand>{
     public:
-    explicit LauncherCommand(LauncherSubsystem* Launcher_Subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* OI );
+    explicit LauncherCommand(LauncherSubsystem* launcher_Subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* OI );
     
     void Initialize() override;
     void Execute() override;
