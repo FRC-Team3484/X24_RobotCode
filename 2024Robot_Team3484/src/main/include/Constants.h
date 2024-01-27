@@ -16,6 +16,9 @@
 
 
 namespace LauncherConstants {
+    constexpr int LEFT_MOTOR_CANID = 40;
+    constexpr int RIGHT_MOTOR_CANID = 41;
+
     constexpr int Motor_Left_CanID2 = 0;
     constexpr int Motor_Right_CanID2 = 1;
 
@@ -24,14 +27,17 @@ namespace LauncherConstants {
     constexpr double D_Launcher = 0;
     constexpr double FF_Launcher = 0;
     constexpr double RPM_Window_Launcher = 50;
+    constexpr double GEAR_RATIO = 3;
+    constexpr double RPM_WINDOW_RANGE = 50;
 
     //constexpr bool IsLoaded = true;
     constexpr bool MOTOR_INVERTED = true;
 
 
 
-    constexpr units::revolutions_per_minute_t Target_RPM/*place holder*/ = 2000_rpm;
-    constexpr units::revolutions_per_minute_t Reverse_RPM = -1000_rpm; // make a command that tuns this value to rue an drunss the command 
+
+    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1503_rpm;
+    constexpr units::revolutions_per_minute_t REVERSE_RPM = -(TARGET_RPM/2); // make a command that tuns this value to rue an drunss the command 
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
@@ -78,10 +84,17 @@ namespace SwerveConstants {
     }
 
     namespace ControllerConstants {
-        constexpr double RUMBLE_HIGH = 0.5;
-        constexpr double RUMBLE_LOW = 0.2;
-        constexpr double RUMBLE_STOP = 0;
+        constexpr double DRIVER_RUMBLE_HIGH = 0.5;
+        constexpr double DRIVER_RUMBLE_LOW = 0.2;
+
+        constexpr double OPERATOR_RUMBLE_HIGH = 0.5;
+        constexpr double OPERATOR_RUMBLE_LOW = 0.2;
         
+        constexpr double RUMBLE_STOP = 0;
+
+         namespace Operator_Controler{
+        constexpr int OPERATOR_CONTROLLER_PORT = 1;
+        }  
         namespace Driver {
             constexpr int DRIVER_CONTROLLER_PORT = 0;
             constexpr double JOYSTICK_DEADBAND = 0.02;
