@@ -43,7 +43,7 @@ class Operator_Interface{
         bool IgnoreVison();
        
     private:
-        frc::XboxController _perator_controller{SwerveConstants::ControllerConstants::OPERATOR_CONTROLLER_PORT};
+        frc::XboxController _operator_controller{SwerveConstants::ControllerConstants::OPERATOR_CONTROLLER_PORT};
 
 };
 #endif
