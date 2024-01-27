@@ -19,23 +19,13 @@ bool Driver_Interface::GetDisableBrakeMode() {return _driver_controller.GetRawBu
 void Driver_Interface::SetDriverRumble(double Rumble) {
     _driver_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
-<<<<<<< HEAD
-bool Operator_Interface::DummyInput() {return false;}
+//Operator Stuff
 bool Operator_Interface::ExtendIntakeButton() {return false;}
 bool Operator_Interface::EjectIntakeButton() {return false;}
+bool Operator_Interface::IgnoreVision() {return _Operator_controller.GetRawButton(IGNORE_AIM);}
 bool Operator_Interface::IntakeOverrideButton() {return false;}
 bool Operator_Interface::IntakeThroughShooterButton() {return false;}
 bool Operator_Interface::LaunchButton() {return false;}
 void Operator_Interface::SetOperatorRumble(double Rumble) {
     _Operator_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
-=======
-
-//Operator Stuff
-bool Operator_Interface::ExtendIntakeButton() {return false;}
-bool Operator_Interface::EjectIntakeButton() {return false;}
-bool Operator_Interface::IgnoreVision() {return _operator_controller.GetRawButton(IGNORE_AIM);}
-bool Operator_Interface::IntakeOverrideButton() {return false;}
-bool Operator_Interface::IntakeThroughShooterButton() {return false;}
-bool Operator_Interface::LaunchButton() {return false;}
->>>>>>> f900388ca1fa47fff4d075bc03edfc27c3953795

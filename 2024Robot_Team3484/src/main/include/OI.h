@@ -44,11 +44,7 @@ class Operator_Interface{
         bool LaunchButton();
         void SetOperatorRumble(double Rumble);
     private:
-<<<<<<< HEAD
         frc::XboxController _Operator_controller{SwerveConstants::ControllerConstants::Operator_Controler::OPERATOR_CONTROLLER_PORT};
-=======
-        frc::XboxController _perator_controller{SwerveConstants::ControllerConstants::OPERATOR_CONTROLLER_PORT};
->>>>>>> f900388ca1fa47fff4d075bc03edfc27c3953795
 
 };
 #endif
