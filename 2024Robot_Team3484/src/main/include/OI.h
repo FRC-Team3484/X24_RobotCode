@@ -12,9 +12,11 @@ class Driver_Interface {
         double GetThrottle();
         double GetStrafe();
         double GetRotation();
+        bool StartAim();
         bool GetResetHeading();
         bool GetBrake();
-        bool GetStraightenWheels();
+        bool GetBrakePressed();
+        // bool GetStraightenWheels();
         bool GetSetBrakeMode();
         bool GetDisableBrakeMode();
         void SetRumble(double Rumble);
@@ -31,18 +33,17 @@ class Driver_Interface {
         frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
 };
 
-#include <frc/XboxController.h>
-
 class Operator_Interface{
     public:
         bool DeployIntake();
         bool Launch();
+        bool IgnoreVision();
         bool Climb();
         bool IgnoreSensor();
         bool IgnoreVison();
        
     private:
-        //frc::XboxController _Operator_controller{SwerveConstants::ControllerConstants::OPERATOR_CONTROLLER_PORT};
+        frc::XboxController _perator_controller{SwerveConstants::ControllerConstants::OPERATOR_CONTROLLER_PORT};
 
 };
 #endif

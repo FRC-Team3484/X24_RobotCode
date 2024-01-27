@@ -11,9 +11,10 @@
 
 // Swerve Stuff
 #include "subsystems/DrivetrainSubsystem.h"
-#include "commands/SwerveTeleop/TeleopDriveCommand.h"
-#include "commands/SwerveTeleop/DynamicBrakeCommand.h"
-#include "commands/SwerveTeleop/StraightenWheelsCommand.h"
+#include "commands/teleop/TeleopAimCommand.h"
+#include "commands/teleop/TeleopDriveCommand.h"
+#include "subsystems/Vision.h"
+// #include "commands/Teleop/StraightenWheelsCommand.h"
 #include "subsystems/AutonGenerator.h"
 
 
@@ -24,7 +25,8 @@
 #include <frc/TimedRobot.h>
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/CommandScheduler.h>
-
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DigitalInput.h>
 class Robot : public frc::TimedRobot {
  public:
   void RobotInit() override;
@@ -40,18 +42,26 @@ class Robot : public frc::TimedRobot {
   //void SimulationPeriodic() override;
 
  private:
-  enum State {drive, brake, straighten};
+  enum State {drive, shoot};
   State _robot_state = drive;
 
-  Driver_Interface _oi{};
+  Driver_Interface _oi_driver{};
+  Operator_Interface _oi_operator{};
+
+  Vision _vision{VisionConstants::CAMERA_ANGLE, VisionConstants::CAMERA_HEIGHT, VisionConstants::TARGET_HEIGHT};
 
   DrivetrainSubsystem _drivetrain{SwerveConstants::DrivetrainConstants::SWERVE_CONFIGS_ARRAY};
 
-  TeleopDriveCommand _drive_command{&_drivetrain, &_oi};
-  DynamicBrakeCommand _brake_command{&_drivetrain};
-  StraightenWheelsCommand _straighten_command{&_drivetrain};
+  // TeleopDriveCommand _drive_command{&_drivetrain, &_oi};
+  // DynamicBrakeCommand _brake_command{&_drivetrain};
 
+  // StraightenWheelsCommand _straighten_command{&_drivetrain};
+
+  TeleopAimCommand _aim_command{&_drivetrain, &_oi_driver, &_oi_operator, &_vision};
+  TeleopDriveCommand _drive_command{&_drivetrain, &_oi_driver};
   AutonGenerator _auton_generator{&_drivetrain};
+  
+  frc::DigitalInput _troubleshoot{0};
 
   std::optional<frc2::CommandPtr> _auton_command;
 };

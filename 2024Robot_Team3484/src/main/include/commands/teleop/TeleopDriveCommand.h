@@ -1,11 +1,12 @@
-#ifndef TELEOPDRIVECOMMAND_H
-#define TELEOPDRIVECOMMAND_H
+#ifndef DRIVECOMMAND_H
+#define DRIVECOMMAND_H
 
 #include "OI.h"
 #include "subsystems/DrivetrainSubsystem.h"
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/kinematics/SwerveModulePosition.h>
 
 class TeleopDriveCommand: public frc2::CommandHelper<frc2::Command, TeleopDriveCommand> {
     public:
@@ -19,6 +20,13 @@ class TeleopDriveCommand: public frc2::CommandHelper<frc2::Command, TeleopDriveC
     private:
         DrivetrainSubsystem* _drivetrain;
         Driver_Interface* _oi;
+        wpi::array<frc::SwerveModulePosition, 4> _initial_positions = {
+            frc::SwerveModulePosition{0_m, 0_rad},
+            frc::SwerveModulePosition{0_m, 0_rad},
+            frc::SwerveModulePosition{0_m, 0_rad},
+            frc::SwerveModulePosition{0_m, 0_rad}
+        };
 };
+
 
 #endif

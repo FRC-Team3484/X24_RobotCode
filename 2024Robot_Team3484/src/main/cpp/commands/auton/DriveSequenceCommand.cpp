@@ -1,4 +1,4 @@
-#include "commands/SwerveAuton/DriveSequenceCommand.h"
+#include "commands/auton/DriveSequenceCommand.h"
 
 #include <units/length.h>
 #include <units/angle.h>
