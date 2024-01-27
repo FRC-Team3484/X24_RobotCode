@@ -51,10 +51,8 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
     switch (_robot_state) {
     case drive:
-      if (_oi_driver.StartAim()){
-        wpi::outs() << "Testing: drive \n";
+      if (_oi_operator.LaunchButton()){
         _drive_command.Cancel();
-        wpi::outs() << "Testing: aim \n";
         _aim_command.Schedule();
         _robot_state = shoot;
       }
@@ -62,7 +60,7 @@ void Robot::TeleopPeriodic() {
 
       break;
     case shoot:
-      if (!_oi_driver.StartAim()) {
+      if (!_oi_operator.LaunchButton()) {
         _aim_command.Cancel();
         _drive_command.Schedule();
         _robot_state = drive;

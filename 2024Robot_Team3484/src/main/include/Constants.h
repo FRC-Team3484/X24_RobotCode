@@ -107,13 +107,13 @@ namespace SwerveConstants {
             constexpr int THROTTLE =  XBOX_LS_Y;
             constexpr int STRAFE = XBOX_LS_X;
             constexpr int ROTATION = XBOX_RS_X;
-            constexpr int RESET_HEADING = XBOX_BACK;
+            constexpr int RESET_HEADING = XBOX_START;
             constexpr int BRAKE = XBOX_X;
-            constexpr int STRAIGHTEN_WHEELS = XBOX_START;
             constexpr int BRAKE_MODE = XBOX_RB;
             constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
             constexpr int AIM_START = XBOX_A;
             constexpr int IGNORE_AIM = XBOX_B;
+            constexpr int LOW_SPEED = XBOX_LB;
         }
     }
 
@@ -178,6 +178,10 @@ namespace SwerveConstants {
             constexpr double Kd_Drive = 0.0;
             constexpr units::radians_per_second_t MAX_SPEED = 12_rad_per_s;
             constexpr units::radians_per_second_squared_t MAX_ACCELERATION  = 100_rad_per_s_sq;
+        }
+
+        namespace JoystickScaling {
+            constexpr double LOW_SCALE = 0.2;
         }
     }
 
