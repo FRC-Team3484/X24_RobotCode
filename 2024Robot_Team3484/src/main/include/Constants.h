@@ -19,14 +19,7 @@ namespace LauncherConstants {
     constexpr int LEFT_MOTOR_CANID = 40;
     constexpr int RIGHT_MOTOR_CANID = 41;
 
-    constexpr int Motor_Left_CanID2 = 0;
-    constexpr int Motor_Right_CanID2 = 1;
-
-    constexpr double P_Launcher = 0;
-    constexpr double I_Launcher = 0;
-    constexpr double D_Launcher = 0;
-    constexpr double FF_Launcher = 0;
-    constexpr double RPM_Window_Launcher = 50;
+    constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
     constexpr double GEAR_RATIO = 3;
     constexpr double RPM_WINDOW_RANGE = 50;
 
