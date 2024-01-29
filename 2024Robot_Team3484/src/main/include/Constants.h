@@ -91,23 +91,6 @@ namespace SwerveConstants {
         
         constexpr double RUMBLE_STOP = 0;
 
-         namespace Operator_Controler{
-        constexpr int OPERATOR_CONTROLLER_PORT = 1;
-        }  
-        namespace Driver {
-            constexpr int DRIVER_CONTROLLER_PORT = 0;
-            constexpr double JOYSTICK_DEADBAND = 0.02;
-            constexpr int THROTTLE =  XBOX_LS_Y;
-            constexpr int STRAFE = XBOX_LS_X;
-            constexpr int ROTATION = XBOX_RS_X;
-            constexpr int RESET_HEADING = XBOX_START;
-            constexpr int BRAKE = XBOX_X;
-            constexpr int BRAKE_MODE = XBOX_RB;
-            constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
-            constexpr int AIM_START = XBOX_A;
-            constexpr int IGNORE_AIM = XBOX_B;
-            constexpr int LOW_SPEED = XBOX_LB;
-        }
     }
 
     namespace DrivetrainConstants {
@@ -215,6 +198,29 @@ namespace VisionConstants {
     constexpr double STEER_GAIN = -.01;
     constexpr double TARGET_HEIGHT = 36; // inches
     // multiplier to give how far off and results to a steer power
+}
+namespace UserInterface {
+    namespace Driver {
+        constexpr int DRIVER_CONTROLLER_PORT = 0;
+        constexpr double JOYSTICK_DEADBAND = 0.02;
+        constexpr int THROTTLE =  XBOX_LS_Y;
+        constexpr int STRAFE = XBOX_LS_X;
+        constexpr int ROTATION = XBOX_RS_X;
+        constexpr int RESET_HEADING = XBOX_START;
+        constexpr int BRAKE = XBOX_X;
+        constexpr int BRAKE_MODE = XBOX_RB;
+        constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
+        constexpr int LOW_SPEED = XBOX_LB;
+    }
+    namespace Operator {
+        constexpr int OPERATOR_CONTROLLER_PORT = 1;
+        constexpr int INTAKE_SHOOTER = XBOX_Y;
+        constexpr int IGNORE = XBOX_RB;
+        constexpr int AIM_START = XBOX_X;
+        constexpr int EXTEND = XBOX_A;
+        constexpr int EJECT = XBOX_B;
+    }
+
 }
 
 #endif

@@ -26,7 +26,7 @@ class Driver_Interface {
         // Operator Controllers
 
     private:
-        frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
+        frc::XboxController _driver_controller{UserInterface::Driver::DRIVER_CONTROLLER_PORT};
 };
 
 class Operator_Interface{
@@ -40,9 +40,8 @@ class Operator_Interface{
         bool EjectIntakeButton();
         bool IntakeThroughShooterButton();
         bool LaunchButton();
-        void SetOperatorRumble(double Rumble);
+        void SetRumble(double Rumble);
     private:
-        frc::XboxController _operator_controller{SwerveConstants::ControllerConstants::Operator_Controler::OPERATOR_CONTROLLER_PORT};
-
+        frc::XboxController _operator_controller{UserInterface::Operator::OPERATOR_CONTROLLER_PORT};
 };
 #endif
