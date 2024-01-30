@@ -5,15 +5,42 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace frc;
+// using namespace pathplanner;
 using namespace units;
 using namespace SwerveConstants::DrivetrainConstants;
 using namespace SC;
+using namespace pathplanner;
 
 DrivetrainSubsystem::DrivetrainSubsystem(SC_SwerveConfigs swerve_config_array[4]) {
     if (NULL != swerve_config_array) {
         for (int i = 0; i < 4; i++) {
             _modules[i] = new SwerveModule(swerve_config_array[i]);
         }
+    AutoBuilder::configureHolonomic(
+        [this](){ return GetPose(); }, // Robot pose supplier
+        [this](frc::Pose2d pose){ ResetOdometry(pose); }, // Method to reset odometry (will be called if your auto has a starting pose)
+        [this](){ return GetChassisSpeeds(); }, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+        [this](frc::ChassisSpeeds speeds){ DriveRobotcentric(speeds); }, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+        HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+            PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+            PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+            4.5_mps, // Max module speed, in m/s
+            0.4_m, // Drive base radius in meters. Distance from robot center to furthest module.
+            ReplanningConfig() // Default path replanning config. See the API for the options here
+        ),
+        []() {
+            // Boolean supplier that controls when the path will be mirrored for the red alliance
+            // This will flip the path being followed to the red side of the field.
+            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+            auto alliance = DriverStation::GetAlliance();
+            if (alliance) {
+                return alliance.value() == DriverStation::Alliance::kRed;
+            }
+            return false;
+        },
+        this // Reference to this subsystem to set requirements
+    );
     }
     _gyro = new AHRS{SPI::Port::kMXP};
     _odometry = new SwerveDriveOdometry<4>{kinematics, GetHeading(), GetModulePositions()};
@@ -28,8 +55,14 @@ void DrivetrainSubsystem::Periodic() {
 }
 
 void DrivetrainSubsystem::Drive(meters_per_second_t x_speed, meters_per_second_t y_speed, radians_per_second_t rotation, bool open_loop) {
-    auto states = kinematics.ToSwerveModuleStates(ChassisSpeeds::FromFieldRelativeSpeeds(x_speed, y_speed, rotation, GetHeading()));
+    // auto states = kinematics.ToSwerveModuleStates(ChassisSpeeds::FromFieldRelativeSpeeds(x_speed, y_speed, rotation, GetHeading()));
+    DriveRobotcentric(ChassisSpeeds::FromFieldRelativeSpeeds(x_speed, y_speed, rotation, GetHeading()), open_loop);
 
+    // SetModuleStates(states, open_loop, true);
+}
+
+void DrivetrainSubsystem::DriveRobotcentric(ChassisSpeeds speeds, bool open_loop){
+    auto states = kinematics.ToSwerveModuleStates(speeds);
     SetModuleStates(states, open_loop, true);
 }
 

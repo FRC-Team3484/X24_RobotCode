@@ -76,6 +76,10 @@ namespace SwerveConstants {
     const std::string AUTON_DISTANCE = "Drive 5 feet";
     const std::string AUTON_ANGLE = "Turn 90 degrees";
     const std::string AUTON_SEQUENCE = "Drive Sequence";
+
+    //Testing
+    
+    const std::string TWO_PIECE_AUTON = "Two Piece Auton";
     }
 
     namespace ControllerConstants {
