@@ -1,5 +1,6 @@
 #include "commands/teleop/TeleopIntakeCommand.h"
 #include <Constants.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace IntakeConstants;
 
@@ -60,6 +61,14 @@ void TeleopIntakeCommand::Execute() {
 
         }
     }
+
+    #ifdef EN_DIAGNOSTICS
+    frc::SmartDashboard::PutBoolean("Intake: Has Piece", _intake_subsystem->HasPiece());
+    frc::SmartDashboard::PutBoolean("Intake: Arm Extended", _intake_subsystem->ArmExtended());
+    frc::SmartDashboard::PutBoolean("Intake: At Set Position", _intake_subsystem->AtSetPosition());
+    #endif
+
+
 }
 
 void TeleopIntakeCommand::End(bool inturrupted) {

@@ -1,7 +1,6 @@
 #ifndef INTAKE_H
 #define INTAKE_H
 
-
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
 //#include <ctre/Phoenix.h>

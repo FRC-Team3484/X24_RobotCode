@@ -1,5 +1,6 @@
 #include "commands/teleop/TeleopClawCommand.h"
 #include <Constants.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace ClawConstants;
 
@@ -22,6 +23,11 @@ void ClawCommand::Execute() {
         _claw_subsystem->SetClawPower(ClawConstants::MOTOR_STOP);
 
     }
+
+    #ifdef EN_DIAGNOSTICS
+    frc::SmartDashboard::PutBoolean("Intake: Has Piece", _claw_subsystem->GetLeftSensor());
+    frc::SmartDashboard::PutBoolean("Intake: Has Piece", _claw_subsystem->GetRightSensor());
+    #endif
 }
 
 void ClawCommand::End(bool inturrupted) {
