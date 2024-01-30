@@ -1,4 +1,4 @@
-#include "commands/teleop/ClawCommand.h"
+#include "commands/teleop/TeleopClawCommand.h"
 #include <Constants.h>
 
 using namespace ClawConstants;

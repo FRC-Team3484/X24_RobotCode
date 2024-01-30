@@ -23,7 +23,7 @@ void TeleopIntakeCommand::Execute() {
         }
 
         if (_intake_subsystem->HasPiece()) {
-            _oi->SetOperatorRumble(SwerveConstants::ControllerConstants::OPERATOR_RUMBLE_LOW);
+            _oi->SetRumble(SwerveConstants::ControllerConstants::OPERATOR_RUMBLE_LOW);
 
         }
 
@@ -50,7 +50,7 @@ void TeleopIntakeCommand::Execute() {
         _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
         _intake_subsystem->SetRollerPower(0);
 
-        _oi->SetOperatorRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
+        _oi->SetRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
 
         if (_oi->LaunchButton()) {
             _launcher_subsystem->setLauncherRPM(LauncherConstants::TARGET_RPM);
@@ -68,7 +68,7 @@ void TeleopIntakeCommand::End(bool inturrupted) {
 
     _launcher_subsystem->setLauncherRPM(0_rpm);
 
-    _oi->SetOperatorRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
+    _oi->SetRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
 }
 
 bool TeleopIntakeCommand::IsFinished() {return false;}

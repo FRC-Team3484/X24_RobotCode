@@ -1,29 +1,21 @@
-#include "commands/teleop/TeleopAimCommand.h"
+#include "commands/auton/AutonAimCommand.h"
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace frc;
-
 using namespace VisionConstants;
-
 using namespace SwerveConstants::AutonDriveConstants;
 using namespace SwerveConstants::BrakeConstants;
 
 
-TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision)
+AutonAimCommand::AutonAimCommand(DrivetrainSubsystem* drivetrain, Vision* vision)
     : _drivetrain{drivetrain},
-    _oi_driver{oi_driver},
-    _oi_operator{oi_operator},
     _limelight{vision} {
     AddRequirements(_drivetrain);
 }
 
 
-void TeleopAimCommand::Initialize() {
-    _oi_driver->SetRumble(.2);
-    // fmt::print("Testing");
-    //  Two constants for AIM_TOLERANCE HIGH and LOW
-    // natural default is to break
+void AutonAimCommand::Initialize() {
     _aiming = false;
     _initial_positions = _drivetrain->GetModulePositions();
     if (_limelight == NULL) {
@@ -35,7 +27,7 @@ void TeleopAimCommand::Initialize() {
     _limelight->SetTargetHeight(TARGET_HEIGHT);
     }
 }
-void TeleopAimCommand::Execute() {
+void AutonAimCommand::Execute() {
     if (_limelight == NULL) {
         fmt::print("Limelight is Null");
     } else {
@@ -43,7 +35,7 @@ void TeleopAimCommand::Execute() {
         SmartDashboard::PutNumber("Horizontal Angle", _limelight->GetOffsetX());
         if (_aiming){
             _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
-            if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()){
+            if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget()){
                 _aiming = false;
                 _initial_positions = _drivetrain->GetModulePositions();
     }
@@ -70,10 +62,9 @@ void TeleopAimCommand::Execute() {
 
 
 
-void TeleopAimCommand::End(bool interrupted) {
+void AutonAimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
     _drivetrain->SetCoastMode();
-    _oi_driver->SetRumble(0);
 }
 
-bool TeleopAimCommand::IsFinished() {return false;}
+bool AutonAimCommand::IsFinished() {return false;}
