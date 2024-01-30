@@ -46,7 +46,7 @@ frc2::CommandPtr AutonGenerator::GetAutonomousCommand() {
   if (auton_selected == AUTON_NONE) {
     fmt::print("No Auton Selected");
   } else if (auton_selected == TWO_PIECE_AUTON) {
-    return PathPlannerAuto("Two Piece Auton.auto").ToPtr();
+    return PathPlannerAuto("pos_1_2_piece.auto").ToPtr();
   }
   return frc2::cmd::None();
 }
