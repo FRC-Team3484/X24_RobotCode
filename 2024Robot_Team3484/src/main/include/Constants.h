@@ -1,6 +1,8 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#define EN_DIAGNOSTICS
+
 #include <units/voltage.h>
 #include <units/length.h>
 #include <units/velocity.h>
