@@ -31,8 +31,6 @@ void AutonAimCommand::Execute() {
     if (_limelight == NULL) {
         fmt::print("Limelight is Null");
     } else {
-        SmartDashboard::PutNumber("Horizontal Distance", _limelight->GetHorizontalDistance().value());
-        SmartDashboard::PutNumber("Horizontal Angle", _limelight->GetOffsetX());
         if (_aiming){
             _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
             if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget()){
@@ -57,6 +55,11 @@ void AutonAimCommand::Execute() {
                 _aiming = true;
             }
         }
+        #ifdef EN_DIAGNOSTICS
+            SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has Piece", _limelight->HasTarget());
+            SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());
+            SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
+        #endif
     }
 }
 

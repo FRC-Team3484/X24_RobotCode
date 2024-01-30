@@ -1,13 +1,14 @@
 #include "commands/teleop/TeleopAimCommand.h"
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/smartdashboard/SmartDashboard.h>
-
 using namespace frc;
 
 using namespace VisionConstants;
 
 using namespace SwerveConstants::AutonDriveConstants;
 using namespace SwerveConstants::BrakeConstants;
+
+
 
 
 TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision)
@@ -39,8 +40,6 @@ void TeleopAimCommand::Execute() {
     if (_limelight == NULL) {
         fmt::print("Limelight is Null");
     } else {
-        SmartDashboard::PutNumber("Horizontal Distance", _limelight->GetHorizontalDistance().value());
-        SmartDashboard::PutNumber("Horizontal Angle", _limelight->GetOffsetX());
         if (_aiming){
             _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
             if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()){
@@ -65,7 +64,13 @@ void TeleopAimCommand::Execute() {
                 _aiming = true;
             }
         }
+        #ifdef EN_DIAGNOSTICS
+            SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has Piece", _limelight->HasTarget());
+            SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());
+            SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
+        #endif
     }
+
 }
 
 

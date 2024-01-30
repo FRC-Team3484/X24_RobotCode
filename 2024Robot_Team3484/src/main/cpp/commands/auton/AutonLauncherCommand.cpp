@@ -3,11 +3,14 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/auton/AutonLauncherCommand.h"
-
+#include "frc/smartdashboard/SmartDashboard.h"
 
 using namespace LauncherConstants;
 using namespace IntakeConstants;
 using namespace VisionConstants;
+using namespace frc;
+
+
 
 AutonLauncherCommand::AutonLauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision)
 : _launcher{launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}{ 
@@ -38,6 +41,12 @@ void AutonLauncherCommand::Execute(){
         if(_launching){
             _intake->SetRollerPower(-ROLLER_POWER);
         }
+        #ifdef EN_DIAGNOSTICS
+            SmartDashboard::PutBoolean("Launcher: At Target RPM", _launcher->atTargetRPM());
+            SmartDashboard::PutBoolean("Launcher: At Set Position", _intake->AtSetPosition());
+            SmartDashboard::PutBoolean("Launcher: Has Target", _limelight->HasTarget());
+            SmartDashboard::PutNumber("Launcher: Horizontal Distance", double(_limelight->GetHorizontalDistance().value()));
+        #endif
     }
 
 }
