@@ -3,11 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/LauncherSubsystem.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 #include <numbers>
 
 using namespace LauncherConstants;
 using namespace rev;
+using namespace frc;
 
 LauncherSubsystem::LauncherSubsystem(
         int CAN_ID_Left,
@@ -60,6 +62,10 @@ void LauncherSubsystem::setLauncherRPM(units::revolutions_per_minute_t speed){
 }
 
 void LauncherSubsystem::Periodic() {
+    #ifdef EN_DIAGNOSTICS
+        SmartDashboard::PutNumber("Motor Speed Left (RPM)", Launcher_Encoder_Left->GetVelocity()/GEAR_RATIO);
+        SmartDashboard::PutNumber("Motor Speed Right (RPM)", Launcher_Encoder_Right->GetVelocity()/GEAR_RATIO);
+    #endif
     _counter_null_right = 0;
     _counter_null_left = 0;
 

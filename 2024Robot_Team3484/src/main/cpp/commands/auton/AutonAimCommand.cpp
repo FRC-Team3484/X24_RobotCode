@@ -56,7 +56,7 @@ void AutonAimCommand::Execute() {
             }
         }
         #ifdef EN_DIAGNOSTICS
-            SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has Piece", _limelight->HasTarget());
+            SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has April Tag", _limelight->HasTarget());
             SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());
             SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
         #endif

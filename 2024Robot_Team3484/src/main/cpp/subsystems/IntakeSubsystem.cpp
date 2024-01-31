@@ -7,8 +7,10 @@
 #include <subsystems/IntakeSubsystem.h>
 #include <units/angle.h>
 #include <FRC3484_Lib/utils/SC_Datatypes.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace IntakeConstants;
+using namespace frc;
 
 IntakeSubsystem::IntakeSubsystem( //Reference constants in Robot.h in the intializer list
     int pivot_motor_can_id, 
@@ -47,6 +49,10 @@ IntakeSubsystem::IntakeSubsystem( //Reference constants in Robot.h in the intial
 
 void IntakeSubsystem::Periodic() {
     // Runs every 20ms
+
+    #ifdef EN_DIAGNOSTICS
+        SmartDashboard::GetNumber("Intake Angle (deg)", _pivot_encoder->GetPosition()*360);
+    #endif
 
     const frc::TrapezoidProfile<units::degree>::State current_state{
         GetIntakePosition(), 

@@ -44,7 +44,7 @@ void AutonLauncherCommand::Execute(){
         #ifdef EN_DIAGNOSTICS
             SmartDashboard::PutBoolean("Launcher: At Target RPM", _launcher->atTargetRPM());
             SmartDashboard::PutBoolean("Launcher: At Set Position", _intake->AtSetPosition());
-            SmartDashboard::PutBoolean("Launcher: Has Target", _limelight->HasTarget());
+            SmartDashboard::PutBoolean("Launcher: Has April Tag", _limelight->HasTarget());
             SmartDashboard::PutNumber("Launcher: Horizontal Distance", double(_limelight->GetHorizontalDistance().value()));
         #endif
     }

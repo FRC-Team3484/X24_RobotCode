@@ -1,4 +1,7 @@
 #include "subsystems/ClawSubsystem.h"
+#include <frc/smartdashboard/SmartDashboard.h>
+
+using namespace frc;
 
 ClawSubsystem::ClawSubsystem(
     int left_motor_can_id,
@@ -23,7 +26,15 @@ ClawSubsystem::ClawSubsystem(
     _right_climb_motor.SetInverted(ClawConstants::MOTOR_INVERTED);
 }
 
-void ClawSubsystem::Periodic() {}
+void ClawSubsystem::Periodic() {
+    #ifdef EN_DIAGNOSTICS
+        SmartDashboard::PutBoolean("Left Limit Sensor", GetLeftSensor());
+        SmartDashboard::PutBoolean("Right Limit Sensor", GetRightSensor());
+        SmartDashboard::PutNumber("Claw Power Right", _right_climb_motor.Get());
+        SmartDashboard::PutNumber("Claw Power Left", _left_climb_motor.Get());
+    #endif
+
+}
 
 bool ClawSubsystem::GetLeftSensor() {
     // Returns the value of the left limit switch
