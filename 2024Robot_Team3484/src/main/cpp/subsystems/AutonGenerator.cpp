@@ -5,39 +5,28 @@
 
 //#include <pathplanner/lib/PathPlannerTrajectory.h>
 // #include <pathplanner/lib/PathPlanner.h>
-#include <pathplanner/lib/commands/PathPlannerAuto.h>
 //#include <pathplanner/lib/commands/FollowPathWithEvents.h>
-
+#include <pathplanner/lib/commands/PathPlannerAuto.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <pathplanner/lib/auto/NamedCommands.h>
+#include <memory>
 
 using namespace frc;
 using namespace pathplanner;
 using namespace SwerveConstants::AutonNames;
 
-AutonGenerator::AutonGenerator(DrivetrainSubsystem* drivetrain) 
-    : _drivetrain{drivetrain} {
+AutonGenerator::AutonGenerator(DrivetrainSubsystem* drivetrain, AutonAimCommand* aimCommand)
+    : _drivetrain{drivetrain},
+    _aim_command{aimCommand}
+     {
+      NamedCommands::registerCommand("Aim Command", std::move(std::shared_ptr<AutonAimCommand>(_aim_command)));
+
+
 
     _auton_chooser.SetDefaultOption(AUTON_NONE, AUTON_NONE);
-    // Testing with PathPlanner
-
     _auton_chooser.AddOption(TWO_PIECE_AUTON, TWO_PIECE_AUTON);
-
-
     frc::SmartDashboard::PutData("Autons", &_auton_chooser);
 
-    //_event_map.emplace("test", std::make_shared<frc2::PrintCommand>("test"));
-
-    /*_auton_builder = new SwerveAutoBuilder{
-        [this](){return _drivetrain->GetPose();},
-        [this](Pose2d pose){_drivetrain->ResetOdometry(pose);},
-        _drivetrain->kinematics,
-        PIDConstants(PathDrivePIDConstants::P, PathDrivePIDConstants::I, PathDrivePIDConstants::D),
-        PIDConstants(PathRotationPIDConstants::P, PathRotationPIDConstants::I, PathRotationPIDConstants::D),
-        [this](wpi::array<SwerveModuleState, 4> states){_drivetrain->SetModuleStates(states, false, true);},
-        _event_map,
-        {_drivetrain},
-        true
-    };*/
 }
 
 frc2::CommandPtr AutonGenerator::GetAutonomousCommand() {

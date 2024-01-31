@@ -17,6 +17,9 @@
 // #include "commands/Teleop/StraightenWheelsCommand.h"
 #include "subsystems/AutonGenerator.h"
 
+//Autons
+#include "commands/auton/AutonAimCommand.h"
+
 
 #include <string>
 #include <optional>
@@ -59,8 +62,13 @@ class Robot : public frc::TimedRobot {
 
   TeleopAimCommand _aim_command{&_drivetrain, &_oi_driver, &_oi_operator, &_vision};
   TeleopDriveCommand _drive_command{&_drivetrain, &_oi_driver};
-  AutonGenerator _auton_generator{&_drivetrain};
+
+  // Creation of Command for Path
+  AutonAimCommand _aim_command_auton{&_drivetrain, &_vision};
   
+
+  AutonGenerator _auton_generator{&_drivetrain, &_aim_command_auton};
+
   frc::DigitalInput _troubleshoot{0};
 
   std::optional<frc2::CommandPtr> _auton_command;
