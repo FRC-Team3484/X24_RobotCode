@@ -1,5 +1,6 @@
 #include "commands/auton/AutonIntakeCommand.h"
 #include <Constants.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace IntakeConstants;
 
@@ -13,7 +14,13 @@ void AutonIntakeCommand::Initialize() {
     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER);
 }
 
-void AutonIntakeCommand::Execute() {}
+void AutonIntakeCommand::Execute() {
+    #ifdef EN_DIAGNOSTICS
+    frc::SmartDashboard::PutBoolean("Intake: Has Piece", _intake_subsystem->HasPiece());
+    frc::SmartDashboard::PutBoolean("Intake: Arm Extended", _intake_subsystem->ArmExtended());
+    frc::SmartDashboard::PutBoolean("Intake: At Set Position", _intake_subsystem->AtSetPosition());
+    #endif
+}
 
 void AutonIntakeCommand::End(bool inturrupted) {
     _intake_subsystem->SetIntakeAngle(STOW_POSITION);

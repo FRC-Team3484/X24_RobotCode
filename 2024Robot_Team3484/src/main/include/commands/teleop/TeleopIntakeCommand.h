@@ -16,7 +16,7 @@ class TeleopIntakeCommand
         explicit TeleopIntakeCommand(
             IntakeSubsystem* intake_subsystem,
             LauncherSubsystem* launcher_subsystem,
-            Driver_Interface *oi
+            Operator_Interface *oi
         );
 
         void Initialize() override;
@@ -27,7 +27,7 @@ class TeleopIntakeCommand
     private:
         IntakeSubsystem* _intake_subsystem;
         LauncherSubsystem* _launcher_subsystem;
-        Driver_Interface* _oi;
+        Operator_Interface* _oi;
 
 };
 

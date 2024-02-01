@@ -1,7 +1,6 @@
 #include "subsystems/DrivetrainSubsystem.h"
 
 #include <frc/geometry/Translation2d.h>
-
 #include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace frc;

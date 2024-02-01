@@ -10,6 +10,7 @@ using namespace units;
 using namespace frc;
 using namespace SwerveConstants::AutonDriveConstants;
 using namespace SwerveConstants::BrakeConstants;
+using namespace SwerveConstants::DrivetrainConstants::JoystickScaling;
 
 TeleopDriveCommand::TeleopDriveCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi) 
     : _drivetrain{drivetrain}, _oi{oi} {
@@ -54,9 +55,14 @@ void TeleopDriveCommand::Execute() {
             
         }
         // Logic for actual joystick movements
-        const meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED;
-        const meters_per_second_t y_speed = -_oi->GetStrafe() * MAX_LINEAR_SPEED;
-        const radians_per_second_t rotation = -_oi->GetRotation() * MAX_ROTATION_SPEED;
+        meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED;
+        meters_per_second_t y_speed = -_oi->GetStrafe() * MAX_LINEAR_SPEED;
+        radians_per_second_t rotation = -_oi->GetRotation() * MAX_ROTATION_SPEED;
+        if (_oi->LowSpeed()) {
+            meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED*LOW_SCALE;
+            meters_per_second_t y_speed = -_oi->GetStrafe() * MAX_LINEAR_SPEED*LOW_SCALE;
+            radians_per_second_t rotation = -_oi->GetRotation() * MAX_ROTATION_SPEED*LOW_SCALE;
+        }
         
         _drivetrain->Drive(x_speed, y_speed, rotation, true);
 

@@ -5,7 +5,9 @@
 #include <units/angle.h>
 #include <units/angular_velocity.h>
 #include <units/voltage.h>
+#include <wpi/deprecated.h>
 
+WPI_IGNORE_DEPRECATED
 #include <frc/geometry/Rotation2d.h>
 
 using namespace frc;
@@ -155,3 +157,4 @@ void SwerveModule::SetBrakeMode() {
     // _drive_motor.GetConfigurator().Apply(_drive_motor_config);
     _drive_motor.SetNeutralMode(motorcontrol::Brake);
 }
+WPI_UNIGNORE_DEPRECATED
