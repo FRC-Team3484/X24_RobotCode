@@ -201,4 +201,9 @@ namespace VisionConstants {
     // multiplier to give how far off and results to a steer power
 }
 
+namespace LedConstants {
+    constexpr int LED_STRIP_PWM = 0;
+
+    constexpr int LED_STRIP_LENGTH = 0;
+}
 #endif
