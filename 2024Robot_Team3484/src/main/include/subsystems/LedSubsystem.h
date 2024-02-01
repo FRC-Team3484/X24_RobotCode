@@ -11,7 +11,9 @@
 
 class LedSubsystem : public frc2::SubsystemBase {
     public:
-        LedSubsystem();
+        LedSubsystem(
+            int LED_STRIP_LENGTH
+        );
 
         void Periodic() override;
         void SetSolidState(int r, int g, int b);

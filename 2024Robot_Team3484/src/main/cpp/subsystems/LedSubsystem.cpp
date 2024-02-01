@@ -8,8 +8,8 @@
 
 using namespace LedConstants;
 
-LedSubsystem::LedSubsystem() {
-    _led_strip.SetLength(LedConstants::LED_STRIP_LENGTH);
+LedSubsystem::LedSubsystem(int LED_STRIP_LENGTH) {
+    _led_strip.SetLength(LED_STRIP_LENGTH);
     _led_strip.SetData(_led_buffer);
     _led_strip.Start();
 }
@@ -43,7 +43,7 @@ void LedSubsystem::Periodic() {
 }
 
 void LedSubsystem::_SetAll(int r, int g, int b) {
-    for (int i = 0; i < LedConstants::LED_STRIP_LENGTH; i++) {
+    for (int i = 0; i < LED_STRIP_LENGTH; i++) {
         _led_buffer[i].SetRGB(r, g, b);
     }
 
