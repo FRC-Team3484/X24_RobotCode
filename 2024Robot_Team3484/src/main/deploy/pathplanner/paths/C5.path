@@ -1,0 +1,124 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7535265331068357,
+        "y": 4.35
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.768311431359705,
+        "y": 4.6215392430784865
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.892776136429466,
+        "y": 5.138430276860554
+      },
+      "prevControl": {
+        "x": 2.2333447704930185,
+        "y": 4.418658785936457
+      },
+      "nextControl": {
+        "x": 4.280220490265542,
+        "y": 6.6528303232045065
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.744297242980451,
+        "y": 6.0815297069190635
+      },
+      "prevControl": {
+        "x": 6.496151524856309,
+        "y": 7.995353141376078
+      },
+      "nextControl": {
+        "x": 7.880321199238891,
+        "y": 5.8729596406561235
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.845202992605366,
+        "y": 6.330885118593495
+      },
+      "prevControl": {
+        "x": 6.284910615462922,
+        "y": 7.463455115241441
+      },
+      "nextControl": {
+        "x": 4.3234110497017175,
+        "y": 5.920408790175958
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.7535265331068357,
+        "y": 4.35
+      },
+      "prevControl": {
+        "x": 2.625847928788512,
+        "y": 4.535920835004942
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": 147.33908727832616,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Intake",
+      "waypointRelativePos": 1.7,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeCommand"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 120.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "C",
+  "previewStartingState": {
+    "rotation": 120.0,
+    "velocity": 0.0
+  },
+  "useDefaultConstraints": false
+}
