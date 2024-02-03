@@ -15,33 +15,41 @@ using namespace frc;
 using namespace pathplanner;
 using namespace SwerveConstants::AutonNames;
 
-AutonGenerator::AutonGenerator(DrivetrainSubsystem* drivetrain, AutonAimCommand* aimCommand)
-    : _drivetrain{drivetrain},
-    _aim_command{aimCommand}
+AutonGenerator::AutonGenerator(DrivetrainSubsystem* drivetrain, LauncherSubsystem* launcher, IntakeSubsystem* intake, Vision* vision)
      {
-      NamedCommands::registerCommand("Aim Command", std::move(std::shared_ptr<AutonAimCommand>(_aim_command)));
+      NamedCommands::registerCommand("LauncherCommand", std::move(frc2::cmd::Race(AutonLauncherCommand(launcher, intake, vision).ToPtr(), AutonAimCommand(drivetrain, vision).ToPtr())));
+      NamedCommands::registerCommand("IntakeCommand", std::move(AutonIntakeCommand(intake).ToPtr()));
 
 
 
-    _auton_chooser.SetDefaultOption(AUTON_NONE, AUTON_NONE);
-    _auton_chooser.AddOption(TWO_PIECE_AUTON, TWO_PIECE_AUTON);
-    frc::SmartDashboard::PutData("Autons", &_auton_chooser);
+    _auton_chooser_initial.AddOption("No", "No");
+    _auton_chooser_initial.SetDefaultOption("Yes", "Yes");
 
+    _auton_chooser_piece_2.SetDefaultOption("None","None");
+    _auton_chooser_piece_3.SetDefaultOption("None","None");
+    _auton_chooser_piece_4.SetDefaultOption("None","None");
+
+
+    _auton_map.emplace("No", frc2::cmd::None());
+    _auton_map.emplace("None", frc2::cmd::None());
+    _auton_map.emplace("Yes", frc2::cmd::Race(AutonLauncherCommand(launcher, intake, vision).ToPtr(), AutonAimCommand(drivetrain, vision).ToPtr()));
+
+
+
+
+    for (const std::string* ptr = std::begin(AUTON_NAMES); ptr != std::end(AUTON_NAMES); ptr++){
+      _auton_map.emplace(*ptr, PathPlannerAuto(*ptr).ToPtr());
+      _auton_chooser_piece_2.AddOption(*ptr, *ptr);
+      _auton_chooser_piece_3.AddOption(*ptr, *ptr);
+      _auton_chooser_piece_4.AddOption(*ptr, *ptr);
+    }
 }
 
 frc2::CommandPtr AutonGenerator::GetAutonomousCommand() {
-  const std::string auton_selected = _auton_chooser.GetSelected();
-
-  if (auton_selected == AUTON_NONE) {
-    fmt::print("No Auton Selected");
-  } else if (auton_selected == TWO_PIECE_AUTON) {
-    return PathPlannerAuto("pos_1_2_piece.auto").ToPtr();
-  }
-  return frc2::cmd::None();
+  return frc2::cmd::Sequence(
+    std::move(_auton_map.at(_auton_chooser_initial.GetSelected())),
+    std::move(_auton_map.at(_auton_chooser_piece_2.GetSelected())),
+    std::move(_auton_map.at(_auton_chooser_piece_3.GetSelected())),
+    std::move(_auton_map.at(_auton_chooser_piece_4.GetSelected()))
+  );
 }
-
-/*frc2::CommandPtr AutonGenerator::_BuildPathCommand(std::string path_name) {
-    PathPlannerTrajectory path = PathPlanner::loadPath(path_name, PathConstraints(MAX_LINEAR_SPEED, MAX_LINEAR_ACCELERATION));
-    
-    return _auton_builder->fullAuto(path);
-}*/
