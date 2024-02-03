@@ -11,11 +11,8 @@
 #include <units/angular_acceleration.h>
 // #include <ctre/Phoenix.h>
 
-
 #include <FRC3484_Lib/utils/SC_ControllerMaps.h>
 #include <FRC3484_Lib/utils/SC_Datatypes.h>
-
-
 
 namespace LauncherConstants {
     constexpr int LEFT_MOTOR_CANID = 40;
@@ -27,9 +24,6 @@ namespace LauncherConstants {
 
     //constexpr bool IsLoaded = true;
     constexpr bool MOTOR_INVERTED = true;
-
-
-
 
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1503_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -(TARGET_RPM/2); // make a command that tuns this value to rue an drunss the command 
@@ -61,12 +55,11 @@ namespace IntakeConstants {
     constexpr units::degree_t POSITION_TOLERANCE = 2_deg;
 }
 
-
 namespace ClawConstants {
     constexpr int LEFT_MOTOR_CAN_ID = 50;
     constexpr int RIGHT_MOTOR_CAN_ID = 51;
-    constexpr int LEFT_SENSOR_DI_CH= 3;
-    constexpr int RIGHT_SENSOR_DI_CH= 4;
+    constexpr int LEFT_SENSOR_DI_CH = 3;
+    constexpr int RIGHT_SENSOR_DI_CH = 4;
 
     constexpr bool MOTOR_INVERTED = false;
     constexpr int MOTOR_STOP = 0;
@@ -74,7 +67,6 @@ namespace ClawConstants {
     constexpr double MOTOR_UP_SPEED = 0.5;
     constexpr double MOTOR_DOWN_SPEED = -0.5;
 }
-
 
 namespace SwerveConstants {
     namespace AutonNames {
@@ -101,6 +93,7 @@ namespace SwerveConstants {
         // For those with static, do not change into constants; it will break the linking
         // DO NOT REMOVE STATIC CALLS
 
+        // Drive, steer, encoder, magnet offset
         static SC::SC_SwerveConfigs SWERVE_FRONT_LEFT{10,11,20, 4.394};
         static SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21,71.630};
         static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,-26.103};
@@ -121,7 +114,6 @@ namespace SwerveConstants {
         constexpr bool STEER_MOTOR_REVERSED = false;
         constexpr bool ENCODER_REVERSED = false;
 
-
         constexpr double ENCODER_OFFSET[] = {4.394, 71.630, -26.103, -71.455};
 
         constexpr double DRIVE_CURRENT_THRESHOLD = 60;
@@ -133,7 +125,7 @@ namespace SwerveConstants {
         constexpr units::inch_t DRIVETRAIN_LENGTH = 24_in;
         constexpr double DRIVE_GEAR_RATIO = 36000.0/5880.0;
         constexpr double STEER_GEAR_RATIO = 12.8;
-        constexpr int DRIVE_TICKS_PER_REVOLUTION =2048;
+        constexpr int DRIVE_TICKS_PER_REVOLUTION = 2048;
         constexpr int STEER_TICKS_PER_REVOLUTION = 2048;
         constexpr units::inch_t WHEEL_RADIUS = 2_in;
 
@@ -155,7 +147,7 @@ namespace SwerveConstants {
             constexpr double Ki_Drive = 0.0;
             constexpr double Kd_Drive = 0.0;
             constexpr units::radians_per_second_t MAX_SPEED = 12_rad_per_s;
-            constexpr units::radians_per_second_squared_t MAX_ACCELERATION  = 100_rad_per_s_sq;
+            constexpr units::radians_per_second_squared_t MAX_ACCELERATION = 100_rad_per_s_sq;
         }
 
         namespace JoystickScaling {
@@ -205,7 +197,7 @@ namespace UserInterface {
     namespace Driver {
         constexpr int DRIVER_CONTROLLER_PORT = 0;
         constexpr double JOYSTICK_DEADBAND = 0.02;
-        constexpr int THROTTLE =  XBOX_LS_Y;
+        constexpr int THROTTLE = XBOX_LS_Y;
         constexpr int STRAFE = XBOX_LS_X;
         constexpr int ROTATION = XBOX_RS_X;
         constexpr int RESET_HEADING = XBOX_START;
