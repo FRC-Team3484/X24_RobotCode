@@ -28,6 +28,9 @@ namespace LauncherConstants {
 
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1503_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -(TARGET_RPM/2); // make a command that tuns this value to rue an drunss the command 
+
+    constexpr units::second_t TIMEOUT = 3_s;
+    constexpr units::second_t LAUNCH_DURATION = 1_s;
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
@@ -176,6 +179,7 @@ namespace SwerveConstants {
 
         constexpr units::inch_t POSITION_TOLERANCE = 2_in; // Drive to a position, when safe to quit
         constexpr units::degree_t ANGLE_TOLERANCE = 2_deg;
+    }
 
         namespace PathDrivePIDConstants {
             constexpr double P = 5.0;
@@ -190,7 +194,6 @@ namespace SwerveConstants {
         }
     }
 
-}
 namespace VisionConstants {
     constexpr units::inch_t MAX_LAUNCH_RANGE = 1000_in;
     constexpr units::inch_t AIM_TOLERANCE_LARGE = 12_in;
