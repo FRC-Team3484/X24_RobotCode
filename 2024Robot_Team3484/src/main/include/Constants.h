@@ -1,6 +1,8 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#define EN_DIAGNOSTICS
+
 #include <units/voltage.h>
 #include <units/length.h>
 #include <units/velocity.h>
@@ -9,30 +11,23 @@
 #include <units/angular_acceleration.h>
 // #include <ctre/Phoenix.h>
 
-
 #include <FRC3484_Lib/utils/SC_ControllerMaps.h>
 #include <FRC3484_Lib/utils/SC_Datatypes.h>
 
-
-
 namespace LauncherConstants {
-    constexpr int Motor_Left_CanID2 = 0;
-    constexpr int Motor_Right_CanID2 = 1;
+    constexpr int LEFT_MOTOR_CANID = 40;
+    constexpr int RIGHT_MOTOR_CANID = 41;
 
-    constexpr double P_Launcher = 0;
-    constexpr double I_Launcher = 0;
-    constexpr double D_Launcher = 0;
-    constexpr double FF_Launcher = 0;
-    constexpr double RPM_Window_Launcher = 50;
+    constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
+    constexpr double GEAR_RATIO = 3;
+    constexpr double RPM_WINDOW_RANGE = 50;
 
     //constexpr bool IsLoaded = true;
     constexpr bool MOTOR_INVERTED = true;
     constexpr int OPERATOR_CONTROLLER_PORT = 1;
 
-
-
-    constexpr units::revolutions_per_minute_t Target_RPM/*place holder*/ = 2000_rpm;
-    constexpr units::revolutions_per_minute_t Reverse_RPM = -1000_rpm; // make a command that tuns this value to rue an drunss the command 
+    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1503_rpm;
+    constexpr units::revolutions_per_minute_t REVERSE_RPM = -(TARGET_RPM/2); // make a command that tuns this value to rue an drunss the command 
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
@@ -61,14 +56,18 @@ namespace IntakeConstants {
     constexpr units::degree_t POSITION_TOLERANCE = 2_deg;
 }
 
-namespace HookConstants {}
+namespace ClawConstants {
+    constexpr int LEFT_MOTOR_CAN_ID = 50;
+    constexpr int RIGHT_MOTOR_CAN_ID = 51;
+    constexpr int LEFT_SENSOR_DI_CH = 3;
+    constexpr int RIGHT_SENSOR_DI_CH = 4;
 
+    constexpr bool MOTOR_INVERTED = false;
+    constexpr int MOTOR_STOP = 0;
 
-
-
-
-
-
+    constexpr double MOTOR_UP_SPEED = 0.5;
+    constexpr double MOTOR_DOWN_SPEED = -0.5;
+}
 
 namespace SwerveConstants {
     namespace AutonNames {
@@ -76,31 +75,24 @@ namespace SwerveConstants {
     const std::string AUTON_DISTANCE = "Drive 5 feet";
     const std::string AUTON_ANGLE = "Turn 90 degrees";
     const std::string AUTON_SEQUENCE = "Drive Sequence";
-
+    const std::string AUTON_NAMES[] = {
+        "A1", "A4", "A5", "B1", "B2", "B3", "B5", "B6",
+        "C1", "C2", "C3", "C5", "C6", "C7", "C8", "D0"
+    };
     //Testing
     
     const std::string TWO_PIECE_AUTON = "Two Piece Auton";
     }
 
     namespace ControllerConstants {
-        constexpr double RUMBLE_HIGH = 0.5;
-        constexpr double RUMBLE_LOW = 0.2;
-        constexpr double RUMBLE_STOP = 0;
+        constexpr double DRIVER_RUMBLE_HIGH = 0.5;
+        constexpr double DRIVER_RUMBLE_LOW = 0.2;
+
+        constexpr double OPERATOR_RUMBLE_HIGH = 0.5;
+        constexpr double OPERATOR_RUMBLE_LOW = 0.2;
         
-        namespace Driver {
-            constexpr int DRIVER_CONTROLLER_PORT = 0;
-            constexpr double JOYSTICK_DEADBAND = 0.02;
-            constexpr int THROTTLE =  XBOX_LS_Y;
-            constexpr int STRAFE = XBOX_LS_X;
-            constexpr int ROTATION = XBOX_RS_X;
-            constexpr int RESET_HEADING = XBOX_BACK;
-            constexpr int BRAKE = XBOX_X;
-            constexpr int STRAIGHTEN_WHEELS = XBOX_START;
-            constexpr int BRAKE_MODE = XBOX_RB;
-            constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
-            constexpr int AIM_START = XBOX_A;
-            constexpr int IGNORE_AIM = XBOX_B;
-        }
+        constexpr double RUMBLE_STOP = 0;
+
     }
 
     namespace DrivetrainConstants {
@@ -109,6 +101,7 @@ namespace SwerveConstants {
         // For those with static, do not change into constants; it will break the linking
         // DO NOT REMOVE STATIC CALLS
 
+        // Drive, steer, encoder, magnet offset
         static SC::SC_SwerveConfigs SWERVE_FRONT_LEFT{10,11,20, 4.394};
         static SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21,71.630};
         static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,-26.103};
@@ -129,7 +122,6 @@ namespace SwerveConstants {
         constexpr bool STEER_MOTOR_REVERSED = false;
         constexpr bool ENCODER_REVERSED = false;
 
-
         constexpr double ENCODER_OFFSET[] = {4.394, 71.630, -26.103, -71.455};
 
         constexpr double DRIVE_CURRENT_THRESHOLD = 60;
@@ -141,7 +133,7 @@ namespace SwerveConstants {
         constexpr units::inch_t DRIVETRAIN_LENGTH = 24_in;
         constexpr double DRIVE_GEAR_RATIO = 36000.0/5880.0;
         constexpr double STEER_GEAR_RATIO = 12.8;
-        constexpr int DRIVE_TICKS_PER_REVOLUTION =2048;
+        constexpr int DRIVE_TICKS_PER_REVOLUTION = 2048;
         constexpr int STEER_TICKS_PER_REVOLUTION = 2048;
         constexpr units::inch_t WHEEL_RADIUS = 2_in;
 
@@ -163,7 +155,11 @@ namespace SwerveConstants {
             constexpr double Ki_Drive = 0.0;
             constexpr double Kd_Drive = 0.0;
             constexpr units::radians_per_second_t MAX_SPEED = 12_rad_per_s;
-            constexpr units::radians_per_second_squared_t MAX_ACCELERATION  = 100_rad_per_s_sq;
+            constexpr units::radians_per_second_squared_t MAX_ACCELERATION = 100_rad_per_s_sq;
+        }
+
+        namespace JoystickScaling {
+            constexpr double LOW_SCALE = 0.2;
         }
     }
 
@@ -204,6 +200,29 @@ namespace VisionConstants {
     constexpr double STEER_GAIN = -.01;
     constexpr double TARGET_HEIGHT = 36; // inches
     // multiplier to give how far off and results to a steer power
+}
+namespace UserInterface {
+    namespace Driver {
+        constexpr int DRIVER_CONTROLLER_PORT = 0;
+        constexpr double JOYSTICK_DEADBAND = 0.02;
+        constexpr int THROTTLE = XBOX_LS_Y;
+        constexpr int STRAFE = XBOX_LS_X;
+        constexpr int ROTATION = XBOX_RS_X;
+        constexpr int RESET_HEADING = XBOX_START;
+        constexpr int BRAKE = XBOX_X;
+        constexpr int BRAKE_MODE = XBOX_RB;
+        constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
+        constexpr int LOW_SPEED = XBOX_LB;
+    }
+    namespace Operator {
+        constexpr int OPERATOR_CONTROLLER_PORT = 1;
+        constexpr int INTAKE_SHOOTER = XBOX_Y;
+        constexpr int IGNORE = XBOX_RB;
+        constexpr int AIM_START = XBOX_X;
+        constexpr int EXTEND = XBOX_A;
+        constexpr int EJECT = XBOX_B;
+    }
+
 }
 
 #endif

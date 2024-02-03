@@ -1,6 +1,7 @@
 #ifndef SWERVEMODULE_H
 #define SWERVEMODULE_H
 
+
 #include "Constants.h"
 
 // #include <ctre/phoenix6/TalonFX.hpp>
@@ -11,9 +12,13 @@
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/kinematics/SwerveModulePosition.h>
 
+#include <wpi/deprecated.h>
+
+WPI_IGNORE_DEPRECATED
 #include "ctre/phoenix/sensors/WPI_CANCoder.h"
 #include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
 // #include "ctre/Phoenix.h"
+
 
 class SwerveModule {
     public:
@@ -71,5 +76,7 @@ class SwerveModule {
 
         frc::SimpleMotorFeedforward<units::meters> _drive_feed_forward{SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::S, SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::V, SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::A};
 };
+
+WPI_UNIGNORE_DEPRECATED
 
 #endif

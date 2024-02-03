@@ -67,7 +67,7 @@ class Robot : public frc::TimedRobot {
   AutonAimCommand _aim_command_auton{&_drivetrain, &_vision};
   
 
-  AutonGenerator _auton_generator{&_drivetrain, &_aim_command_auton};
+  // AutonGenerator _auton_generator{&_drivetrain, &_aim_command_auton};
 
   frc::DigitalInput _troubleshoot{0};
 

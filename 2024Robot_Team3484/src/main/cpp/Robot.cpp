@@ -2,6 +2,8 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+// This is the testing branch
+
 #include "Robot.h"
 
 #include <frc2/command/CommandScheduler.h>
@@ -23,7 +25,7 @@ void Robot::DisabledPeriodic() {}
 // void Robot::DisabledExit() {}
 
 void Robot::AutonomousInit() {
-    _auton_command = _auton_generator.GetAutonomousCommand();
+    // _auton_command = _auton_generator.GetAutonomousCommand();
   
   if (_auton_command) {
     _auton_command->Schedule();
@@ -49,10 +51,8 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
     switch (_robot_state) {
     case drive:
-      if (_oi_driver.StartAim()){
-        wpi::outs() << "Testing: drive \n";
+      if (_oi_operator.LaunchButton()){
         _drive_command.Cancel();
-        wpi::outs() << "Testing: aim \n";
         _aim_command.Schedule();
         _robot_state = shoot;
       }
@@ -60,7 +60,7 @@ void Robot::TeleopPeriodic() {
 
       break;
     case shoot:
-      if (!_oi_driver.StartAim()) {
+      if (!_oi_operator.LaunchButton()) {
         _aim_command.Cancel();
         _drive_command.Schedule();
         _robot_state = drive;

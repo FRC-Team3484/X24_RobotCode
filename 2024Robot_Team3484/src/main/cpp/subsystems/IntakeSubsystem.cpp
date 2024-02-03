@@ -1,25 +1,25 @@
 //
 // Intake Subsystem
 //
-// -Noah, Aidan & Ethan
+// -Noah, Aidan  & Ethan
 //
 
 #include <subsystems/IntakeSubsystem.h>
 #include <units/angle.h>
 #include <FRC3484_Lib/utils/SC_Datatypes.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace IntakeConstants;
+using namespace frc;
 
-IntakeSubsystem::IntakeSubsystem(
+IntakeSubsystem::IntakeSubsystem( //Reference constants in Robot.h in the intializer list
     int pivot_motor_can_id, 
     int drive_motor_can_id, 
     int piece_sensor_di_ch, 
     int arm_sensor_di_ch,
-    SC::SC_PIDConstants PID_CONSTANTS,
-    double PID_IZ_ZONE,
-    double PID_OUTPUTRANGE_MIN,
-    double PID_OUTPUTRANGE_MAX
-
+    SC::SC_PIDConstants pidc,
+    double pid_output_range_max,
+    double pid_output_range_min
     ) :
         _pivot_motor{pivot_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
         _drive_motor{drive_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
@@ -39,16 +39,20 @@ IntakeSubsystem::IntakeSubsystem(
 
     _target_position = STOW_POSITION;
 
-    _pivot_pid_controller->SetP(PID_CONSTANTS.Kp);
-    _pivot_pid_controller->SetI(PID_CONSTANTS.Ki);
-    _pivot_pid_controller->SetD(PID_CONSTANTS.Kd);
+    _pivot_pid_controller->SetP(pidc.Kp);
+    _pivot_pid_controller->SetI(pidc.Ki);
+    _pivot_pid_controller->SetD(pidc.Kd);
     _pivot_pid_controller->SetIZone(PID_IZ_ZONE);
     _pivot_pid_controller->SetFF(PID_CONSTANTS.Kf);
-    _pivot_pid_controller->SetOutputRange(PID_OUTPUTRANGE_MIN, PID_OUTPUTRANGE_MAX);
+    _pivot_pid_controller->SetOutputRange(pid_output_range_min, pid_output_range_max);
 }
 
 void IntakeSubsystem::Periodic() {
     // Runs every 20ms
+
+    #ifdef EN_DIAGNOSTICS
+        SmartDashboard::GetNumber("Intake Angle (deg)", _pivot_encoder->GetPosition()*360);
+    #endif
 
     const frc::TrapezoidProfile<units::degree>::State current_state{
         GetIntakePosition(), 
@@ -60,23 +64,19 @@ void IntakeSubsystem::Periodic() {
         0_deg_per_s
     };
 
-    if (_arm_sensor_hit) {
-        const units::turn_t linear_angle = _intake_trapezoid.Calculate(20_ms, current_state, target_state).position;
-        _pivot_pid_controller->SetReference(linear_angle.value(), rev::CANSparkMax::ControlType::kPosition);
+    const units::turn_t linear_angle = _intake_trapezoid.Calculate(20_ms, current_state, target_state).position;
 
-    } else {
-        _pivot_pid_controller->SetReference(IntakeConstants::HOME_POWER, rev::CANSparkMax::ControlType::kDutyCycle);
+    _pivot_pid_controller->SetReference(linear_angle.value(), rev::CANSparkMax::ControlType::kPosition);
 
-        if (!ArmExtended()) {
-            _arm_sensor_hit = true;
-            _pivot_encoder->SetPosition(IntakeConstants::STOW_POSITION.value());
-        }
+    if (!ArmExtended() && !_arm_sensor_hit) {
+        _arm_sensor_hit = true;
+        _pivot_encoder->SetPosition(IntakeConstants::STOW_POSITION.value());
     }
 }
 
 void IntakeSubsystem::SetIntakeAngle(units::degree_t angle) {
     // Use the pivot motor and set the angle
-    _target_position = angle;
+    if (_arm_sensor_hit) _target_position = angle;
 }
 
 void IntakeSubsystem::SetRollerPower(double power) {
@@ -104,7 +104,7 @@ units::turn_t IntakeSubsystem::GetIntakePosition() {
         return units::turn_t{_pivot_encoder->GetPosition() / IntakeConstants::GEAR_RATIO};
 
     } else {
-        return 0_deg;
+        return MAX_VELOCITY*20_ms;
 
     }
 }

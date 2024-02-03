@@ -16,6 +16,7 @@ class Driver_Interface {
         bool GetResetHeading();
         bool GetBrake();
         bool GetBrakePressed();
+        bool LowSpeed();
         // bool GetStraightenWheels();
         bool GetSetBrakeMode();
         bool GetDisableBrakeMode();
@@ -25,23 +26,22 @@ class Driver_Interface {
         // Operator Controllers
 
     private:
-        frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
+        frc::XboxController _driver_controller{UserInterface::Driver::DRIVER_CONTROLLER_PORT};
 };
 
 class Operator_Interface{
     public:
-        bool DeployIntake();
         bool Launch();
-        bool Climb();
         bool IgnoreVision();
+        bool ClimbUp();
+        bool ClimbDown();
+        bool IgnoreSensor();
         bool ExtendIntakeButton();
         bool EjectIntakeButton();
         bool IntakeThroughShooterButton();
         bool LaunchButton();
         void SetRumble(double Rumble);
-       
     private:
-        frc::XboxController _operator_controller{LauncherConstants::OPERATOR_CONTROLLER_PORT};
-
+        frc::XboxController _operator_controller{UserInterface::Operator::OPERATOR_CONTROLLER_PORT};
 };
 #endif
