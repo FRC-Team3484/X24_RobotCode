@@ -18,19 +18,17 @@ class AutonGenerator {
         frc2::CommandPtr GetAutonomousCommand();
     private:
         //frc2::CommandPtr _BuildPathCommand(std::string path_name);
+
         
-        DrivetrainSubsystem* _drivetrain;
-        // LauncherSubsystem _launcher;
-        // IntakeSubsystem _intake;
-        // Vision _vision;
 
         //pathplanner::SwerveAutoBuilder* _auton_builder;
         //std::unordered_map<std::string, std::shared_ptr<frc2::Command>> _event_map;
         AutonAimCommand* _aim_command;
         // auto _aim_command_ptr = std::__make_shared<AutonAimCommand>(_aim_command);
-        frc::SendableChooser<std::string> _auton_chooser;
-        std::optional<frc2::CommandPtr> _auton_command;
-        // std::optional<frc2::CommandPtr> _auton_command;
+        frc::SendableChooser<frc2::CommandPtr> _auton_chooser_initial;
+        frc::SendableChooser<frc2::CommandPtr> _auton_chooser_piece_2;
+        frc::SendableChooser<frc2::CommandPtr> _auton_chooser_peice_3;
+        frc::SendableChooser<frc2::CommandPtr> _auton_chooser_piece_4;
 };
 
 #endif
