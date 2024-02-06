@@ -4,7 +4,7 @@
 #include <Constants.h>
 
 #include <frc2/command/SubsystemBase.h>
-#include <ctre/Phoenix.h>
+#include <rev/CANSparkMax.h>
 #include <frc/DigitalInput.h>
 
 class ClawSubsystem : public frc2::SubsystemBase {
@@ -21,8 +21,8 @@ class ClawSubsystem : public frc2::SubsystemBase {
         bool GetRightSensor();
 
     private: 
-        WPI_TalonSRX _left_climb_motor;
-        WPI_TalonSRX _right_climb_motor;
+        rev::CANSparkMax _left_climb_motor;
+        rev::CANSparkMax _right_climb_motor;
 
         frc::DigitalInput _left_motor_sensor;
         frc::DigitalInput _right_motor_sensor;

@@ -51,7 +51,8 @@ void IntakeSubsystem::Periodic() {
     // Runs every 20ms
 
     #ifdef EN_DIAGNOSTICS
-        SmartDashboard::GetNumber("Intake Angle (deg)", _pivot_encoder->GetPosition()*360);
+        SmartDashboard::PutNumber("Intake Angle (deg)", _pivot_encoder->GetPosition()*360);
+        SmartDashboard::PutNumber("Intake Angle (deg)", _pivot_encoder->GetVelocity());
     #endif
 
     const frc::TrapezoidProfile<units::degree>::State current_state{
