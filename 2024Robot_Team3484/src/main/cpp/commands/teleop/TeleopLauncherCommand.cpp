@@ -34,7 +34,12 @@ void TeleopLauncherCommand::Initialize(){
 }
 void TeleopLauncherCommand::Execute(){
     if (_launcher !=NULL && _intake != NULL){
-        if(_launcher->atTargetRPM() && _intake->AtSetPosition() && ( _limelight == NULL || (_oi != NULL && _oi->IgnoreVision()) || (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )){
+        if(_launcher->atTargetRPM() 
+            && _intake->AtSetPosition() 
+            && ( _limelight == NULL 
+                || (_oi != NULL && _oi->IgnoreVision()) 
+                || (_limelight->HasTarget() 
+                    && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )){
             _launching = true;
         }
         if(_launching){

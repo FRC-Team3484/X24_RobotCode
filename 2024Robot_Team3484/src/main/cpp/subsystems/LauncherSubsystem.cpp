@@ -71,25 +71,25 @@ void LauncherSubsystem::Periodic() {
 
     if (Launcher_m_Left_pidController !=NULL){
         Launcher_m_Left_pidController->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
-        _counter_null_left++;
+        _counter_not_null_left++;
     }
      if (Launcher_m_Right_pidController !=NULL){
         Launcher_m_Right_pidController->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
-        _counter_null_right++;
+        _counter_not_null_right++;
      }
 }
 
 bool LauncherSubsystem::atTargetRPM(){
-    if (_counter_null_left + _counter_null_right == 0){
+    if (_counter_not_null_left + _counter_not_null_right == 2){
         return std::abs(Launcher_Encoder_Left->GetVelocity()-_target_speed) < RPM_WINDOW_RANGE && std::abs(Launcher_Encoder_Right->GetVelocity()-_target_speed) < RPM_WINDOW_RANGE;   
     }
-    else if (_counter_null_left == 1) {
+    else if (_counter_not_null_left == 1) {
         return std::abs(Launcher_Encoder_Left->GetVelocity()-_target_speed) < RPM_WINDOW_RANGE;   
     }
-    else if (_counter_null_right == 1) {
+    else if (_counter_not_null_right == 1) {
         return std::abs(Launcher_Encoder_Right->GetVelocity()-_target_speed) < RPM_WINDOW_RANGE;   
     }
-    if (_counter_null_left + _counter_null_right == 2){
+    else {
         return false;
     }
 }
