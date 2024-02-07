@@ -10,17 +10,17 @@ ClawSubsystem::ClawSubsystem(
     int right_sensor_di_ch
 
     ) : 
-        _left_climb_motor{left_motor_can_id},
-        _right_climb_motor{right_motor_can_id},
+        _left_climb_motor{left_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
+        _right_climb_motor{right_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
         _left_motor_sensor{left_sensor_di_ch},
         _right_motor_sensor{right_sensor_di_ch}
     {
 
-    _right_climb_motor.ConfigFactoryDefault();
-    _left_climb_motor.ConfigFactoryDefault();
+    _right_climb_motor.RestoreFactoryDefaults();
+    _left_climb_motor.RestoreFactoryDefaults();
 
-    _left_climb_motor.SetNeutralMode(motorcontrol::Brake);
-    _right_climb_motor.SetNeutralMode(motorcontrol::Brake);
+    _left_climb_motor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    _right_climb_motor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
     _left_climb_motor.SetInverted(ClawConstants::MOTOR_INVERTED);
     _right_climb_motor.SetInverted(ClawConstants::MOTOR_INVERTED);

@@ -25,8 +25,8 @@ void ClawCommand::Execute() {
     }
 
     #ifdef EN_DIAGNOSTICS
-    frc::SmartDashboard::PutBoolean("Intake: Has Piece", _claw_subsystem->GetLeftSensor());
-    frc::SmartDashboard::PutBoolean("Intake: Has Piece", _claw_subsystem->GetRightSensor());
+    frc::SmartDashboard::PutBoolean("Claw: Left Sensor", _claw_subsystem->GetLeftSensor());
+    frc::SmartDashboard::PutBoolean("Claw: Right Sensor", _claw_subsystem->GetRightSensor());
     #endif
 }
 
