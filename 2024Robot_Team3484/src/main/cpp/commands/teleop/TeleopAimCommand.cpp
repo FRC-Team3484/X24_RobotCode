@@ -27,9 +27,9 @@ void TeleopAimCommand::Initialize() {
         fmt::print("Limelight is Null");
     }
     else {
-        _limelight->SetCameraAngle(CAMERA_ANGLE);
-        _limelight->SetLensHeight(CAMERA_HEIGHT);
-        _limelight->SetTargetHeight(TARGET_HEIGHT);
+            _limelight->SetCameraAngle(CAMERA_ANGLE);
+            _limelight->SetLensHeight(CAMERA_HEIGHT);
+            _limelight->SetTargetHeight(TARGET_HEIGHT);
     }
 }
 

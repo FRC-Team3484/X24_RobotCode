@@ -16,7 +16,7 @@ AutonLauncherCommand::AutonLauncherCommand(LauncherSubsystem* launcher_subsystem
 }
 
 void AutonLauncherCommand::Initialize() {
-    if(_intake !=NULL) {
+    if (_intake !=NULL) {
         _intake->SetIntakeAngle(STOW_POSITION);
         _intake->SetRollerPower(ROLLER_STOP);
     }
@@ -27,13 +27,17 @@ void AutonLauncherCommand::Initialize() {
         _launcher->setLauncherRPM(TARGET_RPM);
     }
 }
-void AutonLauncherCommand::Execute() {
+void AutonLauncherCommand::Execute(){
     if (_launcher !=NULL && _intake != NULL) {
-        if(_launcher->atTargetRPM() && _intake->AtSetPosition() && ( _limelight == NULL || (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )) {
+        if (_launcher->atTargetRPM() 
+            && _intake->AtSetPosition() 
+            && ( _limelight == NULL 
+                || (_limelight->HasTarget() 
+                && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )) {
             _launching = true;
         }
 
-        if(_launching) {
+        if (_launching) {
             _intake->SetRollerPower(-ROLLER_POWER);
         }
 
