@@ -15,8 +15,8 @@
 #include <FRC3484_Lib/utils/SC_Datatypes.h>
 
 namespace LauncherConstants {
-    constexpr int LEFT_MOTOR_CANID = 40;
-    constexpr int RIGHT_MOTOR_CANID = 41;
+    constexpr int LEFT_MOTOR_CAN_ID = 40;
+    constexpr int RIGHT_MOTOR_CAN_ID = 41;
 
     constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
     constexpr double GEAR_RATIO = 3;

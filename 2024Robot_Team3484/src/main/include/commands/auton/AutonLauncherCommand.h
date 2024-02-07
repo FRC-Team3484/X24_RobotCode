@@ -2,8 +2,8 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#ifndef AUTONLAUNCHERCOMMANDH
-#define AUTONLAUNCHERCOMMANDH
+#ifndef AUTON_LAUNCHER_COMMAND_H
+#define AUTON_LAUNCHER_COMMAND_H
 
 #include "subsystems/LauncherSubsystem.h"
 #include "subsystems/IntakeSubsystem.h"
@@ -15,7 +15,7 @@
 
 class AutonLauncherCommand: public frc2::CommandHelper<frc2::Command, AutonLauncherCommand>{
     public:
-    explicit AutonLauncherCommand(LauncherSubsystem* Launcher_Subsystem, IntakeSubsystem* intake_subsystem, Vision* vision);
+    explicit AutonLauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision);
     
     void Initialize() override;
     void Execute() override;

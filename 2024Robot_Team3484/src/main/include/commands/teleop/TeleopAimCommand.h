@@ -10,8 +10,6 @@
 #include "subsystems/Vision.h"
 #include "OI.h"
 
-
-
 class TeleopAimCommand: public frc2::CommandHelper<frc2::Command, TeleopAimCommand>{
 
     public:
@@ -20,7 +18,6 @@ class TeleopAimCommand: public frc2::CommandHelper<frc2::Command, TeleopAimComma
         void Execute() override;
         void End(bool interrupted) override;
         bool IsFinished() override; 
-
 
     private:
         DrivetrainSubsystem* _drivetrain;
@@ -35,12 +32,6 @@ class TeleopAimCommand: public frc2::CommandHelper<frc2::Command, TeleopAimComma
         Driver_Interface* _oi_driver;
         Operator_Interface* _oi_operator;
         bool _aiming;
-
-
 };
-
-
-
-
 
 #endif

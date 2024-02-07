@@ -16,9 +16,9 @@ void AutonIntakeCommand::Initialize() {
 
 void AutonIntakeCommand::Execute() {
     #ifdef EN_DIAGNOSTICS
-    frc::SmartDashboard::PutBoolean("Intake: Has Piece", _intake_subsystem->HasPiece());
-    frc::SmartDashboard::PutBoolean("Intake: Arm Extended", _intake_subsystem->ArmExtended());
-    frc::SmartDashboard::PutBoolean("Intake: At Set Position", _intake_subsystem->AtSetPosition());
+        frc::SmartDashboard::PutBoolean("Intake: Has Piece", _intake_subsystem->HasPiece());
+        frc::SmartDashboard::PutBoolean("Intake: Arm Extended", _intake_subsystem->ArmExtended());
+        frc::SmartDashboard::PutBoolean("Intake: At Set Position", _intake_subsystem->AtSetPosition());
     #endif
 }
 

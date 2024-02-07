@@ -1,5 +1,5 @@
-#ifndef TELEOPINTAKECOMMAND_H
-#define TELEOPINTAKECOMMAND_H
+#ifndef TELEOP_INTAKE_COMMAND_H
+#define TELEOP_INTAKE_COMMAND_H
 
 #include "OI.h"
 #include "Constants.h"
@@ -16,7 +16,7 @@ class TeleopIntakeCommand
         explicit TeleopIntakeCommand(
             IntakeSubsystem* intake_subsystem,
             LauncherSubsystem* launcher_subsystem,
-            Operator_Interface *oi
+            Operator_Interface* oi
         );
 
         void Initialize() override;

@@ -17,6 +17,15 @@
 // #include "commands/Teleop/StraightenWheelsCommand.h"
 #include "subsystems/AutonGenerator.h"
 
+// Other Subsystems
+#include "subsystems/IntakeSubsystem.h"
+#include "subsystems/LauncherSubsystem.h"
+#include "subsystems/ClawSubsystem.h"
+
+// Teleop Commands
+#include "commands/teleop/TeleopClawCommand.h"
+#include "commands/teleop/TeleopIntakeCommand.h"
+#include "commands/teleop/TeleopLauncherCommand.h"
 
 #include <string>
 #include <optional>
@@ -28,42 +37,52 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/DigitalInput.h>
 class Robot : public frc::TimedRobot {
- public:
-  void RobotInit() override;
-  void RobotPeriodic() override;
-  void DisabledInit() override;
-  void DisabledPeriodic() override;
-  void AutonomousInit() override;
-  void AutonomousPeriodic() override;
-  void TeleopInit() override;
-  void TeleopPeriodic() override;
-  void TestPeriodic() override;
-  //void SimulationInit() override;w
-  //void SimulationPeriodic() override;
+    public:
+        void RobotInit() override;
+        void RobotPeriodic() override;
+        void DisabledInit() override;
+        void DisabledPeriodic() override;
+        void AutonomousInit() override;
+        void AutonomousPeriodic() override;
+        void TeleopInit() override;
+        void TeleopPeriodic() override;
+        void TestPeriodic() override;
+        //void SimulationInit() override;w
+        //void SimulationPeriodic() override;
 
- private:
-  enum State {drive, shoot};
-  State _robot_state = drive;
+    private:
+        enum State {drive, shoot};
+        State _robot_state = drive;
 
-  Driver_Interface _oi_driver{};
-  Operator_Interface _oi_operator{};
+        Driver_Interface _oi_driver{};
+        Operator_Interface _oi_operator{};
 
-  Vision _vision{VisionConstants::CAMERA_ANGLE, VisionConstants::CAMERA_HEIGHT, VisionConstants::TARGET_HEIGHT};
+        Vision _vision{VisionConstants::CAMERA_ANGLE, VisionConstants::CAMERA_HEIGHT, VisionConstants::TARGET_HEIGHT};
 
-  DrivetrainSubsystem _drivetrain{SwerveConstants::DrivetrainConstants::SWERVE_CONFIGS_ARRAY};
+        DrivetrainSubsystem _drivetrain{SwerveConstants::DrivetrainConstants::SWERVE_CONFIGS_ARRAY};
 
-  // TeleopDriveCommand _drive_command{&_drivetrain, &_oi};
-  // DynamicBrakeCommand _brake_command{&_drivetrain};
+        // TeleopDriveCommand _drive_command{&_drivetrain, &_oi};
+        // DynamicBrakeCommand _brake_command{&_drivetrain};
 
-  // StraightenWheelsCommand _straighten_command{&_drivetrain};
+        // StraightenWheelsCommand _straighten_command{&_drivetrain};
 
-  TeleopAimCommand _aim_command{&_drivetrain, &_oi_driver, &_oi_operator, &_vision};
-  TeleopDriveCommand _drive_command{&_drivetrain, &_oi_driver};
-  AutonGenerator _auton_generator{&_drivetrain};
-  
-  frc::DigitalInput _troubleshoot{0};
+        TeleopAimCommand _aim_command{&_drivetrain, &_oi_driver, &_oi_operator, &_vision};
+        TeleopDriveCommand _drive_command{&_drivetrain, &_oi_driver};
+        AutonGenerator _auton_generator{&_drivetrain};
 
-  std::optional<frc2::CommandPtr> _auton_command;
+        // Uncomment these when ready to test subsystems
+        IntakeSubsystem _intake{IntakeConstants::PIVOT_MOTOR_CAN_ID, IntakeConstants::DRIVE_MOTOR_CAN_ID, IntakeConstants::PIECE_SENSOR_DI_CH, IntakeConstants::ARM_SENSOR_DI_CH, IntakeConstants::PID_CONSTANTS, IntakeConstants::PID_OUTPUTRANGE_MAX, IntakeConstants::PID_OUTPUTRANGE_MIN};
+        LauncherSubsystem _launcher{LauncherConstants::LEFT_MOTOR_CAN_ID, LauncherConstants::RIGHT_MOTOR_CAN_ID, LauncherConstants::PID_CONSTANTS, LauncherConstants::RPM_WINDOW_RANGE};
+        ClawSubsystem _claw{ClawConstants::LEFT_MOTOR_CAN_ID, ClawConstants::RIGHT_MOTOR_CAN_ID, ClawConstants::LEFT_SENSOR_DI_CH, ClawConstants::RIGHT_SENSOR_DI_CH};
+        
+        // Uncomment these when ready to test the teleop commands
+        TeleopClawCommand _teleop_claw_command{&_claw, &_oi_operator};
+        TeleopIntakeCommand _teleop_intake_command{&_intake, &_launcher, &_oi_operator};
+        TeleopLauncherCommand _teleop_launcher_command{&_launcher, &_intake, &_vision, &_oi_operator};
+
+        frc::DigitalInput _troubleshoot{0};
+
+        std::optional<frc2::CommandPtr> _auton_command;
 };
 
 #endif

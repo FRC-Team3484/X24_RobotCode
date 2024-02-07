@@ -8,9 +8,6 @@
 #include "subsystems/DrivetrainSubsystem.h"
 #include <frc/kinematics/SwerveModulePosition.h>
 #include "subsystems/Vision.h"
-
-
-
 class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand>{
 
     public:
@@ -19,7 +16,6 @@ class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand
         void Execute() override;
         void End(bool interrupted) override;
         bool IsFinished() override; 
-
 
     private:
         DrivetrainSubsystem* _drivetrain;
@@ -32,11 +28,6 @@ class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand
 
         Vision* _limelight;
         bool _aiming;
-
-
 };
-
-
-
 
 #endif

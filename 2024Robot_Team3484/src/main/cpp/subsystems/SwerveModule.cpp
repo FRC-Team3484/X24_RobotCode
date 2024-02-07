@@ -21,8 +21,8 @@ using namespace ctre::phoenix;
 
 SwerveModule::SwerveModule(SC_SwerveConfigs corner) 
         : _drive_motor(corner.CAN_ID),
-          _steer_motor(corner.SteerMotorPort),
-          _steer_encoder(corner.EncoderPort)
+            _steer_motor(corner.SteerMotorPort),
+            _steer_encoder(corner.EncoderPort)
         {
 
     // configs::CurrentLimitsConfigs drive_motor_current_limit{};
@@ -106,7 +106,7 @@ void SwerveModule::SetDesiredState(SwerveModuleState state, bool open_loop, bool
         _drive_motor.Set(state.speed / MAX_WHEEL_SPEED);
     } else {
         volt_t drive_output = volt_t{_drive_pid_controller.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
-         volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);
+        volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);
         _drive_motor.SetVoltage(drive_output + drive_feed_forward);
     }
 

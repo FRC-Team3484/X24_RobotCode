@@ -12,7 +12,7 @@
 using namespace IntakeConstants;
 using namespace frc;
 
-IntakeSubsystem::IntakeSubsystem( //Reference constants in Robot.h in the intializer list
+IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intializer list
     int pivot_motor_can_id, 
     int drive_motor_can_id, 
     int piece_sensor_di_ch, 
@@ -48,8 +48,6 @@ IntakeSubsystem::IntakeSubsystem( //Reference constants in Robot.h in the intial
 }
 
 void IntakeSubsystem::Periodic() {
-    // Runs every 20ms
-
     #ifdef EN_DIAGNOSTICS
         SmartDashboard::PutNumber("Intake Angle (deg)", _pivot_encoder->GetPosition()*360);
         SmartDashboard::PutNumber("Intake Angle (deg)", _pivot_encoder->GetVelocity());
@@ -82,37 +80,31 @@ void IntakeSubsystem::SetIntakeAngle(units::degree_t angle) {
 
 void IntakeSubsystem::SetRollerPower(double power) {
     // Set the power level of the drive motor
-
     _drive_motor.Set(power);
 }
 
 bool IntakeSubsystem::HasPiece() {
     // Returns true is there's a game piece in the intake
-
     return _piece_sensor.Get();
 }
 
 bool IntakeSubsystem::ArmExtended() {
     // Returns true if the intake arm is extended
-
     return _arm_sensor.Get();
 }
 
 units::turn_t IntakeSubsystem::GetIntakePosition() {
     // Returns the angle of the intake
-
     if (_arm_sensor_hit) {
         return units::turn_t{_pivot_encoder->GetPosition() / IntakeConstants::GEAR_RATIO};
 
     } else {
         return MAX_VELOCITY*20_ms;
-
     }
 }
 
 units::revolutions_per_minute_t IntakeSubsystem::GetEncoderVelocity() {
     // Returns the velocity of the encoder
-
     return units::revolutions_per_minute_t{_pivot_encoder->GetVelocity()} / IntakeConstants::GEAR_RATIO;
 }
 

@@ -8,9 +8,6 @@ using namespace VisionConstants;
 using namespace SwerveConstants::AutonDriveConstants;
 using namespace SwerveConstants::BrakeConstants;
 
-
-
-
 TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision)
     : _drivetrain{drivetrain},
     _oi_driver{oi_driver},
@@ -18,7 +15,6 @@ TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Inter
     _limelight{vision} {
     AddRequirements(_drivetrain);
 }
-
 
 void TeleopAimCommand::Initialize() {
     _oi_driver->SetRumble(.2);
@@ -36,18 +32,19 @@ void TeleopAimCommand::Initialize() {
         _limelight->SetTargetHeight(TARGET_HEIGHT);
     }
 }
+
 void TeleopAimCommand::Execute() {
     if (_limelight == NULL) {
         fmt::print("Limelight is Null");
     } else {
         if (_aiming){
             _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
-            if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()){
+            if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()) {
                 _aiming = false;
                 _initial_positions = _drivetrain->GetModulePositions();
             }
         }
-        else{
+        else {
             wpi::array<SwerveModulePosition, 4> current_positions = _drivetrain->GetModulePositions();
             _drivetrain->SetModuleStates(
                 {
@@ -70,10 +67,7 @@ void TeleopAimCommand::Execute() {
             SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
         #endif
     }
-
 }
-
-
 
 void TeleopAimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();

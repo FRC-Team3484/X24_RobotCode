@@ -1,5 +1,5 @@
-#ifndef AUTONGENERATOR_H
-#define AUTONGENERATOR_H
+#ifndef AUTON_GENERATOR_H
+#define AUTON_GENERATOR_H
 
 #include "subsystems/DrivetrainSubsystem.h"
 
@@ -13,6 +13,7 @@ class AutonGenerator {
     public:
         AutonGenerator(DrivetrainSubsystem* drivetrain);
         frc2::CommandPtr GetAutonomousCommand();
+        
     private:
         //frc2::CommandPtr _BuildPathCommand(std::string path_name);
         
