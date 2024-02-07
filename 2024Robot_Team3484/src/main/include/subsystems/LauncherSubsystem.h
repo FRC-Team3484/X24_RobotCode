@@ -36,8 +36,8 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         rev::SparkPIDController* Launcher_m_Right_pidController;
 
         double _target_speed;
-        int _counter_null_right;
-        int _counter_null_left;
+        int _counter_not_null_right;
+        int _counter_not_null_left;
 
 
 };

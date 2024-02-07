@@ -22,9 +22,9 @@ void AutonAimCommand::Initialize() {
         fmt::print("Limelight is Null");
     }
     else {
-        _limelight->SetCameraAngle(CAMERA_ANGLE);
-        _limelight->SetLensHeight(CAMERA_HEIGHT);
-        _limelight->SetTargetHeight(TARGET_HEIGHT);
+            _limelight->SetCameraAngle(CAMERA_ANGLE);
+            _limelight->SetLensHeight(CAMERA_HEIGHT);
+            _limelight->SetTargetHeight(TARGET_HEIGHT);
     }
 }
 void AutonAimCommand::Execute() {
@@ -34,8 +34,8 @@ void AutonAimCommand::Execute() {
         if (_aiming){
             _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
             if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget()){
-                _aiming = false;
-                _initial_positions = _drivetrain->GetModulePositions();
+                    _aiming = false;
+                    _initial_positions = _drivetrain->GetModulePositions();
             }
         }
         else{

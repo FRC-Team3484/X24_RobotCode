@@ -66,8 +66,8 @@ void LauncherSubsystem::Periodic() {
         SmartDashboard::PutNumber("Motor Speed Left (RPM)", Launcher_Encoder_Left->GetVelocity()/GEAR_RATIO);
         SmartDashboard::PutNumber("Motor Speed Right (RPM)", Launcher_Encoder_Right->GetVelocity()/GEAR_RATIO);
     #endif
-    _counter_null_right = 0;
-    _counter_null_left = 0;
+    _counter_not_null_right = 0;
+    _counter_not_null_left = 0;
 
     if (Launcher_m_Left_pidController !=NULL){
         Launcher_m_Left_pidController->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
