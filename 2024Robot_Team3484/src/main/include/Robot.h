@@ -36,6 +36,8 @@
 #include <frc2/command/CommandScheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/DigitalInput.h>
+// Command Groups
+#include <frc2/command/SequentialCommandGroup.h>
 class Robot : public frc::TimedRobot {
     public:
         void RobotInit() override;
@@ -84,6 +86,18 @@ class Robot : public frc::TimedRobot {
         frc::DigitalInput _troubleshoot{0};
 
         std::optional<frc2::CommandPtr> _auton_command;
+
+        // frc2::CommandPtr _GetDriveCommands();
+        // frc2::CommandPtr _GetLaunchCommands();
+        // std::optional<frc2::CommandPtr> _drive_commands;
+        // std::optional<frc2::CommandPtr> _launch_commands;
+
+        void _StartDriveCommands();
+        void _StopDriveCommands();
+        void _StartLaunchCommands();
+        void _StopLaunchCommands();
+
+
 };
 
 #endif

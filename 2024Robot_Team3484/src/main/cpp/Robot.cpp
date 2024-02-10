@@ -9,9 +9,10 @@
 #include <frc2/command/CommandScheduler.h>
 
 using namespace SwerveConstants::AutonNames;
-
 void Robot::RobotInit() {
     frc::SmartDashboard::GetBoolean("testing",true);
+    // _drive_commands = _GetDriveCommands();
+    // _launch_commands = _GetLaunchCommands();
 
 }
 
@@ -46,7 +47,7 @@ void Robot::TeleopInit() {
     }
 
     _robot_state = drive;
-    _drive_command.Schedule();
+    _StartDriveCommands();
 }
 
 // There are two states that can be done; drive and shoot
@@ -59,8 +60,8 @@ void Robot::TeleopPeriodic() {
         switch (_robot_state) {
         case drive:
             if (_oi_operator.Launch()) {
-                _drive_command.Cancel();
-                _aim_command.Schedule();
+                _StopDriveCommands();
+                _StartLaunchCommands();
                 _robot_state = shoot;
             }
 
@@ -68,8 +69,8 @@ void Robot::TeleopPeriodic() {
 
         case shoot:
             if (!_oi_operator.Launch()) {
-                _aim_command.Cancel();
-                _drive_command.Schedule();
+                _StopLaunchCommands();
+                _StartDriveCommands();
                 _robot_state = drive;
             }
 
@@ -89,10 +90,48 @@ void Robot::TestInit() {
 
 void Robot::TestPeriodic() {}
 
+// frc2::CommandPtr Robot::_GetDriveCommands() {
+//     return frc2::cmd::Sequence(
+//         _drive_command.ToPtr(),
+//         _teleop_climber_command.ToPtr(),
+//         _teleop_intake_command.ToPtr(),
+//         _teleop_launcher_command.ToPtr()
+//     )
+
+// }
+
+// frc2::CommandPtr Robot::_GetLaunchCommands() {
+
+// }
+
+void Robot::_StartDriveCommands() {
+    _drive_command.Schedule(),
+    _teleop_climber_command.Schedule(),
+    _teleop_intake_command.Schedule(),
+    _teleop_launcher_command.Schedule();
+}
+void Robot::_StopDriveCommands() {
+    _drive_command.Cancel(),
+    _teleop_climber_command.Cancel(),
+    _teleop_intake_command.Cancel(),
+    _teleop_launcher_command.Cancel();
+}
+
+void Robot::_StartLaunchCommands() {
+    _drive_command.Schedule(),
+    _teleop_launcher_command.Schedule();
+}
+void Robot::_StopLaunchCommands() {
+    _drive_command.Cancel(),
+    _teleop_launcher_command.Cancel();
+}
+
+
 // void Robot::TestExit() {}
 
 #ifndef RUNNING_FRC_TESTS
 int main() {
     return frc::StartRobot<Robot>();
 }
+
 #endif
