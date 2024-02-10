@@ -62,8 +62,8 @@ class Operator_Interface{
         bool LaunchButton();
         bool IntakeTrap();
         bool ScoreTrap();
-        bool ScoreAmp();
-        void SetRumble(double Rumble);
+        bool AmpTrap();
+                void SetRumble(double Rumble);
 
 #endif
 

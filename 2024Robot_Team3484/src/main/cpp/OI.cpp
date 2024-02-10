@@ -41,6 +41,7 @@ bool Operator_Interface::IntakeAngleReadyTest(){return _operator_controller.GetR
 bool Operator_Interface::IntakePowerForwardTest(){return _operator_controller.GetRawButton(Intake::ROLL_FORWARD);}
 bool Operator_Interface::IntakePowerBackwardTest(){return _operator_controller.GetRawButton(Intake::ROLL_BACKWARD);}
 double Operator_Interface::IntakeSensorTest(){return _operator_controller.GetRawButton(Intake::HAS_PIECE_SENSOR);}
+#else
 //Toggle
 bool Operator_Interface::EjectIntakeButton() {return _operator_controller.GetRawButton(EJECT);}
 bool Operator_Interface::IgnoreVision() {return _operator_controller.GetRawButton(IGNORE);}

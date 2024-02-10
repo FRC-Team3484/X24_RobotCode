@@ -12,6 +12,9 @@ void TeleopTrapCommand::Initialize() {}
 
 void TeleopTrapCommand::Execute() {
     if (_oi != NULL) {
+#ifdef EN_TESTING
+    
+#else
         if (_oi->ScoreTrap()){
             _trap_subsystem->SetPosition(TRAP_POSITION);
             if (_trap_subsystem->AtPosition()) {
@@ -29,6 +32,8 @@ void TeleopTrapCommand::Execute() {
             _trap_subsystem->SetPosition(HOME_POSITION);
             _trap_subsystem->SetRollerPower(0);
         }
+    
+#endif
     }
 }
 

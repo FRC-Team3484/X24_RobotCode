@@ -53,6 +53,9 @@ void Robot::TeleopInit() {
 // drive: include logic for x-break using buttons
 // shoot: break and visions
 void Robot::TeleopPeriodic() {
+#ifdef EN_TESTING
+
+#else
     switch (_robot_state) {
     case drive:
         if (_oi_operator.LaunchButton()) {
@@ -74,6 +77,7 @@ void Robot::TeleopPeriodic() {
         default:
         _robot_state = drive;
     }
+#endif
 }
 
 // void Robot::TeleopExit() {}
