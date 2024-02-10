@@ -56,3 +56,11 @@ void ClimberSubsystem::SetClimberPower(double power) {
     else    
         _left_climber_motor.Set(power);
 }
+
+#ifdef EN_TESTING
+void ClimberSubsystem::OpenLoopTestMotors(double power_left, double power_right) {
+    _left_climber_motor.Set(power_left);
+    _right_climber_motor.Set(power_right);
+}
+
+#endif
