@@ -116,3 +116,11 @@ bool IntakeSubsystem::AtSetPosition() {
         return false;
     }
 }
+
+#ifdef EN_TESTING
+void IntakeSubsystem::OpenLoopTestMotors(double power_left, double power_right) {
+    _pivot_motor.Set(power_left);
+    _drive_motor.Set(power_right);
+}
+
+#endif

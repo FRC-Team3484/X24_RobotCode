@@ -13,6 +13,11 @@ TeleopIntakeCommand::TeleopIntakeCommand(IntakeSubsystem* intake_subsystem, Laun
 void TeleopIntakeCommand::Initialize() {}
 
 void TeleopIntakeCommand::Execute() {
+    #ifdef EN_TESTING
+    if(_oi->IntakeHotKey() && _is_open_loop) {
+        _intake_subsystem->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
+    }
+    #else
     if (_oi != NULL) {
         if (_oi->ExtendIntakeButton()) {
             if ((!_intake_subsystem->HasPiece() || _oi->IgnoreSensor())) {
@@ -67,15 +72,21 @@ void TeleopIntakeCommand::Execute() {
         frc::SmartDashboard::PutBoolean("Intake: Arm Extended", _intake_subsystem->ArmExtended());
         frc::SmartDashboard::PutBoolean("Intake: At Set Position", _intake_subsystem->AtSetPosition());
     #endif
+
+    #endif
 }
 
 void TeleopIntakeCommand::End(bool inturrupted) {
+    #ifdef EN_TESTING
+    #else
     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
     _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
 
     _launcher_subsystem->setLauncherRPM(0_rpm);
 
     _oi->SetRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
+
+    #endif
 }
 
 bool TeleopIntakeCommand::IsFinished() {return false;}
