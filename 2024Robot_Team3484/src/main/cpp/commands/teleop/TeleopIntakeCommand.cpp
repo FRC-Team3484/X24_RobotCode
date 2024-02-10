@@ -13,12 +13,16 @@ TeleopIntakeCommand::TeleopIntakeCommand(IntakeSubsystem* intake_subsystem, Laun
 void TeleopIntakeCommand::Initialize() {}
 
 void TeleopIntakeCommand::Execute() {
-    #ifdef EN_TESTING
-    if(_oi->IntakeHotKey() && _is_open_loop) {
-        _intake_subsystem->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
-    }
-    #else
-    if (_oi != NULL) {
+    if (_oi != NULL && _intake_subsystem != NULL) {
+#ifdef EN_TESTING
+        _intake_subsystem->SetIntakeAngle(0_deg);
+        _intake_subsystem->SetRollerPower(0);
+        
+        if(_oi->IntakeHotKey() && _is_open_loop) {
+            _intake_subsystem->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
+        }
+#else
+    
         if (_oi->ExtendIntakeButton()) {
             if ((!_intake_subsystem->HasPiece() || _oi->IgnoreSensor())) {
                 _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
@@ -65,7 +69,7 @@ void TeleopIntakeCommand::Execute() {
 
             }
         }
-    }
+    
 
     #ifdef EN_DIAGNOSTICS
         frc::SmartDashboard::PutBoolean("Intake: Has Piece", _intake_subsystem->HasPiece());
@@ -73,7 +77,8 @@ void TeleopIntakeCommand::Execute() {
         frc::SmartDashboard::PutBoolean("Intake: At Set Position", _intake_subsystem->AtSetPosition());
     #endif
 
-    #endif
+#endif
+    }
 }
 
 void TeleopIntakeCommand::End(bool inturrupted) {
