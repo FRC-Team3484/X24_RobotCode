@@ -20,10 +20,10 @@
 // Other Subsystems
 #include "subsystems/IntakeSubsystem.h"
 #include "subsystems/LauncherSubsystem.h"
-#include "subsystems/ClawSubsystem.h"
+#include "subsystems/ClimberSubsystem.h"
 
 // Teleop Commands
-#include "commands/teleop/TeleopClawCommand.h"
+#include "commands/teleop/TeleopClimberCommand.h"
 #include "commands/teleop/TeleopIntakeCommand.h"
 #include "commands/teleop/TeleopLauncherCommand.h"
 
@@ -73,10 +73,10 @@ class Robot : public frc::TimedRobot {
         // Uncomment these when ready to test subsystems
         IntakeSubsystem _intake{IntakeConstants::PIVOT_MOTOR_CAN_ID, IntakeConstants::DRIVE_MOTOR_CAN_ID, IntakeConstants::PIECE_SENSOR_DI_CH, IntakeConstants::ARM_SENSOR_DI_CH, IntakeConstants::PID_CONSTANTS, IntakeConstants::PID_OUTPUTRANGE_MAX, IntakeConstants::PID_OUTPUTRANGE_MIN};
         LauncherSubsystem _launcher{LauncherConstants::LEFT_MOTOR_CAN_ID, LauncherConstants::RIGHT_MOTOR_CAN_ID, LauncherConstants::PID_CONSTANTS, LauncherConstants::RPM_WINDOW_RANGE};
-        ClawSubsystem _claw{ClawConstants::LEFT_MOTOR_CAN_ID, ClawConstants::RIGHT_MOTOR_CAN_ID, ClawConstants::LEFT_SENSOR_DI_CH, ClawConstants::RIGHT_SENSOR_DI_CH};
+        ClimberSubsystem _climber{ClimberConstants::LEFT_MOTOR_CAN_ID, ClimberConstants::RIGHT_MOTOR_CAN_ID, ClimberConstants::LEFT_SENSOR_DI_CH, ClimberConstants::RIGHT_SENSOR_DI_CH};
         
         // Uncomment these when ready to test the teleop commands
-        TeleopClawCommand _teleop_claw_command{&_claw, &_oi_operator};
+        TeleopClimberCommand _teleop_climber_command{&_climber, &_oi_operator};
         TeleopIntakeCommand _teleop_intake_command{&_intake, &_launcher, &_oi_operator};
         TeleopLauncherCommand _teleop_launcher_command{&_launcher, &_intake, &_vision, &_oi_operator};
 

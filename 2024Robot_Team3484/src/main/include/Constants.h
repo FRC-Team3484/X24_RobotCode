@@ -56,7 +56,7 @@ namespace IntakeConstants {
     constexpr units::degree_t POSITION_TOLERANCE = 2_deg;
 }
 
-namespace ClawConstants {
+namespace ClimberConstants {
     constexpr int LEFT_MOTOR_CAN_ID = 50;
     constexpr int RIGHT_MOTOR_CAN_ID = 51;
     constexpr int LEFT_SENSOR_DI_CH = 3;
@@ -220,7 +220,7 @@ namespace UserInterface {
         namespace Hotkey {
             constexpr int LAUNCHER_HK = XBOX_LB;
             constexpr int INTAKE_HK = XBOX_RB;
-            constexpr int CLIMBER_HK = XBOX_LT;
+            constexpr int CLIMBR_HK = XBOX_LT;
         }
         namespace Launcher {
         constexpr int LEFT_MOTOR = XBOX_X;
