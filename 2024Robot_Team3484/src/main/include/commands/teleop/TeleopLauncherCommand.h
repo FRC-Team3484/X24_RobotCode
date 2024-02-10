@@ -31,6 +31,11 @@ class TeleopLauncherCommand: public frc2::CommandHelper<frc2::Command, TeleopLau
         Operator_Interface* _oi;
         bool _launching; 
         bool _loaded;
+        #ifdef EN_TESTING
+        bool _is_open_loop = true; 
+
+        #endif
+
 
 };
 

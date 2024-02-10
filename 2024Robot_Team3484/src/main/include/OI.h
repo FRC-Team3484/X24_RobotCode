@@ -32,6 +32,9 @@ class Driver_Interface {
 class Operator_Interface{
     public:
     #ifdef EN_TESTING
+        //joystick
+        double OpenLoopControlLeft();
+        double OpenLoopControlRight();
         // Hotkeys
         bool LauncherHotKey();
         bool IntakeHotKey();

@@ -95,3 +95,11 @@ bool LauncherSubsystem::atTargetRPM(){
         return false;
     }
 }
+
+#ifdef EN_TESTING
+void LauncherSubsystem::OpenLoopTestMotors(double power_left, double power_right) {
+    _left_motor.Set(power_left);
+    _right_motor.Set(power_right);
+}
+
+#endif

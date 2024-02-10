@@ -15,17 +15,11 @@ TeleopLauncherCommand::TeleopLauncherCommand(LauncherSubsystem* launcher_subsyst
     AddRequirements(_launcher), AddRequirements(_intake);
 }
 
-#ifdef EN_TESTING
-void TeleopLauncherCommand::Execute() {
-    if (_oi != NULL) {
-        if (_oi->LauncherHotKey() && _oi->LauncherLeftMotorTest()) {
-            _launcher->_left_motor.Set(5);
-        }
-    }
-}
-#else
 
 void TeleopLauncherCommand::Initialize(){
+    #ifdef EN_TESTING
+
+    #else
     if(_intake !=NULL) {
         _intake->SetIntakeAngle(STOW_POSITION);
         _intake->SetRollerPower(ROLLER_STOP);
@@ -36,9 +30,16 @@ void TeleopLauncherCommand::Initialize(){
     if (_launcher !=NULL) {
         _launcher->setLauncherRPM(TARGET_RPM);
     }
+
+    #endif
 }
 
 void TeleopLauncherCommand::Execute(){
+    #ifdef EN_TESTING
+    if(_oi->LauncherHotKey() && _is_open_loop) {
+        _launcher->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
+    }
+    #else
     if (_launcher !=NULL && _intake != NULL) {
         if(_launcher->atTargetRPM() 
             && _intake->AtSetPosition() 
@@ -60,13 +61,16 @@ void TeleopLauncherCommand::Execute(){
             SmartDashboard::PutNumber("Launcher: Horizontal Distance", double(_limelight->GetHorizontalDistance().value()));
         #endif
     }
+    #endif
 
 }
 void TeleopLauncherCommand::End(bool interrupted) {
+    #ifdef EN_TESTING
+    #else
     if (_launcher !=NULL && _intake != NULL) {
         _launcher->setLauncherRPM(0_rpm);
         _intake->SetRollerPower(ROLLER_STOP);
     }
+    #endif
 }
 bool TeleopLauncherCommand::IsFinished() {return false;}
-#endif

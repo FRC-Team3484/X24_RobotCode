@@ -23,14 +23,17 @@ void Driver_Interface::SetRumble(double Rumble) {
 }
 
 #ifdef EN_TESTING
+//joystick
+double Operator_Interface::OpenLoopControlLeft() {return frc::ApplyDeadband(_operator_controller.GetRawAxis(TESTING_OPEN_LOOP_LEFT), TESTING_DEADBAND);}
+double Operator_Interface::OpenLoopControlRight() {return frc::ApplyDeadband(_operator_controller.GetRawAxis(TESTING_OPEN_LOOP_RIGHT), TESTING_DEADBAND);}
 // Hotkeys
 bool Operator_Interface::LauncherHotKey(){return _operator_controller.GetRawButton(Hotkey::LAUNCHER_HK);}
 bool Operator_Interface::IntakeHotKey(){return _operator_controller.GetRawButton(Hotkey::INTAKE_HK);}
 double Operator_Interface::ClimberHotKey(){return _operator_controller.GetRawAxis(Hotkey::CLIMBER_HK);}
 
 //Testing Values for Launcher
-bool Operator_Interface::LauncherLeftMotorTest(){return _operator_controller.GetRawButton(Launcher::LEFT_MOTOR);}
-bool Operator_Interface::LauncherRightMotorTest(){return _operator_controller.GetRawButton(Launcher::RIGHT_MOTOR);}
+// bool Operator_Interface::LauncherLeftMotorTest(){return _operator_controller.GetRawButton(Launcher::LEFT_MOTOR);}
+// bool Operator_Interface::LauncherRightMotorTest(){return _operator_controller.GetRawButton(Launcher::RIGHT_MOTOR);}
 bool Operator_Interface::LauncherSensorTest(){return _operator_controller.GetRawButtonPressed(Launcher::SHOT_SENSOR);}
 
 //Testing Values for Intake
