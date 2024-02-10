@@ -10,7 +10,10 @@
 
 using namespace SwerveConstants::AutonNames;
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+    frc::SmartDashboard::GetBoolean("testing",true);
+
+}
 
 void Robot::RobotPeriodic() {
     frc::SmartDashboard::PutBoolean("Digital Input: 0",_troubleshoot.Get());
@@ -71,7 +74,6 @@ void Robot::TeleopPeriodic() {
         default:
         _robot_state = drive;
     }
-
 }
 
 // void Robot::TeleopExit() {}

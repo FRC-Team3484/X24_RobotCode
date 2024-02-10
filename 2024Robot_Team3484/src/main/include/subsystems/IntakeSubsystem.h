@@ -34,7 +34,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
         bool AtSetPosition();
 
         #ifdef EN_TESTING
-        void OpenLoopTestMotors(double power_left, double power_right);
+        void OpenLoopTestMotors(double pivot_power, double drive_power);
         #endif
 
     private:

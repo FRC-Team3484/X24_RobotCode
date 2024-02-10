@@ -16,7 +16,7 @@ void TeleopClimberCommand::Execute() {
 #ifdef EN_TESTING
     _climber_subsystem->SetClimberPower(0);
     
-    if(_oi->IntakeHotKey() && _is_open_loop) {
+    if(_oi->IntakeHotKey() && frc::SmartDashboard::GetBoolean("testing",true)) {
         _climber_subsystem->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
     }
 #else

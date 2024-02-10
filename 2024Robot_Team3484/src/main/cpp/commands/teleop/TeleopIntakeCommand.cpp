@@ -18,7 +18,7 @@ void TeleopIntakeCommand::Execute() {
         _intake_subsystem->SetIntakeAngle(0_deg);
         _intake_subsystem->SetRollerPower(0);
         
-        if(_oi->IntakeHotKey() && _is_open_loop) {
+        if(_oi->IntakeHotKey() && frc::SmartDashboard::GetBoolean("testing",true)) {
             _intake_subsystem->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
         }
 #else

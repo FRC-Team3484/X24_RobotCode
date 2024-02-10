@@ -17,31 +17,34 @@ TeleopLauncherCommand::TeleopLauncherCommand(LauncherSubsystem* launcher_subsyst
 
 
 void TeleopLauncherCommand::Initialize(){
-    #ifdef EN_TESTING
-
-    #else
-    if(_intake !=NULL) {
-        _intake->SetIntakeAngle(STOW_POSITION);
-        _intake->SetRollerPower(ROLLER_STOP);
-    }
-
     _launching = false;
 
-    if (_launcher !=NULL) {
+    if(_launcher != NULL) {
+#ifdef EN_TESTING
+        _launcher->OpenLoopTestMotors(0,0);
+#else
         _launcher->setLauncherRPM(TARGET_RPM);
+#endif
+}
+    if(_intake != NULL) {
+#ifdef EN_TESTING
+        _intake->SetRollerPower(0);
+        _intake->OpenLoopTestMotors(0,0);
+#else
+        _intake->SetIntakeAngle(STOW_POSITION);
+        _intake->SetRollerPower(ROLLER_STOP);
+#endif
     }
-
-    #endif
 }
 
 void TeleopLauncherCommand::Execute(){
-    #ifdef EN_TESTING
-    if(_oi->LauncherHotKey() && _is_open_loop) {
-        _launcher->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
-    }
-    #else
-    if (_launcher !=NULL && _intake != NULL) {
-        if(_launcher->atTargetRPM() 
+    if (_launcher !=NULL && _intake != NULL){
+#ifdef EN_TESTING
+        if(_oi->LauncherHotKey() &&  frc::SmartDashboard::GetBoolean("testing",true)) {
+            _launcher->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
+        }
+#else
+           if(_launcher->atTargetRPM() 
             && _intake->AtSetPosition() 
             && ( _limelight == NULL 
                 || (_oi != NULL && _oi->IgnoreVision()) 
@@ -60,8 +63,9 @@ void TeleopLauncherCommand::Execute(){
             SmartDashboard::PutBoolean("Launcher: Has Target", _limelight->HasTarget());
             SmartDashboard::PutNumber("Launcher: Horizontal Distance", double(_limelight->GetHorizontalDistance().value()));
         #endif
+#endif
     }
-    #endif
+    
 
 }
 void TeleopLauncherCommand::End(bool interrupted) {

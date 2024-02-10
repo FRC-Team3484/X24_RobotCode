@@ -31,7 +31,7 @@ class Driver_Interface {
 
 class Operator_Interface{
     public:
-    #ifdef EN_TESTING
+#ifdef EN_TESTING
         //joystick
         double OpenLoopControlLeft();
         double OpenLoopControlRight();
@@ -50,7 +50,7 @@ class Operator_Interface{
         bool IntakePowerForwardTest();
         bool IntakePowerBackwardTest();
         double IntakeSensorTest();
-    #else
+//#else
         bool Launch();
         bool IgnoreVision();
         bool ClimbUp();
@@ -62,7 +62,7 @@ class Operator_Interface{
         bool LaunchButton();
         void SetRumble(double Rumble);
 
-    #endif
+#endif
 
     private:
         frc::XboxController _operator_controller{UserInterface::Operator::OPERATOR_CONTROLLER_PORT};

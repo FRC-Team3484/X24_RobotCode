@@ -22,11 +22,6 @@ class TeleopClimberCommand
     private:
         ClimberSubsystem* _climber_subsystem;
         Operator_Interface* _oi;
-
-        #ifdef EN_TESTING
-        bool _is_open_loop;
-        #endif
-
 };
 
 #endif

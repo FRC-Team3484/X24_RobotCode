@@ -45,6 +45,5 @@ class LauncherSubsystem : public frc2::SubsystemBase {
 
         double _rpm_window;
 
-
 };
 #endif

@@ -28,11 +28,6 @@ class TeleopIntakeCommand
         IntakeSubsystem* _intake_subsystem;
         LauncherSubsystem* _launcher_subsystem;
         Operator_Interface* _oi;
-
-        #ifdef EN_TESTING
-        bool _is_open_loop;
-        #endif
-
 };
 
 #endif

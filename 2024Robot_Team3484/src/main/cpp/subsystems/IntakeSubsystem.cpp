@@ -118,9 +118,9 @@ bool IntakeSubsystem::AtSetPosition() {
 }
 
 #ifdef EN_TESTING
-void IntakeSubsystem::OpenLoopTestMotors(double power_left, double power_right) {
-    _pivot_motor.Set(power_left);
-    _drive_motor.Set(power_right);
+void IntakeSubsystem::OpenLoopTestMotors(double pivot_power, double drive_power) {
+    _pivot_motor.Set(pivot_power);
+    _drive_motor.Set(drive_power);
 }
 
 #endif

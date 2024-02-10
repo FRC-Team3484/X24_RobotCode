@@ -220,6 +220,7 @@ namespace UserInterface {
         constexpr int TESTING_OPEN_LOOP_RIGHT = XBOX_RS_Y;
         constexpr double TESTING_DEADBAND = 0.02;
         constexpr int TESTING_CONTROLLER_PORT = 3;
+        constexpr int TOGGLE_TESTING = XBOX_BACK;
         namespace Hotkey {
             constexpr int LAUNCHER_HK = XBOX_LB;
             constexpr int INTAKE_HK = XBOX_RB;
@@ -236,8 +237,8 @@ namespace UserInterface {
         constexpr int ROLL_FORWARD = XBOX_Y;
         constexpr int ROLL_BACKWARD = XBOX_A;
         constexpr int HAS_PIECE_SENSOR = XBOX_RT;
+        
         }
     }
 }
-
 #endif

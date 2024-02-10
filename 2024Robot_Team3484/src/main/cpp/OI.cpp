@@ -21,7 +21,6 @@ bool Driver_Interface::LowSpeed() {return _driver_controller.GetRawAxis(LOW_SPEE
 void Driver_Interface::SetRumble(double Rumble) {
     _driver_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
-
 #ifdef EN_TESTING
 //joystick
 double Operator_Interface::OpenLoopControlLeft() {return frc::ApplyDeadband(_operator_controller.GetRawAxis(TESTING_OPEN_LOOP_LEFT), TESTING_DEADBAND);}
@@ -42,9 +41,7 @@ bool Operator_Interface::IntakeAngleReadyTest(){return _operator_controller.GetR
 bool Operator_Interface::IntakePowerForwardTest(){return _operator_controller.GetRawButton(Intake::ROLL_FORWARD);}
 bool Operator_Interface::IntakePowerBackwardTest(){return _operator_controller.GetRawButton(Intake::ROLL_BACKWARD);}
 double Operator_Interface::IntakeSensorTest(){return _operator_controller.GetRawButton(Intake::HAS_PIECE_SENSOR);}
-
-#else
-bool Operator_Interface::ExtendIntakeButton() {return _operator_controller.GetRawButton(EXTEND);}
+//Toggle
 bool Operator_Interface::EjectIntakeButton() {return _operator_controller.GetRawButton(EJECT);}
 bool Operator_Interface::IgnoreVision() {return _operator_controller.GetRawButton(IGNORE);}
 bool Operator_Interface::IgnoreSensor() {return _operator_controller.GetRawButton(IGNORE);}
