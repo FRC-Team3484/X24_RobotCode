@@ -26,6 +26,7 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         void setLauncherRPM(units::revolutions_per_minute_t speed);
         bool atTargetRPM();
 
+
     private:
         rev::CANSparkMax _left_motor;
         rev::CANSparkMax _right_motor;

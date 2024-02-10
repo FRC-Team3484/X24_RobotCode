@@ -5,6 +5,7 @@
 
 using namespace UserInterface::Driver;
 using namespace UserInterface::Operator;
+using namespace UserInterface::Testing;
 
 
 double Driver_Interface::GetThrottle() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(THROTTLE), JOYSTICK_DEADBAND);}
@@ -20,6 +21,26 @@ bool Driver_Interface::LowSpeed() {return _driver_controller.GetRawAxis(LOW_SPEE
 void Driver_Interface::SetRumble(double Rumble) {
     _driver_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
+
+#ifdef EN_TESTING
+// Hotkeys
+bool Operator_Interface::LauncherHotKey(){return _operator_controller.GetRawButton(Hotkey::LAUNCHER_HK);}
+bool Operator_Interface::IntakeHotKey(){return _operator_controller.GetRawButton(Hotkey::INTAKE_HK);}
+double Operator_Interface::ClimberHotKey(){return _operator_controller.GetRawAxis(Hotkey::CLIMBER_HK);}
+
+//Testing Values for Launcher
+bool Operator_Interface::LauncherLeftMotorTest(){return _operator_controller.GetRawButton(Launcher::LEFT_MOTOR);}
+bool Operator_Interface::LauncherRightMotorTest(){return _operator_controller.GetRawButton(Launcher::RIGHT_MOTOR);}
+bool Operator_Interface::LauncherSensorTest(){return _operator_controller.GetRawButtonPressed(Launcher::SHOT_SENSOR);}
+
+//Testing Values for Intake
+bool Operator_Interface::IntakeAngleStowTest(){return _operator_controller.GetRawButtonPressed(Intake::STOW_ANGLE);}
+bool Operator_Interface::IntakeAngleReadyTest(){return _operator_controller.GetRawButtonPressed(Intake::READY_ANGLE);}
+bool Operator_Interface::IntakePowerForwardTest(){return _operator_controller.GetRawButton(Intake::ROLL_FORWARD);}
+bool Operator_Interface::IntakePowerBackwardTest(){return _operator_controller.GetRawButton(Intake::ROLL_BACKWARD);}
+double Operator_Interface::IntakeSensorTest(){return _operator_controller.GetRawButton(Intake::HAS_PIECE_SENSOR);}
+
+#else
 bool Operator_Interface::ExtendIntakeButton() {return _operator_controller.GetRawButton(EXTEND);}
 bool Operator_Interface::EjectIntakeButton() {return _operator_controller.GetRawButton(EJECT);}
 bool Operator_Interface::IgnoreVision() {return _operator_controller.GetRawButton(IGNORE);}
@@ -34,3 +55,4 @@ bool Operator_Interface::ClimbDown() {return _operator_controller.GetPOV()<=225 
 void Operator_Interface::SetRumble(double Rumble) {
     _operator_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
+#endif

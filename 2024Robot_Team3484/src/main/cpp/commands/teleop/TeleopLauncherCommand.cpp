@@ -15,6 +15,16 @@ TeleopLauncherCommand::TeleopLauncherCommand(LauncherSubsystem* launcher_subsyst
     AddRequirements(_launcher), AddRequirements(_intake);
 }
 
+#ifdef EN_TESTING
+void TeleopLauncherCommand::Execute() {
+    if (_oi != NULL) {
+        if (_oi->LauncherHotKey() && _oi->LauncherLeftMotorTest()) {
+            _launcher->_left_motor.Set(5);
+        }
+    }
+}
+#else
+
 void TeleopLauncherCommand::Initialize(){
     if(_intake !=NULL) {
         _intake->SetIntakeAngle(STOW_POSITION);
@@ -59,3 +69,4 @@ void TeleopLauncherCommand::End(bool interrupted) {
     }
 }
 bool TeleopLauncherCommand::IsFinished() {return false;}
+#endif

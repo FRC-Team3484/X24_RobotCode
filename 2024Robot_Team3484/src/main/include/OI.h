@@ -31,6 +31,23 @@ class Driver_Interface {
 
 class Operator_Interface{
     public:
+    #ifdef EN_TESTING
+        // Hotkeys
+        bool LauncherHotKey();
+        bool IntakeHotKey();
+        double ClimberHotKey();
+        // Launcher
+        bool LauncherLeftMotorTest();
+        bool LauncherRightMotorTest();
+        bool LauncherSensorTest();
+        
+        // Intake
+        bool IntakeAngleStowTest();
+        bool IntakeAngleReadyTest();
+        bool IntakePowerForwardTest();
+        bool IntakePowerBackwardTest();
+        double IntakeSensorTest();
+    #else
         bool Launch();
         bool IgnoreVision();
         bool ClimbUp();
@@ -41,7 +58,11 @@ class Operator_Interface{
         bool IntakeThroughShooterButton();
         bool LaunchButton();
         void SetRumble(double Rumble);
+
+    #endif
+
     private:
         frc::XboxController _operator_controller{UserInterface::Operator::OPERATOR_CONTROLLER_PORT};
 };
+
 #endif

@@ -2,6 +2,7 @@
 #define CONSTANTS_H
 
 #define EN_DIAGNOSTICS
+// #define EN_TESTING
 
 #include <units/voltage.h>
 #include <units/length.h>
@@ -214,7 +215,26 @@ namespace UserInterface {
         constexpr int EXTEND = XBOX_A;
         constexpr int EJECT = XBOX_B;
     }
-
+    namespace Testing {
+        constexpr int TESTING_CONTROLLER_PORT = 3;
+        namespace Hotkey {
+            constexpr int LAUNCHER_HK = XBOX_LB;
+            constexpr int INTAKE_HK = XBOX_RB;
+            constexpr int CLIMBER_HK = XBOX_LT;
+        }
+        namespace Launcher {
+        constexpr int LEFT_MOTOR = XBOX_X;
+        constexpr int RIGHT_MOTOR = XBOX_B;
+        constexpr int SHOT_SENSOR = XBOX_A;
+        }
+        namespace Intake {
+        constexpr int STOW_ANGLE = XBOX_X;
+        constexpr int READY_ANGLE = XBOX_B;
+        constexpr int ROLL_FORWARD = XBOX_Y;
+        constexpr int ROLL_BACKWARD = XBOX_A;
+        constexpr int HAS_PIECE_SENSOR = XBOX_RT;
+        }
+    }
 }
 
 #endif

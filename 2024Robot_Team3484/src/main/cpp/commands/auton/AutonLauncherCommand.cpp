@@ -10,6 +10,11 @@ using namespace IntakeConstants;
 using namespace VisionConstants;
 using namespace frc;
 
+#ifdef EN_TESTINING
+
+
+#else
+
 AutonLauncherCommand::AutonLauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision)
 : _launcher{launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}{ 
     AddRequirements(_launcher), AddRequirements(_intake);
@@ -59,3 +64,4 @@ void  AutonLauncherCommand::End(bool interrupted) {
 bool  AutonLauncherCommand::IsFinished() {
     return false;
 }
+#endif
