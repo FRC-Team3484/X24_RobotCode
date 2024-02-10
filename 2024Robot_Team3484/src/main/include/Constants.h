@@ -7,8 +7,10 @@
 #include <units/length.h>
 #include <units/velocity.h>
 #include <units/acceleration.h>
+#include <units/angle.h>
 #include <units/angular_velocity.h>
 #include <units/angular_acceleration.h>
+
 // #include <ctre/Phoenix.h>
 
 
@@ -200,6 +202,21 @@ namespace VisionConstants {
     constexpr double STEER_GAIN = -.01;
     constexpr double TARGET_HEIGHT = 36; // inches
     // multiplier to give how far off and results to a steer power
+}
+
+namespace TrapConstants {
+    constexpr bool MOTOR_INVERTED = false;
+    constexpr units::feet_per_second_t MAX_VELOCITY = 0.5_fps;
+    constexpr units::feet_per_second_squared_t MAX_ACCELERATION = 0.1_fps_sq;
+    constexpr units::inch_t HOME_POSITION = 0_in;
+    constexpr units::inch_t INTAKE_POSITION = 6_in;
+    constexpr units::inch_t TRAP_POSITION = 12_in;
+    constexpr units::inch_t AMP_POSITION = 8_in;
+    constexpr double EJECT_POWER = -0.5;
+    constexpr double INTAKE_POWER = 0.5;
+    constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
+    constexpr units::inch_t POSITION_TOLORANCE = 1_in;
+    constexpr units::inch_t GEAR_RATIO = 1.0_in;
 }
 namespace UserInterface {
     namespace Driver {

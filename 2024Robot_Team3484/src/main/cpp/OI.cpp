@@ -27,6 +27,10 @@ bool Operator_Interface::IgnoreSensor() {return _operator_controller.GetRawButto
 bool Operator_Interface::IntakeThroughShooterButton() {return _operator_controller.GetRawButton(INTAKE_SHOOTER);}
 // Starts launch and aim
 bool Operator_Interface::LaunchButton() {return _operator_controller.GetRawButton(AIM_START);}
+// Trap Device
+bool Operator_Interface::IntakeTrap() {return false;}
+bool Operator_Interface::ScoreTrap() {return false;}
+bool Operator_Interface::ScoreAmp() {return false;}
 // Mapped to D-Pad
 bool Operator_Interface::ClimbUp() {return _operator_controller.GetPOV()==315 || _operator_controller.GetPOV()<=45;}
 bool Operator_Interface::ClimbDown() {return _operator_controller.GetPOV()<=225 && _operator_controller.GetPOV()>=135;}

@@ -40,6 +40,9 @@ class Operator_Interface{
         bool EjectIntakeButton();
         bool IntakeThroughShooterButton();
         bool LaunchButton();
+        bool IntakeTrap();
+        bool ScoreTrap();
+        bool ScoreAmp();
         void SetRumble(double Rumble);
     private:
         frc::XboxController _operator_controller{UserInterface::Operator::OPERATOR_CONTROLLER_PORT};
