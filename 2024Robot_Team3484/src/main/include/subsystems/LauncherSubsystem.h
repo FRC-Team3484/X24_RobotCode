@@ -25,9 +25,7 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         void Periodic() override;
         void setLauncherRPM(units::revolutions_per_minute_t speed);
         bool atTargetRPM();
-        #ifdef EN_TESTING
         void OpenLoopTestMotors(double power_left, double power_right);
-        #endif
 
 
     private:

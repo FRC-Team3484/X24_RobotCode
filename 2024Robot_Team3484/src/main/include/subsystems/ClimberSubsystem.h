@@ -20,10 +20,7 @@ class ClimberSubsystem : public frc2::SubsystemBase {
         void SetClimberPower(double power);
         bool GetLeftSensor();
         bool GetRightSensor();
-
-        #ifdef EN_TESTING
         void OpenLoopTestMotors(double power_left, double power_right);
-        #endif
 
     private: 
         ctre::phoenix::motorcontrol::can::WPI_TalonFX _left_climber_motor;

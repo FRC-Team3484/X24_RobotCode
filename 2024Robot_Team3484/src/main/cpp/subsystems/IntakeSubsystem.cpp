@@ -117,10 +117,9 @@ bool IntakeSubsystem::AtSetPosition() {
     }
 }
 
-#ifdef EN_TESTING
 void IntakeSubsystem::OpenLoopTestMotors(double pivot_power, double drive_power) {
-    _pivot_motor.Set(pivot_power);
-    _drive_motor.Set(drive_power);
+    if (frc::SmartDashboard::GetBoolean("testing",true)) {
+        _pivot_motor.Set(pivot_power);
+        _drive_motor.Set(drive_power);
+    }
 }
-
-#endif

@@ -57,10 +57,9 @@ void ClimberSubsystem::SetClimberPower(double power) {
         _left_climber_motor.Set(power);
 }
 
-#ifdef EN_TESTING
 void ClimberSubsystem::OpenLoopTestMotors(double power_left, double power_right) {
-    _left_climber_motor.Set(power_left);
-    _right_climber_motor.Set(power_right);
+    if (frc::SmartDashboard::GetBoolean("testing",true)) {
+        _left_climber_motor.Set(power_left);
+        _right_climber_motor.Set(power_right);
+    }
 }
-
-#endif

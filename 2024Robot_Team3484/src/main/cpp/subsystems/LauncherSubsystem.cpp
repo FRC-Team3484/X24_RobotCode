@@ -96,10 +96,10 @@ bool LauncherSubsystem::atTargetRPM(){
     }
 }
 
-#ifdef EN_TESTING
 void LauncherSubsystem::OpenLoopTestMotors(double power_left, double power_right) {
-    _left_motor.Set(power_left);
-    _right_motor.Set(power_right);
+    if (frc::SmartDashboard::GetBoolean("testing",true)) {
+        _left_motor.Set(power_left);
+        _right_motor.Set(power_right);
+    }
 }
 
-#endif

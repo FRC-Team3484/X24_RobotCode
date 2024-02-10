@@ -20,61 +20,63 @@ void TeleopLauncherCommand::Initialize(){
     _launching = false;
 
     if(_launcher != NULL) {
-#ifdef EN_TESTING
-        _launcher->OpenLoopTestMotors(0,0);
-#else
-        _launcher->setLauncherRPM(TARGET_RPM);
-#endif
-}
-    if(_intake != NULL) {
-#ifdef EN_TESTING
-        _intake->SetRollerPower(0);
-        _intake->OpenLoopTestMotors(0,0);
-#else
-        _intake->SetIntakeAngle(STOW_POSITION);
-        _intake->SetRollerPower(ROLLER_STOP);
-#endif
+        if (frc::SmartDashboard::GetBoolean("testing",true)) {
+            _launcher->OpenLoopTestMotors(0,0);
+        }
+        else {
+            _launcher->setLauncherRPM(TARGET_RPM);
+        }
+        }
+        if(_intake != NULL) {
+            if (frc::SmartDashboard::GetBoolean("testing", true)) {
+                _intake->SetRollerPower(0);
+                _intake->OpenLoopTestMotors(0,0);
+            }
+            else {
+                _intake->SetIntakeAngle(STOW_POSITION);
+                _intake->SetRollerPower(ROLLER_STOP);
+        }
     }
 }
 
 void TeleopLauncherCommand::Execute(){
     if (_launcher !=NULL && _intake != NULL){
-#ifdef EN_TESTING
-        if(_oi->LauncherHotKey() &&  frc::SmartDashboard::GetBoolean("testing",true)) {
-            _launcher->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
+        if (frc::SmartDashboard::GetBoolean("testing",true)) {
+                if(_oi->LauncherHotKey() &&  frc::SmartDashboard::GetBoolean("testing",true)) {
+                    _launcher->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
+                }
         }
-#else
-           if(_launcher->atTargetRPM() 
-            && _intake->AtSetPosition() 
-            && ( _limelight == NULL 
-                || (_oi != NULL && _oi->IgnoreVision()) 
-                || (_limelight->HasTarget() 
-                    && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )) {
-            _launching = true;
+        else {
+                if(_launcher->atTargetRPM() 
+                && _intake->AtSetPosition() 
+                && ( _limelight == NULL 
+                    || (_oi != NULL && _oi->IgnoreVision()) 
+                    || (_limelight->HasTarget() 
+                        && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )) {
+                    _launching = true;
+                }
+
+                if(_launching) {
+                    _intake->SetRollerPower(-ROLLER_POWER);
+                }
+
+                #ifdef EN_DIAGNOSTICS
+                    SmartDashboard::PutBoolean("Launcher: At Target RPM", _launcher->atTargetRPM());
+                    SmartDashboard::PutBoolean("Launcher: At Set Position", _intake->AtSetPosition());
+                    SmartDashboard::PutBoolean("Launcher: Has Target", _limelight->HasTarget());
+                    SmartDashboard::PutNumber("Launcher: Horizontal Distance", double(_limelight->GetHorizontalDistance().value()));
+                #endif
         }
 
-        if(_launching) {
-            _intake->SetRollerPower(-ROLLER_POWER);
-        }
-
-        #ifdef EN_DIAGNOSTICS
-            SmartDashboard::PutBoolean("Launcher: At Target RPM", _launcher->atTargetRPM());
-            SmartDashboard::PutBoolean("Launcher: At Set Position", _intake->AtSetPosition());
-            SmartDashboard::PutBoolean("Launcher: Has Target", _limelight->HasTarget());
-            SmartDashboard::PutNumber("Launcher: Horizontal Distance", double(_limelight->GetHorizontalDistance().value()));
-        #endif
-#endif
     }
-    
-
 }
 void TeleopLauncherCommand::End(bool interrupted) {
-    #ifdef EN_TESTING
-    #else
-    if (_launcher !=NULL && _intake != NULL) {
-        _launcher->setLauncherRPM(0_rpm);
-        _intake->SetRollerPower(ROLLER_STOP);
+    if (frc::SmartDashboard::GetBoolean("testing",true)) {}
+    else {
+        if (_launcher !=NULL && _intake != NULL) {
+            _launcher->setLauncherRPM(0_rpm);
+            _intake->SetRollerPower(ROLLER_STOP);
+        }
     }
-    #endif
 }
 bool TeleopLauncherCommand::IsFinished() {return false;}

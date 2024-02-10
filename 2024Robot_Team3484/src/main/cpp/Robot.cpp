@@ -53,31 +53,32 @@ void Robot::TeleopInit() {
 // drive: include logic for x-break using buttons
 // shoot: break and visions
 void Robot::TeleopPeriodic() {
-#ifdef EN_TESTING
+    if (frc::SmartDashboard::GetBoolean("testing",true)) {}
 
-#else
-    switch (_robot_state) {
-    case drive:
-        if (_oi_operator.LaunchButton()) {
-            _drive_command.Cancel();
-            _aim_command.Schedule();
-            _robot_state = shoot;
-        }
+    else {
+        switch (_robot_state) {
+        case drive:
+            if (_oi_operator.Launch()) {
+                _drive_command.Cancel();
+                _aim_command.Schedule();
+                _robot_state = shoot;
+            }
 
-        break;
+            break;
 
-    case shoot:
-        if (!_oi_operator.LaunchButton()) {
-            _aim_command.Cancel();
-            _drive_command.Schedule();
+        case shoot:
+            if (!_oi_operator.Launch()) {
+                _aim_command.Cancel();
+                _drive_command.Schedule();
+                _robot_state = drive;
+            }
+
+            break;
+            default:
             _robot_state = drive;
         }
 
-        break;
-        default:
-        _robot_state = drive;
     }
-#endif
 }
 
 // void Robot::TeleopExit() {}
