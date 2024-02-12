@@ -4,8 +4,8 @@
 
 using namespace ClimberConstants;
 
-TeleopClimberCommand::TeleopClimberCommand(ClimberSubsystem* Climber_subsystem, Operator_Interface* oi)
-    : _climber_subsystem{_climber_subsystem}, _oi{oi} {
+TeleopClimberCommand::TeleopClimberCommand(ClimberSubsystem* climber_subsystem, Operator_Interface* oi)
+    : _climber_subsystem{climber_subsystem}, _oi{oi} {
         AddRequirements(_climber_subsystem);
 }
 

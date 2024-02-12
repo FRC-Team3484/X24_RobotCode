@@ -12,7 +12,7 @@ class TeleopClimberCommand
     :public frc2::CommandHelper<frc2::Command, TeleopClimberCommand> {
 
     public:
-        explicit TeleopClimberCommand(ClimberSubsystem* Climber_subsystem, Operator_Interface* oi);
+        explicit TeleopClimberCommand(ClimberSubsystem* climber_subsystem, Operator_Interface* oi);
 
         void Initialize() override;
         void Execute() override;
