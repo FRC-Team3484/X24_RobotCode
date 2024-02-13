@@ -198,6 +198,8 @@ namespace VisionConstants {
 }
 
 namespace TrapConstants {
+    constexpr int EXTENSION_MOTOR_CAN_ID = 60;
+    constexpr int GP_CONTROL_CAN_ID = 61;
     constexpr bool MOTOR_INVERTED = false;
     constexpr units::feet_per_second_t MAX_VELOCITY = 0.5_fps;
     constexpr units::feet_per_second_squared_t MAX_ACCELERATION = 0.1_fps_sq;
@@ -233,8 +235,8 @@ namespace UserInterface {
         constexpr int EJECT = XBOX_B;
         constexpr int ENDGAME_TOGGLE_HK = XBOX_LB;
         constexpr int INTAKE_TRAP = XBOX_A;
-        constexpr int SCORETRAP = XBOX_X;
-        constexpr int AMPTRAP =XBOX_Y;
+        constexpr int SCORE_TRAP = XBOX_X;
+        constexpr int AMP_TRAP =XBOX_Y;
     }
     namespace Testing {
         constexpr int TESTING_OPEN_LOOP_LEFT = XBOX_LS_Y;

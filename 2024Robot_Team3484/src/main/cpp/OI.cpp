@@ -49,10 +49,10 @@ bool Operator_Interface::IntakeThroughShooter() {return _operator_controller.Get
 // Starts launch and aim
 bool Operator_Interface::Launch() {return _operator_controller.GetRawButton(AIM_START);}
 // Trap Device
-bool Operator_Interface::EndgameToggle() {_operator_controller.GetRawButton(ENDGAME_TOGGLE_HK);}
-bool Operator_Interface::IntakeTrap() {_operator_controller.GetRawButtonPressed(INTAKE_TRAP);} 
-bool Operator_Interface::ScoreTrap() {_operator_controller.GetRawButtonPressed(SCORETRAP);}
-bool Operator_Interface::AmpTrap() {_operator_controller.GetRawButtonPressed(AMPTRAP);}
+bool Operator_Interface::EndgameToggle() {return _operator_controller.GetRawButton(ENDGAME_TOGGLE_HK);}
+bool Operator_Interface::IntakeTrap() {return _operator_controller.GetRawButtonPressed(INTAKE_TRAP);} 
+bool Operator_Interface::ScoreTrap() {return _operator_controller.GetRawButtonPressed(SCORE_TRAP);}
+bool Operator_Interface::AmpTrap() {return _operator_controller.GetRawButtonPressed(AMP_TRAP);}
 // Mapped to D-Pad
 bool Operator_Interface::ClimbUp() {return _operator_controller.GetPOV()==315 || _operator_controller.GetPOV()<=45;}
 bool Operator_Interface::ClimbDown() {return _operator_controller.GetPOV()<=225 && _operator_controller.GetPOV()>=135;}
