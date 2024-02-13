@@ -60,8 +60,9 @@ void Robot::TeleopPeriodic() {
         switch (_robot_state) {
         case drive:
             if (_oi_operator.Launch()) {
-                _StopDriveCommands();
-                _StartLaunchCommands();
+                _drive_state_commands.Cancel();
+                _launch_state_commands.Schedule();
+
                 _robot_state = shoot;
             }
 
@@ -69,8 +70,8 @@ void Robot::TeleopPeriodic() {
 
         case shoot:
             if (!_oi_operator.Launch()) {
-                _StopLaunchCommands();
-                _StartDriveCommands();
+                _launch_state_commands.Cancel();
+                _drive_state_commands.Schedule();
                 _robot_state = drive;
             }
 
@@ -82,52 +83,11 @@ void Robot::TeleopPeriodic() {
     }
 }
 
-// void Robot::TeleopExit() {}
-
 void Robot::TestInit() {
   frc2::CommandScheduler::GetInstance().CancelAll();
 }
 
 void Robot::TestPeriodic() {}
-
-// frc2::CommandPtr Robot::_GetDriveCommands() {
-//     return frc2::cmd::Sequence(
-//         _drive_command.ToPtr(),
-//         _teleop_climber_command.ToPtr(),
-//         _teleop_intake_command.ToPtr(),
-//         _teleop_launcher_command.ToPtr()
-//     )
-
-// }
-
-// frc2::CommandPtr Robot::_GetLaunchCommands() {
-
-// }
-
-void Robot::_StartDriveCommands() {
-    _drive_command.Schedule(),
-    _teleop_climber_command.Schedule(),
-    _teleop_intake_command.Schedule(),
-    _teleop_launcher_command.Schedule();
-}
-void Robot::_StopDriveCommands() {
-    _drive_command.Cancel(),
-    _teleop_climber_command.Cancel(),
-    _teleop_intake_command.Cancel(),
-    _teleop_launcher_command.Cancel();
-}
-
-void Robot::_StartLaunchCommands() {
-    _drive_command.Schedule(),
-    _teleop_launcher_command.Schedule();
-}
-void Robot::_StopLaunchCommands() {
-    _drive_command.Cancel(),
-    _teleop_launcher_command.Cancel();
-}
-
-
-// void Robot::TestExit() {}
 
 #ifndef RUNNING_FRC_TESTS
 int main() {

@@ -10,6 +10,7 @@
 
 
 // Swerve Stuff
+#include "frc2/command/Commands.h"
 #include "subsystems/DrivetrainSubsystem.h"
 #include "commands/teleop/TeleopAimCommand.h"
 #include "commands/teleop/TeleopDriveCommand.h"
@@ -50,54 +51,40 @@ class Robot : public frc::TimedRobot {
         void TeleopPeriodic() override;
         void TestInit() override;
         void TestPeriodic() override;
-        //void SimulationInit() override;w
-        //void SimulationPeriodic() override;
 
     private:
         enum State {drive, shoot};
         State _robot_state = drive;
 
+        // Interface OI
         Driver_Interface _oi_driver{};
         Operator_Interface _oi_operator{};
 
-        Vision _vision{VisionConstants::CAMERA_ANGLE, VisionConstants::CAMERA_HEIGHT, VisionConstants::TARGET_HEIGHT};
-
-        DrivetrainSubsystem _drivetrain{SwerveConstants::DrivetrainConstants::SWERVE_CONFIGS_ARRAY};
-
-        // TeleopDriveCommand _drive_command{&_drivetrain, &_oi};
-        // DynamicBrakeCommand _brake_command{&_drivetrain};
-
-        // StraightenWheelsCommand _straighten_command{&_drivetrain};
-
-        TeleopAimCommand _aim_command{&_drivetrain, &_oi_driver, &_oi_operator, &_vision};
-        TeleopDriveCommand _drive_command{&_drivetrain, &_oi_driver};
-        AutonGenerator _auton_generator{&_drivetrain};
-
-        // Uncomment these when ready to test subsystems
+        //Subsystems
         IntakeSubsystem _intake{IntakeConstants::PIVOT_MOTOR_CAN_ID, IntakeConstants::DRIVE_MOTOR_CAN_ID, IntakeConstants::PIECE_SENSOR_DI_CH, IntakeConstants::ARM_SENSOR_DI_CH, IntakeConstants::PID_CONSTANTS, IntakeConstants::PID_OUTPUTRANGE_MAX, IntakeConstants::PID_OUTPUTRANGE_MIN};
         LauncherSubsystem _launcher{LauncherConstants::LEFT_MOTOR_CAN_ID, LauncherConstants::RIGHT_MOTOR_CAN_ID, LauncherConstants::PID_CONSTANTS, LauncherConstants::RPM_WINDOW_RANGE};
         ClimberSubsystem _climber{ClimberConstants::LEFT_MOTOR_CAN_ID, ClimberConstants::RIGHT_MOTOR_CAN_ID, ClimberConstants::LEFT_SENSOR_DI_CH, ClimberConstants::RIGHT_SENSOR_DI_CH};
-        
-        // Uncomment these when ready to test the teleop commands
-        TeleopClimberCommand _teleop_climber_command{&_climber, &_oi_operator};
-        TeleopIntakeCommand _teleop_intake_command{&_intake, &_launcher, &_oi_operator};
-        TeleopLauncherCommand _teleop_launcher_command{&_launcher, &_intake, &_vision, &_oi_operator};
+        DrivetrainSubsystem _drivetrain{SwerveConstants::DrivetrainConstants::SWERVE_CONFIGS_ARRAY};
+        // Subsystem Adjacent
+        Vision _vision{VisionConstants::CAMERA_ANGLE, VisionConstants::CAMERA_HEIGHT, VisionConstants::TARGET_HEIGHT};
+        AutonGenerator _auton_generator{&_drivetrain};
 
+        // Command Groups
+        frc2::CommandPtr _drive_state_commands = frc2::cmd::Parallel(
+            TeleopDriveCommand{&_drivetrain, &_oi_driver}.ToPtr(),
+        TeleopClimberCommand{&_climber, &_oi_operator}.ToPtr(),
+        TeleopIntakeCommand{&_intake, &_launcher, &_oi_operator}.ToPtr()
+        );
+
+        frc2::CommandPtr _launch_state_commands = frc2::cmd::Parallel(
+            TeleopAimCommand{&_drivetrain, &_oi_driver, &_oi_operator, &_vision}.ToPtr(),
+            TeleopLauncherCommand{&_launcher, &_intake, &_vision, &_oi_operator}.ToPtr()
+        );
+
+        // Variables
         frc::DigitalInput _troubleshoot{0};
 
         std::optional<frc2::CommandPtr> _auton_command;
-
-        // frc2::CommandPtr _GetDriveCommands();
-        // frc2::CommandPtr _GetLaunchCommands();
-        // std::optional<frc2::CommandPtr> _drive_commands;
-        // std::optional<frc2::CommandPtr> _launch_commands;
-
-        void _StartDriveCommands();
-        void _StopDriveCommands();
-        void _StartLaunchCommands();
-        void _StopLaunchCommands();
-
-
 };
 
 #endif
