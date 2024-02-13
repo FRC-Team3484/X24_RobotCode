@@ -16,17 +16,17 @@ void TeleopTrapCommand::Execute() {
         if (frc::SmartDashboard::GetBoolean("testing",true)) {}
 
         else {
-                if (_oi->ScoreTrap()){
+                if (_oi->EndgameToggle()&&_oi->ScoreTrap()){
                     _trap_subsystem->SetPosition(TRAP_POSITION);
                     if (_trap_subsystem->AtPosition()) {
                         _trap_subsystem->SetRollerPower(EJECT_POWER);
                     }
-                } else if (_oi->AmpTrap()) {
+                } else if (_oi->EndgameToggle()&&_oi->AmpTrap()) {
                     _trap_subsystem->SetPosition(AMP_POSITION);
                     if (_trap_subsystem->AtPosition()) {
                         _trap_subsystem->SetRollerPower(EJECT_POWER);
                     } 
-                } else if (_oi->IntakeTrap()){
+                } else if (_oi->EndgameToggle()&&_oi->IntakeTrap()){
                     _trap_subsystem->SetPosition(INTAKE_POSITION);
                     _trap_subsystem->SetRollerPower(INTAKE_POWER);
                 } else {
