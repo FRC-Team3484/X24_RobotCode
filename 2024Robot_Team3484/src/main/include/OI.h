@@ -50,6 +50,7 @@ class Operator_Interface{
         bool IntakePowerBackwardTest();
         double IntakeSensorTest();
   // None testing
+        bool EndgameToggle();
         bool IgnoreVision();
         bool ClimbUp();
         bool ClimbDown();

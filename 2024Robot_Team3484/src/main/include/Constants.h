@@ -231,6 +231,10 @@ namespace UserInterface {
         constexpr int AIM_START = XBOX_X;
         constexpr int EXTEND = XBOX_A;
         constexpr int EJECT = XBOX_B;
+        constexpr int ENDGAME_TOGGLE_HK = XBOX_LB;
+        constexpr int INTAKE_TRAP = XBOX_A;
+        constexpr int SCORETRAP = XBOX_X;
+        constexpr int AMPTRAP =XBOX_Y;
     }
     namespace Testing {
         constexpr int TESTING_OPEN_LOOP_LEFT = XBOX_LS_Y;
