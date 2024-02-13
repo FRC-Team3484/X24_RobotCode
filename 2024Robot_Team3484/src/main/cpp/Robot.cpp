@@ -47,7 +47,6 @@ void Robot::TeleopInit() {
     }
 
     _robot_state = drive;
-    _StartDriveCommands();
 }
 
 // There are two states that can be done; drive and shoot
