@@ -11,8 +11,6 @@
 using namespace SwerveConstants::AutonNames;
 void Robot::RobotInit() {
     frc::SmartDashboard::GetBoolean("testing",true);
-    // _drive_commands = _GetDriveCommands();
-    // _launch_commands = _GetLaunchCommands();
 
 }
 
