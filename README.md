@@ -1,6 +1,8 @@
 # X24_RobotCode
 ---
-<img src="logo.png" style="width: 70%; margin-left: 15%; margin-right: 15%;">
+<p align="center">
+    <img src="logo.png" style="width: 70%;">
+</p>
 
 ## Installation
 
