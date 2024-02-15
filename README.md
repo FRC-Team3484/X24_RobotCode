@@ -19,7 +19,7 @@ You can use `Git: Open Repository` and select the `X24_RobotCode` parent folder 
 ## NeoVim
 If you wanted to use NeoVim to write code instead of Visual Studio Code, follow these steps:
 
-Download [CMakeLists.txt](lihttps://gist.github.com/michamichaa/bc599e737ef85ee47e8b25847f9a2a3bnk) and put it into `2024Robot_Team3484`.
+Download [CMakeLists.txt](https://gist.github.com/michamichaa/bc599e737ef85ee47e8b25847f9a2a3b) and put it into `2024Robot_Team3484`.
 
 Inside the `2024Robot_Team3484` directory, create a directory called `out`, and run `cd out`
 
