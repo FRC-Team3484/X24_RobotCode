@@ -97,10 +97,10 @@ namespace SwerveConstants {
         // DO NOT REMOVE STATIC CALLS
 
         // Drive, steer, encoder, magnet offset
-        static SC::SC_SwerveConfigs SWERVE_FRONT_LEFT{10,11,20, 4.394};
-        static SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21,71.630};
-        static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,-26.103};
-        static SC::SC_SwerveConfigs SWERVE_BACK_RIGHT{16,17,23,-71.455};
+        static SC::SC_SwerveConfigs SWERVE_FRONT_LEFT{10,11,20, -147.393};
+        static SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21,-58.008};
+        static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,-178.330};
+        static SC::SC_SwerveConfigs SWERVE_BACK_RIGHT{16,17,23,130.781};
 
         static SC::SC_SwerveConfigs SWERVE_CONFIGS_ARRAY[4] = {
             SWERVE_FRONT_LEFT,
@@ -117,7 +117,7 @@ namespace SwerveConstants {
         constexpr bool STEER_MOTOR_REVERSED = false;
         constexpr bool ENCODER_REVERSED = false;
 
-        constexpr double ENCODER_OFFSET[] = {4.394, 71.630, -26.103, -71.455};
+        //constexpr double ENCODER_OFFSET[] = {4.394, 71.630, -26.103, -71.455};
 
         constexpr double DRIVE_CURRENT_THRESHOLD = 60;
         constexpr double DRIVE_CURRENT_TIME = 0.1;
@@ -248,6 +248,7 @@ namespace UserInterface {
             constexpr int LAUNCHER_HK = XBOX_LB;
             constexpr int INTAKE_HK = XBOX_RB;
             constexpr int CLIMBER_HK = XBOX_LT;
+            constexpr int TRAP_HK = XBOX_RT;
         }
         // namespace Launcher {
         // constexpr int LEFT_MOTOR = XBOX_X;

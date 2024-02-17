@@ -21,12 +21,13 @@ void Driver_Interface::SetRumble(double Rumble) {
     _driver_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
 //joystick
-double Operator_Interface::OpenLoopControlLeft() {return frc::SmartDashboard::GetBoolean("testing",true) ? frc::ApplyDeadband(_operator_controller.GetRawAxis(TESTING_OPEN_LOOP_LEFT), TESTING_DEADBAND) : 0;}
-double Operator_Interface::OpenLoopControlRight() {return frc::SmartDashboard::GetBoolean("testing",true) ? frc::ApplyDeadband(_operator_controller.GetRawAxis(TESTING_OPEN_LOOP_RIGHT), TESTING_DEADBAND) : 0;}
+double Operator_Interface::OpenLoopControlLeft() {return frc::SmartDashboard::GetBoolean("testing",true) ? frc::ApplyDeadband(_operator_controller.GetRawAxis(TESTING_OPEN_LOOP_LEFT)*.4, TESTING_DEADBAND) : 0;}
+double Operator_Interface::OpenLoopControlRight() {return frc::SmartDashboard::GetBoolean("testing",true) ? frc::ApplyDeadband(_operator_controller.GetRawAxis(TESTING_OPEN_LOOP_RIGHT)*.4, TESTING_DEADBAND) : 0;}
 // Hotkeys
 bool Operator_Interface::LauncherHotKey(){return frc::SmartDashboard::GetBoolean("testing",true) ? _operator_controller.GetRawButton(Hotkey::LAUNCHER_HK) : false;}
 bool Operator_Interface::IntakeHotKey(){return frc::SmartDashboard::GetBoolean("testing",true) ?  _operator_controller.GetRawButton(Hotkey::INTAKE_HK) : false;}
-double Operator_Interface::ClimberHotKey(){return frc::SmartDashboard::GetBoolean("testing",true) ? _operator_controller.GetRawAxis(Hotkey::CLIMBER_HK) : 0;}
+bool Operator_Interface::TrapHotKey(){return frc::SmartDashboard::GetBoolean("testing",true) ?  _operator_controller.GetRawAxis(Hotkey::TRAP_HK)>.5 : false;}
+bool Operator_Interface::ClimberHotKey(){return frc::SmartDashboard::GetBoolean("testing",true) ? _operator_controller.GetRawAxis(Hotkey::CLIMBER_HK)>.5 : false;}
 
 // //Testing Values for Launcher
 // // bool Operator_Interface::LauncherLeftMotorTest(){return _operator_controller.GetRawButton(Launcher::LEFT_MOTOR);}

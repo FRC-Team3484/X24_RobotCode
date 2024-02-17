@@ -52,7 +52,7 @@ void Robot::TeleopInit() {
     if (_auton_command) {
         _auton_command->Cancel();
     }
-
+    _drive_state_commands.Schedule();
     _robot_state = drive;
 }
 
@@ -60,36 +60,29 @@ void Robot::TeleopInit() {
 // drive: include logic for x-break using buttons
 // shoot: break and visions
 void Robot::TeleopPeriodic() {
-    if (frc::SmartDashboard::GetBoolean("testing",true)) {}
+    switch (_robot_state) {
+    case drive:
+        if (_oi_operator.Launch()) {
+            _drive_state_commands.Cancel();
+            _launch_state_commands.Schedule();
 
-    else {
-        
-        switch (_robot_state) {
-        case drive:
-            if (_oi_operator.Launch()) {
-                _drive_state_commands.Cancel();
-                _launch_state_commands.Schedule();
+            _robot_state = shoot;
+        }
 
-                _robot_state = shoot;
-            }
+        break;
 
-            break;
-
-        case shoot:
-            if (!_oi_operator.Launch()) {
-                _launch_state_commands.Cancel();
-                _drive_state_commands.Schedule();
-                _robot_state = drive;
-            }
-
-            break;
-            default:
+    case shoot:
+        if (!_oi_operator.Launch()) {
+            _launch_state_commands.Cancel();
+            _drive_state_commands.Schedule();
             _robot_state = drive;
         }
 
+        break;
+        default:
+        _robot_state = drive;
     }
 }
-
 void Robot::TestInit() {
   frc2::CommandScheduler::GetInstance().CancelAll();
 }

@@ -37,7 +37,8 @@ class Operator_Interface{
         // Hotkeys
         bool LauncherHotKey();
         bool IntakeHotKey();
-        double ClimberHotKey();
+        bool TrapHotKey();
+        bool ClimberHotKey();
         // Launcher
         bool LauncherLeftMotorTest();
         bool LauncherRightMotorTest();
@@ -49,6 +50,7 @@ class Operator_Interface{
         bool IntakePowerForwardTest();
         bool IntakePowerBackwardTest();
         double IntakeSensorTest();
+        
   // None testing
         bool EndgameToggle();
         bool IgnoreVision();
