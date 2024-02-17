@@ -41,12 +41,6 @@ SwerveModule::SwerveModule(SC_SwerveConfigs corner)
     _drive_motor.ConfigSupplyCurrentLimit(_drive_currrent_limit);
     ResetEncoder();
 
-    _steer_motor.ConfigFactoryDefault();
-    _steer_motor.SetNeutralMode(motorcontrol::Brake);
-    _steer_motor.ConfigSupplyCurrentLimit(_steer_current_limit);
-    _steer_motor.SetInverted(_swerve_current_constants.Steer_Motor_Reversed);
-
-
     // Change to Phoenix 5
     // configs::CurrentLimitsConfigs steer_motor_current_limit{};
     // steer_motor_current_limit.SupplyCurrentThreshold = STEER_CURRENT_THRESHOLD;
