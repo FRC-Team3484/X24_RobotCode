@@ -13,7 +13,11 @@ void TeleopTrapCommand::Initialize() {}
 
 void TeleopTrapCommand::Execute() {
     if (_oi != NULL) {
-        if (frc::SmartDashboard::GetBoolean("testing",true)) {}
+        if (frc::SmartDashboard::GetBoolean("testing",true)) {
+            if(_oi->IntakeHotKey() ) {
+                _trap_subsystem->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
+            }
+        }
 
         else {
                 if (_oi->EndgameToggle()&&_oi->ScoreTrap()){

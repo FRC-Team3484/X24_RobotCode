@@ -3,6 +3,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <rev/CANSparkMaxLowLevel.h>
 //#include <ctre/Phoenix.h>
 #include <frc/DigitalInput.h>
 #include <frc/trajectory/TrapezoidProfile.h>

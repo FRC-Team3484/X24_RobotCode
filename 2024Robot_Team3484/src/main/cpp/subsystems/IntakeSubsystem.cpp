@@ -39,6 +39,10 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
 
     _target_position = STOW_POSITION;
 
+    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus4, 200);
+    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
+    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus6, 200);
+
     _pivot_pid_controller->SetP(pidc.Kp);
     _pivot_pid_controller->SetI(pidc.Ki);
     _pivot_pid_controller->SetD(pidc.Kd);

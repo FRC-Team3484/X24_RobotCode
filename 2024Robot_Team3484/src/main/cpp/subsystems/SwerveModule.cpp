@@ -59,12 +59,19 @@ SwerveModule::SwerveModule(SC_SwerveConfigs corner)
     _steer_motor.ConfigSupplyCurrentLimit(_steer_current_limit);
     _steer_motor.SetInverted(_swerve_current_constants.Steer_Motor_Reversed);
 
+    _steer_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, 1000);
+    _steer_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_4_AinTempVbat_, 1000);
+    _steer_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_12_Feedback1_, 1000);
+    _steer_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_14_Turn_PIDF1_, 200);
+
     _steer_encoder.ConfigFactoryDefault();
     _steer_encoder.SetPositionToAbsolute();
     _steer_encoder.ConfigAbsoluteSensorRange(sensors::AbsoluteSensorRange::Signed_PlusMinus180);
     _steer_encoder.ConfigSensorInitializationStrategy(SensorInitializationStrategy::BootToAbsolutePosition);
     _steer_encoder.ConfigMagnetOffset(corner.EncoderOffset);
     _steer_encoder.ConfigSensorDirection(_swerve_current_constants.Encoder_Reversed);
+    _steer_encoder.SetStatusFramePeriod(ctre::phoenix::sensors::CANCoderStatusFrame::CANCoderStatusFrame_SensorData, 20);
+    _steer_encoder.SetStatusFramePeriod(ctre::phoenix::sensors::CANCoderStatusFrame::CANCoderStatusFrame_VbatAndFaults, 200);
 
     // Change all the way to Cancoder
     // configs::MagnetSensorConfigs encoder_magnet_config{};

@@ -23,6 +23,7 @@ class TrapSubsystem : public frc2::SubsystemBase {
         bool AtPosition();
         units::inch_t GetExtension();
         units::feet_per_second_t GetExtensionVelocity();
+        void OpenLoopTestMotors(double extension_motor, double roller_motor);
 
 
     private: 
