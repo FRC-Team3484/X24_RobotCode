@@ -4,9 +4,14 @@
 #include <Constants.h>
 
 #include <frc2/command/SubsystemBase.h>
-#include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
 // #include <rev/CANSparkMax.h>
 #include <frc/DigitalInput.h>
+
+#include <wpi/deprecated.h>
+
+WPI_IGNORE_DEPRECATED
+
+#include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
 
 class ClimberSubsystem : public frc2::SubsystemBase {
     public: 
@@ -31,4 +36,7 @@ class ClimberSubsystem : public frc2::SubsystemBase {
         frc::DigitalInput _right_motor_sensor;
     
 };
+
+WPI_UNIGNORE_DEPRECATED
+
 #endif

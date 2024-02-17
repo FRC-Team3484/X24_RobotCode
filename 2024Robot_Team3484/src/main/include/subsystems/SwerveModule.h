@@ -14,6 +14,7 @@
 #include <wpi/deprecated.h>
 
 WPI_IGNORE_DEPRECATED
+
 #include "ctre/phoenix/sensors/WPI_CANCoder.h"
 #include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
 // #include "ctre/Phoenix.h"

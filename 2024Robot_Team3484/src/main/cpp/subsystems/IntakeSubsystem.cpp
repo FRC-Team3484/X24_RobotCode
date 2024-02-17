@@ -27,7 +27,7 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
         _arm_sensor{arm_sensor_di_ch}
     {
 
-    _pivot_encoder = new rev::SparkRelativeEncoder(_pivot_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kQuadrature, 4096));
+    _pivot_encoder = new rev::SparkRelativeEncoder(_pivot_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
     _pivot_pid_controller = new rev::SparkPIDController(_pivot_motor.GetPIDController());
     
     _pivot_motor.RestoreFactoryDefaults();

@@ -22,8 +22,8 @@ LauncherSubsystem::LauncherSubsystem(
     {
         _rpm_window = rpm_window;
 
-        _left_launcher_encoder = new SparkRelativeEncoder(_left_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kQuadrature, 4096 ));
-        _right_launcher_encoder = new SparkRelativeEncoder(_right_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kQuadrature, 4096 ));
+        _left_launcher_encoder = new SparkRelativeEncoder(_left_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
+        _right_launcher_encoder = new SparkRelativeEncoder(_right_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
 
     
         _left_launcher_pid_controller = new SparkPIDController(_left_motor.GetPIDController());

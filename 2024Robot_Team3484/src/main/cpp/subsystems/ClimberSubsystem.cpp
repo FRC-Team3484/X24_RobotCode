@@ -1,6 +1,10 @@
 #include "subsystems/ClimberSubsystem.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
+#include <wpi/deprecated.h>
+
+WPI_IGNORE_DEPRECATED
+
 using namespace frc;
 
 ClimberSubsystem::ClimberSubsystem(
@@ -63,3 +67,5 @@ void ClimberSubsystem::OpenLoopTestMotors(double power_left, double power_right)
         _right_climber_motor.Set(power_right);
     }
 }
+
+WPI_UNIGNORE_DEPRECATED
