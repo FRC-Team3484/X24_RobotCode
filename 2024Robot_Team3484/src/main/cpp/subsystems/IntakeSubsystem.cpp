@@ -121,13 +121,5 @@ void IntakeSubsystem::OpenLoopTestMotors(double pivot_power, double drive_power)
     if (frc::SmartDashboard::GetBoolean("testing",true)) {
         _pivot_motor.Set(pivot_power);
         _drive_motor.Set(drive_power);
-        // if (_piece_sensor.Get()) {
-        //     _drive_motor.Set(drive_power);
-        // }
-        // else if (!_piece_sensor.Get()) {
-        //     if (drive_power == 0){
-        //     _drive_motor.Set(.8);
-        //     }
-        // }
     }
 }
