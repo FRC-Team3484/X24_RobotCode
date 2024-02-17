@@ -37,6 +37,7 @@
 #include <frc2/command/CommandScheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/DigitalInput.h>
+#include <frc/smartdashboard/SendableChooser.h>
 // Command Groups
 #include <frc2/command/SequentialCommandGroup.h>
 class Robot : public frc::TimedRobot {
@@ -85,8 +86,12 @@ class Robot : public frc::TimedRobot {
 
         // Variables
         frc::DigitalInput _troubleshoot{9};
-
         std::optional<frc2::CommandPtr> _auton_command;
+
+        // Pipeline Stuff
+        frc::SendableChooser<int> _pipeline_chooser;
+        std::map<std::string, int> _pipeline_map;
+        int _current_pipeline;
 };
 
 #endif
