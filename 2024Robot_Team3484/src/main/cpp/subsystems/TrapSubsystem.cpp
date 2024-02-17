@@ -63,3 +63,9 @@ units::inch_t TrapSubsystem::GetExtension(){
 units::feet_per_second_t TrapSubsystem::GetExtensionVelocity(){
     return _extension_encoder->GetVelocity() * GEAR_RATIO / 1.0_min;
 }
+ void TrapSubsystem::OpenLoopTestMotors(double extension_motor, double roller_motor) {
+    if (frc::SmartDashboard::GetBoolean("testing",true)) {
+        _extension_motor.Set(extension_motor);
+        _roller_motor.Set(roller_motor);
+    }
+}
