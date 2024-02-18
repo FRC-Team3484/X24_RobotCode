@@ -25,27 +25,25 @@ ClimberSubsystem::ClimberSubsystem(
 
 
     _left_climber_motor.SetInverted(ClimberConstants::MOTOR_INVERTED);
-    _right_climber_motor.SetInverted(ClimberConstants::MOTOR_INVERTED);
+    _right_climber_motor.SetInverted(!ClimberConstants::MOTOR_INVERTED);
 }
 
 void ClimberSubsystem::Periodic() {
     #ifdef EN_DIAGNOSTICS
-        SmartDashboard::PutBoolean("Left Limit Sensor", GetLeftSensor());
-        SmartDashboard::PutBoolean("Right Limit Sensor", GetRightSensor());
-        SmartDashboard::PutNumber("Climber Power Right", _right_climber_motor.Get());
-        SmartDashboard::PutNumber("Climber Power Left", _left_climber_motor.Get());
+        SmartDashboard::PutBoolean("Climber Power Right", GetRightSensor());
+        SmartDashboard::PutBoolean("Climber Power Left", GetLeftSensor());
     #endif
 
 }
 
 bool ClimberSubsystem::GetLeftSensor() {
     // Returns the value of the left limit switch
-    return _left_motor_sensor.Get();
+    return !_left_motor_sensor.Get();
 }
 
 bool ClimberSubsystem::GetRightSensor() {
     // Returns the value of the right limit sensor
-    return _right_motor_sensor.Get();
+    return !_right_motor_sensor.Get();
 }
 
 void ClimberSubsystem::SetClimberPower(double power) {

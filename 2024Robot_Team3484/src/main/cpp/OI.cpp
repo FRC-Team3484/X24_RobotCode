@@ -7,9 +7,9 @@ using namespace UserInterface::Operator;
 using namespace UserInterface::Testing;
 
 
-double Driver_Interface::GetThrottle() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(THROTTLE), JOYSTICK_DEADBAND);}
-double Driver_Interface::GetStrafe() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(STRAFE), JOYSTICK_DEADBAND);}
-double Driver_Interface::GetRotation() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(ROTATION), JOYSTICK_DEADBAND);}
+double Driver_Interface::GetThrottle() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(THROTTLE), DRIVER_JOYSTICK_DEADBAND);}
+double Driver_Interface::GetStrafe() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(STRAFE), DRIVER_JOYSTICK_DEADBAND);}
+double Driver_Interface::GetRotation() {return frc::ApplyDeadband(_driver_controller.GetRawAxis(ROTATION), DRIVER_JOYSTICK_DEADBAND);}
 bool Driver_Interface::GetResetHeading() {return _driver_controller.GetRawButton(RESET_HEADING);}
 bool Driver_Interface::GetBrake() {return _driver_controller.GetRawButton(BRAKE);}
 bool Driver_Interface::GetBrakePressed() {return _driver_controller.GetRawButtonPressed(BRAKE);}
@@ -21,8 +21,8 @@ void Driver_Interface::SetRumble(double Rumble) {
     _driver_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
 //joystick
-double Operator_Interface::OpenLoopControlLeft() {return frc::SmartDashboard::GetBoolean("testing",true) ? frc::ApplyDeadband(_operator_controller.GetRawAxis(TESTING_OPEN_LOOP_LEFT)*.4, TESTING_DEADBAND) : 0;}
-double Operator_Interface::OpenLoopControlRight() {return frc::SmartDashboard::GetBoolean("testing",true) ? frc::ApplyDeadband(_operator_controller.GetRawAxis(TESTING_OPEN_LOOP_RIGHT)*.4, TESTING_DEADBAND) : 0;}
+double Operator_Interface::OpenLoopControlLeft() {return frc::SmartDashboard::GetBoolean("testing",true) ? frc::ApplyDeadband(_operator_controller.GetRawAxis(TESTING_OPEN_LOOP_LEFT)*.43, TESTING_DEADBAND) : 0;}
+double Operator_Interface::OpenLoopControlRight() {return frc::SmartDashboard::GetBoolean("testing",true) ? frc::ApplyDeadband(_operator_controller.GetRawAxis(TESTING_OPEN_LOOP_RIGHT)*.43, TESTING_DEADBAND) : 0;}
 // Hotkeys
 bool Operator_Interface::LauncherHotKey(){return frc::SmartDashboard::GetBoolean("testing",true) ? _operator_controller.GetRawButton(Hotkey::LAUNCHER_HK) : false;}
 bool Operator_Interface::IntakeHotKey(){return frc::SmartDashboard::GetBoolean("testing",true) ?  _operator_controller.GetRawButton(Hotkey::INTAKE_HK) : false;}

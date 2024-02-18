@@ -14,12 +14,12 @@ void Robot::RobotInit() {
     _pipeline_map.emplace("Pipeline 1", 1);
     _pipeline_chooser.SetDefaultOption("Pipeline 0", _pipeline_map.at("Pipeline 0"));
     _pipeline_chooser.AddOption("Pipeline 1", _pipeline_map.at("Pipeline 1"));
+    frc::SmartDashboard::PutData("Limelight Pipeline", &_pipeline_chooser);
 
 
 }
 
 void Robot::RobotPeriodic() {
-    frc::SmartDashboard::PutBoolean("Digital Input: 0",_troubleshoot.Get());
     _vision.SetPipeline(_pipeline_chooser.GetSelected());
 
 

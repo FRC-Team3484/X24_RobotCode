@@ -16,7 +16,7 @@ void TeleopClimberCommand::Execute() {
         if (frc::SmartDashboard::GetBoolean("testing",true)) {
             _climber_subsystem->SetClimberPower(0);
             
-            if(_oi->IntakeHotKey() && frc::SmartDashboard::GetBoolean("testing",true)) {
+            if(_oi->ClimberHotKey() && frc::SmartDashboard::GetBoolean("testing",true)) {
                 _climber_subsystem->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
             }
         }
@@ -33,10 +33,7 @@ void TeleopClimberCommand::Execute() {
             _climber_subsystem->SetClimberPower(ClimberConstants::MOTOR_STOP);
         }
 
-        #ifdef EN_DIAGNOSTICS
-            frc::SmartDashboard::PutBoolean("Climber: Left Sensor", _climber_subsystem->GetLeftSensor());
-            frc::SmartDashboard::PutBoolean("Climber: Right Sensor", _climber_subsystem->GetRightSensor());
-        #endif
+
     }   
 }
 

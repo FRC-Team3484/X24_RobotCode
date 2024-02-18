@@ -14,11 +14,13 @@ using namespace frc;
 LauncherSubsystem::LauncherSubsystem(
         int left_motor_can_id,
         int right_motor_can_id,
+        int launch_sensor_di_ch,
         SC::SC_PIDConstants pidc,
         double rpm_window
     ):
     _left_motor{left_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
-    _right_motor{right_motor_can_id, rev::CANSparkMax::MotorType::kBrushless}
+    _right_motor{right_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
+    _launched_sensor{launch_sensor_di_ch}
     {
         _rpm_window = rpm_window;
 
@@ -39,8 +41,8 @@ LauncherSubsystem::LauncherSubsystem(
     _left_motor.RestoreFactoryDefaults();
     _right_motor.RestoreFactoryDefaults();
     
-    _left_motor.SetInverted(MOTOR_INVERTED);
-    _right_motor.SetInverted(!MOTOR_INVERTED);
+    _left_motor.SetInverted(LEFT_MOTOR_INVERTED);
+    _right_motor.SetInverted(!LEFT_MOTOR_INVERTED);
 
     _left_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
     _right_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
@@ -66,23 +68,36 @@ LauncherSubsystem::LauncherSubsystem(
 void LauncherSubsystem::setLauncherRPM(units::revolutions_per_minute_t speed){
     _target_speed = speed.value()*GEAR_RATIO;
 }
+bool LauncherSubsystem::LaunchingSensor(){
+    return !_launched_sensor.Get();
+}
 
 void LauncherSubsystem::Periodic() {
     #ifdef EN_DIAGNOSTICS
         SmartDashboard::PutNumber("Motor Speed Left (RPM)", _left_launcher_encoder->GetVelocity()/GEAR_RATIO);
         SmartDashboard::PutNumber("Motor Speed Right (RPM)", _right_launcher_encoder->GetVelocity()/GEAR_RATIO);
-    #endif
-    _counter_not_null_right = 0;
-    _counter_not_null_left = 0;
+        SmartDashboard::PutBoolean("Launched Sensor", LaunchingSensor());
+        SmartDashboard::PutBoolean("Launcher: At Target RPM", atTargetRPM());
 
-    if (_left_launcher_pid_controller !=NULL){
-        _left_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
-        _counter_not_null_left++;
+
+    #endif
+    if (frc::SmartDashboard::GetBoolean("testing",true)) {}
+    else {
+        _counter_not_null_right = 0;
+        _counter_not_null_left = 0;
+
+
+        if (_left_launcher_pid_controller !=NULL){
+            _left_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
+            _counter_not_null_left++;
+        }
+        if (_right_launcher_pid_controller !=NULL){
+            _right_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
+            _counter_not_null_right++;
+        }
+
     }
-    if (_right_launcher_pid_controller !=NULL){
-        _right_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
-        _counter_not_null_right++;
-    }
+
 }
 
 bool LauncherSubsystem::atTargetRPM(){

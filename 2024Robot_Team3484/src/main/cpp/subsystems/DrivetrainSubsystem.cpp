@@ -29,6 +29,8 @@ void DrivetrainSubsystem::Periodic() {
         SmartDashboard::PutNumber("FR Encoder", _modules[FR]->GetPosition().angle.Degrees().value());
         SmartDashboard::PutNumber("BL Encoder", _modules[BL]->GetPosition().angle.Degrees().value());
         SmartDashboard::PutNumber("BR Encoder", _modules[BR]->GetPosition().angle.Degrees().value());
+        SmartDashboard::PutNumber("Gyro Heading", GetHeading().Degrees().value());
+
     #endif
 }
 

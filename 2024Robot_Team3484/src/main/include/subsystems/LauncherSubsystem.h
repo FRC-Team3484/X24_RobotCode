@@ -10,6 +10,8 @@
 #include <frc2/command/SubsystemBase.h>
 
 #include <rev/CANSparkMax.h>
+#include <frc/DigitalInput.h>
+
 
 #include <units/angle.h>
 #include <units/angular_velocity.h>
@@ -19,6 +21,7 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         LauncherSubsystem(
             int left_motor_can_id, 
             int right_motor_can_id,
+            int launch_sensor_di_ch,
             SC::SC_PIDConstants pidc,
             double rpm_window
         );
@@ -26,6 +29,7 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         void setLauncherRPM(units::revolutions_per_minute_t speed);
         bool atTargetRPM();
         void OpenLoopTestMotors(double power_left, double power_right);
+        bool LaunchingSensor();
 
 
     private:
@@ -36,6 +40,7 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         rev::SparkRelativeEncoder* _right_launcher_encoder;
         rev::SparkPIDController* _left_launcher_pid_controller;
         rev::SparkPIDController* _right_launcher_pid_controller;
+        frc::DigitalInput _launched_sensor;
 
         double _target_speed;
         int _counter_not_null_right;

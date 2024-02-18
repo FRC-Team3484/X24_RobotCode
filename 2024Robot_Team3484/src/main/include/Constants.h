@@ -20,21 +20,23 @@
 namespace LauncherConstants {
     constexpr int LEFT_MOTOR_CAN_ID = 40;
     constexpr int RIGHT_MOTOR_CAN_ID = 41;
+    constexpr int LAUNCH_SENSOR_DI_CH = 2; // Change to 2
+
 
     constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
     constexpr double GEAR_RATIO = 3;
     constexpr double RPM_WINDOW_RANGE = 50;
 
     //constexpr bool IsLoaded = true;
-    constexpr bool MOTOR_INVERTED = true;
+    constexpr bool LEFT_MOTOR_INVERTED = false;
 
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1503_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -(TARGET_RPM/2); // make a command that tuns this value to rue an drunss the command 
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
-    constexpr int DRIVE_MOTOR_CAN_ID = 32;
-    constexpr int PIECE_SENSOR_DI_CH = 0;
+    constexpr int DRIVE_MOTOR_CAN_ID = 31;
+    constexpr int PIECE_SENSOR_DI_CH = 0; // Change to 0
     constexpr int ARM_SENSOR_DI_CH = 1;
     constexpr double GEAR_RATIO = 62.5;
 
@@ -97,10 +99,10 @@ namespace SwerveConstants {
         // DO NOT REMOVE STATIC CALLS
 
         // Drive, steer, encoder, magnet offset
-        static SC::SC_SwerveConfigs SWERVE_FRONT_LEFT{10,11,20, -147.393};
-        static SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21,-58.008};
-        static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,-178.330};
-        static SC::SC_SwerveConfigs SWERVE_BACK_RIGHT{16,17,23,130.781};
+        static SC::SC_SwerveConfigs SWERVE_FRONT_LEFT{10,11,20, -92.505};
+        static SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21,-60.205};
+        static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,160.654};
+        static SC::SC_SwerveConfigs SWERVE_BACK_RIGHT{16,17,23,-55.283};
 
         static SC::SC_SwerveConfigs SWERVE_CONFIGS_ARRAY[4] = {
             SWERVE_FRONT_LEFT,
@@ -113,16 +115,6 @@ namespace SwerveConstants {
         #define FR 1
         #define BL 2
         #define BR 3
-
-        constexpr bool STEER_MOTOR_REVERSED = false;
-        constexpr bool ENCODER_REVERSED = false;
-
-        //constexpr double ENCODER_OFFSET[] = {4.394, 71.630, -26.103, -71.455};
-
-        constexpr double DRIVE_CURRENT_THRESHOLD = 60;
-        constexpr double DRIVE_CURRENT_TIME = 0.1;
-        constexpr double STEER_CURRENT_THRESHOLD = 40;
-        constexpr double STEER_CURRENT_TIME = 0.1;
 
         constexpr units::inch_t DRIVETRAIN_WIDTH = 24_in;
         constexpr units::inch_t DRIVETRAIN_LENGTH = 24_in;
@@ -146,9 +138,9 @@ namespace SwerveConstants {
             constexpr auto A = 0.15_V / 1.0_mps_sq;
         }
         namespace SteerPIDConstants {
-            constexpr double Kp_Drive = 0.5;
-            constexpr double Ki_Drive = 0.0;
-            constexpr double Kd_Drive = 0.0;
+            constexpr double Kp_Steer = 0.5;
+            constexpr double Ki_Steer = 0.0;
+            constexpr double Kd_Steer = 0.0;
             constexpr units::radians_per_second_t MAX_SPEED = 12_rad_per_s;
             constexpr units::radians_per_second_squared_t MAX_ACCELERATION = 100_rad_per_s_sq;
         }
@@ -216,7 +208,7 @@ namespace TrapConstants {
 namespace UserInterface {
     namespace Driver {
         constexpr int DRIVER_CONTROLLER_PORT = 0;
-        constexpr double JOYSTICK_DEADBAND = 0.02;
+        constexpr double DRIVER_JOYSTICK_DEADBAND = 0.02;
         constexpr int THROTTLE = XBOX_LS_Y;
         constexpr int STRAFE = XBOX_LS_X;
         constexpr int ROTATION = XBOX_RS_X;
@@ -241,7 +233,7 @@ namespace UserInterface {
     namespace Testing {
         constexpr int TESTING_OPEN_LOOP_LEFT = XBOX_LS_Y;
         constexpr int TESTING_OPEN_LOOP_RIGHT = XBOX_RS_Y;
-        constexpr double TESTING_DEADBAND = 0.02;
+        constexpr double TESTING_DEADBAND = 0.1;
         constexpr int TESTING_CONTROLLER_PORT = 3;
         constexpr int TOGGLE_TESTING = XBOX_BACK;
         namespace Hotkey {

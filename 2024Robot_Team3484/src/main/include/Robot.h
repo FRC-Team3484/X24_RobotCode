@@ -62,30 +62,31 @@ class Robot : public frc::TimedRobot {
         Operator_Interface _oi_operator{};
 
         //Subsystems
-        //IntakeSubsystem _intake{IntakeConstants::PIVOT_MOTOR_CAN_ID, IntakeConstants::DRIVE_MOTOR_CAN_ID, IntakeConstants::PIECE_SENSOR_DI_CH, IntakeConstants::ARM_SENSOR_DI_CH, IntakeConstants::PID_CONSTANTS, IntakeConstants::PID_OUTPUTRANGE_MAX, IntakeConstants::PID_OUTPUTRANGE_MIN};
-        //LauncherSubsystem _launcher{LauncherConstants::LEFT_MOTOR_CAN_ID, LauncherConstants::RIGHT_MOTOR_CAN_ID, LauncherConstants::PID_CONSTANTS, LauncherConstants::RPM_WINDOW_RANGE};
-        //ClimberSubsystem _climber{ClimberConstants::LEFT_MOTOR_CAN_ID, ClimberConstants::RIGHT_MOTOR_CAN_ID, ClimberConstants::LEFT_SENSOR_DI_CH, ClimberConstants::RIGHT_SENSOR_DI_CH};
+        IntakeSubsystem _intake{IntakeConstants::PIVOT_MOTOR_CAN_ID, IntakeConstants::DRIVE_MOTOR_CAN_ID, IntakeConstants::PIECE_SENSOR_DI_CH, IntakeConstants::ARM_SENSOR_DI_CH, IntakeConstants::PID_CONSTANTS, IntakeConstants::PID_OUTPUTRANGE_MAX, IntakeConstants::PID_OUTPUTRANGE_MIN};
+        LauncherSubsystem _launcher{LauncherConstants::LEFT_MOTOR_CAN_ID, LauncherConstants::RIGHT_MOTOR_CAN_ID, LauncherConstants::LAUNCH_SENSOR_DI_CH, LauncherConstants::PID_CONSTANTS, LauncherConstants::RPM_WINDOW_RANGE};
+        ClimberSubsystem _climber{ClimberConstants::LEFT_MOTOR_CAN_ID, ClimberConstants::RIGHT_MOTOR_CAN_ID, ClimberConstants::LEFT_SENSOR_DI_CH, ClimberConstants::RIGHT_SENSOR_DI_CH};
         DrivetrainSubsystem _drivetrain{SwerveConstants::DrivetrainConstants::SWERVE_CONFIGS_ARRAY};
         // Subsystem Adjacent
         Vision _vision{VisionConstants::CAMERA_ANGLE, VisionConstants::CAMERA_HEIGHT, VisionConstants::TARGET_HEIGHT};
-        //AutonGenerator _auton_generator{&_drivetrain};
+        AutonGenerator _auton_generator{&_drivetrain};
 
         // Command Groups
         frc2::CommandPtr _drive_state_commands = frc2::cmd::Parallel(
             TeleopDriveCommand{&_drivetrain, &_oi_driver}.ToPtr(),
-            //TeleopClimberCommand{&_climber, &_oi_operator}.ToPtr(),
+            TeleopClimberCommand{&_climber, &_oi_operator}.ToPtr(),
             //TeleopIntakeCommand{&_intake, &_launcher, &_oi_operator}.ToPtr(),
+            TeleopLauncherCommand{&_launcher, &_intake, &_vision, &_oi_operator}.ToPtr(),
             frc2::cmd::None()
         );
 
         frc2::CommandPtr _launch_state_commands = frc2::cmd::Parallel(
-            //TeleopAimCommand{&_drivetrain, &_oi_driver, &_oi_operator, &_vision}.ToPtr(),
+            TeleopAimCommand{&_drivetrain, &_oi_driver, &_oi_operator, &_vision}.ToPtr(),
             //TeleopLauncherCommand{&_launcher, &_intake, &_vision, &_oi_operator}.ToPtr(),
             frc2::cmd::None()
         );
 
         // Variables
-        frc::DigitalInput _troubleshoot{9};
+
         std::optional<frc2::CommandPtr> _auton_command;
 
         // Pipeline Stuff
