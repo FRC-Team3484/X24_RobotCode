@@ -26,7 +26,7 @@ class AutonLauncherCommand: public frc2::CommandHelper<frc2::Command, AutonLaunc
         LauncherSubsystem* _launcher;
         IntakeSubsystem* _intake;
         Vision* _limelight;
-        bool _launching; 
+        int _launching; 
         bool _loaded;
 
 };
