@@ -30,7 +30,6 @@ class AutonLauncherCommand: public frc2::CommandHelper<frc2::Command, AutonLaunc
         int _launching; 
         bool _loaded;
         frc::Timer _timer;
-        units::second_t _launch_time;
 };
 
 #endif

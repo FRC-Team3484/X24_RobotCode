@@ -38,7 +38,6 @@ namespace LauncherConstants {
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -(TARGET_RPM/2); // make a command that tuns this value to rue an drunss the command 
 
     constexpr units::second_t TIMEOUT = 3_s;
-    constexpr units::second_t LAUNCH_DURATION = 1_s;
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;

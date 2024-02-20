@@ -70,6 +70,6 @@ void  AutonLauncherCommand::End(bool interrupted){
     }
 }
 bool  AutonLauncherCommand::IsFinished(){
- return _timer.HasElapsed(TIMEOUT) || (_launching && _launch_time + LAUNCH_DURATION < _timer.Get());
+ return _timer.HasElapsed(TIMEOUT) || (_launching == 2 && !_launcher->LaunchingSensor());
 }
 #endif
