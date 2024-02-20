@@ -12,7 +12,7 @@
 using namespace IntakeConstants;
 using namespace frc;
 
-IntakeSubsystem::IntakeSubsystem( //Reference constants in Robot.h in the intializer list
+IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intializer list
     int pivot_motor_can_id, 
     int drive_motor_can_id, 
     int piece_sensor_di_ch, 
@@ -27,17 +27,21 @@ IntakeSubsystem::IntakeSubsystem( //Reference constants in Robot.h in the intial
         _arm_sensor{arm_sensor_di_ch}
     {
 
-    _pivot_encoder = new rev::SparkRelativeEncoder(_pivot_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kQuadrature, 4096));
+    _pivot_encoder = new rev::SparkRelativeEncoder(_pivot_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
     _pivot_pid_controller = new rev::SparkPIDController(_pivot_motor.GetPIDController());
     
     _pivot_motor.RestoreFactoryDefaults();
     _drive_motor.RestoreFactoryDefaults();
 
-    _drive_motor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    _pivot_motor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
     _pivot_pid_controller->SetFeedbackDevice(*_pivot_encoder);
 
     _target_position = STOW_POSITION;
+
+    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus4, 200);
+    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
+    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus6, 200);
 
     _pivot_pid_controller->SetP(pidc.Kp);
     _pivot_pid_controller->SetI(pidc.Ki);
@@ -48,30 +52,40 @@ IntakeSubsystem::IntakeSubsystem( //Reference constants in Robot.h in the intial
 }
 
 void IntakeSubsystem::Periodic() {
-    // Runs every 20ms
-
     #ifdef EN_DIAGNOSTICS
-        SmartDashboard::GetNumber("Intake Angle (deg)", _pivot_encoder->GetPosition()*360);
+        SmartDashboard::PutNumber("Intake Angle (deg)", GetIntakePosition().value()*360);
+        SmartDashboard::PutNumber("Intake Velocity", _pivot_encoder->GetVelocity());
+        SmartDashboard::PutBoolean("Game Piece Sensor", HasPiece());
+        SmartDashboard::PutBoolean("Arm Extened Sensor", ArmExtended());
+        SmartDashboard::PutBoolean("Intake: At Set Position", AtSetPosition());
+
+
     #endif
 
     const frc::TrapezoidProfile<units::degree>::State current_state{
         GetIntakePosition(), 
         GetEncoderVelocity()
     }; // units::turns converts the revolutions to a angle value
+    if (frc::SmartDashboard::GetBoolean("testing",true)) {}
+    else {
+        if (_arm_sensor_hit) {
+            frc::TrapezoidProfile<units::degree>::State target_state{
+                _target_position,
+                0_deg_per_s
+            };
 
-    const frc::TrapezoidProfile<units::degree>::State target_state{
-        _target_position,
-        0_deg_per_s
-    };
+            const units::turn_t linear_angle = _intake_trapezoid.Calculate(20_ms, current_state, target_state).position;
 
-    const units::turn_t linear_angle = _intake_trapezoid.Calculate(20_ms, current_state, target_state).position;
-
-    _pivot_pid_controller->SetReference(linear_angle.value(), rev::CANSparkMax::ControlType::kPosition);
-
-    if (!ArmExtended() && !_arm_sensor_hit) {
-        _arm_sensor_hit = true;
-        _pivot_encoder->SetPosition(IntakeConstants::STOW_POSITION.value());
+            _pivot_pid_controller->SetReference(linear_angle.value(), rev::CANSparkMax::ControlType::kPosition);
+        } else {
+            _pivot_pid_controller->SetReference(HOME_POWER, rev::CANSparkMax::ControlType::kDutyCycle);
+            if (!ArmExtended()) {
+                _arm_sensor_hit = true;
+                _pivot_encoder->SetPosition(IntakeConstants::STOW_POSITION.value());
+            }
+        }
     }
+
 }
 
 void IntakeSubsystem::SetIntakeAngle(units::degree_t angle) {
@@ -81,37 +95,26 @@ void IntakeSubsystem::SetIntakeAngle(units::degree_t angle) {
 
 void IntakeSubsystem::SetRollerPower(double power) {
     // Set the power level of the drive motor
-
     _drive_motor.Set(power);
 }
 
 bool IntakeSubsystem::HasPiece() {
     // Returns true is there's a game piece in the intake
-
-    return _piece_sensor.Get();
+    return !_piece_sensor.Get();
 }
 
 bool IntakeSubsystem::ArmExtended() {
     // Returns true if the intake arm is extended
-
     return _arm_sensor.Get();
 }
 
 units::turn_t IntakeSubsystem::GetIntakePosition() {
     // Returns the angle of the intake
-
-    if (_arm_sensor_hit) {
-        return units::turn_t{_pivot_encoder->GetPosition() / IntakeConstants::GEAR_RATIO};
-
-    } else {
-        return MAX_VELOCITY*20_ms;
-
-    }
+    return units::turn_t{_pivot_encoder->GetPosition() / IntakeConstants::GEAR_RATIO};
 }
 
 units::revolutions_per_minute_t IntakeSubsystem::GetEncoderVelocity() {
     // Returns the velocity of the encoder
-
     return units::revolutions_per_minute_t{_pivot_encoder->GetVelocity()} / IntakeConstants::GEAR_RATIO;
 }
 
@@ -121,5 +124,12 @@ bool IntakeSubsystem::AtSetPosition() {
 
     } else {
         return false;
+    }
+}
+
+void IntakeSubsystem::OpenLoopTestMotors(double pivot_power, double drive_power) {
+    if (frc::SmartDashboard::GetBoolean("testing",true)) {
+        _pivot_motor.Set(pivot_power);
+        _drive_motor.Set(drive_power);
     }
 }

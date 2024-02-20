@@ -3,6 +3,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <rev/CANSparkMaxLowLevel.h>
 //#include <ctre/Phoenix.h>
 #include <frc/DigitalInput.h>
 #include <frc/trajectory/TrapezoidProfile.h>
@@ -32,6 +33,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
         units::turn_t GetIntakePosition();
         units::revolutions_per_minute_t GetEncoderVelocity();
         bool AtSetPosition();
+        void OpenLoopTestMotors(double pivot_power, double drive_power);
 
     private:
         bool _arm_sensor_hit = false;

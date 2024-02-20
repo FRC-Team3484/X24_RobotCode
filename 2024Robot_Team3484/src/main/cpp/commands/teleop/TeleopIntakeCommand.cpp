@@ -13,71 +13,76 @@ TeleopIntakeCommand::TeleopIntakeCommand(IntakeSubsystem* intake_subsystem, Laun
 void TeleopIntakeCommand::Initialize() {}
 
 void TeleopIntakeCommand::Execute() {
-    if (_oi->ExtendIntakeButton()) {
-        if ((!_intake_subsystem->HasPiece() || _oi->IgnoreVision()) && _oi != NULL) {
-            _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
-            _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER);
+    if (_oi != NULL && _intake_subsystem != NULL) {
+        if (frc::SmartDashboard::GetBoolean("testing",true)) {
 
-        } else {
-            _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
-            _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
+            
+            if(_oi->IntakeHotKey()) {
+                _intake_subsystem->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
+            }
         }
+        else {
+            if (_oi->ExtendIntake()) {
+                if ((!_intake_subsystem->HasPiece() || _oi->IgnoreSensor())) {
+                    _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
+                    _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER);
 
-        if (_intake_subsystem->HasPiece()) {
-            _oi->SetRumble(SwerveConstants::ControllerConstants::OPERATOR_RUMBLE_LOW);
+                } else {
+                    _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
+                    _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
+                }
 
-        }
+                if (_intake_subsystem->HasPiece()) {
+                    _oi->SetRumble(SwerveConstants::ControllerConstants::OPERATOR_RUMBLE_LOW);
 
-    } else if (_oi->EjectIntakeButton()) {
-        _intake_subsystem->SetIntakeAngle(IntakeConstants::EJECT_POSITION);
+                }
 
-        if (_intake_subsystem->AtSetPosition()) {
-            _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
-        }
+            } else if (_oi->EjectIntake()) {
+                _intake_subsystem->SetIntakeAngle(IntakeConstants::EJECT_POSITION);
 
-    } else if (_oi->IntakeThroughShooterButton()) {
-        
-        
-        if (!_intake_subsystem->HasPiece() || _oi->IgnoreVision()) {
-            _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
-            _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
-            _launcher_subsystem->setLauncherRPM(LauncherConstants::REVERSE_RPM);
+                if (_intake_subsystem->AtSetPosition()) {
+                    _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
+                }
 
-        } else {
-            _launcher_subsystem->setLauncherRPM(0_rpm);
-        }
+            } else if (_oi->IntakeThroughShooter()) {
+                if (!_intake_subsystem->HasPiece() || _oi->IgnoreSensor()) {
+                    _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
+                    _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER);
+                    _launcher_subsystem->setLauncherRPM(LauncherConstants::REVERSE_RPM);
 
-    } else {
-        _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
-        _intake_subsystem->SetRollerPower(0);
+                } else {
+                    _launcher_subsystem->setLauncherRPM(0_rpm);
+                }
 
-        _oi->SetRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
+            } else {
+                _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
+                _intake_subsystem->SetRollerPower(0);
 
-        if (_oi->LaunchButton()) {
-            _launcher_subsystem->setLauncherRPM(LauncherConstants::TARGET_RPM);
+                _oi->SetRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
 
-        } else {
-            _launcher_subsystem->setLauncherRPM(0_rpm);
+                if (_oi->Launch()) {
+                    _launcher_subsystem->setLauncherRPM(LauncherConstants::TARGET_RPM);
 
+                } else {
+                    _launcher_subsystem->setLauncherRPM(0_rpm);
+
+                }
+            }
         }
     }
-
-    #ifdef EN_DIAGNOSTICS
-    frc::SmartDashboard::PutBoolean("Intake: Has Piece", _intake_subsystem->HasPiece());
-    frc::SmartDashboard::PutBoolean("Intake: Arm Extended", _intake_subsystem->ArmExtended());
-    frc::SmartDashboard::PutBoolean("Intake: At Set Position", _intake_subsystem->AtSetPosition());
-    #endif
-
 
 }
 
 void TeleopIntakeCommand::End(bool inturrupted) {
-    _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
-    _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
+    if (frc::SmartDashboard::GetBoolean("testing",true)) {}
+    else {
+        _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
+        _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
 
-    _launcher_subsystem->setLauncherRPM(0_rpm);
+        _launcher_subsystem->setLauncherRPM(0_rpm);
 
-    _oi->SetRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
+        _oi->SetRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
+    }
 }
 
 bool TeleopIntakeCommand::IsFinished() {return false;}

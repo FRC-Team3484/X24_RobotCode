@@ -10,10 +10,13 @@ using namespace IntakeConstants;
 using namespace VisionConstants;
 using namespace frc;
 
+#ifdef EN_TESTINING
 
+
+#else
 
 AutonLauncherCommand::AutonLauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision)
-: _launcher{launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}{ 
+: _launcher{launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}{
     AddRequirements(_launcher), AddRequirements(_intake);
 }
 
@@ -26,24 +29,29 @@ void AutonLauncherCommand::Initialize(){
     if(_intake !=NULL){
         _intake->SetIntakeAngle(STOW_POSITION);
         _intake->SetRollerPower(ROLLER_STOP);
-        
     }
 
-    _launching = false;
-    if (_launcher !=NULL){
-    _launcher->setLauncherRPM(TARGET_RPM);
+    _launching = 0;
+
+    if (_launcher !=NULL) {
+        _launcher->setLauncherRPM(TARGET_RPM);
     }
-
-
 }
 void AutonLauncherCommand::Execute(){
-    if (_launcher !=NULL && _intake != NULL){
-        if(_launcher->atTargetRPM() && _intake->AtSetPosition() && ( _limelight == NULL || (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )){
-            _launching = true;
-            _launch_time = _timer.Get();
+    if (_launcher !=NULL && _intake != NULL) {
+        if (_launcher->atTargetRPM() 
+            && _intake->AtSetPosition() 
+            && ( _limelight == NULL 
+                || (_limelight->HasTarget() 
+                && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )) {
+            _launching = 1;
         }
-        if(_launching){
+
+        if (_launching > 0) {
             _intake->SetRollerPower(-ROLLER_POWER);
+        }
+        if (_launching == 1 && _launcher->LaunchingSensor()) {
+            _launching = 2;
         }
         #ifdef EN_DIAGNOSTICS
             SmartDashboard::PutBoolean("Launcher: At Target RPM", _launcher->atTargetRPM());
@@ -64,3 +72,4 @@ void  AutonLauncherCommand::End(bool interrupted){
 bool  AutonLauncherCommand::IsFinished(){
  return _timer.HasElapsed(TIMEOUT) || (_launching && _launch_time + LAUNCH_DURATION < _timer.Get());
 }
+#endif

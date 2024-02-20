@@ -29,7 +29,9 @@
     "*.tcc": "cpp",
     "optional": "cpp",
     "system_error": "cpp",
-    "regex": "cpp"
+    "regex": "cpp",
+    "memory": "cpp",
+    "variant": "cpp"
   },
   "java.project.sourcePaths": [
     "build"

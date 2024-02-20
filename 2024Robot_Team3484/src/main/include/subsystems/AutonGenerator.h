@@ -1,5 +1,5 @@
-#ifndef AUTONGENERATOR_H
-#define AUTONGENERATOR_H
+#ifndef AUTON_GENERATOR_H
+#define AUTON_GENERATOR_H
 
 
 // Subsystems
@@ -22,6 +22,7 @@ class AutonGenerator {
     public:
         AutonGenerator(DrivetrainSubsystem* drivetrain, LauncherSubsystem* launcher, IntakeSubsystem* intake, Vision* vision);
         frc2::CommandPtr GetAutonomousCommand();
+        
     private:
 
         std::unordered_map<std::string, frc2::CommandPtr> _auton_map;

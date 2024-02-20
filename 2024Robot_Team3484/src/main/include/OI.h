@@ -31,17 +31,43 @@ class Driver_Interface {
 
 class Operator_Interface{
     public:
-        bool Launch();
+        //joystick
+        double OpenLoopControlLeft();
+        double OpenLoopControlRight();
+        // Hotkeys
+        bool LauncherHotKey();
+        bool IntakeHotKey();
+        bool TrapHotKey();
+        bool ClimberHotKey();
+        // Launcher
+        bool LauncherLeftMotorTest();
+        bool LauncherRightMotorTest();
+        bool LauncherSensorTest();
+        
+        // Intake
+        bool IntakeAngleStowTest();
+        bool IntakeAngleReadyTest();
+        bool IntakePowerForwardTest();
+        bool IntakePowerBackwardTest();
+        double IntakeSensorTest();
+        
+  // None testing
+        bool EndgameToggle();
         bool IgnoreVision();
         bool ClimbUp();
         bool ClimbDown();
         bool IgnoreSensor();
-        bool ExtendIntakeButton();
-        bool EjectIntakeButton();
-        bool IntakeThroughShooterButton();
-        bool LaunchButton();
+        bool EjectIntake();
+        bool ExtendIntake();
+        bool IntakeThroughShooter();
+        bool Launch();
+        bool IntakeTrap();
+        bool ScoreTrap();
+        bool AmpTrap();
         void SetRumble(double Rumble);
+
     private:
         frc::XboxController _operator_controller{UserInterface::Operator::OPERATOR_CONTROLLER_PORT};
 };
+
 #endif

@@ -18,7 +18,7 @@ TeleopDriveCommand::TeleopDriveCommand(DrivetrainSubsystem* drivetrain, Driver_I
 }
 
 void TeleopDriveCommand::Initialize() {
-        _drivetrain->SetBrakeMode();
+    _drivetrain->SetBrakeMode();
 }
 
 void TeleopDriveCommand::Execute() {
@@ -31,6 +31,7 @@ void TeleopDriveCommand::Execute() {
             // Get Initial Values of the Wheels
             _initial_positions = _drivetrain->GetModulePositions();
         }
+
         if (_oi->GetResetHeading()) {
             _drivetrain->SetHeading();
         }
@@ -38,9 +39,11 @@ void TeleopDriveCommand::Execute() {
         if (_oi->GetSetBrakeMode()) {
             _drivetrain->SetBrakeMode();
         }
+
         if (_oi->GetDisableBrakeMode()) {
             _drivetrain->SetCoastMode();
         }
+
         if(_oi->GetBrake()) {
             _drivetrain->SetModuleStates(
                 {
@@ -54,19 +57,21 @@ void TeleopDriveCommand::Execute() {
             );
             
         }
+
         // Logic for actual joystick movements
         meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED;
         meters_per_second_t y_speed = -_oi->GetStrafe() * MAX_LINEAR_SPEED;
         radians_per_second_t rotation = -_oi->GetRotation() * MAX_ROTATION_SPEED;
+
         if (_oi->LowSpeed()) {
-            meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED*LOW_SCALE;
-            meters_per_second_t y_speed = -_oi->GetStrafe() * MAX_LINEAR_SPEED*LOW_SCALE;
-            radians_per_second_t rotation = -_oi->GetRotation() * MAX_ROTATION_SPEED*LOW_SCALE;
+            x_speed *= LOW_SCALE;
+            y_speed *= LOW_SCALE;
+            rotation *= LOW_SCALE;
         }
         
         _drivetrain->Drive(x_speed, y_speed, rotation, true);
 
-        }
+    }
 }
 
 void TeleopDriveCommand::End(bool interrupted) {
