@@ -24,6 +24,14 @@ void DrivetrainSubsystem::Periodic() {
     } else {
         _odometry->Update(GetHeading(), GetModulePositions());
     }
+    #ifdef EN_DIAGNOSTICS
+        SmartDashboard::PutNumber("FL Encoder", _modules[FL]->GetPosition().angle.Degrees().value());
+        SmartDashboard::PutNumber("FR Encoder", _modules[FR]->GetPosition().angle.Degrees().value());
+        SmartDashboard::PutNumber("BL Encoder", _modules[BL]->GetPosition().angle.Degrees().value());
+        SmartDashboard::PutNumber("BR Encoder", _modules[BR]->GetPosition().angle.Degrees().value());
+        SmartDashboard::PutNumber("Gyro Heading", GetHeading().Degrees().value());
+
+    #endif
 }
 
 void DrivetrainSubsystem::Drive(meters_per_second_t x_speed, meters_per_second_t y_speed, radians_per_second_t rotation, bool open_loop) {

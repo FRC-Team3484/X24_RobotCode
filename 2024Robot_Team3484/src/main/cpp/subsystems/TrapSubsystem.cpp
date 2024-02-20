@@ -35,16 +35,20 @@ void TrapSubsystem::Periodic() {
     #ifdef EN_DIAGNOSTICS
         SmartDashboard::PutNumber("Trap Extension (in)", _extension_encoder->GetPosition() * GEAR_RATIO.value());
     #endif
-    const frc::TrapezoidProfile<units::inch>::State current_state(
-        GetExtension(),
-        GetExtensionVelocity()
-    );
-    const frc::TrapezoidProfile<units::inch>::State target_state(
-        _target_position,
-        0_fps
-    );
-    const units::inch_t linear_position = _extension_trapezoid.Calculate(20_ms, current_state, target_state).position;
-    _extension_pid_controller->SetReference(linear_position.value(), rev::CANSparkMax::ControlType::kPosition);
+    if (frc::SmartDashboard::GetBoolean("testing",true)) {}
+    else {
+        const frc::TrapezoidProfile<units::inch>::State current_state(
+            GetExtension(),
+            GetExtensionVelocity()
+        );
+        const frc::TrapezoidProfile<units::inch>::State target_state(
+            _target_position,
+            0_fps
+        );
+        const units::inch_t linear_position = _extension_trapezoid.Calculate(20_ms, current_state, target_state).position;
+        _extension_pid_controller->SetReference(linear_position.value(), rev::CANSparkMax::ControlType::kPosition);
+
+    }
 }
 void TrapSubsystem::SetRollerPower(double power) {
     _roller_motor.Set(power);

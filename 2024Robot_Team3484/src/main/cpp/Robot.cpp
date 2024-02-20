@@ -14,12 +14,12 @@ void Robot::RobotInit() {
     _pipeline_map.emplace("Pipeline 1", 1);
     _pipeline_chooser.SetDefaultOption("Pipeline 0", _pipeline_map.at("Pipeline 0"));
     _pipeline_chooser.AddOption("Pipeline 1", _pipeline_map.at("Pipeline 1"));
+frc::SmartDashboard::PutData("Limelight Pipeline", &_pipeline_chooser);
 
 
 }
 
 void Robot::RobotPeriodic() {
-    frc::SmartDashboard::PutBoolean("Digital Input: 0",_troubleshoot.Get());
     _vision.SetPipeline(_pipeline_chooser.GetSelected());
 
 
@@ -60,11 +60,7 @@ void Robot::TeleopInit() {
 // drive: include logic for x-break using buttons
 // shoot: break and visions
 void Robot::TeleopPeriodic() {
-    if (frc::SmartDashboard::GetBoolean("testing",true)) {}
-
-    else {
-        
-        switch (_robot_state) {
+    switch (_robot_state) {
         case drive:
             if (_oi_operator.Launch()) {
                 _drive_state_commands.Cancel();
@@ -86,10 +82,7 @@ void Robot::TeleopPeriodic() {
             default:
             _robot_state = drive;
         }
-
     }
-}
-
 void Robot::TestInit() {
   frc2::CommandScheduler::GetInstance().CancelAll();
 }
