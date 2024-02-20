@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/teleop/TeleopLauncherCommand.h"
+#include "Constants.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 
 using namespace LauncherConstants;

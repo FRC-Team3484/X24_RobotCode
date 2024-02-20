@@ -63,7 +63,7 @@ class Robot : public frc::TimedRobot {
 
         //Subsystems
         IntakeSubsystem _intake{IntakeConstants::PIVOT_MOTOR_CAN_ID, IntakeConstants::DRIVE_MOTOR_CAN_ID, IntakeConstants::PIECE_SENSOR_DI_CH, IntakeConstants::ARM_SENSOR_DI_CH, IntakeConstants::PID_CONSTANTS, IntakeConstants::PID_OUTPUTRANGE_MAX, IntakeConstants::PID_OUTPUTRANGE_MIN};
-        LauncherSubsystem _launcher{LauncherConstants::LEFT_MOTOR_CAN_ID, LauncherConstants::RIGHT_MOTOR_CAN_ID, LauncherConstants::PID_CONSTANTS, LauncherConstants::RPM_WINDOW_RANGE};
+        LauncherSubsystem _launcher{LauncherConstants::LEFT_MOTOR_CAN_ID, LauncherConstants::RIGHT_MOTOR_CAN_ID, LauncherConstants::LEFT_PID_CONSTANTS, LauncherConstants::RIGHT_PID_CONSTANTS, LauncherConstants::RPM_WINDOW_RANGE};
         ClimberSubsystem _climber{ClimberConstants::LEFT_MOTOR_CAN_ID, ClimberConstants::RIGHT_MOTOR_CAN_ID, ClimberConstants::LEFT_SENSOR_DI_CH, ClimberConstants::RIGHT_SENSOR_DI_CH};
         DrivetrainSubsystem _drivetrain{SwerveConstants::DrivetrainConstants::SWERVE_CONFIGS_ARRAY};
         // Subsystem Adjacent

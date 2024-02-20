@@ -1,6 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include "units/time.h"
 #define EN_DIAGNOSTICS
 #define EN_TESTING
 
@@ -21,9 +22,12 @@ namespace LauncherConstants {
     constexpr int LEFT_MOTOR_CAN_ID = 40;
     constexpr int RIGHT_MOTOR_CAN_ID = 41;
 
-    constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
+    constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-6, 5e-9, 0, 1.7e-4);
+    constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-6, 8.7e-8, 0, 1.6e-4);
     constexpr double GEAR_RATIO = 3;
     constexpr double RPM_WINDOW_RANGE = 50;
+    constexpr units::second_t WINDOW_TIME = .25_s;
+    // Set logic as if hit -50 window, may run too early
 
     //constexpr bool IsLoaded = true;
     constexpr bool MOTOR_INVERTED = true;

@@ -13,13 +13,15 @@
 
 #include <units/angle.h>
 #include <units/angular_velocity.h>
+#include <frc/filter/Debouncer.h>
 
 class LauncherSubsystem : public frc2::SubsystemBase {
     public:
         LauncherSubsystem(
             int left_motor_can_id, 
             int right_motor_can_id,
-            SC::SC_PIDConstants pidc,
+            SC::SC_PIDConstants _left_pidc,
+            SC::SC_PIDConstants _right_pidc,
             double rpm_window
         );
         void Periodic() override;
@@ -36,6 +38,9 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         rev::SparkRelativeEncoder* _right_launcher_encoder;
         rev::SparkPIDController* _left_launcher_pid_controller;
         rev::SparkPIDController* _right_launcher_pid_controller;
+        frc::Debouncer *_dbnc_launch_window; //avoid premature launch: debounce on rising edge (RE)
+        bool _en_launch;
+
 
         double _target_speed;
         int _counter_not_null_right;

@@ -71,7 +71,7 @@ void IntakeSubsystem::Periodic() {
 
     _pivot_pid_controller->SetReference(linear_angle.value(), rev::CANSparkMax::ControlType::kPosition);
 
-    if (!ArmExtended() && !_arm_sensor_hit) {
+    if (!ArmExtended()) {
         _arm_sensor_hit = true;
         _pivot_encoder->SetPosition(IntakeConstants::STOW_POSITION.value());
     }

@@ -52,7 +52,7 @@ void Robot::TeleopInit() {
     if (_auton_command) {
         _auton_command->Cancel();
     }
-
+    _drive_state_commands.Schedule();
     _robot_state = drive;
 }
 

@@ -86,7 +86,7 @@ SwerveModule::SwerveModule(SC_SwerveConfigs corner)
 
     _steer_pid_controller.EnableContinuousInput(-180_deg, 180_deg);
 
-    SetDesiredState({0_mps, GetState().angle}, true);
+    // SetDesiredState({0_mps, GetState().angle}, true);
 }
 
 void SwerveModule::SetDesiredState(SwerveModuleState state, bool open_loop, bool optimize) {
