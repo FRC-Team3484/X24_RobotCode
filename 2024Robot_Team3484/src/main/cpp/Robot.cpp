@@ -81,8 +81,8 @@ void Robot::TeleopPeriodic() {
             break;
             default:
             _robot_state = drive;
-        }
     }
+}
 void Robot::TestInit() {
   frc2::CommandScheduler::GetInstance().CancelAll();
 }

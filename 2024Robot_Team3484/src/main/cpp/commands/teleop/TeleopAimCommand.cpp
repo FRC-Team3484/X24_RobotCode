@@ -6,6 +6,7 @@ using namespace frc;
 using namespace VisionConstants;
 
 using namespace SwerveConstants::AutonDriveConstants;
+using namespace SwerveConstants::ControllerConstants;
 using namespace SwerveConstants::BrakeConstants;
 
 TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision)
@@ -17,7 +18,7 @@ TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Inter
 }
 
 void TeleopAimCommand::Initialize() {
-    _oi_driver->SetRumble(.2);
+    _oi_driver->SetRumble(DRIVER_RUMBLE_LOW);
     // fmt::print("Testing");
     //  Two constants for AIM_TOLERANCE HIGH and LOW
     // natural default is to break
@@ -72,7 +73,7 @@ void TeleopAimCommand::Execute() {
 void TeleopAimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
     _drivetrain->SetCoastMode();
-    _oi_driver->SetRumble(0);
+    _oi_driver->SetRumble(RUMBLE_STOP);
 }
 
 bool TeleopAimCommand::IsFinished() {return false;}

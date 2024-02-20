@@ -24,6 +24,7 @@ LauncherSubsystem::LauncherSubsystem(
     _launched_sensor{launch_sensor_di_ch}
     {
         _rpm_window = rpm_window;
+        _dbnc_launch_window = new Debouncer(WINDOW_TIME, Debouncer::kRising);
 
         _left_launcher_encoder = new SparkRelativeEncoder(_left_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
         _right_launcher_encoder = new SparkRelativeEncoder(_right_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
@@ -79,15 +80,13 @@ void LauncherSubsystem::Periodic() {
         SmartDashboard::PutNumber("Motor Speed Right (RPM)", _right_launcher_encoder->GetVelocity()/GEAR_RATIO);
         SmartDashboard::PutBoolean("Launched Sensor", LaunchingSensor());
         SmartDashboard::PutBoolean("Launcher: At Target RPM", atTargetRPM());
-
-
     #endif
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
         if (_dbnc_launch_window != NULL) {
-            _en_launch = _dbnc_launch_window->Calculate(true);
+            _en_launch = _dbnc_launch_window->Calculate(atTargetRPM());
         }else {
-            _en_launch = true;
+            _en_launch = atTargetRPM();
         }
         _counter_not_null_right = 0;
         _counter_not_null_left = 0;
