@@ -74,14 +74,14 @@ class Robot : public frc::TimedRobot {
         frc2::CommandPtr _drive_state_commands = frc2::cmd::Parallel(
             TeleopDriveCommand{&_drivetrain, &_oi_driver}.ToPtr(),
             TeleopClimberCommand{&_climber, &_oi_operator}.ToPtr(),
-            //TeleopIntakeCommand{&_intake, &_launcher, &_oi_operator}.ToPtr(),
-            TeleopLauncherCommand{&_launcher, &_intake, &_vision, &_oi_operator}.ToPtr(),
+            TeleopIntakeCommand{&_intake, &_launcher, &_oi_operator}.ToPtr(),
+            //TeleopLauncherCommand{&_launcher, &_intake, &_vision, &_oi_operator}.ToPtr(),
             frc2::cmd::None()
         );
 
         frc2::CommandPtr _launch_state_commands = frc2::cmd::Parallel(
             TeleopAimCommand{&_drivetrain, &_oi_driver, &_oi_operator, &_vision}.ToPtr(),
-            //TeleopLauncherCommand{&_launcher, &_intake, &_vision, &_oi_operator}.ToPtr(),
+            TeleopLauncherCommand{&_launcher, &_intake, &_vision, &_oi_operator}.ToPtr(),
             frc2::cmd::None()
         );
 
