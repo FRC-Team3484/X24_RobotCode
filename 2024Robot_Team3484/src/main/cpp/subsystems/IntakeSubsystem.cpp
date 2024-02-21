@@ -17,7 +17,7 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
     int drive_motor_can_id, 
     int piece_sensor_di_ch, 
     int arm_sensor_di_ch,
-    SC::SC_PIDConstants pidc,
+    SC::SC_PIDConstants pivot_pidc,
     double pid_output_range_max,
     double pid_output_range_min
     ) :
@@ -43,11 +43,11 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
     _drive_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
     _drive_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus6, 200);
 
-    _pivot_pid_controller->SetP(pidc.Kp);
-    _pivot_pid_controller->SetI(pidc.Ki);
-    _pivot_pid_controller->SetD(pidc.Kd);
+    _pivot_pid_controller->SetP(pivot_pidc.Kp);
+    _pivot_pid_controller->SetI(pivot_pidc.Ki);
+    _pivot_pid_controller->SetD(pivot_pidc.Kd);
     _pivot_pid_controller->SetIZone(PID_IZ_ZONE);
-    _pivot_pid_controller->SetFF(PID_CONSTANTS.Kf);
+    _pivot_pid_controller->SetFF(pivot_pidc.Kf);
     _pivot_pid_controller->SetOutputRange(pid_output_range_min, pid_output_range_max);
 }
 
