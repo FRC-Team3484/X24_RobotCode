@@ -84,9 +84,9 @@ void LauncherSubsystem::Periodic() {
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
         if (_dbnc_launch_window != NULL) {
-            _en_launch = _dbnc_launch_window->Calculate(atTargetRPM());
+            _en_launch = _dbnc_launch_window->Calculate(_WithinRPMWindow());
         }else {
-            _en_launch = atTargetRPM();
+            _en_launch = _WithinRPMWindow();
         }
         _counter_not_null_right = 0;
         _counter_not_null_left = 0;
@@ -105,11 +105,9 @@ void LauncherSubsystem::Periodic() {
 
 }
 
-bool LauncherSubsystem::atTargetRPM(){
+bool LauncherSubsystem::_WithinRPMWindow() {
     if (_counter_not_null_left + _counter_not_null_right == 2){
-        if (_en_launch) {
-            return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window && std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
-        }
+        return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window && std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
     }
     else if (_counter_not_null_left == 1) {
         return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;   
@@ -120,6 +118,11 @@ bool LauncherSubsystem::atTargetRPM(){
     else {
         return false;
     }
+}
+
+bool LauncherSubsystem::atTargetRPM(){
+    return _en_launch;
+
 }
 
 void LauncherSubsystem::OpenLoopTestMotors(double power_left, double power_right) {

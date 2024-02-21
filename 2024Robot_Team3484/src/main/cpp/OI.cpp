@@ -20,6 +20,8 @@ bool Driver_Interface::GetBrakePressed() {return _driver_controller.GetRawButton
 bool Driver_Interface::GetSetBrakeMode() {return _driver_controller.GetRawButtonPressed(BRAKE_MODE);}
 bool Driver_Interface::GetDisableBrakeMode() {return _driver_controller.GetRawButtonPressed(DISABLE_BRAKE_MODE);}
 bool Driver_Interface::LowSpeed() {return _driver_controller.GetRawAxis(LOW_SPEED) > 0.5;}
+
+bool Driver_Interface::AimSequenceIgnore() {return _driver_controller.GetRawButton(DRIVER_IGNORE);}
 void Driver_Interface::SetRumble(double Rumble) {
     _driver_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }
@@ -52,8 +54,8 @@ bool Operator_Interface::ClimbUp() {return _operator_controller.GetPOV()==315 ||
 bool Operator_Interface::ClimbDown() {return _operator_controller.GetPOV()<=225 && _operator_controller.GetPOV()>=135;}
 
 // Ignores
-bool Operator_Interface::IgnoreVision() {return _operator_controller.GetRawButton(IGNORE);}
-bool Operator_Interface::IgnoreSensor() {return _operator_controller.GetRawButton(IGNORE);}
+bool Operator_Interface::IgnoreVision() {return _operator_controller.GetRawButton(OPERATOR_IGNORE);}
+bool Operator_Interface::IgnoreSensor() {return _operator_controller.GetRawButton(OPERATOR_IGNORE);}
 
 void Operator_Interface::SetRumble(double Rumble) {
     _operator_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);

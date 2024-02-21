@@ -220,17 +220,21 @@ namespace UserInterface {
         constexpr int THROTTLE = XBOX_LS_Y;
         constexpr int STRAFE = XBOX_LS_X;
         constexpr int ROTATION = XBOX_RS_X;
+        // Settings
         constexpr int RESET_HEADING = XBOX_START;
         constexpr int BRAKE = XBOX_X;
         constexpr int BRAKE_MODE = XBOX_RB;
-        // Settings
         constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
         constexpr int LOW_SPEED = XBOX_LT;
+
+        // Ignore
+        constexpr int DRIVER_IGNORE = XBOX_X;
+
     }
     namespace Operator {
         constexpr int OPERATOR_CONTROLLER_PORT = 1;
         // Intake
-        constexpr int IGNORE = XBOX_RB;
+        constexpr int OPERATOR_IGNORE = XBOX_RB;
         constexpr int EXTEND = XBOX_A;
         constexpr int EJECT = XBOX_B;
         constexpr int LAUNCHER_TRAP = XBOX_X;

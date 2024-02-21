@@ -35,6 +35,7 @@ class LauncherSubsystem : public frc2::SubsystemBase {
 
 
     private:
+        bool _WithinRPMWindow();
         rev::CANSparkMax _left_motor;
         rev::CANSparkMax _right_motor;
 

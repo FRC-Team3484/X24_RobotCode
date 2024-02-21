@@ -1,13 +1,16 @@
 #include "commands/teleop/TeleopAimCommand.h"
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <units/velocity.h>
+#include <units/angular_velocity.h>
 using namespace frc;
 
 using namespace VisionConstants;
-
+using namespace SwerveConstants::DrivetrainConstants::JoystickScaling;
 using namespace SwerveConstants::AutonDriveConstants;
 using namespace SwerveConstants::ControllerConstants;
 using namespace SwerveConstants::BrakeConstants;
+using namespace units;
 
 TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision)
     : _drivetrain{drivetrain},
@@ -18,9 +21,6 @@ TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Inter
 }
 
 void TeleopAimCommand::Initialize() {
-    _oi_driver->SetRumble(DRIVER_RUMBLE_LOW);
-    // fmt::print("Testing");
-    //  Two constants for AIM_TOLERANCE HIGH and LOW
     // natural default is to break
     _aiming = false;
     _initial_positions = _drivetrain->GetModulePositions();
@@ -35,9 +35,21 @@ void TeleopAimCommand::Initialize() {
 }
 
 void TeleopAimCommand::Execute() {
-    if (_limelight == NULL) {
-        fmt::print("Limelight is Null");
+    if (_limelight == NULL || _oi_driver->AimSequenceIgnore()) {
+        meters_per_second_t x_speed = -_oi_driver->GetThrottle() * MAX_LINEAR_SPEED;
+        meters_per_second_t y_speed = -_oi_driver->GetStrafe() * MAX_LINEAR_SPEED;
+        radians_per_second_t rotation = -_oi_driver->GetRotation() * MAX_ROTATION_SPEED;
+
+        if (_oi_driver->LowSpeed()) {
+            x_speed *= LOW_SCALE;
+            y_speed *= LOW_SCALE;
+            rotation *= LOW_SCALE;
+        }
+        _oi_driver->SetRumble(RUMBLE_STOP);
+        
+        _drivetrain->Drive(x_speed, y_speed, rotation, true);
     } else {
+        _oi_driver->SetRumble(DRIVER_RUMBLE_LOW);
         if (_aiming){
             _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
             if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()) {

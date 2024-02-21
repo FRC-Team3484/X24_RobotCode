@@ -12,15 +12,18 @@ class Driver_Interface {
         double GetThrottle();
         double GetStrafe();
         double GetRotation();
-        bool StartAim();
+
         bool GetResetHeading();
         bool GetBrake();
         bool GetBrakePressed();
-        bool LowSpeed();
-        // bool GetStraightenWheels();
+
         bool GetSetBrakeMode();
         bool GetDisableBrakeMode();
+
+        bool LowSpeed();
         void SetRumble(double Rumble);
+
+        bool AimSequenceIgnore();
 
 
         // Operator Controllers
