@@ -58,8 +58,8 @@ namespace IntakeConstants {
     constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 10_deg_per_s_sq;
 
     constexpr units::degree_t STOW_POSITION = 0_deg;
-    constexpr units::degree_t INTAKE_POSITION = 180_deg;
-    constexpr units::degree_t EJECT_POSITION = 180_deg;
+    constexpr units::degree_t INTAKE_POSITION = 160_deg;
+    constexpr units::degree_t EJECT_POSITION = 160_deg;
 
     constexpr double HOME_POWER = -0.2;
 
@@ -72,13 +72,6 @@ namespace IntakeConstants {
     constexpr double ROLLER_POWER = 0.8;
 
     constexpr units::degree_t POSITION_TOLERANCE = 2_deg;
-
-    // Current Limiting
-    constexpr uint PIVOT_STALL_LIMIT = 20;
-    constexpr uint PIVOT_FREE_LIMIT = 10;
-    constexpr uint DRIVE_STALL_LIMIT = 10;
-    constexpr uint DRIVE_FREE_LIMIT = 5;
-
 }
 
 namespace ClimberConstants {
