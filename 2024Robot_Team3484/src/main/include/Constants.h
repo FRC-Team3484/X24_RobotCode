@@ -255,19 +255,6 @@ namespace UserInterface {
             constexpr int CLIMBER_HK = XBOX_LT;
             constexpr int TRAP_HK = XBOX_RT;
         }
-        // namespace Launcher {
-        // constexpr int LEFT_MOTOR = XBOX_X;
-        // constexpr int RIGHT_MOTOR = XBOX_B;
-        // constexpr int SHOT_SENSOR = XBOX_A;
-        // }
-        // namespace Intake {
-        // constexpr int STOW_ANGLE = XBOX_X;
-        // constexpr int READY_ANGLE = XBOX_B;
-        // constexpr int ROLL_FORWARD = XBOX_Y;
-        // constexpr int ROLL_BACKWARD = XBOX_A;
-        // constexpr int HAS_PIECE_SENSOR = XBOX_RT;
-        // 
-        // }
     }
 }
 #endif
