@@ -243,7 +243,7 @@ namespace UserInterface {
         constexpr int LOW_SPEED = XBOX_LT;
 
         // Ignore
-        constexpr int DRIVER_IGNORE = XBOX_X;
+        constexpr int DRIVER_IGNORE = XBOX_A;
 
     }
     namespace Operator {
@@ -268,7 +268,7 @@ namespace UserInterface {
         constexpr int ENDGAME_TOGGLE_HK = XBOX_LB;
         constexpr int INTAKE_TRAP = XBOX_A;
         constexpr int SCORE_TRAP = XBOX_X;
-        constexpr int AMP_TRAP =XBOX_Y;
+        constexpr int AMP_TRAP = XBOX_Y;
     }
     namespace Testing {
         constexpr int TESTING_OPEN_LOOP_LEFT = XBOX_LS_Y;
