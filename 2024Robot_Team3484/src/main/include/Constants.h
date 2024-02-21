@@ -1,8 +1,16 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include "units/time.h"
 #define EN_DIAGNOSTICS
 #define EN_TESTING
+
+// #define CLIMBER_ENABLED
+// #define TRAP_ENABLED
+#define INTAKE_ENABLED
+#define DRIVE_ENABLED
+#define AIM_ENABLED
+#define LAUNCHER_ENABLED
 
 #include <units/voltage.h>
 #include <units/length.h>
@@ -23,15 +31,21 @@ namespace LauncherConstants {
     constexpr int LAUNCH_SENSOR_DI_CH = 2; // Change to 2
 
 
-    constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
+    constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-6, 5e-9, 0, 1.7e-4);
+    constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-6, 8.7e-8, 0, 1.6e-4);
     constexpr double GEAR_RATIO = 3;
     constexpr double RPM_WINDOW_RANGE = 50;
+    constexpr units::second_t WINDOW_TIME = .25_s;
+    // Set logic as if hit -50 window, may run too early
 
     //constexpr bool IsLoaded = true;
     constexpr bool LEFT_MOTOR_INVERTED = false;
-
+    
+    // Target RPM
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1503_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -(TARGET_RPM/2); // make a command that tuns this value to rue an drunss the command 
+    constexpr units::revolutions_per_minute_t AMP_RPM = 500_rpm;
+    constexpr units::revolutions_per_minute_t TRAP_RPM = 500_rpm;
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
@@ -204,27 +218,48 @@ namespace TrapConstants {
     constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
     constexpr units::inch_t POSITION_TOLORANCE = 1_in;
     constexpr units::inch_t GEAR_RATIO = 1.0_in;
+    constexpr double PID_MAX = 1;
+    constexpr double PID_MIN = -1;
+
 }
 namespace UserInterface {
     namespace Driver {
         constexpr int DRIVER_CONTROLLER_PORT = 0;
         constexpr double DRIVER_JOYSTICK_DEADBAND = 0.02;
+        // Motion
         constexpr int THROTTLE = XBOX_LS_Y;
         constexpr int STRAFE = XBOX_LS_X;
         constexpr int ROTATION = XBOX_RS_X;
+        // Settings
         constexpr int RESET_HEADING = XBOX_START;
         constexpr int BRAKE = XBOX_X;
         constexpr int BRAKE_MODE = XBOX_RB;
         constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
-        constexpr int LOW_SPEED = XBOX_LB;
+        constexpr int LOW_SPEED = XBOX_LT;
+
+        // Ignore
+        constexpr int DRIVER_IGNORE = XBOX_X;
+
     }
     namespace Operator {
         constexpr int OPERATOR_CONTROLLER_PORT = 1;
-        constexpr int INTAKE_SHOOTER = XBOX_Y;
-        constexpr int IGNORE = XBOX_RB;
-        constexpr int AIM_START = XBOX_X;
+        // Intake
+        constexpr int OPERATOR_IGNORE = XBOX_RB;
         constexpr int EXTEND = XBOX_A;
         constexpr int EJECT = XBOX_B;
+        constexpr int LAUNCHER_TRAP = XBOX_X;
+        constexpr int LAUNCHER_AMP = XBOX_Y;
+        constexpr int LAUNCHER_INTAKE = XBOX_A; // In accordance with INTAKE_LAUNCHER
+
+        //Launcher
+        constexpr int LAUNCHER_TOGGLE_HK = XBOX_LT;
+        constexpr int INTAKE_LAUNCHER = XBOX_Y;
+        constexpr int AIM_START = XBOX_X;
+
+        // Climb
+        // D-Pad: Hard Coded in OI
+
+        // Trap
         constexpr int ENDGAME_TOGGLE_HK = XBOX_LB;
         constexpr int INTAKE_TRAP = XBOX_A;
         constexpr int SCORE_TRAP = XBOX_X;
@@ -242,19 +277,6 @@ namespace UserInterface {
             constexpr int CLIMBER_HK = XBOX_LT;
             constexpr int TRAP_HK = XBOX_RT;
         }
-        // namespace Launcher {
-        // constexpr int LEFT_MOTOR = XBOX_X;
-        // constexpr int RIGHT_MOTOR = XBOX_B;
-        // constexpr int SHOT_SENSOR = XBOX_A;
-        // }
-        // namespace Intake {
-        // constexpr int STOW_ANGLE = XBOX_X;
-        // constexpr int READY_ANGLE = XBOX_B;
-        // constexpr int ROLL_FORWARD = XBOX_Y;
-        // constexpr int ROLL_BACKWARD = XBOX_A;
-        // constexpr int HAS_PIECE_SENSOR = XBOX_RT;
-        // 
-        // }
     }
 }
 #endif

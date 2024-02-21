@@ -3,11 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/teleop/TeleopLauncherCommand.h"
+#include "Constants.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 
 using namespace LauncherConstants;
 using namespace IntakeConstants;
 using namespace VisionConstants;
+using namespace SwerveConstants::ControllerConstants;
 using namespace frc;
 
 TeleopLauncherCommand::TeleopLauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision, Operator_Interface* oi)
@@ -17,7 +19,7 @@ TeleopLauncherCommand::TeleopLauncherCommand(LauncherSubsystem* launcher_subsyst
 
 
 void TeleopLauncherCommand::Initialize(){
-    _launching = false;
+    _launching = 0;
 
     if(_launcher != NULL) {
         if (frc::SmartDashboard::GetBoolean("testing",true)) {
@@ -53,11 +55,17 @@ void TeleopLauncherCommand::Execute(){
                     || (_oi != NULL && _oi->IgnoreVision()) 
                     || (_limelight->HasTarget() 
                         && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )) {
-                    _launching = true;
+                    _launching = 1;
                 }
 
-                if(_launching) {
+                if(_launching > 0) {
                     _intake->SetRollerPower(-ROLLER_POWER);
+                }
+                if (_launching == 1 && _launcher->LaunchingSensor()) {
+                    _launching = 2;
+                }
+                if (_launching == 2 && !_launcher->LaunchingSensor()) {
+                    _oi->SetRumble(OPERATOR_RUMBLE_HIGH);
                 }
 
         }
@@ -70,6 +78,7 @@ void TeleopLauncherCommand::End(bool interrupted) {
         if (_launcher !=NULL && _intake != NULL) {
             _launcher->setLauncherRPM(0_rpm);
             _intake->SetRollerPower(ROLLER_STOP);
+            _oi->SetRumble(RUMBLE_STOP);
         }
     }
 }

@@ -16,7 +16,7 @@ using namespace frc;
 #else
 
 AutonLauncherCommand::AutonLauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision)
-: _launcher{launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}{ 
+: _launcher{launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}{
     AddRequirements(_launcher), AddRequirements(_intake);
 }
 
@@ -26,7 +26,7 @@ void AutonLauncherCommand::Initialize() {
         _intake->SetRollerPower(ROLLER_STOP);
     }
 
-    _launching = false;
+    _launching = 0;
 
     if (_launcher !=NULL) {
         _launcher->setLauncherRPM(TARGET_RPM);
@@ -39,13 +39,15 @@ void AutonLauncherCommand::Execute(){
             && ( _limelight == NULL 
                 || (_limelight->HasTarget() 
                 && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )) {
-            _launching = true;
+            _launching = 1;
         }
 
-        if (_launching) {
+        if (_launching > 0) {
             _intake->SetRollerPower(-ROLLER_POWER);
         }
-
+        if (_launching == 1 && _launcher->LaunchingSensor()) {
+            _launching = 2;
+        }
         #ifdef EN_DIAGNOSTICS
             SmartDashboard::PutBoolean("Launcher: At Target RPM", _launcher->atTargetRPM());
             SmartDashboard::PutBoolean("Launcher: At Set Position", _intake->AtSetPosition());

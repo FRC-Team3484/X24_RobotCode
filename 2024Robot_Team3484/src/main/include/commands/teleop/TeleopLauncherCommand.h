@@ -29,8 +29,7 @@ class TeleopLauncherCommand: public frc2::CommandHelper<frc2::Command, TeleopLau
         IntakeSubsystem* _intake;
         Vision* _limelight;
         Operator_Interface* _oi;
-        bool _launching; 
-        bool _loaded;
+        int _launching; 
 
 };
 

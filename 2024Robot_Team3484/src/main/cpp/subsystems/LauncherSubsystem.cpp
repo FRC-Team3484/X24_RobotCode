@@ -15,7 +15,8 @@ LauncherSubsystem::LauncherSubsystem(
         int left_motor_can_id,
         int right_motor_can_id,
         int launch_sensor_di_ch,
-        SC::SC_PIDConstants pidc,
+        SC::SC_PIDConstants left_pidc,
+        SC::SC_PIDConstants right_pidc,
         double rpm_window
     ):
     _left_motor{left_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
@@ -23,6 +24,7 @@ LauncherSubsystem::LauncherSubsystem(
     _launched_sensor{launch_sensor_di_ch}
     {
         _rpm_window = rpm_window;
+        _dbnc_launch_window = new Debouncer(WINDOW_TIME, Debouncer::kRising);
 
         _left_launcher_encoder = new SparkRelativeEncoder(_left_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
         _right_launcher_encoder = new SparkRelativeEncoder(_right_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
@@ -48,19 +50,19 @@ LauncherSubsystem::LauncherSubsystem(
     _right_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
 
     if (_left_launcher_pid_controller !=NULL){
-        _left_launcher_pid_controller->SetP(pidc.Kp);
-        _left_launcher_pid_controller->SetI(pidc.Ki);
-        _left_launcher_pid_controller->SetD(pidc.Kd);
+        _left_launcher_pid_controller->SetP(left_pidc.Kp);
+        _left_launcher_pid_controller->SetI(left_pidc.Ki);
+        _left_launcher_pid_controller->SetD(left_pidc.Kd);
         _left_launcher_pid_controller->SetIZone(0);
-        _left_launcher_pid_controller->SetFF(pidc.Kf);
+        _left_launcher_pid_controller->SetFF(left_pidc.Kf);
         _left_launcher_pid_controller->SetOutputRange(0, 1);
         }
     if (_right_launcher_pid_controller !=NULL){
-        _right_launcher_pid_controller->SetP(pidc.Kp);
-        _right_launcher_pid_controller->SetI(pidc.Ki);
-        _right_launcher_pid_controller->SetD(pidc.Kd);
+        _right_launcher_pid_controller->SetP(right_pidc.Kp);
+        _right_launcher_pid_controller->SetI(right_pidc.Ki);
+        _right_launcher_pid_controller->SetD(right_pidc.Kd);
         _right_launcher_pid_controller->SetIZone(0);
-        _right_launcher_pid_controller->SetFF(pidc.Kf);
+        _right_launcher_pid_controller->SetFF(right_pidc.Kf);
         _right_launcher_pid_controller->SetOutputRange(0, 1);
     }
 }
@@ -78,11 +80,14 @@ void LauncherSubsystem::Periodic() {
         SmartDashboard::PutNumber("Motor Speed Right (RPM)", _right_launcher_encoder->GetVelocity()/GEAR_RATIO);
         SmartDashboard::PutBoolean("Launched Sensor", LaunchingSensor());
         SmartDashboard::PutBoolean("Launcher: At Target RPM", atTargetRPM());
-
-
     #endif
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
+        if (_dbnc_launch_window != NULL) {
+            _en_launch = _dbnc_launch_window->Calculate(_WithinRPMWindow());
+        }else {
+            _en_launch = _WithinRPMWindow();
+        }
         _counter_not_null_right = 0;
         _counter_not_null_left = 0;
 
@@ -100,9 +105,9 @@ void LauncherSubsystem::Periodic() {
 
 }
 
-bool LauncherSubsystem::atTargetRPM(){
+bool LauncherSubsystem::_WithinRPMWindow() {
     if (_counter_not_null_left + _counter_not_null_right == 2){
-        return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window && std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;   
+        return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window && std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
     }
     else if (_counter_not_null_left == 1) {
         return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;   
@@ -113,6 +118,11 @@ bool LauncherSubsystem::atTargetRPM(){
     else {
         return false;
     }
+}
+
+bool LauncherSubsystem::atTargetRPM(){
+    return _en_launch;
+
 }
 
 void LauncherSubsystem::OpenLoopTestMotors(double power_left, double power_right) {
