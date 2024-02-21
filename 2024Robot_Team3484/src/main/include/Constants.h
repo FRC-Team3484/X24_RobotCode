@@ -5,6 +5,13 @@
 #define EN_DIAGNOSTICS
 #define EN_TESTING
 
+// #define CLIMBER_ENABLED
+// #define TRAP_ENABLED
+#define INTAKE_ENABLED
+#define DRIVE_ENABLED
+#define AIM_ENABLED
+#define LAUNCHER_ENABLED
+
 #include <units/voltage.h>
 #include <units/length.h>
 #include <units/velocity.h>
@@ -211,6 +218,9 @@ namespace TrapConstants {
     constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
     constexpr units::inch_t POSITION_TOLORANCE = 1_in;
     constexpr units::inch_t GEAR_RATIO = 1.0_in;
+    constexpr double PID_MAX = 1;
+    constexpr double PID_MIN = -1;
+
 }
 namespace UserInterface {
     namespace Driver {
