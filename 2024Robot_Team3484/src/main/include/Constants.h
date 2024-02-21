@@ -63,7 +63,7 @@ namespace IntakeConstants {
 
     constexpr double HOME_POWER = -0.2;
 
-    constexpr SC::SC_PIDConstants PID_CONSTANTS(0.1, 1e-4, 1, 0);
+    constexpr SC::SC_PIDConstants PIVOT_PID_CONSTANTS(0.05, 1e-4, 1e-7, 0);
     constexpr double PID_IZ_ZONE = 0;
     constexpr double PID_OUTPUTRANGE_MIN = -1;
     constexpr double PID_OUTPUTRANGE_MAX = 1;

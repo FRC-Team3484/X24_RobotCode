@@ -20,7 +20,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
             int drive_motor_can_id, 
             int piece_sensor_di_ch,
             int arm_sensor_di_ch,
-            SC::SC_PIDConstants pidc,
+            SC::SC_PIDConstants pivot_pidc,
             double pid_output_range_max,
             double pid_output_range_min
         );
