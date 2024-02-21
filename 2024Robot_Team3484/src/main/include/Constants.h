@@ -72,6 +72,11 @@ namespace IntakeConstants {
     constexpr double ROLLER_POWER = 0.8;
 
     constexpr units::degree_t POSITION_TOLERANCE = 2_deg;
+
+    constexpr uint PIVOT_STALL_LIMIT = 20;
+    constexpr uint PIVOT_FREE_LIMIT = 10;
+    constexpr uint DRIVE_STALL_LIMIT = 10;
+    constexpr uint DRIVE_FREE_LIMIT = 5;
 }
 
 namespace ClimberConstants {
