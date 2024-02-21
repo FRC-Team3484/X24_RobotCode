@@ -33,9 +33,12 @@ namespace LauncherConstants {
 
     //constexpr bool IsLoaded = true;
     constexpr bool LEFT_MOTOR_INVERTED = false;
-
+    
+    // Target RPM
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1503_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -(TARGET_RPM/2); // make a command that tuns this value to rue an drunss the command 
+    constexpr units::revolutions_per_minute_t AMP_RPM = 500_rpm;
+    constexpr units::revolutions_per_minute_t TRAP_RPM = 500_rpm;
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
@@ -213,22 +216,36 @@ namespace UserInterface {
     namespace Driver {
         constexpr int DRIVER_CONTROLLER_PORT = 0;
         constexpr double DRIVER_JOYSTICK_DEADBAND = 0.02;
+        // Motion
         constexpr int THROTTLE = XBOX_LS_Y;
         constexpr int STRAFE = XBOX_LS_X;
         constexpr int ROTATION = XBOX_RS_X;
         constexpr int RESET_HEADING = XBOX_START;
         constexpr int BRAKE = XBOX_X;
         constexpr int BRAKE_MODE = XBOX_RB;
+        // Settings
         constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
-        constexpr int LOW_SPEED = XBOX_LB;
+        constexpr int LOW_SPEED = XBOX_LT;
     }
     namespace Operator {
         constexpr int OPERATOR_CONTROLLER_PORT = 1;
-        constexpr int INTAKE_SHOOTER = XBOX_Y;
+        // Intake
         constexpr int IGNORE = XBOX_RB;
-        constexpr int AIM_START = XBOX_X;
         constexpr int EXTEND = XBOX_A;
         constexpr int EJECT = XBOX_B;
+        constexpr int LAUNCHER_TRAP = XBOX_X;
+        constexpr int LAUNCHER_AMP = XBOX_Y;
+        constexpr int LAUNCHER_INTAKE = XBOX_A; // In accordance with INTAKE_LAUNCHER
+
+        //Launcher
+        constexpr int LAUNCHER_TOGGLE_HK = XBOX_LT;
+        constexpr int INTAKE_LAUNCHER = XBOX_Y;
+        constexpr int AIM_START = XBOX_X;
+
+        // Climb
+        // D-Pad: Hard Coded in OI
+
+        // Trap
         constexpr int ENDGAME_TOGGLE_HK = XBOX_LB;
         constexpr int INTAKE_TRAP = XBOX_A;
         constexpr int SCORE_TRAP = XBOX_X;
@@ -246,19 +263,6 @@ namespace UserInterface {
             constexpr int CLIMBER_HK = XBOX_LT;
             constexpr int TRAP_HK = XBOX_RT;
         }
-        // namespace Launcher {
-        // constexpr int LEFT_MOTOR = XBOX_X;
-        // constexpr int RIGHT_MOTOR = XBOX_B;
-        // constexpr int SHOT_SENSOR = XBOX_A;
-        // }
-        // namespace Intake {
-        // constexpr int STOW_ANGLE = XBOX_X;
-        // constexpr int READY_ANGLE = XBOX_B;
-        // constexpr int ROLL_FORWARD = XBOX_Y;
-        // constexpr int ROLL_BACKWARD = XBOX_A;
-        // constexpr int HAS_PIECE_SENSOR = XBOX_RT;
-        // 
-        // }
     }
 }
 #endif

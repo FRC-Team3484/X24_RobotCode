@@ -52,18 +52,30 @@ class Operator_Interface{
         double IntakeSensorTest();
         
   // None testing
-        bool EndgameToggle();
-        bool IgnoreVision();
-        bool ClimbUp();
-        bool ClimbDown();
-        bool IgnoreSensor();
-        bool EjectIntake();
-        bool ExtendIntake();
+
+        // Launcher
         bool IntakeThroughShooter();
-        bool Launch();
+        bool LauncherSpeaker();
+        bool LauncherToggle();
+        bool LauncherTrap();
+        bool LauncherAmp();
+        bool LauncherIntake();
+        // Trap
+        bool EndgameToggle();
         bool IntakeTrap();
         bool ScoreTrap();
         bool AmpTrap();
+        // Climber
+        bool ClimbUp();
+        bool ClimbDown();
+        // Intake
+        bool EjectIntake();
+        bool ExtendIntake();
+
+        // Ignores
+        bool IgnoreVision();
+        bool IgnoreSensor();
+
         void SetRumble(double Rumble);
 
     private:
