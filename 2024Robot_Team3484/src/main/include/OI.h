@@ -8,6 +8,7 @@
 class Driver_Interface {
     
     public:
+        Driver_Interface();
         //  Swerve Controllers
         double GetThrottle();
         double GetStrafe();
@@ -34,6 +35,7 @@ class Driver_Interface {
 
 class Operator_Interface{
     public:
+        Operator_Interface();
         //joystick
         double OpenLoopControlLeft();
         double OpenLoopControlRight();

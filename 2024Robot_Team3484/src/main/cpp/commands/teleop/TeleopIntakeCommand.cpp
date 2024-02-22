@@ -10,7 +10,10 @@ TeleopIntakeCommand::TeleopIntakeCommand(IntakeSubsystem* intake_subsystem, Laun
         AddRequirements(_launcher_subsystem);
 }
 
-void TeleopIntakeCommand::Initialize() {}
+void TeleopIntakeCommand::Initialize() {
+    _intake_subsystem->OpenLoopTestMotors(0,0);
+    _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
+}
 
 void TeleopIntakeCommand::Execute() {
     if (_operator_oi != NULL && _intake_subsystem != NULL) {

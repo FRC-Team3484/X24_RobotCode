@@ -2,15 +2,14 @@
 #define CONSTANTS_H
 
 #include "units/time.h"
-#define EN_DIAGNOSTICS
 #define EN_TESTING
 
 // #define CLIMBER_ENABLED
 // #define TRAP_ENABLED
 #define INTAKE_ENABLED
-#define DRIVE_ENABLED
-#define AIM_ENABLED
-#define LAUNCHER_ENABLED
+//#define DRIVE_ENABLED
+//#define AIM_ENABLED
+//#define LAUNCHER_ENABLED
 
 #include <units/voltage.h>
 #include <units/length.h>
@@ -54,14 +53,14 @@ namespace IntakeConstants {
     constexpr int ARM_SENSOR_DI_CH = 1;
     constexpr double GEAR_RATIO = 62.5;
 
-    constexpr units::degrees_per_second_t MAX_VELOCITY = 10_deg_per_s;
-    constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 10_deg_per_s_sq;
+    constexpr units::degrees_per_second_t MAX_VELOCITY = 20_deg_per_s;
+    constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 40_deg_per_s_sq;
 
     constexpr units::degree_t STOW_POSITION = 0_deg;
-    constexpr units::degree_t INTAKE_POSITION = 160_deg;
-    constexpr units::degree_t EJECT_POSITION = 160_deg;
+    constexpr units::degree_t INTAKE_POSITION = 155_deg;
+    constexpr units::degree_t EJECT_POSITION = 155_deg;
 
-    constexpr double HOME_POWER = -0.2;
+    constexpr double HOME_POWER = -0.2; 
 
     constexpr SC::SC_PIDConstants PIVOT_PID_CONSTANTS(0.05, 1e-4, 1e-7, 0);
     constexpr double PID_IZ_ZONE = 0;
@@ -69,14 +68,14 @@ namespace IntakeConstants {
     constexpr double PID_OUTPUTRANGE_MAX = 1;
 
     constexpr int ROLLER_STOP = 0;
-    constexpr double ROLLER_POWER = 0.8;
+    constexpr double ROLLER_POWER = 1.0;
 
     constexpr units::degree_t POSITION_TOLERANCE = 2_deg;
 
-    constexpr uint PIVOT_STALL_LIMIT = 20;
-    constexpr uint PIVOT_FREE_LIMIT = 10;
-    constexpr uint DRIVE_STALL_LIMIT = 10;
-    constexpr uint DRIVE_FREE_LIMIT = 5;
+    constexpr uint PIVOT_STALL_LIMIT = 60;
+    constexpr uint PIVOT_FREE_LIMIT = 40;
+    constexpr uint DRIVE_STALL_LIMIT = 60;
+    constexpr uint DRIVE_FREE_LIMIT = 40;
 }
 
 namespace ClimberConstants {

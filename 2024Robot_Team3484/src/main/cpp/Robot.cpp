@@ -8,13 +8,22 @@
 
 using namespace SwerveConstants::AutonNames;
 void Robot::RobotInit() {
-    frc::SmartDashboard::PutBoolean("testing",true);
+    frc::SmartDashboard::PutBoolean("testing",false);
+    frc::SmartDashboard::PutBoolean("Drivetrain Diagnostics", false);
+    frc::SmartDashboard::PutBoolean("Intake Diagnostics", false);
+    frc::SmartDashboard::PutBoolean("Launcher Diagnostics", false);
+    frc::SmartDashboard::PutBoolean("Climber Diagnostics", false);
+    frc::SmartDashboard::PutBoolean("trap Diagnostics", false);
     // Choosing Pipelines
     _pipeline_map.emplace("Pipeline 0", 0);
     _pipeline_map.emplace("Pipeline 1", 1);
     _pipeline_chooser.SetDefaultOption("Pipeline 0", _pipeline_map.at("Pipeline 0"));
     _pipeline_chooser.AddOption("Pipeline 1", _pipeline_map.at("Pipeline 1"));
-frc::SmartDashboard::PutData("Limelight Pipeline", &_pipeline_chooser);
+    frc::SmartDashboard::PutData("Limelight Pipeline", &_pipeline_chooser);
+    frc::SmartDashboard::PutNumber("Joystick Value (Left)", .4);
+    frc::SmartDashboard::PutNumber("Joystick Value (Right))", .4);
+
+
 
 
 }

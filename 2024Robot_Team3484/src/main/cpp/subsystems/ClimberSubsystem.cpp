@@ -29,10 +29,10 @@ ClimberSubsystem::ClimberSubsystem(
 }
 
 void ClimberSubsystem::Periodic() {
-    #ifdef EN_DIAGNOSTICS
+    if(frc::SmartDashboard::GetBoolean("Climber Diagnostics", false)){
         SmartDashboard::PutBoolean("Climber Power Right", GetRightSensor());
         SmartDashboard::PutBoolean("Climber Power Left", GetLeftSensor());
-    #endif
+    }
 
 }
 

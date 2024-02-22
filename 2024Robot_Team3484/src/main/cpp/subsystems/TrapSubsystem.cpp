@@ -32,9 +32,9 @@ TrapSubsystem::TrapSubsystem(
 }
 
 void TrapSubsystem::Periodic() {
-    #ifdef EN_DIAGNOSTICS
+    if( frc::SmartDashboard::PutBoolean("trap Diagnostics", false)){
         SmartDashboard::PutNumber("Trap Extension (in)", _extension_encoder->GetPosition() * GEAR_RATIO.value());
-    #endif
+    }
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
         const frc::TrapezoidProfile<units::inch>::State current_state(
