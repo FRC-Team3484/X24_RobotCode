@@ -22,7 +22,7 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
     double pid_output_range_min
     ) :
         _pivot_motor{pivot_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
-        _drive_motor{drive_motor_can_id, rev::CANSparkMax::MotorType::kBrushed},
+        _drive_motor{drive_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
         _piece_sensor{piece_sensor_di_ch},
         _arm_sensor{arm_sensor_di_ch}
     {
