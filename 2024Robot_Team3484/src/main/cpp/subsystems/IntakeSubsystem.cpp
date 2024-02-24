@@ -77,7 +77,7 @@ void IntakeSubsystem::Periodic() {
             else {
                 
 
-                units::turn_t linear_angle = _intake_trapezoid.Calculate(_trapezoid_timer.Get()).position;
+                units::turn_t linear_angle = _intake_trapezoid.Calculate(_trapezoid_timer.Get(), _current_state, _target_state).position;
                 #ifdef EN_DIAGNOSTICS
                 SmartDashboard::PutNumber(" Target Position (Trapezoid)", linear_angle.value()*360);
                 #endif
@@ -105,21 +105,10 @@ void IntakeSubsystem::SetIntakeAngle(units::degree_t angle, bool force_recalcula
     // Use the pivot motor and set the angle
     if (_arm_sensor_hit && (angle != _target_position || force_recalculate)) {
         _target_position = angle;
-
-        frc::TrapezoidProfile<units::degree>::State target_state{
-        _target_position,
-        0_deg_per_s
-            };
-
-        frc::TrapezoidProfile<units::degree>::State current_state{
-            GetIntakePosition(), 
-            GetEncoderVelocity()
-        }; // units::turns converts the revolutions to a angle value
-        _intake_trapezoid = frc::TrapezoidProfile<units::degrees>{
-            {IntakeConstants::MAX_VELOCITY, IntakeConstants::MAX_ACCELERATION},
-            target_state, 
-            current_state};
-        
+        _target_state.position = _target_position;
+        _current_state.position = GetIntakePosition();
+        _current_state.velocity = GetEncoderVelocity();
+    
         _trapezoid_timer.Restart();
     }
 

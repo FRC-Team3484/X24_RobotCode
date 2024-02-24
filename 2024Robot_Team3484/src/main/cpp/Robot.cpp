@@ -21,7 +21,7 @@ void Robot::RobotInit() {
     _pipeline_chooser.AddOption("Pipeline 1", _pipeline_map.at("Pipeline 1"));
     frc::SmartDashboard::PutData("Limelight Pipeline", &_pipeline_chooser);
     frc::SmartDashboard::PutNumber("Joystick Value (Left)", .4);
-    frc::SmartDashboard::PutNumber("Joystick Value (Right))", .4);
+    frc::SmartDashboard::PutNumber("Joystick Value (Right)", .4);
 
 
 
@@ -71,7 +71,7 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
     switch (_robot_state) {
         case drive:
-            if (_oi_operator.LauncherSpeaker()) {
+            if (_oi_operator.LauncherSpeaker()  && !_oi_operator.LauncherToggle()) {
                 _drive_state_commands.Cancel();
                 _launch_state_commands.Schedule();
 
@@ -81,7 +81,7 @@ void Robot::TeleopPeriodic() {
             break;
 
         case shoot:
-            if (!_oi_operator.LauncherSpeaker()) {
+            if (!_oi_operator.LauncherSpeaker() || _oi_operator.LauncherToggle()) {
                 _launch_state_commands.Cancel();
                 _drive_state_commands.Schedule();
                 _robot_state = drive;

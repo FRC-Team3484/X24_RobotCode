@@ -46,7 +46,7 @@ void TeleopIntakeCommand::Execute() {
                     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
                 }
 
-            } else if (_operator_oi->IntakeThroughShooter() || (_operator_oi->LauncherIntake() && _operator_oi->LauncherToggle())) {
+            } else if ((_operator_oi->IntakeThroughShooter() && !_operator_oi->LauncherToggle()) || (_operator_oi->LauncherIntake() && _operator_oi->LauncherToggle())) {
                 if (!_intake_subsystem->HasPiece() || _operator_oi->IgnoreSensor()) {
                     _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
                     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER);
