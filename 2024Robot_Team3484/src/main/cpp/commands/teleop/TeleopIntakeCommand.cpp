@@ -18,8 +18,6 @@ void TeleopIntakeCommand::Initialize() {
 void TeleopIntakeCommand::Execute() {
     if (_operator_oi != NULL && _intake_subsystem != NULL) {
         if (frc::SmartDashboard::GetBoolean("testing",true)) {
-
-            
             if(_operator_oi->IntakeHotKey()) {
                 _intake_subsystem->OpenLoopTestMotors(_operator_oi->OpenLoopControlLeft(), _operator_oi->OpenLoopControlRight());
             }
