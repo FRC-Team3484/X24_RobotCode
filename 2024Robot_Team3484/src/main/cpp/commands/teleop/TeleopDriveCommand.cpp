@@ -56,20 +56,21 @@ void TeleopDriveCommand::Execute() {
                 false
             );
             
-        }
+        } else {
 
-        // Logic for actual joystick movements
-        meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED;
-        meters_per_second_t y_speed = -_oi->GetStrafe() * MAX_LINEAR_SPEED;
-        radians_per_second_t rotation = -_oi->GetRotation() * MAX_ROTATION_SPEED;
+            // Logic for actual joystick movements
+            meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED;
+            meters_per_second_t y_speed = -_oi->GetStrafe() * MAX_LINEAR_SPEED;
+            radians_per_second_t rotation = -_oi->GetRotation() * MAX_ROTATION_SPEED;
 
-        if (_oi->LowSpeed()) {
-            x_speed *= LOW_SCALE;
-            y_speed *= LOW_SCALE;
-            rotation *= LOW_SCALE;
+            if (_oi->LowSpeed()) {
+                x_speed *= LOW_SCALE;
+                y_speed *= LOW_SCALE;
+                rotation *= LOW_SCALE;
+            }
+            
+            _drivetrain->Drive(x_speed, y_speed, rotation, true);
         }
-        
-        _drivetrain->Drive(x_speed, y_speed, rotation, true);
 
     }
 }

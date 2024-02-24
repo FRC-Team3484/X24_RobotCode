@@ -49,6 +49,14 @@ class IntakeSubsystem : public frc2::SubsystemBase {
         rev::SparkPIDController* _pivot_pid_controller;
 
         frc::TrapezoidProfile<units::degrees> _intake_trapezoid{{IntakeConstants::MAX_VELOCITY, IntakeConstants::MAX_ACCELERATION}};
+        frc::TrapezoidProfile<units::degree>::State _current_state{
+            0_deg, 
+            0_deg_per_s
+        };
+        frc::TrapezoidProfile<units::degree>::State _target_state{
+            0_deg, 
+            0_deg_per_s
+        };
         units::degree_t _target_position;
 
         frc::Timer _trapezoid_timer;

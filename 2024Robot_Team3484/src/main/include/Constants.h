@@ -4,12 +4,12 @@
 #include "units/time.h"
 #define EN_TESTING
 
-// #define CLIMBER_ENABLED
+#define CLIMBER_ENABLED
 // #define TRAP_ENABLED
 #define INTAKE_ENABLED
-//#define DRIVE_ENABLED
-//#define AIM_ENABLED
-//#define LAUNCHER_ENABLED
+#define DRIVE_ENABLED
+#define AIM_ENABLED
+#define LAUNCHER_ENABLED
 
 #include <units/voltage.h>
 #include <units/length.h>
@@ -30,7 +30,7 @@ namespace LauncherConstants {
     constexpr int LAUNCH_SENSOR_DI_CH = 2; // Change to 2
 
 
-    constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-6, 5e-9, 0, 1.7e-4);
+    constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-6, 8.7e-8, 0, 1.7e-4);
     constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-6, 8.7e-8, 0, 1.6e-4);
     constexpr double GEAR_RATIO = 3;
     constexpr double RPM_WINDOW_RANGE = 50;
@@ -42,7 +42,7 @@ namespace LauncherConstants {
     
     // Target RPM
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1503_rpm;
-    constexpr units::revolutions_per_minute_t REVERSE_RPM = -(TARGET_RPM/2); // make a command that tuns this value to rue an drunss the command 
+    constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
     constexpr units::revolutions_per_minute_t AMP_RPM = 500_rpm;
     constexpr units::revolutions_per_minute_t TRAP_RPM = 500_rpm;
 }
@@ -53,14 +53,14 @@ namespace IntakeConstants {
     constexpr int ARM_SENSOR_DI_CH = 1;
     constexpr double GEAR_RATIO = 100.0/9.0;
 
-    constexpr units::degrees_per_second_t MAX_VELOCITY = 20_deg_per_s;
-    constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 40_deg_per_s_sq;
+    constexpr units::degrees_per_second_t MAX_VELOCITY = 250_deg_per_s;
+    constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 750_deg_per_s_sq;
 
     constexpr units::degree_t STOW_POSITION = 0_deg;
-    constexpr units::degree_t INTAKE_POSITION = 155_deg;
-    constexpr units::degree_t EJECT_POSITION = 155_deg;
+    constexpr units::degree_t INTAKE_POSITION = 165_deg;
+    constexpr units::degree_t EJECT_POSITION = 165_deg;
 
-    constexpr double HOME_POWER = -0.2; 
+    constexpr double HOME_POWER = -0.25; 
 
     constexpr SC::SC_PIDConstants PIVOT_PID_CONSTANTS(0.4, 0.0005, 0, 0);
     constexpr double PID_IZ_ZONE = 0;
@@ -68,7 +68,7 @@ namespace IntakeConstants {
     constexpr double PID_OUTPUTRANGE_MAX = 1;
 
     constexpr int ROLLER_STOP = 0;
-    constexpr double ROLLER_POWER = 1.0;
+    constexpr double ROLLER_POWER = 0.8;
 
     constexpr units::degree_t POSITION_TOLERANCE = 2_deg;
 
