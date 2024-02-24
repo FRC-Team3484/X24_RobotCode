@@ -95,6 +95,7 @@ void LauncherSubsystem::Periodic() {
         if (_left_launcher_pid_controller !=NULL){
             if (_target_speed == 0) {
                 _left_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
+                _left_launcher_pid_controller->SetIAccum(0);
             } else {
                 _left_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
             }
@@ -103,6 +104,7 @@ void LauncherSubsystem::Periodic() {
         if (_right_launcher_pid_controller !=NULL){
             if (_target_speed == 0) {
                 _right_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
+                _right_launcher_pid_controller->SetIAccum(0);
             } else {
                 _right_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
             }

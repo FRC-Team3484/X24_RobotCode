@@ -30,8 +30,8 @@ namespace LauncherConstants {
     constexpr int LAUNCH_SENSOR_DI_CH = 2; // Change to 2
 
 
-    constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-6, 8.7e-8, 0, 1.7e-4);
-    constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-6, 8.7e-8, 0, 1.6e-4);
+    constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-6, 5e-7, 0, 0);
+    constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-6, 7e-8, 0, 1.6e-4);
     constexpr double GEAR_RATIO = 3;
     constexpr double RPM_WINDOW_RANGE = 50;
     constexpr units::second_t WINDOW_TIME = .25_s;
