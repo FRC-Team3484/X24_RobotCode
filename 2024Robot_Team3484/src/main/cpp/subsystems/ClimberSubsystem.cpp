@@ -6,6 +6,7 @@
 WPI_IGNORE_DEPRECATED
 
 using namespace frc;
+using namespace ctre::phoenix;
 
 ClimberSubsystem::ClimberSubsystem(
     int left_motor_can_id,
@@ -23,6 +24,11 @@ ClimberSubsystem::ClimberSubsystem(
     _left_climber_motor.ConfigFactoryDefault();
     _right_climber_motor.ConfigFactoryDefault();
 
+    _left_climber_motor.SetNeutralMode(motorcontrol::Brake);
+    _right_climber_motor.SetNeutralMode(motorcontrol::Brake);
+
+
+
 
     _left_climber_motor.SetInverted(ClimberConstants::MOTOR_INVERTED);
     _right_climber_motor.SetInverted(!ClimberConstants::MOTOR_INVERTED);
@@ -30,20 +36,22 @@ ClimberSubsystem::ClimberSubsystem(
 
 void ClimberSubsystem::Periodic() {
     if(frc::SmartDashboard::GetBoolean("Climber Diagnostics", false)){
-        SmartDashboard::PutBoolean("Climber Power Right", GetRightSensor());
-        SmartDashboard::PutBoolean("Climber Power Left", GetLeftSensor());
+        SmartDashboard::PutNumber("Climber Power Right", GetRightSensor());
+        SmartDashboard::PutNumber("Climber Power Left", GetLeftSensor());
     }
 
 }
 
 bool ClimberSubsystem::GetLeftSensor() {
     // Returns the value of the left limit switch
-    return !_left_motor_sensor.Get();
+    return false;
+    //return !_left_motor_sensor.Get();
 }
 
 bool ClimberSubsystem::GetRightSensor() {
     // Returns the value of the right limit sensor
-    return !_right_motor_sensor.Get();
+    return false;
+    //return !_right_motor_sensor.Get();
 }
 
 void ClimberSubsystem::SetClimberPower(double power) {

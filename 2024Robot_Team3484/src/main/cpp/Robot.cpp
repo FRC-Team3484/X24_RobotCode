@@ -30,6 +30,15 @@ void Robot::RobotInit() {
 
 void Robot::RobotPeriodic() {
     _vision.SetPipeline(_pipeline_chooser.GetSelected());
+    frc::SmartDashboard::PutNumber("Distance to Target", _vision.GetDistanceFromTarget());
+    frc::SmartDashboard::PutNumber("Taget Angle", _vision.GetOffsetY());
+        frc::SmartDashboard::PutNumber("Horizontal Distance", _vision.GetHorizontalDistance().value());
+
+    frc::SmartDashboard::PutNumber("Climber Up", _oi_operator.ClimbUp());
+    frc::SmartDashboard::PutNumber("Climber Down", _oi_operator.ClimbDown());
+    frc::SmartDashboard::PutNumber("POV", _oi_operator.RawPOV());
+
+
 
 
     
@@ -71,7 +80,7 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
     switch (_robot_state) {
         case drive:
-            if (_oi_operator.LauncherSpeaker()  && !_oi_operator.LauncherToggle()) {
+            if (_oi_operator.LauncherSpeaker()  && !_oi_operator.LauncherToggle() && _vision.GetDistanceFromTargetInch() < VisionConstants::MAX_LAUNCH_RANGE) {
                 _drive_state_commands.Cancel();
                 _launch_state_commands.Schedule();
 

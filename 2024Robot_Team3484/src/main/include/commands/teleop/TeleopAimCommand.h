@@ -32,6 +32,8 @@ class TeleopAimCommand: public frc2::CommandHelper<frc2::Command, TeleopAimComma
         Driver_Interface* _oi_driver;
         Operator_Interface* _oi_operator;
         bool _aiming;
+        frc::Timer _brake_timer;
+        bool _encoder_saved;
 };
 
 #endif

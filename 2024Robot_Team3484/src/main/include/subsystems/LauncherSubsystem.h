@@ -43,7 +43,7 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         rev::SparkRelativeEncoder* _right_launcher_encoder;
         rev::SparkPIDController* _left_launcher_pid_controller;
         rev::SparkPIDController* _right_launcher_pid_controller;
-        frc::Debouncer *_dbnc_launch_window; //avoid premature launch: debounce on rising edge (RE)
+        //frc::Debouncer *_dbnc_launch_window; //avoid premature launch: debounce on rising edge (RE)
         bool _en_launch;
         frc::DigitalInput _launched_sensor;
 

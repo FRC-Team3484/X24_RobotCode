@@ -48,6 +48,7 @@ class Operator_Interface{
         bool LauncherLeftMotorTest();
         bool LauncherRightMotorTest();
         bool LauncherSensorTest();
+
         
         // Intake
         bool IntakeAngleStowTest();
@@ -82,6 +83,8 @@ class Operator_Interface{
         bool IgnoreSensor();
 
         void SetRumble(double Rumble);
+
+        int RawPOV();
 
     private:
         frc::XboxController _operator_controller{UserInterface::Operator::OPERATOR_CONTROLLER_PORT};

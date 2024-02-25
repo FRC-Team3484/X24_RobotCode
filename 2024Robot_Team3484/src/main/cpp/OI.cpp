@@ -52,7 +52,7 @@ bool Operator_Interface::AmpTrap() {return _operator_controller.GetRawButtonPres
 
 // Climb
 // Mapped to D-Pad
-bool Operator_Interface::ClimbUp() {return _operator_controller.GetPOV()==315 || _operator_controller.GetPOV()<=45;}
+bool Operator_Interface::ClimbUp() {return _operator_controller.GetPOV()==315 || (_operator_controller.GetPOV()>=0 && _operator_controller.GetPOV()<=45);}
 bool Operator_Interface::ClimbDown() {return _operator_controller.GetPOV()<=225 && _operator_controller.GetPOV()>=135;}
 
 // Ignores
@@ -61,6 +61,10 @@ bool Operator_Interface::IgnoreSensor() {return _operator_controller.GetRawButto
 
 void Operator_Interface::SetRumble(double Rumble) {
     _operator_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
+}
+
+int Operator_Interface::RawPOV() {
+    return _operator_controller.GetPOV();
 }
 
 // TESTING

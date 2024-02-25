@@ -104,7 +104,7 @@ void SwerveModule::SetDesiredState(SwerveModuleState state, bool open_loop, bool
     //In open loop, treat speed as a percent power
     //In closed loop, try to hit the acutal speed
     if (open_loop) {
-        _drive_motor.Set(state.speed / MAX_WHEEL_SPEED *.2);
+        _drive_motor.Set(state.speed / MAX_WHEEL_SPEED);
     } else {
         volt_t drive_output = volt_t{_drive_pid_controller.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
         volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);

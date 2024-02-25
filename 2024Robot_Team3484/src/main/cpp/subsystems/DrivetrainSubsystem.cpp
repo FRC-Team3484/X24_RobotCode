@@ -29,7 +29,7 @@ void DrivetrainSubsystem::Periodic() {
         //SmartDashboard::PutNumber("FR Encoder", _modules[FR]->GetPosition().angle.Degrees().value());
         //SmartDashboard::PutNumber("BL Encoder", _modules[BL]->GetPosition().angle.Degrees().value());
         //SmartDashboard::PutNumber("BR Encoder", _modules[BR]->GetPosition().angle.Degrees().value());
-        //SmartDashboard::PutNumber("Gyro Heading", GetHeading().Degrees().value());
+        SmartDashboard::PutNumber("Gyro Heading", GetHeading().Degrees().value());
     }
 
     
@@ -63,6 +63,7 @@ Rotation2d DrivetrainSubsystem::GetHeading() {
 
 void DrivetrainSubsystem::SetHeading(degree_t heading) {
     ResetOdometry(Pose2d(_odometry->GetPose().Translation(), Rotation2d(heading)));
+    fmt::print("Reset Head!!!!!!\n");
 }
 
 degrees_per_second_t DrivetrainSubsystem::GetTurnRate() {
