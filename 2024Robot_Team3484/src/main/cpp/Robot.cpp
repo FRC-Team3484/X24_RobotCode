@@ -80,7 +80,7 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
     switch (_robot_state) {
         case drive:
-            if (_oi_operator.LauncherSpeaker()  && !_oi_operator.LauncherToggle() && _vision.GetDistanceFromTargetInch() < VisionConstants::MAX_LAUNCH_RANGE) {
+            if (_oi_operator.LauncherSpeaker()  && !_oi_operator.LauncherToggle() && (_vision.GetDistanceFromTargetInch() < VisionConstants::MAX_LAUNCH_RANGE || _oi_operator.IgnoreVision())) {
                 _drive_state_commands.Cancel();
                 _launch_state_commands.Schedule();
 

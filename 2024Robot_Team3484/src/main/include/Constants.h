@@ -70,6 +70,7 @@ namespace IntakeConstants {
 
     constexpr int ROLLER_STOP = 0;
     constexpr double ROLLER_POWER = 0.8;
+    constexpr double INTAKE_SHOOTER_POWER = 0.4;
 
     constexpr units::degree_t POSITION_TOLERANCE = 5_deg;
 
@@ -245,7 +246,7 @@ namespace UserInterface {
         constexpr int LOW_SPEED = XBOX_LT;
 
         // Ignore
-        constexpr int DRIVER_IGNORE = XBOX_A;
+        constexpr int DRIVER_IGNORE = XBOX_Y;
 
     }
     namespace Operator {
