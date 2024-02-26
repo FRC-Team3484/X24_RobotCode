@@ -59,6 +59,7 @@ namespace IntakeConstants {
     constexpr units::degree_t STOW_POSITION = 0_deg;
     constexpr units::degree_t INTAKE_POSITION = 165_deg;
     constexpr units::degree_t EJECT_POSITION = 165_deg;
+    constexpr units::degree_t CLIMB_POSITION = 90_deg;
 
     constexpr double HOME_POWER = -0.25; 
 
@@ -89,6 +90,7 @@ namespace ClimberConstants {
 
     constexpr double MOTOR_UP_SPEED = 0.5;
     constexpr double MOTOR_DOWN_SPEED = -0.5;
+    constexpr double HOME_SPEED = 0.1;
 }
 
 namespace SwerveConstants {

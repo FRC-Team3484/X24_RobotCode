@@ -33,7 +33,21 @@ void ClimberSubsystem::Periodic() {
         SmartDashboard::PutBoolean("Climber Power Right", GetRightSensor());
         SmartDashboard::PutBoolean("Climber Power Left", GetLeftSensor());
     }
+    if (!_left_homed) {
+        _left_climber_motor.Set(ClimberConstants::HOME_SPEED);
+    }
+    if (!_right_homed) {
+        _right_climber_motor.Set(ClimberConstants::HOME_SPEED);
+    }
 
+    if (GetLeftSensor() && !_left_homed) {
+        _left_homed = true;
+        _left_climber_motor.Set(0);
+    }
+    if (GetRightSensor() && !_right_homed) {
+        _right_homed = true;
+        _right_climber_motor.Set(0);
+    }
 }
 
 bool ClimberSubsystem::GetLeftSensor() {
