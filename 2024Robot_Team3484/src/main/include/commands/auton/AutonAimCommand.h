@@ -25,9 +25,17 @@ class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand
             frc::SwerveModulePosition{0_m, 0_rad},
             frc::SwerveModulePosition{0_m, 0_rad}
         };
+        wpi::array<frc::SwerveModulePosition, 4> _current_positions = {
+            frc::SwerveModulePosition{0_m, 0_rad},
+            frc::SwerveModulePosition{0_m, 0_rad},
+            frc::SwerveModulePosition{0_m, 0_rad},
+            frc::SwerveModulePosition{0_m, 0_rad}
+        };
 
         Vision* _limelight;
         bool _aiming;
+        frc::Timer _brake_timer;
+        bool _encoder_saved;
 };
 
 #endif

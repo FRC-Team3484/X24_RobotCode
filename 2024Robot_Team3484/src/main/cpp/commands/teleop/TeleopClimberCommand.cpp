@@ -5,34 +5,30 @@
 using namespace ClimberConstants;
 
 TeleopClimberCommand::TeleopClimberCommand(ClimberSubsystem* climber_subsystem, Operator_Interface* oi)
-    : _climber_subsystem{climber_subsystem}, _oi{oi} {
-        AddRequirements(_climber_subsystem);
-}
+    : _climber_subsystem{climber_subsystem}, _oi{oi} {}
 
 void TeleopClimberCommand::Initialize() {}
-
 void TeleopClimberCommand::Execute() {
     if (_oi != NULL && _climber_subsystem != NULL) {
-        if (frc::SmartDashboard::GetBoolean("testing",true)) {
-            _climber_subsystem->SetClimberPower(0);
-            
-            if(_oi->ClimberHotKey() && frc::SmartDashboard::GetBoolean("testing",true)) {
+        if (frc::SmartDashboard::GetBoolean("testing",true)) {            
+            if(_oi->ClimberHotKey()) {
                 _climber_subsystem->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
+            }else {
+                _climber_subsystem->SetClimberPower(0);
             }
         }
-    }
-    else {
-        if (_oi->ClimbUp()) {
-            _climber_subsystem->SetClimberPower(ClimberConstants::MOTOR_UP_SPEED);
+        else {
+            if (_oi->ClimbUp()) {
+                _climber_subsystem->SetClimberPower(ClimberConstants::MOTOR_UP_SPEED);
 
 
-        } else if (_oi->ClimbDown()) {
-            _climber_subsystem->SetClimberPower(ClimberConstants::MOTOR_DOWN_SPEED);
+            } else if (_oi->ClimbDown()) {
+                _climber_subsystem->SetClimberPower(ClimberConstants::MOTOR_DOWN_SPEED);
 
-        } else {
-            _climber_subsystem->SetClimberPower(ClimberConstants::MOTOR_STOP);
+            } else {
+                _climber_subsystem->SetClimberPower(ClimberConstants::MOTOR_STOP);
+            }
         }
-
 
     }   
 }

@@ -34,6 +34,8 @@ class ClimberSubsystem : public frc2::SubsystemBase {
 
         frc::DigitalInput _left_motor_sensor;
         frc::DigitalInput _right_motor_sensor;
+        bool _left_homed = true;
+        bool _right_homed = true;
     
 };
 

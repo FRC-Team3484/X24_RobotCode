@@ -32,6 +32,14 @@ class TeleopAimCommand: public frc2::CommandHelper<frc2::Command, TeleopAimComma
         Driver_Interface* _oi_driver;
         Operator_Interface* _oi_operator;
         bool _aiming;
+        frc::Timer _brake_timer;
+        bool _encoder_saved;
+        wpi::array<frc::SwerveModulePosition, 4> _current_positions = {
+            frc::SwerveModulePosition{0_m, 0_rad},
+            frc::SwerveModulePosition{0_m, 0_rad},
+            frc::SwerveModulePosition{0_m, 0_rad},
+            frc::SwerveModulePosition{0_m, 0_rad}
+        };
 };
 
 #endif

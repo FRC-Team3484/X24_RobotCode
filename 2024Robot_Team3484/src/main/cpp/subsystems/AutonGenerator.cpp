@@ -1,7 +1,5 @@
 #include "subsystems/AutonGenerator.h"
 #include "Constants.h"
-#include "commands/auton/GoToPoseCommand.h"
-#include "commands/auton/DriveSequenceCommand.h"
 
 //#include <pathplanner/lib/PathPlannerTrajectory.h>
 // #include <pathplanner/lib/PathPlanner.h>
@@ -19,7 +17,7 @@ AutonGenerator::AutonGenerator(DrivetrainSubsystem* drivetrain, LauncherSubsyste
      {
       NamedCommands::registerCommand("LauncherCommand", std::move(frc2::cmd::Race(AutonLauncherCommand(launcher, intake, vision).ToPtr(), AutonAimCommand(drivetrain, vision).ToPtr())));
       NamedCommands::registerCommand("IntakeCommand", std::move(AutonIntakeCommand(intake).ToPtr()));
-
+      NamedCommands::registerCommand("TrapCommand", frc2::cmd::Wait(3_s));
 
 
     _auton_chooser_initial.AddOption("No", "No");

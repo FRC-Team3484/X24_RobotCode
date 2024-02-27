@@ -7,6 +7,7 @@
 //#include <ctre/Phoenix.h>
 #include <frc/DigitalInput.h>
 #include <frc/trajectory/TrapezoidProfile.h>
+#include <frc/Timer.h>
 
 #include <units/angle.h>
 
@@ -20,13 +21,13 @@ class IntakeSubsystem : public frc2::SubsystemBase {
             int drive_motor_can_id, 
             int piece_sensor_di_ch,
             int arm_sensor_di_ch,
-            SC::SC_PIDConstants pidc,
+            SC::SC_PIDConstants pivot_pidc,
             double pid_output_range_max,
             double pid_output_range_min
         );
 
         void Periodic() override;
-        void SetIntakeAngle(units::degree_t angle);
+        void SetIntakeAngle(units::degree_t angle, bool force_recalculate=false);
         void SetRollerPower(double power);
         bool HasPiece();
         bool ArmExtended();
@@ -48,7 +49,17 @@ class IntakeSubsystem : public frc2::SubsystemBase {
         rev::SparkPIDController* _pivot_pid_controller;
 
         frc::TrapezoidProfile<units::degrees> _intake_trapezoid{{IntakeConstants::MAX_VELOCITY, IntakeConstants::MAX_ACCELERATION}};
+        frc::TrapezoidProfile<units::degree>::State _current_state{
+            0_deg, 
+            0_deg_per_s
+        };
+        frc::TrapezoidProfile<units::degree>::State _target_state{
+            0_deg, 
+            0_deg_per_s
+        };
         units::degree_t _target_position;
+
+        frc::Timer _trapezoid_timer;
 };
 
 

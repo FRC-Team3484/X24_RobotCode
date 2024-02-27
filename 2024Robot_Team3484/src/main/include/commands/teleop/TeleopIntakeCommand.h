@@ -5,6 +5,7 @@
 #include "Constants.h"
 #include "subsystems/IntakeSubsystem.h"
 #include "subsystems/LauncherSubsystem.h"
+#include "subsystems/ClimberSubsystem.h"
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
@@ -16,7 +17,9 @@ class TeleopIntakeCommand
         explicit TeleopIntakeCommand(
             IntakeSubsystem* intake_subsystem,
             LauncherSubsystem* launcher_subsystem,
-            Operator_Interface* oi
+            ClimberSubsystem* climber_subsystem,
+            Operator_Interface* operator_oi,
+            Driver_Interface* driver_oi
         );
 
         void Initialize() override;
@@ -27,7 +30,9 @@ class TeleopIntakeCommand
     private:
         IntakeSubsystem* _intake_subsystem;
         LauncherSubsystem* _launcher_subsystem;
-        Operator_Interface* _oi;
+        Operator_Interface* _operator_oi;
+        Driver_Interface* _driver_oi;
+        ClimberSubsystem* _climber_subsystem;
 };
 
 #endif
