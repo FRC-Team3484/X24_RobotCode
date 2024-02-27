@@ -206,7 +206,7 @@ namespace VisionConstants {
     constexpr units::inch_t AIM_TOLERANCE_LARGE = 12_in;
     constexpr units::inch_t AIM_TOLERANCE_SMALL = 6_in;
     constexpr double CAMERA_ANGLE = 30.0;
-    constexpr double CAMERA_HEIGHT = 22.5;
+    constexpr double CAMERA_HEIGHT = 24.25;
     constexpr double STEER_GAIN = -.01;
     constexpr double TARGET_HEIGHT = 57; // inches
     // multiplier to give how far off and results to a steer power
