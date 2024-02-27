@@ -174,6 +174,7 @@ namespace SwerveConstants {
 
     namespace BrakeConstants {
         constexpr auto DYNAMIC_BRAKE_SCALING = -00.2/1_in;
+        constexpr units::second_t BRAKE_DELAY = .5_s;
     }
 
     namespace AutonDriveConstants {
@@ -204,7 +205,7 @@ namespace VisionConstants {
     constexpr units::inch_t MAX_LAUNCH_RANGE = 63.7_in;
     constexpr units::inch_t AIM_TOLERANCE_LARGE = 12_in;
     constexpr units::inch_t AIM_TOLERANCE_SMALL = 6_in;
-    constexpr double CAMERA_ANGLE = 38.0;
+    constexpr double CAMERA_ANGLE = 30.0;
     constexpr double CAMERA_HEIGHT = 22.5;
     constexpr double STEER_GAIN = -.01;
     constexpr double TARGET_HEIGHT = 57; // inches

@@ -92,7 +92,7 @@ class Robot : public frc::TimedRobot {
             TeleopClimberCommand{&_climber, &_oi_operator}.ToPtr(),
             #endif
             #ifdef INTAKE_ENABLED
-            TeleopIntakeCommand{&_intake, &_launcher, &_oi_operator, &_oi_driver}.ToPtr(),
+            TeleopIntakeCommand{&_intake, &_launcher, &_climber, &_oi_operator, &_oi_driver}.ToPtr(),
             #endif
             #ifdef TRAP_ENABLED
             TeleopTrapCommand{&_trap, &_oi_operator}.ToPtr(),
