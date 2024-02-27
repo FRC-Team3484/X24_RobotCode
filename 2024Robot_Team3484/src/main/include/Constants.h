@@ -30,8 +30,9 @@ namespace LauncherConstants {
     constexpr int LAUNCH_SENSOR_DI_CH = 2; // Change to 2
 
 
-    constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-6, 8.7e-8, 0, 1.7e-4);
-    constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-6, 8.7e-8, 0, 1.6e-4);
+    constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-5, 5e-7, 0, 0);
+    constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-5, 5e-7, 0, 1.6e-4);
+    //7e-8
     constexpr double GEAR_RATIO = 3;
     constexpr double RPM_WINDOW_RANGE = 50;
     constexpr units::second_t WINDOW_TIME = .25_s;
@@ -41,10 +42,10 @@ namespace LauncherConstants {
     constexpr bool LEFT_MOTOR_INVERTED = false;
     
     // Target RPM
-    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1503_rpm;
+    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1600_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
-    constexpr units::revolutions_per_minute_t AMP_RPM = 500_rpm;
-    constexpr units::revolutions_per_minute_t TRAP_RPM = 500_rpm;
+    constexpr units::revolutions_per_minute_t AMP_RPM = 850_rpm;
+    constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
@@ -54,12 +55,11 @@ namespace IntakeConstants {
     constexpr double GEAR_RATIO = 100.0/9.0;
 
     constexpr units::degrees_per_second_t MAX_VELOCITY = 250_deg_per_s;
-    constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 750_deg_per_s_sq;
+    constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 1000_deg_per_s_sq;
 
     constexpr units::degree_t STOW_POSITION = 0_deg;
-    constexpr units::degree_t INTAKE_POSITION = 165_deg;
-    constexpr units::degree_t EJECT_POSITION = 165_deg;
-    constexpr units::degree_t CLIMB_POSITION = 90_deg;
+    constexpr units::degree_t INTAKE_POSITION = 174_deg;
+    constexpr units::degree_t EJECT_POSITION = 90_deg;
 
     constexpr double HOME_POWER = -0.25; 
 
@@ -70,8 +70,9 @@ namespace IntakeConstants {
 
     constexpr int ROLLER_STOP = 0;
     constexpr double ROLLER_POWER = 0.8;
+    constexpr double INTAKE_SHOOTER_POWER = 0.4;
 
-    constexpr units::degree_t POSITION_TOLERANCE = 2_deg;
+    constexpr units::degree_t POSITION_TOLERANCE = 5_deg;
 
     constexpr uint PIVOT_STALL_LIMIT = 60;
     constexpr uint PIVOT_FREE_LIMIT = 40;
@@ -88,9 +89,8 @@ namespace ClimberConstants {
     constexpr bool MOTOR_INVERTED = false;
     constexpr int MOTOR_STOP = 0;
 
-    constexpr double MOTOR_UP_SPEED = 0.5;
-    constexpr double MOTOR_DOWN_SPEED = -0.5;
-    constexpr double HOME_SPEED = 0.1;
+    constexpr double MOTOR_UP_SPEED = -0.5;
+    constexpr double MOTOR_DOWN_SPEED = 0.5;
 }
 
 namespace SwerveConstants {
@@ -123,6 +123,8 @@ namespace SwerveConstants {
         static SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21,-60.205};
         static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,160.654};
         static SC::SC_SwerveConfigs SWERVE_BACK_RIGHT{16,17,23,-55.283};
+
+        constexpr units::second_t X_BRAKE_TIMER = .5_s;
 
         static SC::SC_SwerveConfigs SWERVE_CONFIGS_ARRAY[4] = {
             SWERVE_FRONT_LEFT,
@@ -199,13 +201,13 @@ namespace SwerveConstants {
 
 }
 namespace VisionConstants {
-    constexpr units::inch_t MAX_LAUNCH_RANGE = 1000_in;
+    constexpr units::inch_t MAX_LAUNCH_RANGE = 63.7_in;
     constexpr units::inch_t AIM_TOLERANCE_LARGE = 12_in;
     constexpr units::inch_t AIM_TOLERANCE_SMALL = 6_in;
-    constexpr double CAMERA_ANGLE = 30.0;
-    constexpr double CAMERA_HEIGHT = 9.0;
+    constexpr double CAMERA_ANGLE = 38.0;
+    constexpr double CAMERA_HEIGHT = 22.5;
     constexpr double STEER_GAIN = -.01;
-    constexpr double TARGET_HEIGHT = 36; // inches
+    constexpr double TARGET_HEIGHT = 57; // inches
     // multiplier to give how far off and results to a steer power
 }
 
@@ -237,14 +239,14 @@ namespace UserInterface {
         constexpr int STRAFE = XBOX_LS_X;
         constexpr int ROTATION = XBOX_RS_X;
         // Settings
-        constexpr int RESET_HEADING = XBOX_START;
+        constexpr int RESET_HEADING = XBOX_BACK;
         constexpr int BRAKE = XBOX_X;
         constexpr int BRAKE_MODE = XBOX_RB;
         constexpr int DISABLE_BRAKE_MODE = XBOX_LB;
         constexpr int LOW_SPEED = XBOX_LT;
 
         // Ignore
-        constexpr int DRIVER_IGNORE = XBOX_A;
+        constexpr int DRIVER_IGNORE = XBOX_Y;
 
     }
     namespace Operator {

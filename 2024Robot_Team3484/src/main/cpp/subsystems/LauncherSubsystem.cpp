@@ -24,7 +24,7 @@ LauncherSubsystem::LauncherSubsystem(
     _launched_sensor{launch_sensor_di_ch}
     {
         _rpm_window = rpm_window;
-        _dbnc_launch_window = new Debouncer(WINDOW_TIME, Debouncer::kRising);
+        //_dbnc_launch_window = new Debouncer(WINDOW_TIME, Debouncer::kRising);
 
         _left_launcher_encoder = new SparkRelativeEncoder(_left_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
         _right_launcher_encoder = new SparkRelativeEncoder(_right_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
@@ -83,11 +83,11 @@ void LauncherSubsystem::Periodic() {
     }
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
-        if (_dbnc_launch_window != NULL) {
-            _en_launch = _dbnc_launch_window->Calculate(_WithinRPMWindow());
-        }else {
-            _en_launch = _WithinRPMWindow();
-        }
+        //if (_dbnc_launch_window != NULL) {
+            //_en_launch = _dbnc_launch_window->Calculate(_WithinRPMWindow());
+        //}else {
+            //_en_launch = _WithinRPMWindow();
+        //}
         _counter_not_null_right = 0;
         _counter_not_null_left = 0;
 
@@ -95,6 +95,7 @@ void LauncherSubsystem::Periodic() {
         if (_left_launcher_pid_controller !=NULL){
             if (_target_speed == 0) {
                 _left_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
+                _left_launcher_pid_controller->SetIAccum(0);
             } else {
                 _left_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
             }
@@ -103,6 +104,7 @@ void LauncherSubsystem::Periodic() {
         if (_right_launcher_pid_controller !=NULL){
             if (_target_speed == 0) {
                 _right_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
+                _right_launcher_pid_controller->SetIAccum(0);
             } else {
                 _right_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
             }
@@ -113,7 +115,7 @@ void LauncherSubsystem::Periodic() {
 
 }
 
-bool LauncherSubsystem::_WithinRPMWindow() {
+bool LauncherSubsystem::atTargetRPM() {
     if (_counter_not_null_left + _counter_not_null_right == 2){
         return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window && std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
     }
@@ -128,10 +130,11 @@ bool LauncherSubsystem::_WithinRPMWindow() {
     }
 }
 
-bool LauncherSubsystem::atTargetRPM(){
-    return _en_launch;
 
-}
+//bool LauncherSubsystem::atTargetRPM(){
+    //return _en_launch;
+
+//}
 
 void LauncherSubsystem::OpenLoopTestMotors(double power_left, double power_right) {
     if (frc::SmartDashboard::GetBoolean("testing",true)) {
