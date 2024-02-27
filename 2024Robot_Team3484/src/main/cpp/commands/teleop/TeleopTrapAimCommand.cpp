@@ -1,4 +1,4 @@
-#include "commands/teleop/TeleopAimCommand.h"
+#include "commands/teleop/TeleopTrapAimCommand.h"
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <units/velocity.h>
@@ -12,7 +12,7 @@ using namespace SwerveConstants::ControllerConstants;
 using namespace SwerveConstants::BrakeConstants;
 using namespace units;
 
-TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision)
+TeleopTrapAimCommand::TeleopTrapAimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision)
     : _drivetrain{drivetrain},
     _oi_driver{oi_driver},
     _oi_operator{oi_operator},
@@ -20,7 +20,7 @@ TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Inter
     AddRequirements(_drivetrain);
 }
 
-void TeleopAimCommand::Initialize() {
+void TeleopTrapAimCommand::Initialize() {
     // natural default is to break
     _aiming = false;
     _initial_positions = _drivetrain->GetModulePositions();
@@ -30,11 +30,11 @@ void TeleopAimCommand::Initialize() {
     else {
             _limelight->SetCameraAngle(CAMERA_ANGLE);
             _limelight->SetLensHeight(CAMERA_HEIGHT);
-            _limelight->SetTargetHeight(SPEAKER_TARGET_HEIGHT);
+            _limelight->SetTargetHeight(TRAP_TARGET_HEIGHT);
     }
 }
 
-void TeleopAimCommand::Execute() {
+void TeleopTrapAimCommand::Execute() {
     if (_limelight == NULL || _oi_driver->AimSequenceIgnore()) {
         meters_per_second_t x_speed = -_oi_driver->GetThrottle() * MAX_LINEAR_SPEED;
         meters_per_second_t y_speed = -_oi_driver->GetStrafe() * MAX_LINEAR_SPEED;
@@ -82,10 +82,10 @@ void TeleopAimCommand::Execute() {
     }
 }
 
-void TeleopAimCommand::End(bool interrupted) {
+void TeleopTrapAimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
     _drivetrain->SetCoastMode();
     _oi_driver->SetRumble(RUMBLE_STOP);
 }
 
-bool TeleopAimCommand::IsFinished() {return false;}
+bool TeleopTrapAimCommand::IsFinished() {return false;}
