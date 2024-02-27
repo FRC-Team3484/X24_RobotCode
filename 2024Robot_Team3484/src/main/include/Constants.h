@@ -40,7 +40,7 @@ namespace LauncherConstants {
 
     //constexpr bool IsLoaded = true;
     constexpr bool LEFT_MOTOR_INVERTED = false;
-    
+     
     // Target RPM
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1600_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
@@ -58,7 +58,7 @@ namespace IntakeConstants {
     constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 1000_deg_per_s_sq;
 
     constexpr units::degree_t STOW_POSITION = 0_deg;
-    constexpr units::degree_t INTAKE_POSITION = 174_deg;
+    constexpr units::degree_t INTAKE_POSITION = 163_deg;
     constexpr units::degree_t EJECT_POSITION = 90_deg;
 
     constexpr double HOME_POWER = -0.25; 

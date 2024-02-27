@@ -64,6 +64,7 @@ void IntakeSubsystem::Periodic() {
         SmartDashboard::PutBoolean("Arm Sensor Hit Status", _arm_sensor_hit);
         SmartDashboard::PutNumber("Pivot Accumulator Value", _pivot_pid_controller->GetIAccum());
         SmartDashboard::PutNumber("Pivot Target Position", _target_position.value());
+        SmartDashboard::PutBoolean("Has Note", HasPiece());
     }
 
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
