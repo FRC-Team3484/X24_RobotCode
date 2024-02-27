@@ -1,9 +1,9 @@
 #ifndef INTAKE_H
 #define INTAKE_H
 
-
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <rev/CANSparkMaxLowLevel.h>
 //#include <ctre/Phoenix.h>
 #include <frc/DigitalInput.h>
 #include <frc/trajectory/TrapezoidProfile.h>
@@ -11,6 +11,7 @@
 #include <units/angle.h>
 
 #include <Constants.h>
+#include "FRC3484_Lib/utils/SC_Datatypes.h"
 
 class IntakeSubsystem : public frc2::SubsystemBase {
     public:
@@ -19,11 +20,9 @@ class IntakeSubsystem : public frc2::SubsystemBase {
             int drive_motor_can_id, 
             int piece_sensor_di_ch,
             int arm_sensor_di_ch,
-
-            SC::SC_PIDConstants PID_CONSTANTS,
-            double PID_IZ_ZONE,
-            double PID_OUTPUTRANGE_MIN,
-            double PID_OUTPUTRANGE_MAX
+            SC::SC_PIDConstants pidc,
+            double pid_output_range_max,
+            double pid_output_range_min
         );
 
         void Periodic() override;
@@ -34,6 +33,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
         units::turn_t GetIntakePosition();
         units::revolutions_per_minute_t GetEncoderVelocity();
         bool AtSetPosition();
+        void OpenLoopTestMotors(double pivot_power, double drive_power);
 
     private:
         bool _arm_sensor_hit = false;

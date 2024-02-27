@@ -2,16 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#pragma once
+#ifndef ROBOT_CONTAINER_H
+#define ROBOT_CONTAINER_H
 
 #include <frc2/command/CommandPtr.h>
 
 class RobotContainer {
- public:
-  RobotContainer();
+    public:
+        RobotContainer();
+        frc2::CommandPtr GetAutonomousCommand();
 
-  frc2::CommandPtr GetAutonomousCommand();
-
- private:
-  void ConfigureBindings();
+    private:
+        void ConfigureBindings();
 };
+
+#endif

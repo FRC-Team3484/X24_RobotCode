@@ -1,5 +1,5 @@
-#ifndef DRIVECOMMAND_H
-#define DRIVECOMMAND_H
+#ifndef DRIVE_COMMAND_H
+#define DRIVE_COMMAND_H
 
 #include "OI.h"
 #include "subsystems/DrivetrainSubsystem.h"

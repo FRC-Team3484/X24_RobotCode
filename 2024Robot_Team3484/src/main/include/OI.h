@@ -16,34 +16,58 @@ class Driver_Interface {
         bool GetResetHeading();
         bool GetBrake();
         bool GetBrakePressed();
+        bool LowSpeed();
         // bool GetStraightenWheels();
         bool GetSetBrakeMode();
         bool GetDisableBrakeMode();
         void SetRumble(double Rumble);
-        bool DummyInput();
-        bool ExtendIntakeButton();
-        bool EjectIntakeButton();
-        bool IntakeOverrideButton();
-        bool IntakeThroughShooterButton();
-        bool LaunchButton();
+
 
         // Operator Controllers
 
     private:
-        frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
+        frc::XboxController _driver_controller{UserInterface::Driver::DRIVER_CONTROLLER_PORT};
 };
 
 class Operator_Interface{
     public:
-        bool DeployIntake();
-        bool Launch();
+        //joystick
+        double OpenLoopControlLeft();
+        double OpenLoopControlRight();
+        // Hotkeys
+        bool LauncherHotKey();
+        bool IntakeHotKey();
+        bool TrapHotKey();
+        bool ClimberHotKey();
+        // Launcher
+        bool LauncherLeftMotorTest();
+        bool LauncherRightMotorTest();
+        bool LauncherSensorTest();
+        
+        // Intake
+        bool IntakeAngleStowTest();
+        bool IntakeAngleReadyTest();
+        bool IntakePowerForwardTest();
+        bool IntakePowerBackwardTest();
+        double IntakeSensorTest();
+        
+  // None testing
+        bool EndgameToggle();
         bool IgnoreVision();
-        bool Climb();
+        bool ClimbUp();
+        bool ClimbDown();
         bool IgnoreSensor();
-        bool IgnoreVison();
-       
-    private:
-        frc::XboxController _perator_controller{SwerveConstants::ControllerConstants::OPERATOR_CONTROLLER_PORT};
+        bool EjectIntake();
+        bool ExtendIntake();
+        bool IntakeThroughShooter();
+        bool Launch();
+        bool IntakeTrap();
+        bool ScoreTrap();
+        bool AmpTrap();
+        void SetRumble(double Rumble);
 
+    private:
+        frc::XboxController _operator_controller{UserInterface::Operator::OPERATOR_CONTROLLER_PORT};
 };
+
 #endif

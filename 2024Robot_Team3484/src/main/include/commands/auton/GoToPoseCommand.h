@@ -38,7 +38,6 @@ class GoToPoseCommand: public frc2::CommandHelper<frc2::Command, GoToPoseCommand
 
         units::radians_per_second_t rotation_velocity;
 
-
         frc::Pose2d _target_pose;
         frc::Pose2d _pose_delta;
 

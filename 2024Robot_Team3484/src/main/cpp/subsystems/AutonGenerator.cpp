@@ -4,56 +4,52 @@
 #include "commands/auton/DriveSequenceCommand.h"
 
 //#include <pathplanner/lib/PathPlannerTrajectory.h>
-//#include <pathplanner/lib/PathPlanner.h>
+// #include <pathplanner/lib/PathPlanner.h>
 //#include <pathplanner/lib/commands/FollowPathWithEvents.h>
-
+#include <pathplanner/lib/commands/PathPlannerAuto.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <pathplanner/lib/auto/NamedCommands.h>
+#include <memory>
 
 using namespace frc;
-//using namespace pathplanner;
+using namespace pathplanner;
 using namespace SwerveConstants::AutonNames;
 
-AutonGenerator::AutonGenerator(DrivetrainSubsystem* drivetrain) 
-    : _drivetrain{drivetrain} {
+AutonGenerator::AutonGenerator(DrivetrainSubsystem* drivetrain, LauncherSubsystem* launcher, IntakeSubsystem* intake, Vision* vision)
+     {
+      NamedCommands::registerCommand("LauncherCommand", std::move(frc2::cmd::Race(AutonLauncherCommand(launcher, intake, vision).ToPtr(), AutonAimCommand(drivetrain, vision).ToPtr())));
+      NamedCommands::registerCommand("IntakeCommand", std::move(AutonIntakeCommand(intake).ToPtr()));
 
-    _auton_chooser.SetDefaultOption(AUTON_NONE, AUTON_NONE);
-    _auton_chooser.AddOption(AUTON_DISTANCE, AUTON_DISTANCE);
-    _auton_chooser.AddOption(AUTON_ANGLE, AUTON_ANGLE);
-    _auton_chooser.AddOption(AUTON_SEQUENCE, AUTON_SEQUENCE);
-    frc::SmartDashboard::PutData("Autons", &_auton_chooser);
 
-    //_event_map.emplace("test", std::make_shared<frc2::PrintCommand>("test"));
 
-    /*_auton_builder = new SwerveAutoBuilder{
-        [this](){return _drivetrain->GetPose();},
-        [this](Pose2d pose){_drivetrain->ResetOdometry(pose);},
-        _drivetrain->kinematics,
-        PIDConstants(PathDrivePIDConstants::P, PathDrivePIDConstants::I, PathDrivePIDConstants::D),
-        PIDConstants(PathRotationPIDConstants::P, PathRotationPIDConstants::I, PathRotationPIDConstants::D),
-        [this](wpi::array<SwerveModuleState, 4> states){_drivetrain->SetModuleStates(states, false, true);},
-        _event_map,
-        {_drivetrain},
-        true
-    };*/
+    _auton_chooser_initial.AddOption("No", "No");
+    _auton_chooser_initial.SetDefaultOption("Yes", "Yes");
+
+    _auton_chooser_piece_2.SetDefaultOption("None","None");
+    _auton_chooser_piece_3.SetDefaultOption("None","None");
+    _auton_chooser_piece_4.SetDefaultOption("None","None");
+
+
+    _auton_map.emplace("No", frc2::cmd::None());
+    _auton_map.emplace("None", frc2::cmd::None());
+    _auton_map.emplace("Yes", frc2::cmd::Race(AutonLauncherCommand(launcher, intake, vision).ToPtr(), AutonAimCommand(drivetrain, vision).ToPtr()));
+
+
+
+
+    for (const std::string* ptr = std::begin(AUTON_NAMES); ptr != std::end(AUTON_NAMES); ptr++){
+      _auton_map.emplace(*ptr, PathPlannerAuto(*ptr).ToPtr());
+      _auton_chooser_piece_2.AddOption(*ptr, *ptr);
+      _auton_chooser_piece_3.AddOption(*ptr, *ptr);
+      _auton_chooser_piece_4.AddOption(*ptr, *ptr);
+    }
 }
 
 frc2::CommandPtr AutonGenerator::GetAutonomousCommand() {
-  const std::string auton_selected = _auton_chooser.GetSelected();
-
-  if (auton_selected == AUTON_NONE) {
-    fmt::print("No Auton Selected");
-  } else if (auton_selected == AUTON_DISTANCE) {
-    return GoToPoseCommand{_drivetrain, Pose2d{5_ft, 0_ft, 0_deg}}.ToPtr();
-  } else if (auton_selected == AUTON_ANGLE) {
-    return GoToPoseCommand{_drivetrain, Pose2d{0_ft, 0_ft, 90_deg}}.ToPtr();
-  } else if (auton_selected == AUTON_SEQUENCE) {
-    return DriveSequenceCommand{_drivetrain}.ToPtr();
-  }
-  return frc2::cmd::None();
+  return frc2::cmd::Sequence(
+    std::move(_auton_map.at(_auton_chooser_initial.GetSelected())),
+    std::move(_auton_map.at(_auton_chooser_piece_2.GetSelected())),
+    std::move(_auton_map.at(_auton_chooser_piece_3.GetSelected())),
+    std::move(_auton_map.at(_auton_chooser_piece_4.GetSelected()))
+  );
 }
-
-/*frc2::CommandPtr AutonGenerator::_BuildPathCommand(std::string path_name) {
-    PathPlannerTrajectory path = PathPlanner::loadPath(path_name, PathConstraints(MAX_LINEAR_SPEED, MAX_LINEAR_ACCELERATION));
-    
-    return _auton_builder->fullAuto(path);
-}*/

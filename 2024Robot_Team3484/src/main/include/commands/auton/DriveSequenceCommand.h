@@ -1,5 +1,5 @@
-#ifndef DRIVESEQUENCECOMMAND_H
-#define DRIVESEQUENCECOMMAND_H
+#ifndef DRIVE_SEQUENCE_COMMAND_H
+#define DRIVE_SEQUENCE_COMMAND_H
 
 #include "subsystems/DrivetrainSubsystem.h"
 #include "commands/auton/GoToPoseCommand.h"

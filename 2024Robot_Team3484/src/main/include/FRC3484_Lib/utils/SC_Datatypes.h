@@ -26,7 +26,7 @@ namespace SC
 		double Steer_Current_Threshold = 40;
 		double Steer_Current_Time = 0.1;
 
-		bool Steer_Motor_Reversed = false;
+		bool Steer_Motor_Reversed = true;
 		bool Encoder_Reversed = false;
 		bool Current_Limit_Enable = true;
 		double Current_Limit_Drive = 35;
