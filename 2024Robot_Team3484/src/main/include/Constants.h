@@ -208,7 +208,8 @@ namespace VisionConstants {
     constexpr double CAMERA_ANGLE = 30.0;
     constexpr double CAMERA_HEIGHT = 24.25;
     constexpr double STEER_GAIN = -.01;
-    constexpr double TARGET_HEIGHT = 57; // inches
+    constexpr double SPEAKER_TARGET_HEIGHT = 57;//inches 
+    constexpr double TRAP_TARGET_HEIGHT = 48+(13/16)+3.25;// inches
     // multiplier to give how far off and results to a steer power
 }
 
