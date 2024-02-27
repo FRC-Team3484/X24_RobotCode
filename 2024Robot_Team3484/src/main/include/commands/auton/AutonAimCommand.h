@@ -1,5 +1,5 @@
-#ifndef AIMCOMMAND_H
-#define AIMCOMMAND_H
+#ifndef AUTONAIMCOMMAND_H
+#define AUTONAIMCOMMAND_H
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
@@ -8,12 +8,10 @@
 #include "subsystems/DrivetrainSubsystem.h"
 #include <frc/kinematics/SwerveModulePosition.h>
 #include "subsystems/Vision.h"
-#include "OI.h"
-
-class TeleopAimCommand: public frc2::CommandHelper<frc2::Command, TeleopAimCommand>{
+class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand>{
 
     public:
-        explicit TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Interface* oi_driver, Operator_Interface* oi_operator, Vision* vision);
+        explicit AutonAimCommand(DrivetrainSubsystem* drivetrain, Vision* vision);
         void Initialize() override;
         void Execute() override;
         void End(bool interrupted) override;
@@ -29,11 +27,7 @@ class TeleopAimCommand: public frc2::CommandHelper<frc2::Command, TeleopAimComma
         };
 
         Vision* _limelight;
-        Driver_Interface* _oi_driver;
-        Operator_Interface* _oi_operator;
         bool _aiming;
-        frc::Timer _brake_timer;
-        bool _encoder_saved;
 };
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef SWERVEMODULE_H
-#define SWERVEMODULE_H
+#ifndef SWERVE_MODULE_H
+#define SWERVE_MODULE_H
 
 #include "Constants.h"
 
@@ -10,6 +10,10 @@
 #include <frc/controller/SimpleMotorFeedforward.h>
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/kinematics/SwerveModulePosition.h>
+
+#include <wpi/deprecated.h>
+
+WPI_IGNORE_DEPRECATED
 
 #include "ctre/phoenix/sensors/WPI_CANCoder.h"
 #include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
@@ -46,24 +50,24 @@ class SwerveModule {
         SC::SC_SwerveCurrents _swerve_current_constants;
 
         ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration _drive_currrent_limit{
-                                            _swerve_current_constants.Current_Limit_Enable,
-                                            _swerve_current_constants.Current_Limit_Drive,
-                                            _swerve_current_constants.Drive_Current_Threshold,
-                                            _swerve_current_constants.Drive_Current_Time
-                                        };
+            _swerve_current_constants.Current_Limit_Enable,
+            _swerve_current_constants.Current_Limit_Drive,
+            _swerve_current_constants.Drive_Current_Threshold,
+            _swerve_current_constants.Drive_Current_Time
+        };
         ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration _steer_current_limit{
-                                            _swerve_current_constants.Current_Limit_Enable,
-                                            _swerve_current_constants.Current_Limit_Steer,
-                                            _swerve_current_constants.Steer_Current_Threshold,
-                                            _swerve_current_constants.Steer_Current_Time
-                                        };
+            _swerve_current_constants.Current_Limit_Enable,
+            _swerve_current_constants.Current_Limit_Steer,
+            _swerve_current_constants.Steer_Current_Threshold,
+            _swerve_current_constants.Steer_Current_Time
+        };
 
 
 
 
         frc::PIDController _drive_pid_controller{SwerveConstants::DrivetrainConstants::DrivePIDConstants::Kp_Drive, SwerveConstants::DrivetrainConstants::DrivePIDConstants::Ki_Drive, SwerveConstants::DrivetrainConstants::DrivePIDConstants::Kd_Drive};
-        frc::ProfiledPIDController<units::radians> _steer_pid_controller{SwerveConstants::DrivetrainConstants::SteerPIDConstants::Kp_Drive, SwerveConstants::DrivetrainConstants::SteerPIDConstants::Ki_Drive, SwerveConstants::DrivetrainConstants::SteerPIDConstants::Kd_Drive, 
-                {SwerveConstants::DrivetrainConstants::SteerPIDConstants::MAX_SPEED, SwerveConstants::DrivetrainConstants::SteerPIDConstants::MAX_ACCELERATION}};
+        frc::ProfiledPIDController<units::radians> _steer_pid_controller{SwerveConstants::DrivetrainConstants::SteerPIDConstants::Kp_Steer, SwerveConstants::DrivetrainConstants::SteerPIDConstants::Ki_Steer, SwerveConstants::DrivetrainConstants::SteerPIDConstants::Kd_Steer, 
+            {SwerveConstants::DrivetrainConstants::SteerPIDConstants::MAX_SPEED, SwerveConstants::DrivetrainConstants::SteerPIDConstants::MAX_ACCELERATION}};
 
         units::feet_per_second_t _GetWheelSpeed();
         units::inch_t _GetWheelPosition();
@@ -71,5 +75,7 @@ class SwerveModule {
 
         frc::SimpleMotorFeedforward<units::meters> _drive_feed_forward{SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::S, SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::V, SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::A};
 };
+
+WPI_UNIGNORE_DEPRECATED
 
 #endif

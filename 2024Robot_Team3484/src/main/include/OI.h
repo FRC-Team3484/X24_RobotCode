@@ -8,42 +8,86 @@
 class Driver_Interface {
     
     public:
+        Driver_Interface();
         //  Swerve Controllers
         double GetThrottle();
         double GetStrafe();
         double GetRotation();
-        bool StartAim();
+
         bool GetResetHeading();
         bool GetBrake();
         bool GetBrakePressed();
-        // bool GetStraightenWheels();
+
         bool GetSetBrakeMode();
         bool GetDisableBrakeMode();
+
+        bool LowSpeed();
         void SetRumble(double Rumble);
-        bool DummyInput();
-        bool ExtendIntakeButton();
-        bool EjectIntakeButton();
-        bool IntakeOverrideButton();
-        bool IntakeThroughShooterButton();
-        bool LaunchButton();
+
+        bool AimSequenceIgnore();
+
 
         // Operator Controllers
 
     private:
-        frc::XboxController _driver_controller{SwerveConstants::ControllerConstants::Driver::DRIVER_CONTROLLER_PORT};
+        frc::XboxController _driver_controller{UserInterface::Driver::DRIVER_CONTROLLER_PORT};
 };
 
 class Operator_Interface{
     public:
-        bool DeployIntake();
-        bool Launch();
-        bool IgnoreVision();
-        bool Climb();
-        bool IgnoreSensor();
-        bool IgnoreVison();
-       
-    private:
-        frc::XboxController _perator_controller{SwerveConstants::ControllerConstants::OPERATOR_CONTROLLER_PORT};
+        Operator_Interface();
+        //joystick
+        double OpenLoopControlLeft();
+        double OpenLoopControlRight();
+        // Hotkeys
+        bool LauncherHotKey();
+        bool IntakeHotKey();
+        bool TrapHotKey();
+        bool ClimberHotKey();
+        // Launcher
+        bool LauncherLeftMotorTest();
+        bool LauncherRightMotorTest();
+        bool LauncherSensorTest();
 
+        
+        // Intake
+        bool IntakeAngleStowTest();
+        bool IntakeAngleReadyTest();
+        bool IntakePowerForwardTest();
+        bool IntakePowerBackwardTest();
+        double IntakeSensorTest();
+        
+  // None testing
+
+        // Launcher
+        bool IntakeThroughShooter();
+        bool LauncherSpeaker();
+        bool LauncherToggle();
+        bool LauncherTrap();
+        bool LauncherAmp();
+        bool LauncherIntake();
+        // Trap
+        bool EndgameToggle();
+        bool IntakeTrap();
+        bool ScoreTrap();
+        bool AmpTrap();
+        // Climber
+        bool ClimbUp();
+        bool ClimbDown();
+        // Intake
+        bool EjectIntake();
+        bool ExtendIntake();
+
+        // Ignores
+        bool IgnoreVision();
+        bool IgnoreSensor();
+
+        void SetRumble(double Rumble);
+
+        int RawPOV();
+
+    private:
+        frc::XboxController _operator_controller{UserInterface::Operator::OPERATOR_CONTROLLER_PORT};
 };
+
 #endif
