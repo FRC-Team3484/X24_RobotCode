@@ -10,7 +10,6 @@
 #include <frc2/command/CommandPtr.h>
 #include "subsystems/SysIdRoutineBot.h"
 
-#include "RobotContainer.h"
 
 class Robot : public frc::TimedRobot {
  public:

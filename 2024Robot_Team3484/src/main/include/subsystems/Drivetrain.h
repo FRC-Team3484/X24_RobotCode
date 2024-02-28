@@ -56,8 +56,8 @@ frc::DifferentialDrive m_drive{[this](auto val) { _drive_motor_FL.Set(val); },
             log->Motor("drive-fr")
                 .voltage(_drive_motor_FR.Get() *
                          frc::RobotController::GetBatteryVoltage())
-                .position(units::meter_t{_drive_motor_FL.GetSelectedSensorPosition()*600/(36000.0/5880.0)})
-                .velocity(units::meters_per_second_t{_drive_motor_FL.GetSelectedSensorVelocity()*600/(36000.0/5880.0)});
+                .position(units::meter_t{_drive_motor_FR.GetSelectedSensorPosition()*600/(36000.0/5880.0)})
+                .velocity(units::meters_per_second_t{_drive_motor_FR.GetSelectedSensorVelocity()*600/(36000.0/5880.0)});
             // log->Motor("drive-bl")
             //     .voltage(_drive_motor_BL.Get() *
             //              frc::RobotController::GetBatteryVoltage())
