@@ -30,7 +30,7 @@ void TeleopAimCommand::Initialize() {
     else {
             _limelight->SetCameraAngle(CAMERA_ANGLE);
             _limelight->SetLensHeight(CAMERA_HEIGHT);
-            _limelight->SetTargetHeight(TARGET_HEIGHT);
+            _limelight->SetTargetHeight(SPEAKER_TARGET_HEIGHT);
     }
 }
 

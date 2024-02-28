@@ -51,7 +51,7 @@ void TeleopTrapAimCommand::Execute() {
     } else {
         _oi_driver->SetRumble(DRIVER_RUMBLE_LOW);
         if (_aiming){
-            _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
+            _drivetrain->Drive(0_mps, (_limelight->GetDistanceFromTarget() - TRAP_TARGET_DISTANCE)*DISTANCE_GAIN*MAX_ROTATION_SPEED,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
             if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()) {
                 _aiming = false;
                 _initial_positions = _drivetrain->GetModulePositions();
