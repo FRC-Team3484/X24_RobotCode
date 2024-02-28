@@ -32,8 +32,7 @@ void Robot::RobotPeriodic() {
     _vision.SetPipeline(_pipeline_chooser.GetSelected());
     frc::SmartDashboard::PutNumber("Distance to Target", _vision.GetDistanceFromTarget());
     frc::SmartDashboard::PutNumber("Taget Angle", _vision.GetOffsetY());
-        frc::SmartDashboard::PutNumber("Horizontal Distance", _vision.GetHorizontalDistance().value());
-
+    frc::SmartDashboard::PutNumber("Horizontal Distance", _vision.GetHorizontalDistance().value());
     frc::SmartDashboard::PutNumber("Climber Up", _oi_operator.ClimbUp());
     frc::SmartDashboard::PutNumber("Climber Down", _oi_operator.ClimbDown());
     frc::SmartDashboard::PutNumber("POV", _oi_operator.RawPOV());
@@ -54,12 +53,11 @@ void Robot::DisabledPeriodic() {}
 // void Robot::DisabledExit() {}
 
 void Robot::AutonomousInit() {
-    //_auton_command = _auton_generator.GetAutonomousCommand();
+    _auton_command = _auton_generator.GetAutonomousCommand();
 
     if (_auton_command) {
         _auton_command->Schedule();
     }
-
 }
 
 void Robot::AutonomousPeriodic() {}
