@@ -13,6 +13,9 @@ Drive::Drive() {
  _drive_motor_FL.SetInverted(false);
 //  _drive_motor_BR.SetInverted(false);
  _drive_motor_FR.SetInverted(false);
+
+ m_drive.SetSafetyEnabled(false);
+
 }
 
 frc2::CommandPtr Drive::PseudoDriveCommand(std::function<double()> fwd,

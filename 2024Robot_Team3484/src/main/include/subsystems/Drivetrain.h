@@ -9,12 +9,10 @@
 #include <frc/Encoder.h>
 #include <frc/RobotController.h>
 #include <frc/drive/DifferentialDrive.h>
-#include <frc/motorcontrol/PWMSparkMax.h>
 #include <frc2/command/SubsystemBase.h>
+#include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
 #include <frc2/command/sysid/SysIdRoutine.h>
 
-#include "ctre/phoenix/sensors/WPI_CANCoder.h"
-#include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
 
 
 class Drive : public frc2::SubsystemBase {
@@ -74,3 +72,4 @@ frc::DifferentialDrive m_drive{[this](auto val) { _drive_motor_FL.Set(val); },
 
 
 #endif
+
