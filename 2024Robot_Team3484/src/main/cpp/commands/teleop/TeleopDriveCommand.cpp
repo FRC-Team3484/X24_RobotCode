@@ -19,6 +19,9 @@ TeleopDriveCommand::TeleopDriveCommand(DrivetrainSubsystem* drivetrain, Driver_I
 
 void TeleopDriveCommand::Initialize() {
     _drivetrain->SetBrakeMode();
+    _encoder_saved = false;
+    _brake_timer.Stop();
+
 }
 
 void TeleopDriveCommand::Execute() {
@@ -45,18 +48,27 @@ void TeleopDriveCommand::Execute() {
         }
 
         if(_oi->GetBrake()) {
+            if (_brake_timer.Get() == 0_s) {
+                _brake_timer.Reset();
+                _brake_timer.Start();
+            }
+            if (_brake_timer.HasElapsed(BRAKE_DELAY) && !_encoder_saved) {
+                _encoder_saved = true;
+            }
             _drivetrain->SetModuleStates(
                 {
-                SwerveModuleState{-(_initial_positions[FL].distance - current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
-                SwerveModuleState{-(_initial_positions[FR].distance - current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BL].distance - current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BR].distance - current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
+                SwerveModuleState{(_encoder_saved ? -(_initial_positions[FL].distance - current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED : 0_fps), 45_deg},
+                SwerveModuleState{(_encoder_saved ? -(_initial_positions[FR].distance - current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED : 0_fps), -45_deg},
+                SwerveModuleState{(_encoder_saved ? -(_initial_positions[BL].distance - current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED : 0_fps), -45_deg},
+                SwerveModuleState{(_encoder_saved ? -(_initial_positions[BR].distance - current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED : 0_fps), 45_deg}
                 },
                 true,
                 false
             );
             
         } else {
+            _brake_timer.Stop();
+            _brake_timer.Reset();
 
             // Logic for actual joystick movements
             meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED;
@@ -77,6 +89,7 @@ void TeleopDriveCommand::Execute() {
 
 void TeleopDriveCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
+    _brake_timer.Stop();
 }
 
 bool TeleopDriveCommand::IsFinished() {return false;}

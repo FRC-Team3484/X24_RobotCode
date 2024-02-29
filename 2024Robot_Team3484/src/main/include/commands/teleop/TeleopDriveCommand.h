@@ -20,6 +20,9 @@ class TeleopDriveCommand: public frc2::CommandHelper<frc2::Command, TeleopDriveC
     private:
         DrivetrainSubsystem* _drivetrain;
         Driver_Interface* _oi;
+        bool _aiming;
+        frc::Timer _brake_timer;
+        bool _encoder_saved;
         wpi::array<frc::SwerveModulePosition, 4> _initial_positions = {
             frc::SwerveModulePosition{0_m, 0_rad},
             frc::SwerveModulePosition{0_m, 0_rad},
