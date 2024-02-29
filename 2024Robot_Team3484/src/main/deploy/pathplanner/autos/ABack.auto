@@ -14,13 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "A4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "LauncherCommand"
+            "pathName": "ABack"
           }
         }
       ]

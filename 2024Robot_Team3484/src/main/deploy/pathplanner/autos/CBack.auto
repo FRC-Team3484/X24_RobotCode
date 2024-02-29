@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.87,
-      "y": 6.83
+      "x": 0.83,
+      "y": 4.18
     },
-    "rotation": -120.0
+    "rotation": 120.0
   },
   "command": {
     "type": "sequential",
@@ -14,18 +14,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "A4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "LauncherCommand"
+            "pathName": "CBack"
           }
         }
       ]
     }
   },
-  "folder": "A",
+  "folder": "C",
   "choreoAuto": false
 }
