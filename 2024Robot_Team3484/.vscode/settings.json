@@ -31,7 +31,8 @@
     "system_error": "cpp",
     "regex": "cpp",
     "memory": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "ranges": "cpp"
   },
   "java.project.sourcePaths": [
     "build"

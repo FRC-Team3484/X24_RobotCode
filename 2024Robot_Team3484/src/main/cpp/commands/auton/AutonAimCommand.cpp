@@ -17,6 +17,9 @@ AutonAimCommand::AutonAimCommand(DrivetrainSubsystem* drivetrain, Vision* vision
 
 void AutonAimCommand::Initialize() {
     _aiming = false;
+    // _encoder_saved = false;
+    // _brake_timer.Reset();
+    // _brake_timer.Start();
     _initial_positions = _drivetrain->GetModulePositions();
     if (_limelight == NULL) {
         fmt::print("Limelight is Null");
@@ -24,7 +27,7 @@ void AutonAimCommand::Initialize() {
     else {
         _limelight->SetCameraAngle(CAMERA_ANGLE);
         _limelight->SetLensHeight(CAMERA_HEIGHT);
-        _limelight->SetTargetHeight(TARGET_HEIGHT);
+        _limelight->SetTargetHeight(SPEAKER_TARGET_HEIGHT);
     }
 }
 void AutonAimCommand::Execute() {
@@ -34,18 +37,35 @@ void AutonAimCommand::Execute() {
         if (_aiming){
             _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
             if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget()){
-                    _aiming = false;
-                    _initial_positions = _drivetrain->GetModulePositions();
+                _aiming = false;
+                // _encoder_saved = false;
+                // _brake_timer.Reset();
+                // _brake_timer.Start();
+                _initial_positions = _drivetrain->GetModulePositions();
             }
         }
         else{
-            wpi::array<SwerveModulePosition, 4> current_positions = _drivetrain->GetModulePositions();
+            // if (_brake_timer.HasElapsed(BRAKE_DELAY) && !_encoder_saved) {
+            //     _current_positions = _drivetrain->GetModulePositions();
+            //     _encoder_saved = true;
+            // }
+            // _drivetrain->SetModuleStates(
+            //     {
+            //     SwerveModuleState{(_encoder_saved ? -(_initial_positions[FL].distance - _current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED : 0_fps), 45_deg},
+            //     SwerveModuleState{(_encoder_saved ? -(_initial_positions[FR].distance - _current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED: 0_fps), -45_deg},
+            //     SwerveModuleState{(_encoder_saved ? -(_initial_positions[BL].distance - _current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED : 0_fps), -45_deg},
+            //     SwerveModuleState{(_encoder_saved ? -(_initial_positions[BR].distance - _current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED : 0_fps), 45_deg}
+            //     },
+            //     true,
+            //     false
+            // );
+            wpi::array<frc::SwerveModulePosition, 4> _current_positions = _drivetrain->GetModulePositions();
             _drivetrain->SetModuleStates(
                 {
-                SwerveModuleState{-(_initial_positions[FL].distance - current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
-                SwerveModuleState{-(_initial_positions[FR].distance - current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BL].distance - current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BR].distance - current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
+                SwerveModuleState{-(_initial_positions[FL].distance - _current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
+                SwerveModuleState{-(_initial_positions[FR].distance - _current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
+                SwerveModuleState{-(_initial_positions[BL].distance - _current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
+                SwerveModuleState{-(_initial_positions[BR].distance - _current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
                 },
                 true,
                 false
@@ -68,6 +88,7 @@ void AutonAimCommand::Execute() {
 void AutonAimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
     _drivetrain->SetCoastMode();
+    // _brake_timer.Stop();
 }
 
 bool AutonAimCommand::IsFinished() {return false;}

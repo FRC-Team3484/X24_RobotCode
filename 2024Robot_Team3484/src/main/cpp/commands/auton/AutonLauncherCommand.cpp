@@ -43,7 +43,7 @@ void AutonLauncherCommand::Execute(){
             && _intake->AtSetPosition() 
             && ( _limelight == NULL 
                 || (_limelight->HasTarget() 
-                && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )) {
+                && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_LARGE) )) {
             _launching = 1;
         }
 
@@ -53,12 +53,12 @@ void AutonLauncherCommand::Execute(){
         if (_launching == 1 && _launcher->LaunchingSensor()) {
             _launching = 2;
         }
-        #ifdef EN_DIAGNOSTICS
-            SmartDashboard::PutBoolean("Launcher: At Target RPM", _launcher->atTargetRPM());
-            SmartDashboard::PutBoolean("Launcher: At Set Position", _intake->AtSetPosition());
-            SmartDashboard::PutBoolean("Launcher: Has April Tag", _limelight->HasTarget());
-            SmartDashboard::PutNumber("Launcher: Horizontal Distance", double(_limelight->GetHorizontalDistance().value()));
-        #endif
+        // #ifdef EN_DIAGNOSTICS
+        //     SmartDashboard::PutBoolean("Launcher: At Target RPM", _launcher->atTargetRPM());
+        //     SmartDashboard::PutBoolean("Launcher: At Set Position", _intake->AtSetPosition());
+        //     SmartDashboard::PutBoolean("Launcher: Has April Tag", _limelight->HasTarget());
+        //     SmartDashboard::PutNumber("Launcher: Horizontal Distance", double(_limelight->GetHorizontalDistance().value()));
+        // #endif
     }
 
 }

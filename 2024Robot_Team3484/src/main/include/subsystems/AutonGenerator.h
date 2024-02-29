@@ -26,6 +26,12 @@ class AutonGenerator {
     private:
 
         std::unordered_map<std::string, frc2::CommandPtr> _auton_map;
+        frc2::CommandPtr _GetCommand(std::string command_name);
+        
+        DrivetrainSubsystem* _drivetrain;
+        IntakeSubsystem* _intake;
+        LauncherSubsystem* _launcher;
+        Vision* _vision;
         //frc2::CommandPtr _BuildPathCommand(std::string path_name);
         
         // DrivetrainSubsystem* _drivetrain;

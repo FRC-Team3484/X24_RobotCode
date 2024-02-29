@@ -19,6 +19,9 @@ TeleopLauncherCommand::TeleopLauncherCommand(LauncherSubsystem* launcher_subsyst
 
 
 void TeleopLauncherCommand::Initialize(){
+    if (frc::SmartDashboard::GetBoolean("Launcher Diagnostics",false)){
+        //SmartDashboard::PutNumber("Distance to Target", _limelight->GetDistanceFromTarget());
+    }
     _launching = 0;
 
     if(_launcher != NULL) {
@@ -54,7 +57,7 @@ void TeleopLauncherCommand::Execute(){
                 && ( _limelight == NULL 
                     || (_oi != NULL && _oi->IgnoreVision()) 
                     || (_limelight->HasTarget() 
-                        && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) )) {
+                        && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_LARGE) )) {
                     _launching = 1;
                 }
 

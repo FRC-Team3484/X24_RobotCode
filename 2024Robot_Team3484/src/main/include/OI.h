@@ -8,19 +8,23 @@
 class Driver_Interface {
     
     public:
+        Driver_Interface();
         //  Swerve Controllers
         double GetThrottle();
         double GetStrafe();
         double GetRotation();
-        bool StartAim();
+
         bool GetResetHeading();
         bool GetBrake();
         bool GetBrakePressed();
-        bool LowSpeed();
-        // bool GetStraightenWheels();
+
         bool GetSetBrakeMode();
         bool GetDisableBrakeMode();
+
+        bool LowSpeed();
         void SetRumble(double Rumble);
+
+        bool AimSequenceIgnore();
 
 
         // Operator Controllers
@@ -31,6 +35,7 @@ class Driver_Interface {
 
 class Operator_Interface{
     public:
+        Operator_Interface();
         //joystick
         double OpenLoopControlLeft();
         double OpenLoopControlRight();
@@ -43,6 +48,7 @@ class Operator_Interface{
         bool LauncherLeftMotorTest();
         bool LauncherRightMotorTest();
         bool LauncherSensorTest();
+
         
         // Intake
         bool IntakeAngleStowTest();
@@ -52,19 +58,33 @@ class Operator_Interface{
         double IntakeSensorTest();
         
   // None testing
-        bool EndgameToggle();
-        bool IgnoreVision();
-        bool ClimbUp();
-        bool ClimbDown();
-        bool IgnoreSensor();
-        bool EjectIntake();
-        bool ExtendIntake();
+
+        // Launcher
         bool IntakeThroughShooter();
-        bool Launch();
+        bool LauncherSpeaker();
+        bool LauncherToggle();
+        bool LauncherTrap();
+        bool LauncherAmp();
+        bool LauncherIntake();
+        // Trap
+        bool EndgameToggle();
         bool IntakeTrap();
         bool ScoreTrap();
         bool AmpTrap();
+        // Climber
+        bool ClimbUp();
+        bool ClimbDown();
+        // Intake
+        bool EjectIntake();
+        bool ExtendIntake();
+
+        // Ignores
+        bool IgnoreVision();
+        bool IgnoreSensor();
+
         void SetRumble(double Rumble);
+
+        int RawPOV();
 
     private:
         frc::XboxController _operator_controller{UserInterface::Operator::OPERATOR_CONTROLLER_PORT};

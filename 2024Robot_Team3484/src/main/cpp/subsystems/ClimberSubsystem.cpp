@@ -6,6 +6,7 @@
 WPI_IGNORE_DEPRECATED
 
 using namespace frc;
+using namespace ctre::phoenix;
 
 ClimberSubsystem::ClimberSubsystem(
     int left_motor_can_id,
@@ -23,27 +24,48 @@ ClimberSubsystem::ClimberSubsystem(
     _left_climber_motor.ConfigFactoryDefault();
     _right_climber_motor.ConfigFactoryDefault();
 
+    _left_climber_motor.SetNeutralMode(motorcontrol::Brake);
+    _right_climber_motor.SetNeutralMode(motorcontrol::Brake);
+
+
+
 
     _left_climber_motor.SetInverted(ClimberConstants::MOTOR_INVERTED);
     _right_climber_motor.SetInverted(!ClimberConstants::MOTOR_INVERTED);
 }
 
 void ClimberSubsystem::Periodic() {
-    #ifdef EN_DIAGNOSTICS
-        SmartDashboard::PutBoolean("Climber Power Right", GetRightSensor());
-        SmartDashboard::PutBoolean("Climber Power Left", GetLeftSensor());
-    #endif
+    if(frc::SmartDashboard::GetBoolean("Climber Diagnostics", false)){
+        SmartDashboard::PutNumber("Climber Power Right", GetRightSensor());
+        SmartDashboard::PutNumber("Climber Power Left", GetLeftSensor());
+    }
+    // if (!_left_homed) {
+    //     _left_climber_motor.Set(ClimberConstants::HOME_SPEED);
+    // }
+    // if (!_right_homed) {
+    //     _right_climber_motor.Set(ClimberConstants::HOME_SPEED);
+    // }
 
+    // if (GetLeftSensor() && !_left_homed) {
+    //     _left_homed = true;
+    //     _left_climber_motor.Set(0);
+    // }
+    // if (GetRightSensor() && !_right_homed) {
+    //     _right_homed = true;
+    //     _right_climber_motor.Set(0);
+    // }
 }
 
 bool ClimberSubsystem::GetLeftSensor() {
     // Returns the value of the left limit switch
-    return !_left_motor_sensor.Get();
+    return false;
+    //return !_left_motor_sensor.Get();
 }
 
 bool ClimberSubsystem::GetRightSensor() {
     // Returns the value of the right limit sensor
-    return !_right_motor_sensor.Get();
+    return false;
+    //return !_right_motor_sensor.Get();
 }
 
 void ClimberSubsystem::SetClimberPower(double power) {
