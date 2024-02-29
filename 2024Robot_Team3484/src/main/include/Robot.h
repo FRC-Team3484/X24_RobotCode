@@ -80,8 +80,7 @@ class Robot : public frc::TimedRobot {
         DrivetrainSubsystem _drivetrain{SwerveConstants::DrivetrainConstants::SWERVE_CONFIGS_ARRAY};
         // Subsystem Adjacent
         Vision _vision{VisionConstants::CAMERA_ANGLE, VisionConstants::CAMERA_HEIGHT, VisionConstants::SPEAKER_TARGET_HEIGHT};
-
-        AutonGenerator _auton_generator{&_drivetrain};
+        AutonGenerator _auton_generator{&_drivetrain, &_launcher, &_intake, &_vision};
 
         // Command Groups
         frc2::CommandPtr _drive_state_commands = frc2::cmd::Parallel(

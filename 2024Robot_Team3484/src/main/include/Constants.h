@@ -46,6 +46,7 @@ namespace LauncherConstants {
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
     constexpr units::revolutions_per_minute_t AMP_RPM = 850_rpm;
     constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
+    constexpr units::second_t TIMEOUT = 5_s;
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
@@ -99,6 +100,14 @@ namespace SwerveConstants {
     const std::string AUTON_DISTANCE = "Drive 5 feet";
     const std::string AUTON_ANGLE = "Turn 90 degrees";
     const std::string AUTON_SEQUENCE = "Drive Sequence";
+    const std::string AUTON_NAMES[] = {
+        "A1", "B1", "B2", "B3",
+        "C1", "C2", "C3", "D0",
+        "ABack", "BBack", "CBack"
+    };
+    //Testing
+    
+    const std::string TWO_PIECE_AUTON = "Two Piece Auton";
     }
 
     namespace ControllerConstants {
@@ -124,7 +133,7 @@ namespace SwerveConstants {
         static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,160.654};
         static SC::SC_SwerveConfigs SWERVE_BACK_RIGHT{16,17,23,-55.283};
 
-        constexpr units::second_t X_BRAKE_TIMER = .5_s;
+        // constexpr units::second_t X_BRAKE_TIMER = .5_s;
 
         static SC::SC_SwerveConfigs SWERVE_CONFIGS_ARRAY[4] = {
             SWERVE_FRONT_LEFT,
@@ -149,11 +158,13 @@ namespace SwerveConstants {
         constexpr units::feet_per_second_t MAX_WHEEL_SPEED = 8_fps;
         constexpr units::feet_per_second_squared_t MAX_WHEEL_ACCELERATION = 4_fps_sq;
 
+// Check For Autons
         namespace DrivePIDConstants {
             constexpr double Kp_Drive = 1.0;
             constexpr double Ki_Drive = 0.0;
             constexpr double Kd_Drive = 0.0;
         }
+// Check For Autons
         namespace DriveFeedForwardConstants {
             constexpr units::volt_t S = 1.0_V;
             constexpr auto V = 0.8_V / 1.0_mps;
@@ -186,6 +197,7 @@ namespace SwerveConstants {
 
         constexpr units::inch_t POSITION_TOLERANCE = 2_in; // Drive to a position, when safe to quit
         constexpr units::degree_t ANGLE_TOLERANCE = 2_deg;
+    }
 
         namespace PathDrivePIDConstants {
             constexpr double P = 5.0;
@@ -200,7 +212,6 @@ namespace SwerveConstants {
         }
     }
 
-}
 namespace VisionConstants {
     constexpr units::inch_t MAX_LAUNCH_RANGE = 1000_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_LARGE = 12_in;

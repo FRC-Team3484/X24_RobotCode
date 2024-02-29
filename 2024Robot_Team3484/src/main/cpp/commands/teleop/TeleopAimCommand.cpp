@@ -23,9 +23,9 @@ TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Inter
 void TeleopAimCommand::Initialize() {
     // natural default is to break
     _aiming = false;
-    _encoder_saved = false;
-    _brake_timer.Reset();
-    _brake_timer.Start();
+    // _encoder_saved = false;
+    // _brake_timer.Reset();
+    // _brake_timer.Start();
     _initial_positions = _drivetrain->GetModulePositions();
     if (_limelight == NULL) {
         fmt::print("Limelight is Null");
@@ -131,6 +131,11 @@ void TeleopAimCommand::Execute() {
                 }
             }
         }
+        #ifdef EN_DIAGNOSTICS
+            SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has Piece", _limelight->HasTarget());
+            SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());
+            SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
+        #endif
     }
     
 }
@@ -139,7 +144,7 @@ void TeleopAimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
     _drivetrain->SetCoastMode();
     _oi_driver->SetRumble(RUMBLE_STOP);
-    _brake_timer.Stop();
+    // _brake_timer.Stop();
 }
 
 bool TeleopAimCommand::IsFinished() {return false;}
