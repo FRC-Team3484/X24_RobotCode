@@ -202,7 +202,6 @@ namespace SwerveConstants {
 
 }
 namespace VisionConstants {
-<<<<<<< HEAD
     constexpr units::inch_t MAX_LAUNCH_RANGE = 1000_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_LARGE = 12_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_SMALL = 6_in;
@@ -210,13 +209,6 @@ namespace VisionConstants {
     constexpr units::inch_t TRAP_AIM_TOLERANCE_SMALL = 30_in;
     constexpr double CAMERA_ANGLE = 38.0;
     constexpr double CAMERA_HEIGHT = 22.5;
-=======
-    constexpr units::inch_t MAX_LAUNCH_RANGE = 63.7_in;
-    constexpr units::inch_t AIM_TOLERANCE_LARGE = 12_in;
-    constexpr units::inch_t AIM_TOLERANCE_SMALL = 6_in;
-    constexpr double CAMERA_ANGLE = 30.0;
-    constexpr double CAMERA_HEIGHT = 24.25;
->>>>>>> 2e8c0b4c11953584c14e35b5ac5619b1f27326ea
     constexpr double STEER_GAIN = -.01;
     constexpr double DISTANCE_GAIN = -.01;
     constexpr double TRAP_TARGET_DISTANCE = 32.5;

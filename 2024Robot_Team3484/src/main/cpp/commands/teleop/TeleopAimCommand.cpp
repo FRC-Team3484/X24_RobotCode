@@ -45,38 +45,16 @@ void TeleopAimCommand::Execute() {
             meters_per_second_t y_speed = -_oi_driver->GetStrafe() * MAX_LINEAR_SPEED;
             radians_per_second_t rotation = -_oi_driver->GetRotation() * MAX_ROTATION_SPEED;
 
-<<<<<<< HEAD
             if (_oi_driver->LowSpeed()) {
                 x_speed *= LOW_SCALE;
                 y_speed *= LOW_SCALE;
                 rotation *= LOW_SCALE;
-=======
-        if (_oi_driver->LowSpeed()) {
-            x_speed *= LOW_SCALE;
-            y_speed *= LOW_SCALE;
-            rotation *= LOW_SCALE;
-        }
-        _oi_driver->SetRumble(RUMBLE_STOP);
-        
-        _drivetrain->Drive(x_speed, y_speed, rotation, true);
-    } else {
-        _oi_driver->SetRumble(DRIVER_RUMBLE_LOW);
-        if (_aiming){
-            _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
-            if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()) {
-                _aiming = false;
-                _encoder_saved = false;
-                _brake_timer.Reset();
-                _brake_timer.Start();
-                _initial_positions = _drivetrain->GetModulePositions();
->>>>>>> 2e8c0b4c11953584c14e35b5ac5619b1f27326ea
             }
             _oi_driver->SetRumble(RUMBLE_STOP);
         
             _drivetrain->Drive(x_speed, y_speed, rotation, true);
         }
         else {
-<<<<<<< HEAD
             _oi_driver->SetRumble(DRIVER_RUMBLE_LOW);
             if (_aiming){
                 _drivetrain->Drive((_limelight->GetDistanceFromTarget() - TRAP_TARGET_DISTANCE)*DISTANCE_GAIN*MAX_LINEAR_SPEED,
@@ -99,36 +77,17 @@ void TeleopAimCommand::Execute() {
                 //     true,
                 //     false
                 // );
-=======
-            if (_brake_timer.HasElapsed(BRAKE_DELAY) && !_encoder_saved) {
-                _current_positions = _drivetrain->GetModulePositions();
-                _encoder_saved = true;
-            }
-            _drivetrain->SetModuleStates(
-                {
-                SwerveModuleState{(_encoder_saved ? -(_initial_positions[FL].distance - _current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED : 0_fps), 45_deg},
-                SwerveModuleState{(_encoder_saved ? -(_initial_positions[FR].distance - _current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED: 0_fps), -45_deg},
-                SwerveModuleState{(_encoder_saved ? -(_initial_positions[BL].distance - _current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED : 0_fps), -45_deg},
-                SwerveModuleState{(_encoder_saved ? -(_initial_positions[BR].distance - _current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED : 0_fps), 45_deg}
-                },
-                true,
-                false
-            );
->>>>>>> 2e8c0b4c11953584c14e35b5ac5619b1f27326ea
 
                 if (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance())>TRAP_AIM_TOLERANCE_LARGE) {
                     _aiming = true;
                 }
             }
         }
-<<<<<<< HEAD
-=======
-        // #ifdef EN_DIAGNOSTICS
-        //     SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has Piece", _limelight->HasTarget());
-        //     SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());
-        //     SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
-        // #endif
->>>>>>> 2e8c0b4c11953584c14e35b5ac5619b1f27326ea
+        #ifdef EN_DIAGNOSTICS
+        SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has Piece", _limelight->HasTarget());
+        SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());
+        SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
+        #endif
     }
     else{
         if (_limelight == NULL || _oi_driver->AimSequenceIgnore()) {
