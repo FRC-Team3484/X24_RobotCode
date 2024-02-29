@@ -103,7 +103,7 @@ namespace SwerveConstants {
     const std::string AUTON_NAMES[] = {
         "A1", "B1", "B2", "B3",
         "C1", "C2", "C3", "D0",
-        "ABack", "BBack", "C6Center", "CBack"
+        "ABack", "BBack", "CBack"
     };
     //Testing
     
