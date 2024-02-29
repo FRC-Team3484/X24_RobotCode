@@ -202,8 +202,10 @@ namespace SwerveConstants {
 }
 namespace VisionConstants {
     constexpr units::inch_t MAX_LAUNCH_RANGE = 1000_in;
-    constexpr units::inch_t AIM_TOLERANCE_LARGE = 12_in;
-    constexpr units::inch_t AIM_TOLERANCE_SMALL = 6_in;
+    constexpr units::inch_t SPEAKER_AIM_TOLERANCE_LARGE = 12_in;
+    constexpr units::inch_t SPEAKER_AIM_TOLERANCE_SMALL = 6_in;
+    constexpr units::inch_t TRAP_AIM_TOLERANCE_LARGE  = 35_in;
+    constexpr units::inch_t TRAP_AIM_TOLERANCE_SMALL = 30_in;
     constexpr double CAMERA_ANGLE = 38.0;
     constexpr double CAMERA_HEIGHT = 22.5;
     constexpr double STEER_GAIN = -.01;
@@ -271,7 +273,8 @@ namespace UserInterface {
         // D-Pad: Hard Coded in OI
 
         // Trap
-        constexpr int ENDGAME_TOGGLE_HK = XBOX_LB;
+        constexpr int ENDGAME_TOGGLE_HK = XBOX_LT;
+        constexpr int TRAP_TOGGLE = XBOX_LB;
         constexpr int INTAKE_TRAP = XBOX_A;
         constexpr int SCORE_TRAP = XBOX_X;
         constexpr int AMP_TRAP = XBOX_Y;
