@@ -101,8 +101,9 @@ namespace SwerveConstants {
     const std::string AUTON_ANGLE = "Turn 90 degrees";
     const std::string AUTON_SEQUENCE = "Drive Sequence";
     const std::string AUTON_NAMES[] = {
-        "A1", "A4", "A5", "B1", "B2", "B3", "B5", "B6",
-        "C1", "C2", "C3", "C5", "C6", "C7", "C8", "D0"
+        "A1", "B1", "B2", "B3",
+        "C1", "C2", "C3", "D0",
+        "ABack", "BBack", "C6Center", "CBack"
     };
     //Testing
     
