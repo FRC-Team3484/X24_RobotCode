@@ -68,17 +68,17 @@ void TeleopAimCommand::Execute() {
             //     _current_positions = _drivetrain->GetModulePositions();
             //     _encoder_saved = true;
             // }
-            wpi::array<frc::SwerveModulePosition, 4> _current_positions = _drivetrain->GetModulePositions();
-            _drivetrain->SetModuleStates(
-                {
-                SwerveModuleState{-(_initial_positions[FL].distance - _current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
-                SwerveModuleState{-(_initial_positions[FR].distance - _current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BL].distance - _current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BR].distance - _current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
-                },
-                true,
-                false
-            );
+            // wpi::array<frc::SwerveModulePosition, 4> _current_positions = _drivetrain->GetModulePositions();
+            // _drivetrain->SetModuleStates(
+            //     {
+            //     SwerveModuleState{-(_initial_positions[FL].distance - _current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
+            //     SwerveModuleState{-(_initial_positions[FR].distance - _current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
+            //     SwerveModuleState{-(_initial_positions[BL].distance - _current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
+            //     SwerveModuleState{-(_initial_positions[BR].distance - _current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
+            //     },
+            //     true,
+            //     false
+            // );
             // _drivetrain->SetModuleStates(
             //     {
             //     SwerveModuleState{(_encoder_saved ? -(_initial_positions[FL].distance - _current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED : 0_fps), 45_deg},
@@ -94,11 +94,11 @@ void TeleopAimCommand::Execute() {
                 _aiming = true;
             }
         }
-        // #ifdef EN_DIAGNOSTICS
-        //     SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has Piece", _limelight->HasTarget());
-        //     SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());
-        //     SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
-        // #endif
+        #ifdef EN_DIAGNOSTICS
+            SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has Piece", _limelight->HasTarget());
+            SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());
+            SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
+        #endif
     }
 }
 
