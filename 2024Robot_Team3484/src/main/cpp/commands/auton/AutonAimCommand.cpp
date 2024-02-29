@@ -9,9 +9,10 @@ using namespace SwerveConstants::BrakeConstants;
 
 
 AutonAimCommand::AutonAimCommand(DrivetrainSubsystem* drivetrain, Vision* vision)
-    : _drivetrain{drivetrain},
-    _limelight{vision} {
+    : _drivetrain{drivetrain}/*,
+    _limelight{vision}*/ {
     AddRequirements(_drivetrain);
+    _limelight = NULL;
 }
 
 

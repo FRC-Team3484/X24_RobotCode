@@ -83,11 +83,11 @@ void IntakeSubsystem::Periodic() {
                 SmartDashboard::PutNumber(" Target Position (Trapezoid)", linear_angle.value()*360);
                 #endif
 
-                if (units::math::abs(linear_angle - GetIntakePosition()) >= 40_deg){
+                /*if (units::math::abs(linear_angle - GetIntakePosition()) >= 40_deg){
                     SetIntakeAngle(_target_position, true);
-                } else {
-                    _pivot_pid_controller->SetReference(linear_angle.value()*GEAR_RATIO, rev::CANSparkMax::ControlType::kPosition);
-                }
+                } else {*/
+                _pivot_pid_controller->SetReference(linear_angle.value()*GEAR_RATIO, rev::CANSparkMax::ControlType::kPosition);
+                /*}*/
                     
             }
 
