@@ -201,16 +201,6 @@ namespace SwerveConstants {
 
 }
 namespace VisionConstants {
-<<<<<<< HEAD
-    constexpr units::inch_t MAX_LAUNCH_RANGE = 63.7_in;
-    constexpr units::inch_t AIM_TOLERANCE_LARGE = 12_in;
-    constexpr units::inch_t AIM_TOLERANCE_SMALL = 6_in;
-    constexpr double CAMERA_ANGLE = 30.0;
-    constexpr double CAMERA_HEIGHT = 22.5;
-    constexpr double STEER_GAIN = -.01;
-    constexpr double SPEAKER_TARGET_HEIGHT = 57;//inches 
-    constexpr double TRAP_TARGET_HEIGHT = 48+(13/16)+3.25;// inches
-=======
     constexpr units::inch_t MAX_LAUNCH_RANGE = 1000_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_LARGE = 12_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_SMALL = 6_in;
@@ -223,7 +213,6 @@ namespace VisionConstants {
     constexpr double TRAP_TARGET_DISTANCE = 32.5;
     constexpr double SPEAKER_TARGET_HEIGHT = 57; // inches
     constexpr double TRAP_TARGET_HEIGHT = 48+(13/16)+3.25; //Inches
->>>>>>> Trap_Aim
     // multiplier to give how far off and results to a steer power
 }
 
