@@ -55,6 +55,10 @@ namespace IntakeConstants {
     constexpr int ARM_SENSOR_DI_CH = 1;
     constexpr double GEAR_RATIO = 100.0/9.0;
 
+    // Amp
+    constexpr int AMP_ID = 60;
+
+
     constexpr units::degrees_per_second_t MAX_VELOCITY = 250_deg_per_s;
     constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 1000_deg_per_s_sq;
 
@@ -245,7 +249,6 @@ namespace TrapConstants {
     constexpr units::inch_t GEAR_RATIO = 1.0_in;
     constexpr double PID_MAX = 1;
     constexpr double PID_MIN = -1;
-
 }
 namespace UserInterface {
     namespace Driver {
@@ -290,6 +293,13 @@ namespace UserInterface {
         constexpr int INTAKE_TRAP = XBOX_A;
         constexpr int SCORE_TRAP = XBOX_X;
         constexpr int AMP_TRAP = XBOX_Y;
+
+        //Amp
+        constexpr int AMP_TOGGLE = XBOX_LT;
+        constexpr int AMP_STICK = XBOX_LS_Y;
+        constexpr double AMP_DEADBAND = 0.1;
+
+
     }
     namespace Testing {
         constexpr int TESTING_OPEN_LOOP_LEFT = XBOX_LS_Y;

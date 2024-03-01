@@ -33,6 +33,7 @@ class TeleopIntakeCommand
         Operator_Interface* _operator_oi;
         Driver_Interface* _driver_oi;
         ClimberSubsystem* _climber_subsystem;
+
 };
 
 #endif

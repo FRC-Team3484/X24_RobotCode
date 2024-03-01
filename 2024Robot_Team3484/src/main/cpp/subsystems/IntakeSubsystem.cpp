@@ -19,12 +19,14 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
     int arm_sensor_di_ch,
     SC::SC_PIDConstants pivot_pidc,
     double pid_output_range_max,
-    double pid_output_range_min
+    double pid_output_range_min,
+    int amp_motor_id
     ) :
         _pivot_motor{pivot_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
         _drive_motor{drive_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
         _piece_sensor{piece_sensor_di_ch},
-        _arm_sensor{arm_sensor_di_ch}
+        _arm_sensor{arm_sensor_di_ch},
+        _amp_motor{amp_motor_id}
     {
 
     _pivot_encoder = new rev::SparkRelativeEncoder(_pivot_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
@@ -154,4 +156,9 @@ void IntakeSubsystem::OpenLoopTestMotors(double pivot_power, double drive_power)
         _pivot_motor.Set(pivot_power);
         _drive_motor.Set(drive_power);
     }
+}
+
+//Amp
+void IntakeSubsystem::AmpMovement(double extend_power) {
+    _amp_motor.Set(extend_power);
 }

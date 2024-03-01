@@ -59,6 +59,12 @@ bool Operator_Interface::ClimbDown() {return _operator_controller.GetPOV()<=225 
 bool Operator_Interface::IgnoreVision() {return _operator_controller.GetRawButton(OPERATOR_IGNORE);}
 bool Operator_Interface::IgnoreSensor() {return _operator_controller.GetRawButton(OPERATOR_IGNORE);}
 
+// Amp
+bool Operator_Interface::AmpToggle() {return _operator_controller.GetRawAxis(AMP_TOGGLE) > 0.5;}
+double Operator_Interface::AmpStick() {return frc::ApplyDeadband(_operator_controller.GetRawAxis(AMP_STICK)*.5, TESTING_DEADBAND);}
+
+
+
 void Operator_Interface::SetRumble(double Rumble) {
     _operator_controller.SetRumble(frc::GenericHID::kBothRumble, Rumble);
 }

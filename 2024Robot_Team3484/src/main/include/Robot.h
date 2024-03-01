@@ -65,7 +65,7 @@ class Robot : public frc::TimedRobot {
 
         //Subsystems
         #if defined (INTAKE_ENABLED) || defined (LAUNCHER_ENABLED)
-        IntakeSubsystem _intake{IntakeConstants::PIVOT_MOTOR_CAN_ID, IntakeConstants::DRIVE_MOTOR_CAN_ID, IntakeConstants::PIECE_SENSOR_DI_CH, IntakeConstants::ARM_SENSOR_DI_CH, IntakeConstants::PIVOT_PID_CONSTANTS, IntakeConstants::PID_OUTPUTRANGE_MAX, IntakeConstants::PID_OUTPUTRANGE_MIN};
+        IntakeSubsystem _intake{IntakeConstants::PIVOT_MOTOR_CAN_ID, IntakeConstants::DRIVE_MOTOR_CAN_ID, IntakeConstants::PIECE_SENSOR_DI_CH, IntakeConstants::ARM_SENSOR_DI_CH, IntakeConstants::PIVOT_PID_CONSTANTS, IntakeConstants::PID_OUTPUTRANGE_MAX, IntakeConstants::PID_OUTPUTRANGE_MIN, IntakeConstants::AMP_ID};
         #endif
         #if defined (TRAP_ENABLED)
         TrapSubsystem _trap{TrapConstants::EXTENSION_MOTOR_CAN_ID, TrapConstants::GP_CONTROL_CAN_ID, TrapConstants::PID_CONSTANTS, TrapConstants::PID_MAX, TrapConstants::PID_MIN};

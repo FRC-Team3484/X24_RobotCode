@@ -79,6 +79,10 @@ class Operator_Interface{
         bool EjectIntake();
         bool ExtendIntake();
 
+        // Amp
+        bool AmpToggle();
+        double AmpStick();
+
         // Ignores
         bool IgnoreVision();
         bool IgnoreSensor();

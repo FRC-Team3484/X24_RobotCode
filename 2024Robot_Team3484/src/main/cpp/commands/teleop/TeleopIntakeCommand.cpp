@@ -23,9 +23,11 @@ void TeleopIntakeCommand::Execute() {
             }
         }
         else {
+
             // if (!_climber_subsystem->GetLeftSensor() || !_climber_subsystem->GetRightSensor()){
             //     _intake_subsystem->SetIntakeAngle(IntakeConstants::CLIMB_POSITION);
             // }else {
+        
             if (_operator_oi->ExtendIntake()) {
                 if ((!_intake_subsystem->HasPiece() || _operator_oi->IgnoreSensor())) {
                     _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
@@ -48,6 +50,8 @@ void TeleopIntakeCommand::Execute() {
             if (_intake_subsystem->AtSetPosition()) {
                 _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
             }
+        } else if (_operator_oi->AmpToggle()){ /*Amp Stuff*/
+                _intake_subsystem->AmpMovement(_operator_oi->AmpStick());
 
         } else if ((_operator_oi->IntakeThroughShooter() && !_operator_oi->LauncherToggle()) || (_operator_oi->LauncherIntake() && _operator_oi->LauncherToggle())) {
             if (!_intake_subsystem->HasPiece() || _operator_oi->IgnoreSensor()) {
