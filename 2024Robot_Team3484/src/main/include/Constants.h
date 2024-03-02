@@ -33,8 +33,9 @@ namespace LauncherConstants {
     constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-5, 5e-7, 0, 0);
     constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-5, 5e-7, 0, 1.6e-4);
     //7e-8
-    constexpr double GEAR_RATIO = 3;
+    constexpr double GEAR_RATIO = 1.0;
     constexpr double RPM_WINDOW_RANGE = 50;
+
     constexpr units::second_t WINDOW_TIME = .25_s;
     // Set logic as if hit -50 window, may run too early
 
@@ -42,9 +43,9 @@ namespace LauncherConstants {
     constexpr bool LEFT_MOTOR_INVERTED = false;
      
     // Target RPM
-    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1600_rpm;
+    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 4500_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
-    constexpr units::revolutions_per_minute_t AMP_RPM = 550_rpm;
+    constexpr units::revolutions_per_minute_t AMP_RPM = 350_rpm;
     constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
     constexpr units::second_t TIMEOUT = 5_s;
 }
@@ -54,6 +55,10 @@ namespace IntakeConstants {
     constexpr int PIECE_SENSOR_DI_CH = 0; // Change to 0
     constexpr int ARM_SENSOR_DI_CH = 1;
     constexpr double GEAR_RATIO = 100.0/9.0;
+
+    // Amp
+    constexpr int AMP_ID = 60;
+
 
     constexpr units::degrees_per_second_t MAX_VELOCITY = 250_deg_per_s;
     constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 1000_deg_per_s_sq;
@@ -73,7 +78,7 @@ namespace IntakeConstants {
     constexpr double ROLLER_POWER = 0.8;
     constexpr double INTAKE_SHOOTER_POWER = 0.4;
 
-    constexpr units::degree_t POSITION_TOLERANCE = 5_deg;
+    constexpr units::degree_t POSITION_TOLERANCE = 10_deg;
 
     constexpr uint PIVOT_STALL_LIMIT = 60;
     constexpr uint PIVOT_FREE_LIMIT = 40;
@@ -284,12 +289,17 @@ namespace UserInterface {
         // Climb
         // D-Pad: Hard Coded in OI
 
+        //Amp 
+        constexpr int AMP_TOGGLE =XBOX_LT;
+        constexpr int AMP_STICK = XBOX_LS_Y;
+        constexpr double AMP_DEADBAND = XBOX_Y;
+
         // Trap
-        constexpr int ENDGAME_TOGGLE_HK = XBOX_LT;
-        constexpr int TRAP_TOGGLE = XBOX_LB;
-        constexpr int INTAKE_TRAP = XBOX_A;
-        constexpr int SCORE_TRAP = XBOX_X;
-        constexpr int AMP_TRAP = XBOX_Y;
+        // constexpr int ENDGAME_TOGGLE_HK = XBOX_LT;
+        // constexpr int TRAP_TOGGLE = XBOX_LB;
+        // constexpr int INTAKE_TRAP = XBOX_A;
+        // constexpr int SCORE_TRAP = XBOX_X;
+        // constexpr int AMP_TRAP = XBOX_Y;
     }
     namespace Testing {
         constexpr int TESTING_OPEN_LOOP_LEFT = XBOX_LS_Y;

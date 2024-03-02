@@ -39,6 +39,7 @@ SwerveModule::SwerveModule(SC_SwerveConfigs corner)
 
     _drive_motor.ConfigFactoryDefault();
     _drive_motor.ConfigSupplyCurrentLimit(_drive_currrent_limit);
+    _drive_motor.ConfigOpenloopRamp(0.25, 0);
     ResetEncoder();
 
     // Change to Phoenix 5
@@ -49,7 +50,7 @@ SwerveModule::SwerveModule(SC_SwerveConfigs corner)
     // steer_motor_current_limit.SupplyCurrentLimitEnable = true;
 
     // configs::TalonFXConfiguration steer_motor_config{};
-    // steer_motor_config.CurrentLimits = steer_motor_current_limit;
+    // steer_motor_config.CurrentLimits = steer_motor_current_limit; 7
     // steer_motor_config.MotorOutput.Inverted = STEER_MOTOR_REVERSED;
     // steer_motor_config.MotorOutput.NeutralMode = signals::NeutralModeValue::Brake;
 

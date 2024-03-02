@@ -96,6 +96,8 @@ void LauncherSubsystem::Periodic() {
             if (_target_speed == 0) {
                 _left_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
                 _left_launcher_pid_controller->SetIAccum(0);
+            } else if (_target_speed == 9999.0*GEAR_RATIO) {
+                _left_launcher_pid_controller->SetReference(1.0, rev::CANSparkMax::ControlType::kDutyCycle);
             } else {
                 _left_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
             }
@@ -105,6 +107,8 @@ void LauncherSubsystem::Periodic() {
             if (_target_speed == 0) {
                 _right_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
                 _right_launcher_pid_controller->SetIAccum(0);
+            } else if (_target_speed == 9999.0*GEAR_RATIO) {
+                _right_launcher_pid_controller->SetReference(1.0, rev::CANSparkMax::ControlType::kDutyCycle); // no pid due to Duty Cycle
             } else {
                 _right_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
             }
@@ -117,6 +121,7 @@ void LauncherSubsystem::Periodic() {
 
 bool LauncherSubsystem::atTargetRPM() {
     if (_counter_not_null_left + _counter_not_null_right == 2){
+        if (_target_speed == 9999.0*GEAR_RATIO) return _left_launcher_encoder->GetVelocity() >= 5000.0 && _right_launcher_encoder->GetVelocity() >= 5000.0;
         return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window && std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
     }
     else if (_counter_not_null_left == 1) {

@@ -63,10 +63,15 @@ void AutonAimCommand::Execute() {
             wpi::array<frc::SwerveModulePosition, 4> _current_positions = _drivetrain->GetModulePositions();
             _drivetrain->SetModuleStates(
                 {
-                SwerveModuleState{-(_initial_positions[FL].distance - _current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
-                SwerveModuleState{-(_initial_positions[FR].distance - _current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BL].distance - _current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BR].distance - _current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
+                //SwerveModuleState{-(_initial_positions[FL].distance - _current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
+                //SwerveModuleState{-(_initial_positions[FR].distance - _current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
+                //SwerveModuleState{-(_initial_positions[BL].distance - _current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
+                //SwerveModuleState{-(_initial_positions[BR].distance - _current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
+                
+                SwerveModuleState{0_mps, 45_deg},
+                SwerveModuleState{0_mps, -45_deg},
+                SwerveModuleState{0_mps, -45_deg},
+                SwerveModuleState{0_mps, 45_deg}
                 },
                 true,
                 false

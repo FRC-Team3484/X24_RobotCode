@@ -67,11 +67,11 @@ class Operator_Interface{
         bool LauncherAmp();
         bool LauncherIntake();
         // Trap
-        bool TrapLunacher();
-        bool EndgameToggle();
-        bool IntakeTrap();
-        bool ScoreTrap();
-        bool AmpTrap();
+        //bool TrapLunacher();
+        //bool EndgameToggle();
+        //bool IntakeTrap();
+        //bool ScoreTrap();
+        //bool AmpTrap();
         // Climber
         bool ClimbUp();
         bool ClimbDown();

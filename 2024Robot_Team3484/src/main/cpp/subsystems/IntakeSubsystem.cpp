@@ -19,17 +19,32 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
     int arm_sensor_di_ch,
     SC::SC_PIDConstants pivot_pidc,
     double pid_output_range_max,
-    double pid_output_range_min
+    double pid_output_range_min,
+    int amp_motor_id
     ) :
         _pivot_motor{pivot_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
         _drive_motor{drive_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
         _piece_sensor{piece_sensor_di_ch},
-        _arm_sensor{arm_sensor_di_ch}
+        _arm_sensor{arm_sensor_di_ch},
+        _amp_motor{amp_motor_id}
     {
 
     _pivot_encoder = new rev::SparkRelativeEncoder(_pivot_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
     _pivot_pid_controller = new rev::SparkPIDController(_pivot_motor.GetPIDController());
     
+    // Amp Stuff
+    _amp_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, 255);
+    _amp_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_4_AinTempVbat_, 255);
+    _amp_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_12_Feedback1_, 255);
+    _amp_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_14_Turn_PIDF1_, 200);
+    _amp_motor.ConfigSupplyCurrentLimit(_amp_currrent_limit);
+    _amp_motor.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
+    _amp_motor.SetInverted(true);
+
+
+
+
+
     _pivot_motor.RestoreFactoryDefaults();
     _drive_motor.RestoreFactoryDefaults();
 
@@ -154,4 +169,9 @@ void IntakeSubsystem::OpenLoopTestMotors(double pivot_power, double drive_power)
         _pivot_motor.Set(pivot_power);
         _drive_motor.Set(drive_power);
     }
+}
+
+//Amp
+void IntakeSubsystem::AmpMovement(double extend_power) {
+    _amp_motor.Set(extend_power);
 }

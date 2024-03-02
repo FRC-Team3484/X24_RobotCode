@@ -41,6 +41,24 @@ namespace SC
 		double EncoderOffset;
 	} SC_SwerveConfigs;
 
+	// Amp Configurations
+	typedef struct {
+		double Motor_Current_Threshold = 50;
+		double Motor_Current_Time = 0.1;
+		bool Motor_Motor_Reversed = true;
+		bool Encoder_Reversed = false;
+		bool Current_Limit_Enable = true;
+		double Current_Limit_Motor = 20;
+
+	} SC_MotorCurrents;
+
+	typedef struct {
+		int CAN_ID;
+		int SteerMotorPort;
+		int EncoderPort;
+		double EncoderOffset;
+	} SC_MotorConfigs;
+
 	// PID loop Integral Anti-Windup calculation modes
 	enum SC_PID_AW_MODE { OFF, /*
 						BACK_CALCULATION, 
