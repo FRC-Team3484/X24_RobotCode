@@ -40,7 +40,7 @@ void TeleopAimCommand::Initialize() {
 
 void TeleopAimCommand::Execute() {
     if(_oi_operator->LauncherToggle()){
-        if (_limelight == NULL || _oi_driver->AimSequenceIgnore()) {
+        if (_limelight == NULL || _oi_driver->AimSequenceIgnore() || !_limelight->HasTarget()) {
             meters_per_second_t x_speed = -_oi_driver->GetThrottle() * MAX_LINEAR_SPEED;
             meters_per_second_t y_speed = -_oi_driver->GetStrafe() * MAX_LINEAR_SPEED;
             radians_per_second_t rotation = -_oi_driver->GetRotation() * MAX_ROTATION_SPEED;

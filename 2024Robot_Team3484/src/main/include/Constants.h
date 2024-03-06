@@ -76,6 +76,7 @@ namespace IntakeConstants {
 
     constexpr int ROLLER_STOP = 0;
     constexpr double ROLLER_POWER = 0.8;
+    constexpr double EJECT_POWER = -1.0;
     constexpr double INTAKE_SHOOTER_POWER = 0.4;
 
     constexpr units::degree_t POSITION_TOLERANCE = 10_deg;
@@ -218,7 +219,7 @@ namespace SwerveConstants {
     }
 
 namespace VisionConstants {
-    constexpr units::inch_t MAX_LAUNCH_RANGE = 1000_in;
+    constexpr units::inch_t MAX_LAUNCH_RANGE = 63.7_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_LARGE = 12_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_SMALL = 6_in;
     constexpr units::inch_t TRAP_AIM_TOLERANCE_LARGE  = 35_in;

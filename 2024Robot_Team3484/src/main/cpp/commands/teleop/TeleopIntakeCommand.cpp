@@ -61,7 +61,7 @@ void TeleopIntakeCommand::Execute() {
                     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
                 }
             } else if (_operator_oi->LauncherToggle()) {
-                _intake_subsystem->AmpMovement(_operator_oi->AmpStick());
+                //_intake_subsystem->AmpMovement(_operator_oi->AmpStick());
                 if (_operator_oi->LauncherTrap()) {
                     _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
                     _launcher_subsystem->setLauncherRPM(LauncherConstants::TRAP_RPM);
@@ -87,7 +87,7 @@ void TeleopIntakeCommand::Execute() {
                 _intake_subsystem->SetIntakeAngle(IntakeConstants::EJECT_POSITION);
 
                 if (_intake_subsystem->AtSetPosition()) {
-                    _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
+                    _intake_subsystem->SetRollerPower(IntakeConstants::EJECT_POWER);
                 }
 
             } else if ((_operator_oi->IntakeThroughShooter() && !_operator_oi->LauncherToggle()) || (_operator_oi->LauncherIntake() && _operator_oi->LauncherToggle())) {
