@@ -8,6 +8,9 @@
 #include "OI.h"
 #include "Constants.h"
 
+//Music
+#include <string>
+#include "ctre/Phoenix.h"
 
 // Swerve Stuff
 #include "frc2/command/Commands.h"
@@ -117,6 +120,23 @@ class Robot : public frc::TimedRobot {
             #endif
             frc2::cmd::None()
         );
+        //Music
+
+        void LoadMusicSelection(int offset);
+        Orchestra _orchestra;
+        TalonFX eight_fxes;
+        std::string _songs[SONG_COUNT] = {
+            "song1.chirp",
+            "song1.chirp",
+            "song1.chirp",
+            "song1.chirp",
+            "song1.chirp",
+            "song1.chirp",
+            "song1.chirp"
+        };
+        int _songSelection = 0;
+        int _timeToPlayLoops = 0;
+
 
         // Variables
 

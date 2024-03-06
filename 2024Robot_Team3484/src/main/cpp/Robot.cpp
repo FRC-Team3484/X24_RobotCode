@@ -7,7 +7,25 @@
 #include <frc2/command/CommandScheduler.h>
 
 using namespace SwerveConstants::AutonNames;
+void Robot::LoadMusicSelection(int offset){
+    _songSelection += offset;
+    if(_songSelection >= 7){
+        _songSelection = 0;
+    }
+    if(_songSelection < 0){
+        _songSelection = 7 - 1;
+    }
+    _orchestra.LoadMusic(_songs[_songSelection]);
+    printf("press left on dpad to change song", _songs[_songSelection].c_str());
+    _timeToPlayLoops = 10;
+}
 void Robot::RobotInit() {
+    // Music
+    for(int i = 0; i < 8; ++i){
+        eight_fxes[i] new TalonFX(i+1);
+    }
+    
+    //smartdashboard
     frc::SmartDashboard::PutBoolean("testing",false);
     frc::SmartDashboard::PutBoolean("Drivetrain Diagnostics", false);
     frc::SmartDashboard::PutBoolean("Intake Diagnostics", false);

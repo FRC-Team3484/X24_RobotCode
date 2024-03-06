@@ -24,6 +24,10 @@
 #include <FRC3484_Lib/utils/SC_ControllerMaps.h>
 #include <FRC3484_Lib/utils/SC_Datatypes.h>
 
+namespace Music {
+    constexpr int TALLON_COUNT = 2;
+    constexpr int SONG_COUNT = 7;
+};
 namespace LauncherConstants {
     constexpr int LEFT_MOTOR_CAN_ID = 40;
     constexpr int RIGHT_MOTOR_CAN_ID = 41;
