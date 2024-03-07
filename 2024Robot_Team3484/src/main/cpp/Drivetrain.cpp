@@ -11,6 +11,7 @@
 using namespace units;
 using namespace ctre::phoenix::sensors;
 using namespace ctre::phoenix;
+using namespace ctre::phoenix::motorcontrol;
 
 Drive::Drive() {
 
@@ -31,6 +32,12 @@ Drive::Drive() {
 
      _drive_motor_BR.Follow(_drive_motor_FR);
      _drive_motor_BL.Follow(_drive_motor_FL);
+
+     _drive_motor_BL.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor);
+     _drive_motor_BR.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor);
+     _drive_motor_FL.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor);
+     _drive_motor_FR.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor);
+     
     //  _drive_motor_BL.SetInverted(false);
     //  _drive_motor_FL.SetInverted(false);
     // //  _drive_motor_BR.SetInverted(false);
