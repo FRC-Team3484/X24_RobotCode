@@ -10,6 +10,15 @@
 #include "units/time.h"
 #include "units/math.h"
 
+#include <units/voltage.h>
+#include <units/length.h>
+#include <units/velocity.h>
+#include <units/acceleration.h>
+#include <units/angular_velocity.h>
+#include <units/angular_acceleration.h>
+#include <frc/controller/ArmFeedforward.h>
+
+//using Acceleration = units::compound_unit<units::radians_per_second, units::inverse<units::seconds>>
 
 namespace SC
 {
@@ -33,6 +42,17 @@ namespace SC
 		double Current_Limit_Steer = 25;
 
 	} SC_SwerveCurrents;
+
+	using kv_unit = units::compound_unit<units::volts, units::inverse<units::radians_per_second>>;
+	using ka_unit = units::compound_unit<units::volts, units::inverse<units::radians_per_second_squared>>;
+	typedef struct {
+		double Kp;
+		double Ki;
+		double Kd;
+		units::unit_t<kv_unit> V;
+		units::unit_t<ka_unit> A;
+		units::volt_t S;
+	} SC_SwervePID;
 
 	typedef struct {
 		int CAN_ID;

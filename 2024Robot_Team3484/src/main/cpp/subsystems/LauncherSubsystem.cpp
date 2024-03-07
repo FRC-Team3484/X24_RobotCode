@@ -46,8 +46,8 @@ LauncherSubsystem::LauncherSubsystem(
     _left_motor.SetInverted(LEFT_MOTOR_INVERTED);
     _right_motor.SetInverted(!LEFT_MOTOR_INVERTED);
 
-    _left_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
-    _right_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
+    _left_motor.SetPeriodicFramePeriod(rev::CANSparkLowLevel::PeriodicFrame::kStatus5, 200);
+    _right_motor.SetPeriodicFramePeriod(rev::CANSparkLowLevel::PeriodicFrame::kStatus5, 200);
 
     if (_left_launcher_pid_controller !=NULL){
         _left_launcher_pid_controller->SetP(left_pidc.Kp);
