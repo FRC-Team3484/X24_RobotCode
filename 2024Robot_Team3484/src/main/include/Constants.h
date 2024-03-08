@@ -33,19 +33,21 @@ namespace LauncherConstants {
     constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-5, 5e-7, 0, 0);
     constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-5, 5e-7, 0, 1.6e-4);
     //7e-8
-    constexpr double GEAR_RATIO = 3;
+    constexpr double GEAR_RATIO = 1.0;
     constexpr double RPM_WINDOW_RANGE = 50;
+
     constexpr units::second_t WINDOW_TIME = .25_s;
     // Set logic as if hit -50 window, may run too early
 
     //constexpr bool IsLoaded = true;
     constexpr bool LEFT_MOTOR_INVERTED = false;
-    
+     
     // Target RPM
-    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1600_rpm;
+    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 4500_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
-    constexpr units::revolutions_per_minute_t AMP_RPM = 850_rpm;
+    constexpr units::revolutions_per_minute_t AMP_RPM = 350_rpm;
     constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
+    constexpr units::second_t TIMEOUT = 5_s;
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
@@ -54,11 +56,15 @@ namespace IntakeConstants {
     constexpr int ARM_SENSOR_DI_CH = 1;
     constexpr double GEAR_RATIO = 100.0/9.0;
 
+    // Amp
+    constexpr int AMP_ID = 60;
+
+
     constexpr units::degrees_per_second_t MAX_VELOCITY = 250_deg_per_s;
     constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 1000_deg_per_s_sq;
 
     constexpr units::degree_t STOW_POSITION = 0_deg;
-    constexpr units::degree_t INTAKE_POSITION = 174_deg;
+    constexpr units::degree_t INTAKE_POSITION = 163_deg;
     constexpr units::degree_t EJECT_POSITION = 90_deg;
 
     constexpr double HOME_POWER = -0.25; 
@@ -70,9 +76,10 @@ namespace IntakeConstants {
 
     constexpr int ROLLER_STOP = 0;
     constexpr double ROLLER_POWER = 0.8;
+    constexpr double EJECT_POWER = -1.0;
     constexpr double INTAKE_SHOOTER_POWER = 0.4;
 
-    constexpr units::degree_t POSITION_TOLERANCE = 5_deg;
+    constexpr units::degree_t POSITION_TOLERANCE = 10_deg;
 
     constexpr uint PIVOT_STALL_LIMIT = 60;
     constexpr uint PIVOT_FREE_LIMIT = 40;
@@ -99,6 +106,14 @@ namespace SwerveConstants {
     const std::string AUTON_DISTANCE = "Drive 5 feet";
     const std::string AUTON_ANGLE = "Turn 90 degrees";
     const std::string AUTON_SEQUENCE = "Drive Sequence";
+    const std::string AUTON_NAMES[] = {
+        "A1", "B1", "B2", "B3",
+        "C1", "C2", "C3", "D0",
+        "ABack", "BBack", "CBack", "CBackNoPiece"
+    };
+    //Testing
+    
+    const std::string TWO_PIECE_AUTON = "Two Piece Auton";
     }
 
     namespace ControllerConstants {
@@ -124,7 +139,7 @@ namespace SwerveConstants {
         static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,160.654};
         static SC::SC_SwerveConfigs SWERVE_BACK_RIGHT{16,17,23,-55.283};
 
-        constexpr units::second_t X_BRAKE_TIMER = .5_s;
+        // constexpr units::second_t X_BRAKE_TIMER = .5_s;
 
         static SC::SC_SwerveConfigs SWERVE_CONFIGS_ARRAY[4] = {
             SWERVE_FRONT_LEFT,
@@ -149,11 +164,18 @@ namespace SwerveConstants {
         constexpr units::feet_per_second_t MAX_WHEEL_SPEED = 8_fps;
         constexpr units::feet_per_second_squared_t MAX_WHEEL_ACCELERATION = 4_fps_sq;
 
+// Check For Autons
         namespace DrivePIDConstants {
             constexpr double Kp_Drive = 1.0;
             constexpr double Ki_Drive = 0.0;
             constexpr double Kd_Drive = 0.0;
+            // Check SC_Datatypes for the struct
+            // We still need to find the proper units types of V and A
+            static SC::SC_SwervePID LeftPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_rad_per_s, 1.1369e-06 * 1_V / 1_rad_per_s_sq, 0.67624_V};
+            static SC::SC_SwervePID RightPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_rad_per_s, 1.1369e-06 * 1_V / 1_rad_per_s_sq, 0.67624_V};
+
         }
+// Check For Autons
         namespace DriveFeedForwardConstants {
             constexpr units::volt_t S = 1.0_V;
             constexpr auto V = 0.8_V / 1.0_mps;
@@ -174,6 +196,7 @@ namespace SwerveConstants {
 
     namespace BrakeConstants {
         constexpr auto DYNAMIC_BRAKE_SCALING = -00.2/1_in;
+        constexpr units::second_t BRAKE_DELAY = .5_s;
     }
 
     namespace AutonDriveConstants {
@@ -185,6 +208,7 @@ namespace SwerveConstants {
 
         constexpr units::inch_t POSITION_TOLERANCE = 2_in; // Drive to a position, when safe to quit
         constexpr units::degree_t ANGLE_TOLERANCE = 2_deg;
+    }
 
         namespace PathDrivePIDConstants {
             constexpr double P = 5.0;
@@ -199,15 +223,19 @@ namespace SwerveConstants {
         }
     }
 
-}
 namespace VisionConstants {
-    constexpr units::inch_t MAX_LAUNCH_RANGE = 1000_in;
-    constexpr units::inch_t AIM_TOLERANCE_LARGE = 12_in;
-    constexpr units::inch_t AIM_TOLERANCE_SMALL = 6_in;
+    constexpr units::inch_t MAX_LAUNCH_RANGE = 63.7_in;
+    constexpr units::inch_t SPEAKER_AIM_TOLERANCE_LARGE = 12_in;
+    constexpr units::inch_t SPEAKER_AIM_TOLERANCE_SMALL = 6_in;
+    constexpr units::inch_t TRAP_AIM_TOLERANCE_LARGE  = 35_in;
+    constexpr units::inch_t TRAP_AIM_TOLERANCE_SMALL = 30_in;
     constexpr double CAMERA_ANGLE = 38.0;
     constexpr double CAMERA_HEIGHT = 22.5;
     constexpr double STEER_GAIN = -.01;
-    constexpr double TARGET_HEIGHT = 57; // inches
+    constexpr double DISTANCE_GAIN = -.01;
+    constexpr double TRAP_TARGET_DISTANCE = 32.5;
+    constexpr double SPEAKER_TARGET_HEIGHT = 57; // inches
+    constexpr double TRAP_TARGET_HEIGHT = 48+(13/16)+3.25; //Inches
     // multiplier to give how far off and results to a steer power
 }
 
@@ -267,11 +295,17 @@ namespace UserInterface {
         // Climb
         // D-Pad: Hard Coded in OI
 
+        //Amp 
+        constexpr int AMP_TOGGLE =XBOX_LT;
+        constexpr int AMP_STICK = XBOX_LS_Y;
+        constexpr double AMP_DEADBAND = XBOX_Y;
+
         // Trap
-        constexpr int ENDGAME_TOGGLE_HK = XBOX_LB;
-        constexpr int INTAKE_TRAP = XBOX_A;
-        constexpr int SCORE_TRAP = XBOX_X;
-        constexpr int AMP_TRAP = XBOX_Y;
+        // constexpr int ENDGAME_TOGGLE_HK = XBOX_LT;
+        // constexpr int TRAP_TOGGLE = XBOX_LB;
+        // constexpr int INTAKE_TRAP = XBOX_A;
+        // constexpr int SCORE_TRAP = XBOX_X;
+        // constexpr int AMP_TRAP = XBOX_Y;
     }
     namespace Testing {
         constexpr int TESTING_OPEN_LOOP_LEFT = XBOX_LS_Y;

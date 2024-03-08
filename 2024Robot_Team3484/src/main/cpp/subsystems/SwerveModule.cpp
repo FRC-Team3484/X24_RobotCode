@@ -39,6 +39,8 @@ SwerveModule::SwerveModule(SC_SwerveConfigs corner)
 
     _drive_motor.ConfigFactoryDefault();
     _drive_motor.ConfigSupplyCurrentLimit(_drive_currrent_limit);
+    _drive_motor.ConfigOpenloopRamp(0.25, 0);
+    _can_id = corner.CAN_ID;
     ResetEncoder();
 
     // Change to Phoenix 5
@@ -49,7 +51,7 @@ SwerveModule::SwerveModule(SC_SwerveConfigs corner)
     // steer_motor_current_limit.SupplyCurrentLimitEnable = true;
 
     // configs::TalonFXConfiguration steer_motor_config{};
-    // steer_motor_config.CurrentLimits = steer_motor_current_limit;
+    // steer_motor_config.CurrentLimits = steer_motor_current_limit; 7
     // steer_motor_config.MotorOutput.Inverted = STEER_MOTOR_REVERSED;
     // steer_motor_config.MotorOutput.NeutralMode = signals::NeutralModeValue::Brake;
 
@@ -106,9 +108,15 @@ void SwerveModule::SetDesiredState(SwerveModuleState state, bool open_loop, bool
     if (open_loop) {
         _drive_motor.Set(state.speed / MAX_WHEEL_SPEED);
     } else {
-        volt_t drive_output = volt_t{_drive_pid_controller.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
-        volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);
-        _drive_motor.SetVoltage(drive_output + drive_feed_forward);
+        if (_can_id == 14 || _can_id == 10) {
+                volt_t drive_output = volt_t{_drive_pid_controller_left.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
+                volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);
+                _drive_motor.SetVoltage(drive_output + drive_feed_forward);
+        }else if (_can_id == 12 || _can_id == 16) {
+                volt_t drive_output = volt_t{_drive_pid_controller_right.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
+                volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);
+                _drive_motor.SetVoltage(drive_output + drive_feed_forward);
+        }
     }
 
     double steer_output = _steer_pid_controller.Calculate(_GetSteerAngle(), state.angle.Radians());
