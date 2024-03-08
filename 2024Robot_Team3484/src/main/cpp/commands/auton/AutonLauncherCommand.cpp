@@ -16,8 +16,9 @@ using namespace frc;
 #else
 
 AutonLauncherCommand::AutonLauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision)
-: _launcher{launcher_subsystem},_intake{intake_subsystem}, _limelight{vision}{
+: _launcher{launcher_subsystem},_intake{intake_subsystem} /*,_limelight{vision}*/{
     AddRequirements(_launcher), AddRequirements(_intake);
+    _limelight = NULL;
 }
 
 
@@ -43,7 +44,7 @@ void AutonLauncherCommand::Execute(){
             && _intake->AtSetPosition() 
             && ( _limelight == NULL 
                 || (_limelight->HasTarget() 
-                && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_LARGE) )) {
+                && units::math::abs(_limelight->GetHorizontalDistance()) < SPEAKER_AIM_TOLERANCE_LARGE) )) {
             _launching = 1;
         }
 

@@ -1,4 +1,7 @@
 #include "commands/teleop/TeleopTrapCommand.h"
+
+#ifdef TRAP_ENABLED
+
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <Constants.h>
 
@@ -49,3 +52,5 @@ void TeleopTrapCommand::End(bool interupted) {
 bool TeleopTrapCommand::IsFinished() {
     return false;
 }
+
+#endif

@@ -17,6 +17,10 @@
 #include "subsystems/Vision.h"
 // #include "commands/Teleop/StraightenWheelsCommand.h"
 #include "subsystems/AutonGenerator.h"
+#include <frc/PowerDistribution.h>
+#include <frc/shuffleboard/ShuffleboardTab.h>
+#include <frc/shuffleboard/Shuffleboard.h>
+
 
 // Other Subsystems
 #include "subsystems/IntakeSubsystem.h"
@@ -59,13 +63,18 @@ class Robot : public frc::TimedRobot {
         enum State {drive, shoot};
         State _robot_state = drive;
 
+        // Power Stuff
+        frc::PowerDistribution _agent_smith_pdp{1, frc::PowerDistribution::ModuleType::kRev};
+        frc::ShuffleboardTab& _power_diagnostics = frc::Shuffleboard::GetTab("Power Diagnostics");
+        
+
         // Interface OI
         Driver_Interface _oi_driver{};
         Operator_Interface _oi_operator{};
 
         //Subsystems
         #if defined (INTAKE_ENABLED) || defined (LAUNCHER_ENABLED)
-        IntakeSubsystem _intake{IntakeConstants::PIVOT_MOTOR_CAN_ID, IntakeConstants::DRIVE_MOTOR_CAN_ID, IntakeConstants::PIECE_SENSOR_DI_CH, IntakeConstants::ARM_SENSOR_DI_CH, IntakeConstants::PIVOT_PID_CONSTANTS, IntakeConstants::PID_OUTPUTRANGE_MAX, IntakeConstants::PID_OUTPUTRANGE_MIN};
+        IntakeSubsystem _intake{IntakeConstants::PIVOT_MOTOR_CAN_ID, IntakeConstants::DRIVE_MOTOR_CAN_ID, IntakeConstants::PIECE_SENSOR_DI_CH, IntakeConstants::ARM_SENSOR_DI_CH, IntakeConstants::PIVOT_PID_CONSTANTS, IntakeConstants::PID_OUTPUTRANGE_MAX, IntakeConstants::PID_OUTPUTRANGE_MIN, 60};
         #endif
         #if defined (TRAP_ENABLED)
         TrapSubsystem _trap{TrapConstants::EXTENSION_MOTOR_CAN_ID, TrapConstants::GP_CONTROL_CAN_ID, TrapConstants::PID_CONSTANTS, TrapConstants::PID_MAX, TrapConstants::PID_MIN};

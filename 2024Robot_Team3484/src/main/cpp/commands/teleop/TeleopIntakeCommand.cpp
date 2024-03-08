@@ -23,9 +23,11 @@ void TeleopIntakeCommand::Execute() {
             }
         }
         else {
+
             // if (!_climber_subsystem->GetLeftSensor() || !_climber_subsystem->GetRightSensor()){
             //     _intake_subsystem->SetIntakeAngle(IntakeConstants::CLIMB_POSITION);
             // }else {
+        
             if (_operator_oi->ExtendIntake()) {
                 if ((!_intake_subsystem->HasPiece() || _operator_oi->IgnoreSensor())) {
                     _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
@@ -42,41 +44,50 @@ void TeleopIntakeCommand::Execute() {
 
             }
 
-        } else if (_operator_oi->EjectIntake()) {
-            _intake_subsystem->SetIntakeAngle(IntakeConstants::EJECT_POSITION);
-
-            if (_intake_subsystem->AtSetPosition()) {
-                _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
-            }
-
-        } else if ((_operator_oi->IntakeThroughShooter() && !_operator_oi->LauncherToggle()) || (_operator_oi->LauncherIntake() && _operator_oi->LauncherToggle())) {
-            if (!_intake_subsystem->HasPiece() || _operator_oi->IgnoreSensor()) {
-                _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
-                _intake_subsystem->SetRollerPower(IntakeConstants::INTAKE_SHOOTER_POWER);
-                _launcher_subsystem->setLauncherRPM(LauncherConstants::REVERSE_RPM);
-
-            } else {
-                _launcher_subsystem->setLauncherRPM(0_rpm);
-                _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
-            }
-        } else if (_operator_oi->LauncherToggle() && _operator_oi->LauncherTrap()) {
-                _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
-                _launcher_subsystem->setLauncherRPM(LauncherConstants::TRAP_RPM);
-                if (_intake_subsystem->AtSetPosition() && _launcher_subsystem->atTargetRPM()) {
-                    _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER*-1);
-                }
-
-                if (_intake_subsystem->HasPiece()) {
-                    _operator_oi->SetRumble(SwerveConstants::ControllerConstants::OPERATOR_RUMBLE_HIGH);
-                    _driver_oi->SetRumble(SwerveConstants::ControllerConstants::DRIVER_RUMBLE_HIGH);
-
-                }
-
             } else if (_operator_oi->EjectIntake()) {
                 _intake_subsystem->SetIntakeAngle(IntakeConstants::EJECT_POSITION);
 
                 if (_intake_subsystem->AtSetPosition()) {
                     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
+                }
+            } else if ((_operator_oi->IntakeThroughShooter() && !_operator_oi->LauncherToggle()) || (_operator_oi->LauncherIntake() && _operator_oi->LauncherToggle())) {
+                if (!_intake_subsystem->HasPiece() || _operator_oi->IgnoreSensor()) {
+                    _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
+                    _intake_subsystem->SetRollerPower(IntakeConstants::INTAKE_SHOOTER_POWER);
+                    _launcher_subsystem->setLauncherRPM(LauncherConstants::REVERSE_RPM);
+
+                } else {
+                    _launcher_subsystem->setLauncherRPM(0_rpm);
+                    _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
+                }
+            } else if (_operator_oi->LauncherToggle()) {
+                //_intake_subsystem->AmpMovement(_operator_oi->AmpStick());
+                if (_operator_oi->LauncherTrap()) {
+                    _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
+                    _launcher_subsystem->setLauncherRPM(LauncherConstants::TRAP_RPM);
+                    if (_intake_subsystem->AtSetPosition() && _launcher_subsystem->atTargetRPM()) {
+                        _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER*-1);
+                    }
+                    if (_intake_subsystem->HasPiece()) {
+                        _operator_oi->SetRumble(SwerveConstants::ControllerConstants::OPERATOR_RUMBLE_HIGH);
+                        _driver_oi->SetRumble(SwerveConstants::ControllerConstants::DRIVER_RUMBLE_HIGH);
+
+                    }
+                }
+
+                if (_operator_oi->LauncherAmp()) {
+                    _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
+                    _launcher_subsystem->setLauncherRPM(LauncherConstants::AMP_RPM);
+                    if (_intake_subsystem->AtSetPosition() && _launcher_subsystem->atTargetRPM()) {
+                        _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER*-1);
+                    }
+                }
+            
+            } else if (_operator_oi->EjectIntake()) {
+                _intake_subsystem->SetIntakeAngle(IntakeConstants::EJECT_POSITION);
+
+                if (_intake_subsystem->AtSetPosition()) {
+                    _intake_subsystem->SetRollerPower(IntakeConstants::EJECT_POWER);
                 }
 
             } else if ((_operator_oi->IntakeThroughShooter() && !_operator_oi->LauncherToggle()) || (_operator_oi->LauncherIntake() && _operator_oi->LauncherToggle())) {
@@ -89,19 +100,7 @@ void TeleopIntakeCommand::Execute() {
                     _launcher_subsystem->setLauncherRPM(0_rpm);
                     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
                 }
-            } else if (_operator_oi->LauncherToggle() && _operator_oi->LauncherTrap()) {
-                    _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
-                    _launcher_subsystem->setLauncherRPM(LauncherConstants::TRAP_RPM);
-                    if (_intake_subsystem->AtSetPosition() && _launcher_subsystem->atTargetRPM()) {
-                        _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER*-1);
-                    }
 
-            } else if (_operator_oi->LauncherToggle() && _operator_oi->LauncherAmp()) {
-                    _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
-                    _launcher_subsystem->setLauncherRPM(LauncherConstants::AMP_RPM);
-                    if (_intake_subsystem->AtSetPosition() && _launcher_subsystem->atTargetRPM()) {
-                        _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER*-1);
-                    }
             } else {
                 _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
                 _intake_subsystem->SetRollerPower(0);

@@ -45,10 +45,10 @@ bool Operator_Interface::LauncherIntake() {return _operator_controller.GetRawBut
 
 
 // Trap
-bool Operator_Interface::EndgameToggle() {return _operator_controller.GetRawButton(ENDGAME_TOGGLE_HK);}
-bool Operator_Interface::IntakeTrap() {return _operator_controller.GetRawButtonPressed(INTAKE_TRAP);} 
-bool Operator_Interface::ScoreTrap() {return _operator_controller.GetRawButtonPressed(SCORE_TRAP);}
-bool Operator_Interface::AmpTrap() {return _operator_controller.GetRawButtonPressed(AMP_TRAP);}
+//bool Operator_Interface::EndgameToggle() {return _operator_controller.GetRawButton(ENDGAME_TOGGLE_HK);}
+//bool Operator_Interface::IntakeTrap() {return _operator_controller.GetRawButtonPressed(INTAKE_TRAP);} 
+//bool Operator_Interface::ScoreTrap() {return _operator_controller.GetRawButtonPressed(SCORE_TRAP);}
+//bool Operator_Interface::AmpTrap() {return _operator_controller.GetRawButtonPressed(AMP_TRAP);}
 
 // Climb
 // Mapped to D-Pad
