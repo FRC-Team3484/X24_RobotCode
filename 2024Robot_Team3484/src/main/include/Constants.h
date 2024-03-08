@@ -166,20 +166,11 @@ namespace SwerveConstants {
 
 // Check For Autons
         namespace DrivePIDConstants {
-            constexpr double Kp_Drive = 1.0;
-            constexpr double Ki_Drive = 0.0;
-            constexpr double Kd_Drive = 0.0;
             // Check SC_Datatypes for the struct
             // We still need to find the proper units types of V and A
-            static SC::SC_SwervePID LeftPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_rad_per_s, 1.1369e-06 * 1_V / 1_rad_per_s_sq, 0.67624_V};
-            static SC::SC_SwervePID RightPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_rad_per_s, 1.1369e-06 * 1_V / 1_rad_per_s_sq, 0.67624_V};
+            static SC::SC_SwervePID LeftPID{0.37509, 0, 0, 2.0974 * 1_V / 1_mps, 0.46723 * 1_V / 1_mps_sq, 0.16185_V};
+            static SC::SC_SwervePID RightPID{0.39614, 0, 0, 2.0482 * 1_V / 1_mps, 0.4729 * 1_V / 1_mps_sq, 0.17662_V};
 
-        }
-// Check For Autons
-        namespace DriveFeedForwardConstants {
-            constexpr units::volt_t S = 1.0_V;
-            constexpr auto V = 0.8_V / 1.0_mps;
-            constexpr auto A = 0.15_V / 1.0_mps_sq;
         }
         namespace SteerPIDConstants {
             constexpr double Kp_Steer = 0.5;

@@ -21,7 +21,7 @@ WPI_IGNORE_DEPRECATED
 
 class SwerveModule {
     public:
-        SwerveModule(SC::SC_SwerveConfigs corner);
+        SwerveModule(SC::SC_SwerveConfigs corner, SC::SC_SwervePID pid_struct);
         void SetDesiredState(frc::SwerveModuleState state, bool open_loop, bool optimize=true);
         frc::SwerveModuleState GetState();
         frc::SwerveModulePosition GetPosition();
@@ -67,14 +67,8 @@ class SwerveModule {
             _swerve_current_constants.Steer_Current_Time
         };
 
-        frc::PIDController _drive_pid_controller_left{SwerveConstants::DrivetrainConstants::DrivePIDConstants::LeftPID.Kp, SwerveConstants::DrivetrainConstants::DrivePIDConstants::LeftPID.Ki, SwerveConstants::DrivetrainConstants::DrivePIDConstants::LeftPID.Kd};
-        frc::PIDController _drive_pid_controller_right{SwerveConstants::DrivetrainConstants::DrivePIDConstants::RightPID.Kp, SwerveConstants::DrivetrainConstants::DrivePIDConstants::RightPID.Ki, SwerveConstants::DrivetrainConstants::DrivePIDConstants::RightPID.Kd};
-
-
-
-
-
-        //frc::PIDController _drive_pid_controller{SwerveConstants::DrivetrainConstants::DrivePIDConstants::Kp_Drive, SwerveConstants::DrivetrainConstants::DrivePIDConstants::Ki_Drive, SwerveConstants::DrivetrainConstants::DrivePIDConstants::Kd_Drive};
+        frc::PIDController _drive_pid_controller{0, 0, 0};
+        
         frc::ProfiledPIDController<units::radians> _steer_pid_controller{SwerveConstants::DrivetrainConstants::SteerPIDConstants::Kp_Steer, SwerveConstants::DrivetrainConstants::SteerPIDConstants::Ki_Steer, SwerveConstants::DrivetrainConstants::SteerPIDConstants::Kd_Steer, 
             {SwerveConstants::DrivetrainConstants::SteerPIDConstants::MAX_SPEED, SwerveConstants::DrivetrainConstants::SteerPIDConstants::MAX_ACCELERATION}};
 
@@ -82,7 +76,7 @@ class SwerveModule {
         units::inch_t _GetWheelPosition();
         units::degree_t _GetSteerAngle();
 
-        frc::SimpleMotorFeedforward<units::meters> _drive_feed_forward{SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::S, SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::V, SwerveConstants::DrivetrainConstants::DriveFeedForwardConstants::A};
+        frc::SimpleMotorFeedforward<units::meters> _drive_feed_forward;
 };
 
 WPI_UNIGNORE_DEPRECATED

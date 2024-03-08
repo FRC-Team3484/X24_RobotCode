@@ -19,10 +19,11 @@ using namespace SwerveConstants::DrivetrainConstants;
 using namespace ctre::phoenix::sensors;
 using namespace ctre::phoenix;
 
-SwerveModule::SwerveModule(SC_SwerveConfigs corner) 
+SwerveModule::SwerveModule(SC_SwerveConfigs corner, SC_SwervePID pid_struct) 
         : _drive_motor(corner.CAN_ID),
             _steer_motor(corner.SteerMotorPort),
-            _steer_encoder(corner.EncoderPort)
+            _steer_encoder(corner.EncoderPort),
+            _drive_feed_forward{pid_struct.S, pid_struct.V, pid_struct.A}
         {
 
     // configs::CurrentLimitsConfigs drive_motor_current_limit{};
@@ -89,6 +90,10 @@ SwerveModule::SwerveModule(SC_SwerveConfigs corner)
     _steer_pid_controller.EnableContinuousInput(-180_deg, 180_deg);
 
     // SetDesiredState({0_mps, GetState().angle}, true);
+
+    _drive_pid_controller.SetP(pid_struct.Kp);
+    _drive_pid_controller.SetI(pid_struct.Ki);
+    _drive_pid_controller.SetD(pid_struct.Kd);
 }
 
 void SwerveModule::SetDesiredState(SwerveModuleState state, bool open_loop, bool optimize) {
@@ -108,15 +113,10 @@ void SwerveModule::SetDesiredState(SwerveModuleState state, bool open_loop, bool
     if (open_loop) {
         _drive_motor.Set(state.speed / MAX_WHEEL_SPEED);
     } else {
-        if (_can_id == 14 || _can_id == 10) {
-                volt_t drive_output = volt_t{_drive_pid_controller_left.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
-                volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);
-                _drive_motor.SetVoltage(drive_output + drive_feed_forward);
-        }else if (_can_id == 12 || _can_id == 16) {
-                volt_t drive_output = volt_t{_drive_pid_controller_right.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
-                volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);
-                _drive_motor.SetVoltage(drive_output + drive_feed_forward);
-        }
+        volt_t drive_output = volt_t{_drive_pid_controller.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
+        volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);
+        _drive_motor.SetVoltage(drive_output + drive_feed_forward);
+
     }
 
     double steer_output = _steer_pid_controller.Calculate(_GetSteerAngle(), state.angle.Radians());
