@@ -36,5 +36,6 @@
   },
   "java.project.sourcePaths": [
     "build"
-  ]
+  ],
+  "C_Cpp.errorSquiggles": "enabled"
 }

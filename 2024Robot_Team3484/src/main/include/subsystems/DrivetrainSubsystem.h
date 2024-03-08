@@ -24,6 +24,7 @@
 #include <pathplanner/lib/util/PIDConstants.h>
 #include <pathplanner/lib/util/ReplanningConfig.h>
 #include <frc/DriverStation.h>
+#include <frc/smartdashboard/Field2d.h>
 
 
 class DrivetrainSubsystem : public frc2::SubsystemBase {
@@ -65,6 +66,8 @@ class DrivetrainSubsystem : public frc2::SubsystemBase {
         units::degree_t _gyro_offset = 0_deg;
 
         frc::SwerveDriveOdometry<4>* _odometry;
+
+        frc::Field2d _field;
 
 };
 

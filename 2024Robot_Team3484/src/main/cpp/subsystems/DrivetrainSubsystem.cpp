@@ -43,6 +43,8 @@ DrivetrainSubsystem::DrivetrainSubsystem(SC_SwerveConfigs swerve_config_array[4]
     }
     _gyro = new AHRS{SPI::Port::kMXP};
     _odometry = new SwerveDriveOdometry<4>{kinematics, GetHeading(), GetModulePositions()};
+
+    frc::SmartDashboard::PutData("Field", &_field);
 }
 
 void DrivetrainSubsystem::Periodic() {
@@ -59,7 +61,8 @@ void DrivetrainSubsystem::Periodic() {
         SmartDashboard::PutNumber("Gyro Heading", GetHeading().Degrees().value());
     }
 
-    
+    _field.SetRobotPose(GetPose());
+
 }
 
 void DrivetrainSubsystem::Drive(meters_per_second_t x_speed, meters_per_second_t y_speed, radians_per_second_t rotation, bool open_loop) {
