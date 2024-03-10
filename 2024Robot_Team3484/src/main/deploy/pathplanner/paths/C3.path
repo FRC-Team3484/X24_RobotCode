@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.2688233086821947,
-        "y": 4.0989329518215305
+        "x": 2.4302946851507747,
+        "y": 4.091952640045631
       },
       "prevControl": {
-        "x": 2.0947126446713926,
-        "y": 4.10618756282198
+        "x": 2.2561840211399726,
+        "y": 4.099207251046081
       },
       "nextControl": {
-        "x": 2.4689741358362896,
-        "y": 4.090593334023444
+        "x": 2.6304455123048696,
+        "y": 4.083613022247544
       },
       "isLocked": false,
       "linkedName": null
@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "Intake",
-      "waypointRelativePos": 0.3,
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "sequential",
         "data": {
@@ -64,6 +64,23 @@
               "type": "named",
               "data": {
                 "name": "IntakeCommand"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Spool",
+      "waypointRelativePos": 1.35,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "SpoolCommand"
               }
             }
           ]

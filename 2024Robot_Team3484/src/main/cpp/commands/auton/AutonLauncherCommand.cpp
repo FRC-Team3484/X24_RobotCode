@@ -16,9 +16,9 @@ using namespace frc;
 #else
 
 AutonLauncherCommand::AutonLauncherCommand(LauncherSubsystem* launcher_subsystem, IntakeSubsystem* intake_subsystem, Vision* vision)
-: _launcher{launcher_subsystem},_intake{intake_subsystem} /*,_limelight{vision}*/{
+: _launcher{launcher_subsystem},_intake{intake_subsystem} ,_limelight{vision}{
     AddRequirements(_launcher), AddRequirements(_intake);
-    _limelight = NULL;
+    // _limelight = NULL;
 }
 
 
@@ -71,6 +71,6 @@ void  AutonLauncherCommand::End(bool interrupted){
     }
 }
 bool  AutonLauncherCommand::IsFinished(){
- return _timer.HasElapsed(TIMEOUT) || (_launching == 2 && !_launcher->LaunchingSensor());
+ return (_timer.HasElapsed(TIMEOUT) || (_launching == 2 && !_launcher->LaunchingSensor())) || (_launching == 0 && !_intake->HasPiece() && !_intake->ArmExtended());
 }
 #endif

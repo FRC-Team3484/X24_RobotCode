@@ -26,10 +26,10 @@ DrivetrainSubsystem::DrivetrainSubsystem(SC_SwerveConfigs swerve_config_array[4]
         [this](){ return GetChassisSpeeds(); }, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         [this](frc::ChassisSpeeds speeds){ DriveRobotcentric(speeds); }, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-            PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+            PIDConstants(5.0, 8.0, 0.0), // Translation PID constants
             PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-            4.5_mps, // Max module speed, in m/s
-            0.4_m, // Drive base radius in meters. Distance from robot center to furthest module.
+            2.0_mps, // Max module speed, in m/s
+            0.4318_m, // Drive base radius in meters. Distance from robot center to furthest module.
             ReplanningConfig() // Default path replanning config. See the API for the options here
         ),
         []() {
@@ -48,6 +48,7 @@ DrivetrainSubsystem::DrivetrainSubsystem(SC_SwerveConfigs swerve_config_array[4]
     }
     _gyro = new AHRS{SPI::Port::kMXP};
     _odometry = new SwerveDriveOdometry<4>{kinematics, GetHeading(), GetModulePositions()};
+    SetBrakeMode();
 }
 
 void DrivetrainSubsystem::Periodic() {
@@ -96,8 +97,11 @@ Rotation2d DrivetrainSubsystem::GetHeading() {
         return Rotation2d{0_deg};
     } else {
         return degree_t{-_gyro->GetAngle()} + _gyro_offset;
+        //return degree_t(180) + _gyro_offset;
     }
 }
+
+
 
 void DrivetrainSubsystem::SetHeading(degree_t heading) {
     ResetOdometry(Pose2d(_odometry->GetPose().Translation(), Rotation2d(heading)));
@@ -128,12 +132,15 @@ void DrivetrainSubsystem::ResetOdometry(Pose2d pose) {
     } else if (_gyro == NULL) {
         fmt::print("Error: gyro accessed in ZeroHeading before initialization");
     } else {
+        fmt::print("Resetting Pose: X ({0}), Y({1}), Rotation({2})", pose.X().value(), pose.Y().value(), pose.Rotation().Degrees().value());
         _gyro_offset = pose.Rotation().Degrees();
         _gyro->ZeroYaw();
         _odometry->ResetPosition(GetHeading(), GetModulePositions(), pose);
     }
     
 }
+
+
 
 wpi::array<SwerveModulePosition, 4> DrivetrainSubsystem::GetModulePositions() {
     int checkNull = CheckNotNullModule();

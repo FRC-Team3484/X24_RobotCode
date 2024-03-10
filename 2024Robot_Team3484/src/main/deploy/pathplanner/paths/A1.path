@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.2888297706463807,
-        "y": 7.013243944392429
+        "x": 2.6065808210697257,
+        "y": 6.97380858227099
       },
       "prevControl": {
-        "x": 1.8453289352281435,
-        "y": 6.947683750038558
+        "x": 2.163079985651488,
+        "y": 6.908248387917118
       },
       "nextControl": {
-        "x": 2.584424753363538,
-        "y": 7.056940061669617
+        "x": 2.902175803786883,
+        "y": 7.017504699548177
       },
       "isLocked": false,
       "linkedName": null
@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "Intake",
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -69,10 +69,27 @@
           ]
         }
       }
+    },
+    {
+      "name": "Spool",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "SpoolCommand"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 1.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0

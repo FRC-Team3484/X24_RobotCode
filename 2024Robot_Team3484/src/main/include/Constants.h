@@ -18,6 +18,8 @@
 #include <units/angle.h>
 #include <units/angular_velocity.h>
 #include <units/angular_acceleration.h>
+#include <frc/geometry/Pose2d.h>
+
 
 // #include <ctre/Phoenix.h>
 
@@ -41,13 +43,13 @@ namespace LauncherConstants {
 
     //constexpr bool IsLoaded = true;
     constexpr bool LEFT_MOTOR_INVERTED = false;
-     
+
     // Target RPM
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 4500_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
-    constexpr units::revolutions_per_minute_t AMP_RPM = 350_rpm;
+    constexpr units::revolutions_per_minute_t AMP_RPM = 900_rpm;
     constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
-    constexpr units::second_t TIMEOUT = 5_s;
+    constexpr units::second_t TIMEOUT = 10_s;
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
@@ -58,7 +60,6 @@ namespace IntakeConstants {
 
     // Amp
     constexpr int AMP_ID = 60;
-
 
     constexpr units::degrees_per_second_t MAX_VELOCITY = 250_deg_per_s;
     constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 1000_deg_per_s_sq;
@@ -101,13 +102,18 @@ namespace ClimberConstants {
 }
 
 namespace SwerveConstants {
+    namespace AutonPoses {
+        constexpr frc::Pose2d POSE_A = {.87_m, 6.83_m, -120.00_deg};
+        constexpr frc::Pose2d POSE_B = {1.60_m, 5.55_m, 180.00_deg};
+        constexpr frc::Pose2d POSE_C = {.83_m, 4.18_m, 120.00_deg};
+    }
     namespace AutonNames {
     const std::string AUTON_NONE = "Nothing";
     const std::string AUTON_DISTANCE = "Drive 5 feet";
     const std::string AUTON_ANGLE = "Turn 90 degrees";
     const std::string AUTON_SEQUENCE = "Drive Sequence";
     const std::string AUTON_NAMES[] = {
-        "A1", "B1", "B2", "B3",
+        "A1", "A4", "B1", "B2", "B3", "B5",
         "C1", "C2", "C3", "D0",
         "ABack", "BBack", "CBack", "CBackNoPiece"
     };
@@ -168,8 +174,11 @@ namespace SwerveConstants {
         namespace DrivePIDConstants {
             // Check SC_Datatypes for the struct
             // We still need to find the proper units types of V and A
-            static SC::SC_SwervePID LeftPID{0.37509, 0, 0, 2.0974 * 1_V / 1_mps, 0.46723 * 1_V / 1_mps_sq, 0.16185_V};
-            static SC::SC_SwervePID RightPID{0.39614, 0, 0, 2.0482 * 1_V / 1_mps, 0.4729 * 1_V / 1_mps_sq, 0.17662_V};
+            static SC::SC_SwervePID LeftPID{5.5, 0, 0, 2.0974 * 1_V / 1_mps, 0.46723 * 1_V / 1_mps_sq, 0.16185_V};
+            static SC::SC_SwervePID RightPID{5.5, 0, 0, 2.0482 * 1_V / 1_mps, 0.4729 * 1_V / 1_mps_sq, 0.17662_V};
+
+            // static SC::SC_SwervePID LeftPID{0.37509, 0, 0, 2.0974 * 1_V / 1_mps, 0.46723 * 1_V / 1_mps_sq, 0.16185_V};
+            // static SC::SC_SwervePID RightPID{0.39614, 0, 0, 2.0482 * 1_V / 1_mps, 0.4729 * 1_V / 1_mps_sq, 0.17662_V};
 
         }
         namespace SteerPIDConstants {

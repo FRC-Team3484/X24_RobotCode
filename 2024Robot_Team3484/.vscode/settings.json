@@ -32,7 +32,9 @@
     "regex": "cpp",
     "memory": "cpp",
     "variant": "cpp",
-    "ranges": "cpp"
+    "ranges": "cpp",
+    "numeric": "cpp",
+    "streambuf": "cpp"
   },
   "java.project.sourcePaths": [
     "build"

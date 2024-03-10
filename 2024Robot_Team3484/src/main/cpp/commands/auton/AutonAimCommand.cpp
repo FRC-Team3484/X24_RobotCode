@@ -9,10 +9,10 @@ using namespace SwerveConstants::BrakeConstants;
 
 
 AutonAimCommand::AutonAimCommand(DrivetrainSubsystem* drivetrain, Vision* vision)
-    : _drivetrain{drivetrain}/*,
-    _limelight{vision}*/ {
+    : _drivetrain{drivetrain},
+    _limelight{vision}{
     AddRequirements(_drivetrain);
-    _limelight = NULL;
+    //_limelight = NULL;
 }
 
 
@@ -78,6 +78,7 @@ void AutonAimCommand::Execute() {
             );
 
             if (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance())>SPEAKER_AIM_TOLERANCE_LARGE) {
+
                 _aiming = true;
             }
         }
@@ -93,7 +94,7 @@ void AutonAimCommand::Execute() {
 
 void AutonAimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
-    _drivetrain->SetCoastMode();
+    //_drivetrain->SetCoastMode();
     // _brake_timer.Stop();
 }
 

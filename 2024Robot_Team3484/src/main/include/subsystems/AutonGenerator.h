@@ -18,6 +18,7 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc/smartdashboard/SendableChooser.h>
 
+
 class AutonGenerator {
     public:
         AutonGenerator(DrivetrainSubsystem* drivetrain, LauncherSubsystem* launcher, IntakeSubsystem* intake, Vision* vision);

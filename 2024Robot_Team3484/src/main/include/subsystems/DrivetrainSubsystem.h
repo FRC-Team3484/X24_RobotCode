@@ -45,6 +45,8 @@ class DrivetrainSubsystem : public frc2::SubsystemBase {
         void ResetEncoders();
         void SetCoastMode();
         void SetBrakeMode();
+        frc::Rotation2d GetHeadingAuto();
+        void ResetOdometryAuto(frc::Pose2d pose);
 
         int CheckNotNullModule();
 
