@@ -8,7 +8,7 @@
 #include "subsystems/DrivetrainSubsystem.h"
 #include <frc/kinematics/SwerveModulePosition.h>
 #include "subsystems/Vision.h"
-class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand>{
+class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand> {
 
     public:
         explicit AutonAimCommand(DrivetrainSubsystem* drivetrain, Vision* vision);
@@ -25,17 +25,9 @@ class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand
             frc::SwerveModulePosition{0_m, 0_rad},
             frc::SwerveModulePosition{0_m, 0_rad}
         };
-        // wpi::array<frc::SwerveModulePosition, 4> _current_positions = {
-        //     frc::SwerveModulePosition{0_m, 0_rad},
-        //     frc::SwerveModulePosition{0_m, 0_rad},
-        //     frc::SwerveModulePosition{0_m, 0_rad},
-        //     frc::SwerveModulePosition{0_m, 0_rad}
-        // };
 
         Vision* _limelight;
         bool _aiming;
-        // frc::Timer _brake_timer;
-        // bool _encoder_saved;
 };
 
 #endif
