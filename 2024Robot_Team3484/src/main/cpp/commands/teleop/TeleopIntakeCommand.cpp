@@ -18,16 +18,10 @@ void TeleopIntakeCommand::Initialize() {
 void TeleopIntakeCommand::Execute() {
     if (_operator_oi != NULL && _intake_subsystem != NULL) {
         if (frc::SmartDashboard::GetBoolean("testing",true)) {
-            if(_operator_oi->IntakeHotKey()) {
+            if (_operator_oi->IntakeHotKey()) {
                 _intake_subsystem->OpenLoopTestMotors(_operator_oi->OpenLoopControlLeft(), _operator_oi->OpenLoopControlRight());
             }
-        }
-        else {
-
-            // if (!_climber_subsystem->GetLeftSensor() || !_climber_subsystem->GetRightSensor()){
-            //     _intake_subsystem->SetIntakeAngle(IntakeConstants::CLIMB_POSITION);
-            // }else {
-        
+        } else {        
             if (_operator_oi->ExtendIntake()) {
                 if ((!_intake_subsystem->HasPiece() || _operator_oi->IgnoreSensor())) {
                     _intake_subsystem->SetIntakeAngle(IntakeConstants::INTAKE_POSITION);
@@ -50,6 +44,7 @@ void TeleopIntakeCommand::Execute() {
                 if (_intake_subsystem->AtSetPosition()) {
                     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
                 }
+
             } else if ((_operator_oi->IntakeThroughShooter() && !_operator_oi->LauncherToggle()) || (_operator_oi->LauncherIntake() && _operator_oi->LauncherToggle())) {
                 if (!_intake_subsystem->HasPiece() || _operator_oi->IgnoreSensor()) {
                     _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
@@ -60,6 +55,7 @@ void TeleopIntakeCommand::Execute() {
                     _launcher_subsystem->setLauncherRPM(0_rpm);
                     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
                 }
+
             } else if (_operator_oi->LauncherToggle()) {
                 //_intake_subsystem->AmpMovement(_operator_oi->AmpStick());
                 if (_operator_oi->LauncherTrap()) {
@@ -80,6 +76,7 @@ void TeleopIntakeCommand::Execute() {
                     fmt::print("Laucher Amp EXECUTING");
                     _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
                     _launcher_subsystem->setLauncherRPM(LauncherConstants::AMP_RPM);
+                    
                     if (_intake_subsystem->AtSetPosition() && _launcher_subsystem->atTargetRPM()) {
                         _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER*-1);
                     }

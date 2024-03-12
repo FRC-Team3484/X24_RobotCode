@@ -19,7 +19,6 @@ TeleopDriveCommand::TeleopDriveCommand(DrivetrainSubsystem* drivetrain, Driver_I
 
 void TeleopDriveCommand::Initialize() {
     _drivetrain->SetBrakeMode();
-
 }
 
 void TeleopDriveCommand::Execute() {
@@ -60,8 +59,6 @@ void TeleopDriveCommand::Execute() {
             );
             
         } else {
-
-
             // Logic for actual joystick movements
             meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED;
             meters_per_second_t y_speed = -_oi->GetStrafe() * MAX_LINEAR_SPEED;
@@ -81,7 +78,6 @@ void TeleopDriveCommand::Execute() {
 }
 void TeleopDriveCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
-   
 }
 
 bool TeleopDriveCommand::IsFinished() {return false;}

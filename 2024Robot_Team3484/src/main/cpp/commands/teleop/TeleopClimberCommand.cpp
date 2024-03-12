@@ -11,16 +11,16 @@ void TeleopClimberCommand::Initialize() {}
 void TeleopClimberCommand::Execute() {
     if (_oi != NULL && _climber_subsystem != NULL) {
         if (frc::SmartDashboard::GetBoolean("testing",true)) {            
-            if(_oi->ClimberHotKey()) {
+            if (_oi->ClimberHotKey()) {
                 _climber_subsystem->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
-            }else {
+                
+            } else {
                 _climber_subsystem->SetClimberPower(0);
             }
         }
         else {
             if (_oi->ClimbUp()) {
                 _climber_subsystem->SetClimberPower(ClimberConstants::MOTOR_UP_SPEED);
-
 
             } else if (_oi->ClimbDown()) {
                 _climber_subsystem->SetClimberPower(ClimberConstants::MOTOR_DOWN_SPEED);
@@ -29,7 +29,6 @@ void TeleopClimberCommand::Execute() {
                 _climber_subsystem->SetClimberPower(ClimberConstants::MOTOR_STOP);
             }
         }
-
     }   
 }
 

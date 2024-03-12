@@ -227,12 +227,13 @@ namespace VisionConstants {
     constexpr units::inch_t MAX_LAUNCH_RANGE = 63.7_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_LARGE = 12_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_SMALL = 6_in;
-    constexpr units::inch_t TRAP_AIM_TOLERANCE_LARGE  = 35_in;
-    constexpr units::inch_t TRAP_AIM_TOLERANCE_SMALL = 30_in;
+    constexpr units::inch_t TRAP_DISTANCE_LARGE  = 35_in;
+    constexpr units::inch_t TRAP_DISTANCE_SMALL = 30_in;
+    constexpr units::inch_t TRAP_AIM_TOLERANCE = 2_in;
     constexpr double CAMERA_ANGLE = 38.0;
     constexpr double CAMERA_HEIGHT = 22.5;
     constexpr double STEER_GAIN = -.01;
-    constexpr double DISTANCE_GAIN = -.01;
+    constexpr double DISTANCE_GAIN = -.1;
     constexpr double TRAP_TARGET_DISTANCE = 32.5;
     constexpr double SPEAKER_TARGET_HEIGHT = 57; // inches
     constexpr double TRAP_TARGET_HEIGHT = 48+(13/16)+3.25; //Inches

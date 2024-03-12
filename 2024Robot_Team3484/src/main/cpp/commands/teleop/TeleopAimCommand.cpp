@@ -23,10 +23,6 @@ TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Inter
 void TeleopAimCommand::Initialize() {
     // natural default is to break
     _aiming = false;
-    // _encoder_saved = false;
-    // _brake_timer.Reset();
-    // _brake_timer.Start();
-    _initial_positions = _drivetrain->GetModulePositions();
     if (_limelight == NULL) {
         fmt::print("Limelight is Null");
     }
@@ -65,26 +61,29 @@ void TeleopAimCommand::Execute() {
                 _drivetrain->Drive((_limelight->GetDistanceFromTarget() - TRAP_TARGET_DISTANCE)*DISTANCE_GAIN*MAX_LINEAR_SPEED,
                                     0_mps,
                                     _limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
-                if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < TRAP_AIM_TOLERANCE_SMALL) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()) {
+                if ((_limelight->HasTarget() &&
+                        units::math::abs(_limelight->GetHorizontalDistance()) < TRAP_AIM_TOLERANCE && _limelight->GetDistanceFromTargetInch() > TRAP_DISTANCE_SMALL && _limelight->GetDistanceFromTargetInch() < TRAP_DISTANCE_LARGE) || !_limelight->HasTarget()) {
                     _aiming = false;
-                    _initial_positions = _drivetrain->GetModulePositions();
                 }
                 //_limelight->SetPipeline(0);
             }
             else {
-                //wpi::array<SwerveModulePosition, 4> current_positions = _drivetrain->GetModulePositions();
-                // _drivetrain->SetModuleStates(
-                //     {
-                //     SwerveModuleState{-(_initial_positions[FL].distance - current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
-                //     SwerveModuleState{-(_initial_positions[FR].distance - current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                //     SwerveModuleState{-(_initial_positions[BL].distance - current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                //     SwerveModuleState{-(_initial_positions[BR].distance - current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
-                //     },
-                //     true,
-                //     false
-                // );
+                _drivetrain->SetModuleStates(
+                    {
+                    SwerveModuleState{0_mps, 45_deg},
+                    SwerveModuleState{0_mps, -45_deg},
+                    SwerveModuleState{0_mps, -45_deg},
+                    SwerveModuleState{0_mps, 45_deg}
+                    },
+                    true,
+                    false
+                );
 
-                if (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance())>TRAP_AIM_TOLERANCE_LARGE) {
+                if (!_limelight == NULL && _limelight->HasTarget() && 
+                        (units::math::abs(_limelight->GetHorizontalDistance()) > TRAP_AIM_TOLERANCE || 
+                        _limelight->GetDistanceFromTargetInch() < TRAP_DISTANCE_SMALL || 
+                        _limelight->GetDistanceFromTargetInch() > TRAP_DISTANCE_LARGE)) 
+                    {
                     _aiming = true;
                 }
             }
@@ -123,23 +122,21 @@ void TeleopAimCommand::Execute() {
                 _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
                 if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < SPEAKER_AIM_TOLERANCE_LARGE) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()) {
                     _aiming = false;
-                    _initial_positions = _drivetrain->GetModulePositions();
                 }
             }
             else {
-                //wpi::array<SwerveModulePosition, 4> current_positions = _drivetrain->GetModulePositions();
-                // _drivetrain->SetModuleStates(
-                //     {
-                //     SwerveModuleState{-(_initial_positions[FL].distance - current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
-                //     SwerveModuleState{-(_initial_positions[FR].distance - current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                //     SwerveModuleState{-(_initial_positions[BL].distance - current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                //     SwerveModuleState{-(_initial_positions[BR].distance - current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
-                //     },
-                //     true,
-                //     false
-                // );
+                _drivetrain->SetModuleStates(
+                    {
+                    SwerveModuleState{0_mps, 45_deg},
+                    SwerveModuleState{0_mps, -45_deg},
+                    SwerveModuleState{0_mps, -45_deg},
+                    SwerveModuleState{0_mps, 45_deg}
+                    },
+                    true,
+                    false
+                );
 
-                if (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance())>SPEAKER_AIM_TOLERANCE_LARGE) {
+                if (!_limelight == NULL && _limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) > SPEAKER_AIM_TOLERANCE_LARGE) {
                     _aiming = true;
                 }
             }
@@ -157,7 +154,6 @@ void TeleopAimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
     _drivetrain->SetCoastMode();
     _oi_driver->SetRumble(RUMBLE_STOP);
-    // _brake_timer.Stop();
 }
 
 bool TeleopAimCommand::IsFinished() {return false;}
