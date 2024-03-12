@@ -13,7 +13,6 @@ AutonLauncherCommand::AutonLauncherCommand(LauncherSubsystem* launcher_subsystem
 }
 
 void AutonLauncherCommand::Initialize() {
-
     _timer.Reset();
     _timer.Start();
 
