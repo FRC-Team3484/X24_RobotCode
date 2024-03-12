@@ -3,6 +3,7 @@
 // Its a Trap!!!!!!!!!!!!!!!!!!!!!!!!
 using namespace frc;
 using namespace TrapConstants;
+
 TrapSubsystem::TrapSubsystem(
     int _extension_motor_can_id,
     int _roller_motor_can_id,
@@ -50,13 +51,15 @@ void TrapSubsystem::Periodic() {
 
     }
 }
+
 void TrapSubsystem::SetRollerPower(double power) {
     _roller_motor.Set(power);
-
 }
+
 void TrapSubsystem::SetPosition(units::inch_t position){
     _target_position = position;
 }
+
 bool TrapSubsystem::AtPosition(){
     return units::math::abs(GetExtension() - _target_position) < POSITION_TOLORANCE;
 }
@@ -64,10 +67,12 @@ bool TrapSubsystem::AtPosition(){
 units::inch_t TrapSubsystem::GetExtension(){
     return _extension_encoder->GetPosition() * GEAR_RATIO;
 }
+
 units::feet_per_second_t TrapSubsystem::GetExtensionVelocity(){
     return _extension_encoder->GetVelocity() * GEAR_RATIO / 1.0_min;
 }
- void TrapSubsystem::OpenLoopTestMotors(double extension_motor, double roller_motor) {
+
+void TrapSubsystem::OpenLoopTestMotors(double extension_motor, double roller_motor) {
     if (frc::SmartDashboard::GetBoolean("testing",true)) {
         _extension_motor.Set(extension_motor);
         _roller_motor.Set(roller_motor);

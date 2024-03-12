@@ -25,7 +25,6 @@
 #include <pathplanner/lib/util/ReplanningConfig.h>
 #include <frc/DriverStation.h>
 
-
 class DrivetrainSubsystem : public frc2::SubsystemBase {
     public:
         DrivetrainSubsystem(SC::SC_SwerveConfigs swerve_config_array[4]);
@@ -56,7 +55,7 @@ class DrivetrainSubsystem : public frc2::SubsystemBase {
         };
 
     private:
-    // Check if can be placed in constants
+        // Check if can be placed in constants
         SwerveModule* _modules[4];
             
 
@@ -65,7 +64,6 @@ class DrivetrainSubsystem : public frc2::SubsystemBase {
         units::degree_t _gyro_offset = 0_deg;
 
         frc::SwerveDriveOdometry<4>* _odometry;
-
 };
 
 #endif

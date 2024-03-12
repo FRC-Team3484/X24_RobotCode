@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 #ifndef LAUNCHER_H
 #define LAUNCHER_H
 
@@ -47,12 +43,11 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         bool _en_launch;
         frc::DigitalInput _launched_sensor;
 
-
         double _target_speed;
         int _counter_not_null_right;
         int _counter_not_null_left;
 
         double _rpm_window;
-
 };
+
 #endif
