@@ -45,8 +45,8 @@ namespace LauncherConstants {
     // Target RPM
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 4500_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
-    constexpr units::revolutions_per_minute_t AMP_RPM = 350_rpm;
-    constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
+    constexpr units::revolutions_per_minute_t AMP_RPM = 900_rpm;
+    constexpr units::revolutions_per_minute_t TRAP_RPM = 4000_rpm;
     constexpr units::second_t TIMEOUT = 5_s;
 }
 namespace IntakeConstants {
@@ -171,8 +171,8 @@ namespace SwerveConstants {
             constexpr double Kd_Drive = 0.0;
             // Check SC_Datatypes for the struct
             // We still need to find the proper units types of V and A
-            static SC::SC_SwervePID LeftPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_rad_per_s, 1.1369e-06 * 1_V / 1_rad_per_s_sq, 0.67624_V};
-            static SC::SC_SwervePID RightPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_rad_per_s, 1.1369e-06 * 1_V / 1_rad_per_s_sq, 0.67624_V};
+            static SC::SC_SwervePID LeftPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_mps, 1.1369e-06 * 1_V / 1_mps_sq, 0.67624_V};
+            static SC::SC_SwervePID RightPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_mps, 1.1369e-06 * 1_V / 1_mps_sq, 0.67624_V};
 
         }
 // Check For Autons

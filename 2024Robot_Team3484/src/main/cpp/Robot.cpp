@@ -26,6 +26,7 @@ void Robot::RobotInit() {
     frc::SmartDashboard::PutData("Limelight Pipeline", &_pipeline_chooser);
     frc::SmartDashboard::PutNumber("Joystick Value (Left)", .4);
     frc::SmartDashboard::PutNumber("Joystick Value (Right)", .4);
+    _vision.SetPipeline(_pipeline_chooser.GetSelected());
 
 
 
@@ -33,7 +34,6 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
-    _vision.SetPipeline(_pipeline_chooser.GetSelected());
     frc::SmartDashboard::PutNumber("Distance to Target", _vision.GetDistanceFromTarget());
     frc::SmartDashboard::PutNumber("Taget Angle", _vision.GetOffsetY());
     frc::SmartDashboard::PutNumber("Horizontal Distance", _vision.GetHorizontalDistance().value());
@@ -99,7 +99,7 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
     switch (_robot_state) {
         case drive:
-            if (_oi_operator.LauncherSpeaker()  && !_oi_operator.LauncherToggle() && ((_vision.HasTarget() && _vision.GetDistanceFromTargetInch() < VisionConstants::MAX_LAUNCH_RANGE) || _oi_operator.IgnoreVision())) {
+            if ((_oi_operator.LauncherSpeaker() || _oi_operator.LauncherTrap()) && ((_vision.HasTarget() && _vision.GetDistanceFromTargetInch() < VisionConstants::MAX_LAUNCH_RANGE) || _oi_operator.IgnoreVision())) {
                 _drive_state_commands.Cancel();
                 _launch_state_commands.Schedule();
 
@@ -109,7 +109,7 @@ void Robot::TeleopPeriodic() {
             break;
 
         case shoot:
-            if (!_oi_operator.LauncherSpeaker() || _oi_operator.LauncherToggle()) {
+            if (!_oi_operator.LauncherSpeaker() && !_oi_operator.LauncherToggle()) {
                 _launch_state_commands.Cancel();
                 _drive_state_commands.Schedule();
                 _robot_state = drive;
