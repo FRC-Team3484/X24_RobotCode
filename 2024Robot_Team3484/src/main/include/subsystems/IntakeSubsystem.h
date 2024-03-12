@@ -17,7 +17,6 @@
 //Amp
 #include "ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h"
 
-
 class IntakeSubsystem : public frc2::SubsystemBase {
     public:
         IntakeSubsystem(
@@ -29,7 +28,6 @@ class IntakeSubsystem : public frc2::SubsystemBase {
             double pid_output_range_max,
             double pid_output_range_min,
             int amp_motor_id
-            /*Amp Stuff*/
         );
 
         void Periodic() override;
@@ -42,7 +40,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
         bool AtSetPosition();
         void OpenLoopTestMotors(double pivot_power, double drive_power);
 
-        //amp sutff
+        // Amp
         void AmpMovement(double extend_power);
 
     private:
@@ -70,7 +68,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
 
         frc::Timer _trapezoid_timer;
 
-        // Amp Stuff
+        // Amp
         ctre::phoenix::motorcontrol::can::WPI_TalonSRX _amp_motor;
 
         SC::SC_MotorCurrents _amp_currents;

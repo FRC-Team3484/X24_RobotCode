@@ -17,7 +17,6 @@ void Robot::RobotInit() {
     //frc::SmartDashboard::PutBoolean("in Break Mode", false);
     frc::SmartDashboard::PutBoolean("Voltage Diagnostics", false);
 
-    
     // Choosing Pipelines
     _pipeline_map.emplace("Pipeline 0", 0);
     _pipeline_map.emplace("Pipeline 1", 1);
@@ -27,10 +26,6 @@ void Robot::RobotInit() {
     frc::SmartDashboard::PutNumber("Joystick Value (Left)", .4);
     frc::SmartDashboard::PutNumber("Joystick Value (Right)", .4);
     _vision.SetPipeline(_pipeline_chooser.GetSelected());
-
-
-
-
 }
 
 void Robot::RobotPeriodic() {
@@ -120,12 +115,13 @@ void Robot::TeleopPeriodic() {
     }
 }
 void Robot::TestInit() {
-  frc2::CommandScheduler::GetInstance().CancelAll();
+    frc2::CommandScheduler::GetInstance().CancelAll();
 }
 
 void Robot::TestPeriodic() {}
 
 #ifndef RUNNING_FRC_TESTS
+
 int main() {
     return frc::StartRobot<Robot>();
 }

@@ -2,7 +2,6 @@
 #define TELEOP_TRAP_COMMAND_H
 #include "Constants.h"
 
-
 #ifdef TRAP_ENABLED
 
 #include "OI.h"

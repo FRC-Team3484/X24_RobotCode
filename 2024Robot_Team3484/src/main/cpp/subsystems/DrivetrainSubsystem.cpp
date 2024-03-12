@@ -49,9 +49,11 @@ DrivetrainSubsystem::DrivetrainSubsystem(SC_SwerveConfigs swerve_config_array[4]
 void DrivetrainSubsystem::Periodic() {
     if (_odometry == NULL) {
         fmt::print("Error: odometry accessed in Periodic before initialization");
+
     } else {
         _odometry->Update(GetHeading(), GetModulePositions());
     }
+
     if(frc::SmartDashboard::GetBoolean("Drivetrain Diagnostics", false)){
         //SmartDashboard::PutNumber("FL Encoder", _modules[FL]->GetPosition().angle.Degrees().value());
         //SmartDashboard::PutNumber("FR Encoder", _modules[FR]->GetPosition().angle.Degrees().value());
@@ -59,18 +61,13 @@ void DrivetrainSubsystem::Periodic() {
         //SmartDashboard::PutNumber("BR Encoder", _modules[BR]->GetPosition().angle.Degrees().value());
         SmartDashboard::PutNumber("Gyro Heading", GetHeading().Degrees().value());
     }
-
-    
 }
 
 void DrivetrainSubsystem::Drive(meters_per_second_t x_speed, meters_per_second_t y_speed, radians_per_second_t rotation, bool open_loop) {
-    // auto states = kinematics.ToSwerveModuleStates(ChassisSpeeds::FromFieldRelativeSpeeds(x_speed, y_speed, rotation, GetHeading()));
     DriveRobotcentric(ChassisSpeeds::FromFieldRelativeSpeeds(x_speed, y_speed, rotation, GetHeading()), open_loop);
-
-    // SetModuleStates(states, open_loop, true);
 }
 
-void DrivetrainSubsystem::DriveRobotcentric(ChassisSpeeds speeds, bool open_loop){
+void DrivetrainSubsystem::DriveRobotcentric(ChassisSpeeds speeds, bool open_loop) {
     auto states = kinematics.ToSwerveModuleStates(speeds);
     SetModuleStates(states, open_loop, true);
 }
@@ -80,6 +77,7 @@ void DrivetrainSubsystem::SetModuleStates(wpi::array<SwerveModuleState, 4> desir
     for (int i = 0; i < 4; i++) {
         if (_modules[i] == NULL) {
             fmt::print("Error: Swerve Module accessed in Periodic before initialization");
+
         } else {
             _modules[i]->SetDesiredState(desired_states[i], open_loop, optimize);
         }
@@ -90,6 +88,7 @@ Rotation2d DrivetrainSubsystem::GetHeading() {
     if (_gyro == NULL) {
         fmt::print("Error: gyro accessed in GetHeading before initialization");
         return Rotation2d{0_deg};
+
     } else {
         return degree_t{-_gyro->GetAngle()} + _gyro_offset;
     }
@@ -104,6 +103,7 @@ degrees_per_second_t DrivetrainSubsystem::GetTurnRate() {
     if (_gyro == NULL) {
         fmt::print("Error: gyro accessed in GetTurnRate before initialization");
         return 0_deg_per_s;
+
     } else {
         return degrees_per_second_t{_gyro->GetRate()};
     }
@@ -113,6 +113,7 @@ Pose2d DrivetrainSubsystem::GetPose() {
     if (_odometry == NULL) {
         fmt::print("Error: odometry accesed in GetPose before initialization");
         return Pose2d{0_m, 0_m, 0_deg};
+
     } else {
         return _odometry->GetPose();
     }
@@ -121,8 +122,10 @@ Pose2d DrivetrainSubsystem::GetPose() {
 void DrivetrainSubsystem::ResetOdometry(Pose2d pose) {
     if (_odometry == NULL) {
         fmt::print("Error: odometry accesed in ResetOdometry before initialization");
+
     } else if (_gyro == NULL) {
         fmt::print("Error: gyro accessed in ZeroHeading before initialization");
+        
     } else {
         _gyro_offset = pose.Rotation().Degrees();
         _gyro->ZeroYaw();

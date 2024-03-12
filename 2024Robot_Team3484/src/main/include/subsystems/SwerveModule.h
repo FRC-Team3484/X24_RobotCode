@@ -31,9 +31,6 @@ class SwerveModule {
         void SetBrakeMode();
 
     private:
-
-
-
         // ctre::phoenix6::configs::TalonFXConfiguration _drive_motor_config{};
 
         // ctre::phoenix6::hardware::TalonFX _drive_motor;
@@ -41,12 +38,10 @@ class SwerveModule {
         // ctre::phoenix6::hardware::CANcoder _steer_encoder;
         // Check for proper path declaration
         
-
         double _can_id;
         ctre::phoenix::motorcontrol::can::WPI_TalonFX _drive_motor;
         ctre::phoenix::motorcontrol::can::WPI_TalonFX _steer_motor;
         ctre::phoenix::sensors::WPI_CANCoder _steer_encoder;
-
 
         // WPI_TalonFX _drive_motor;
         // WPI_TalonFX _steer_motor;
@@ -69,10 +64,6 @@ class SwerveModule {
 
         frc::PIDController _drive_pid_controller_left{SwerveConstants::DrivetrainConstants::DrivePIDConstants::LeftPID.Kp, SwerveConstants::DrivetrainConstants::DrivePIDConstants::LeftPID.Ki, SwerveConstants::DrivetrainConstants::DrivePIDConstants::LeftPID.Kd};
         frc::PIDController _drive_pid_controller_right{SwerveConstants::DrivetrainConstants::DrivePIDConstants::RightPID.Kp, SwerveConstants::DrivetrainConstants::DrivePIDConstants::RightPID.Ki, SwerveConstants::DrivetrainConstants::DrivePIDConstants::RightPID.Kd};
-
-
-
-
 
         //frc::PIDController _drive_pid_controller{SwerveConstants::DrivetrainConstants::DrivePIDConstants::Kp_Drive, SwerveConstants::DrivetrainConstants::DrivePIDConstants::Ki_Drive, SwerveConstants::DrivetrainConstants::DrivePIDConstants::Kd_Drive};
         frc::ProfiledPIDController<units::radians> _steer_pid_controller{SwerveConstants::DrivetrainConstants::SteerPIDConstants::Kp_Steer, SwerveConstants::DrivetrainConstants::SteerPIDConstants::Ki_Steer, SwerveConstants::DrivetrainConstants::SteerPIDConstants::Kd_Steer, 
