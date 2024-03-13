@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.087545062805809,
-        "y": 6.03618838816887
+        "x": 5.086286199822487,
+        "y": 6.036012893787072
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.656436388929751,
-        "y": 3.994560036387843
+        "x": 7.830638104248305,
+        "y": 3.9850912609120326
       },
       "prevControl": {
-        "x": 4.633882776533869,
-        "y": 3.261299680496717
+        "x": 4.808084491852423,
+        "y": 3.2518309050209067
       },
       "nextControl": {
-        "x": 7.910024875983746,
-        "y": 4.05607966783607
+        "x": 8.0842265913023,
+        "y": 4.04661089236026
       },
       "isLocked": false,
       "linkedName": null
@@ -52,8 +52,8 @@
         "y": 5.55
       },
       "prevControl": {
-        "x": 4.316742644007989,
-        "y": 5.972710541914931
+        "x": 4.3173041651533275,
+        "y": 5.972797911584696
       },
       "nextControl": null,
       "isLocked": false,
@@ -90,6 +90,23 @@
               "type": "named",
               "data": {
                 "name": "IntakeCommand"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Spool",
+      "waypointRelativePos": 2.3000000000000003,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "SpoolCommand"
               }
             }
           ]

@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9304336480658901,
-        "y": 6.13104830023157
+        "x": 1.9513749188546288,
+        "y": 6.108691029460742
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.2787941573004487,
-        "y": 6.974393067601336
+        "x": 2.654644347355772,
+        "y": 6.795358060284484
       },
       "prevControl": {
-        "x": 1.8366160404298313,
-        "y": 6.932280865994612
+        "x": 2.3572052963373187,
+        "y": 6.4761551762646805
       },
       "nextControl": {
-        "x": 2.502974411917728,
-        "y": 6.995743568041076
+        "x": 2.8081653051320314,
+        "y": 6.960112258873641
       },
       "isLocked": false,
       "linkedName": null
@@ -36,7 +36,7 @@
         "y": 5.55
       },
       "prevControl": {
-        "x": 1.5205335629656904,
+        "x": 1.52,
         "y": 5.55
       },
       "nextControl": null,
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.0,
-      "rotationDegrees": 180.0,
+      "rotationDegrees": -135.94956685643572,
       "rotateFast": false
     }
   ],
@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "Intake",
-      "waypointRelativePos": 0.15,
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -69,10 +69,27 @@
           ]
         }
       }
+    },
+    {
+      "name": "Spool",
+      "waypointRelativePos": 1.25,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "SpoolCommand"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 1.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
