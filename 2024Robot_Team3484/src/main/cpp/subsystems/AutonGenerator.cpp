@@ -1,6 +1,12 @@
 #include "subsystems/AutonGenerator.h"
 #include "Constants.h"
 
+#include "commands/auton/AutonStopCommand.h"
+#include "commands/auton/AutonSpoolCommand.h"
+
+#include "commands/auton/AutonStopCommand.h"
+#include "commands/auton/AutonSpoolCommand.h"
+
 #include <pathplanner/lib/commands/PathPlannerAuto.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <pathplanner/lib/auto/NamedCommands.h>
@@ -9,12 +15,14 @@
 using namespace frc;
 using namespace pathplanner;
 using namespace SwerveConstants::AutonNames;
+using namespace SwerveConstants::AutonPoses;
 
 AutonGenerator::AutonGenerator(DrivetrainSubsystem* drivetrain, LauncherSubsystem* launcher, IntakeSubsystem* intake, Vision* vision)
-    : _drivetrain{drivetrain}, _launcher{launcher}, _intake{intake}, _vision{vision} {
-        NamedCommands::registerCommand("LauncherCommand", std::move(frc2::cmd::Race(AutonLauncherCommand(launcher, intake, vision).ToPtr(), AutonAimCommand(drivetrain, vision).ToPtr())));
-        NamedCommands::registerCommand("IntakeCommand", std::move(AutonIntakeCommand(intake).ToPtr()));
-        NamedCommands::registerCommand("TrapCommand", frc2::cmd::Wait(3_s));
+     : _drivetrain{drivetrain}, _launcher{launcher}, _intake{intake}, _vision{vision} {
+      NamedCommands::registerCommand("LauncherCommand", std::move(frc2::cmd::Race(AutonLauncherCommand(launcher, intake, vision).ToPtr(), AutonAimCommand(drivetrain, vision).ToPtr())));
+      NamedCommands::registerCommand("IntakeCommand", std::move(AutonIntakeCommand(intake).ToPtr()));
+      NamedCommands::registerCommand("SpoolCommand", std::move(AutonSpoolCommand(launcher).ToPtr()));
+      NamedCommands::registerCommand("TrapCommand", frc2::cmd::Wait(3_s));
 
 
     _auton_chooser_initial.AddOption("No", "No");
@@ -48,12 +56,19 @@ frc2::CommandPtr AutonGenerator::_GetCommand(std::string command_name) {
 }
 
 frc2::CommandPtr AutonGenerator::GetAutonomousCommand() {
-    if (_auton_chooser_piece_2.GetSelected() != "None")
-        _drivetrain->ResetOdometry(PathPlannerAuto::getStartingPoseFromAutoFile(_auton_chooser_piece_2.GetSelected()));
-    return frc2::cmd::Sequence(
-        _GetCommand(_auton_chooser_initial.GetSelected()),
-        _GetCommand(_auton_chooser_piece_2.GetSelected()),
-        _GetCommand(_auton_chooser_piece_3.GetSelected()),
-        _GetCommand(_auton_chooser_piece_4.GetSelected())
-    );
+  if (_auton_chooser_piece_2.GetSelected() != "None")
+    _drivetrain->ResetOdometry(PathPlannerAuto::getStartingPoseFromAutoFile(_auton_chooser_piece_2.GetSelected()));
+
+
+  return frc2::cmd::Sequence(
+    _GetCommand(_auton_chooser_initial.GetSelected()),
+    _GetCommand(_auton_chooser_piece_2.GetSelected()),
+    _GetCommand(_auton_chooser_piece_3.GetSelected()),
+    _GetCommand(_auton_chooser_piece_4.GetSelected()),
+    AutonStopCommand(_drivetrain).ToPtr()
+    //std::move(_auton_map.at(_auton_chooser_initial.GetSelected())),
+    //std::move(_auton_map.at(_auton_chooser_piece_2.GetSelected())),
+    //std::move(_auton_map.at(_auton_chooser_piece_3.GetSelected())),
+    //std::move(_auton_map.at(_auton_chooser_piece_4.GetSelected()))
+  );
 }
