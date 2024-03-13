@@ -15,12 +15,14 @@ LauncherSubsystem::LauncherSubsystem(
         int left_motor_can_id,
         int right_motor_can_id,
         int launch_sensor_di_ch,
+        int transfer_motor_id,
         SC::SC_PIDConstants left_pidc,
         SC::SC_PIDConstants right_pidc,
         double rpm_window
     ):
     _left_motor{left_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
     _right_motor{right_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
+    _transfer_motor{transfer_motor_id, rev::CANSparkMax::MotorType::kBrushed},
     _launched_sensor{launch_sensor_di_ch}
     {
         _rpm_window = rpm_window;
@@ -45,9 +47,11 @@ LauncherSubsystem::LauncherSubsystem(
     
     _left_motor.SetInverted(LEFT_MOTOR_INVERTED);
     _right_motor.SetInverted(!LEFT_MOTOR_INVERTED);
+    _transfer_motor.SetInverted(TRANSFER_MOTOR_INVERTED);
 
     _left_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
     _right_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
+    _transfer_motor.SetPeriodicFramePeriod(rev::CANSparkMax::PeriodicFrame::kStatus5, 200);
 
     if (_left_launcher_pid_controller !=NULL){
         _left_launcher_pid_controller->SetP(left_pidc.Kp);
@@ -107,8 +111,17 @@ void LauncherSubsystem::Periodic() {
                 _right_launcher_pid_controller->SetIAccum(0);
             } else {
                 _right_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
-            }
+            }    
             _counter_not_null_right++;
+        }
+         if (_target_speed == 0 ){
+                _transfer_motor.Set(0);
+        }
+        else if (_target_speed > 0){
+            _transfer_motor.Set(TRANSFER_POWER);
+        }
+        else {
+            _transfer_motor.Set(!TRANSFER_POWER);
         }
 
     }

@@ -28,6 +28,7 @@ namespace LauncherConstants {
     constexpr int LEFT_MOTOR_CAN_ID = 40;
     constexpr int RIGHT_MOTOR_CAN_ID = 41;
     constexpr int LAUNCH_SENSOR_DI_CH = 2; // Change to 2
+    constexpr int TRANSFER_MOTOR = 42;
 
 
     constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-5, 5e-7, 0, 0);
@@ -40,12 +41,14 @@ namespace LauncherConstants {
 
     //constexpr bool IsLoaded = true;
     constexpr bool LEFT_MOTOR_INVERTED = false;
+    constexpr bool TRANSFER_MOTOR_INVERTED;
      
     // Target RPM
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 1600_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
     constexpr units::revolutions_per_minute_t AMP_RPM = 850_rpm;
     constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
+    constexpr double TRANSFER_POWER = 50;
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
