@@ -18,12 +18,20 @@
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
 
+//Path Planner Paths
+#include <pathplanner/lib/auto/AutoBuilder.h>
+#include <pathplanner/lib/util/HolonomicPathFollowerConfig.h>
+#include <pathplanner/lib/util/PIDConstants.h>
+#include <pathplanner/lib/util/ReplanningConfig.h>
+#include <frc/DriverStation.h>
+
 class DrivetrainSubsystem : public frc2::SubsystemBase {
     public:
         DrivetrainSubsystem(SC::SC_SwerveConfigs swerve_config_array[4]);
         void Periodic() override;
 
         void Drive(units::meters_per_second_t x_speed, units::meters_per_second_t y_speed, units::radians_per_second_t rotation, bool open_loop=false);
+        void DriveRobotcentric(frc::ChassisSpeeds speeds, bool open_loop=false);
         void SetModuleStates(wpi::array<frc::SwerveModuleState, 4> desired_states, bool open_loop=false, bool optimize=true);
         frc::Rotation2d GetHeading();
         void SetHeading(units::degree_t heading=0_deg);
@@ -47,7 +55,7 @@ class DrivetrainSubsystem : public frc2::SubsystemBase {
         };
 
     private:
-    // Check if can be placed in constants
+        // Check if can be placed in constants
         SwerveModule* _modules[4];
             
 

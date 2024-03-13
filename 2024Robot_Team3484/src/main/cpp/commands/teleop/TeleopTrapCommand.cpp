@@ -1,4 +1,7 @@
 #include "commands/teleop/TeleopTrapCommand.h"
+
+#ifdef TRAP_ENABLED
+
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <Constants.h>
 
@@ -20,22 +23,27 @@ void TeleopTrapCommand::Execute() {
         }
 
         else {
-                if (_oi->EndgameToggle()&&_oi->ScoreTrap()){
-                    _trap_subsystem->SetPosition(TRAP_POSITION);
-                    if (_trap_subsystem->AtPosition()) {
-                        _trap_subsystem->SetRollerPower(EJECT_POWER);
-                    }
-                } else if (_oi->EndgameToggle()&&_oi->AmpTrap()) {
-                    _trap_subsystem->SetPosition(AMP_POSITION);
-                    if (_trap_subsystem->AtPosition()) {
-                        _trap_subsystem->SetRollerPower(EJECT_POWER);
-                    } 
-                } else if (_oi->EndgameToggle()&&_oi->IntakeTrap()){
-                    _trap_subsystem->SetPosition(INTAKE_POSITION);
-                    _trap_subsystem->SetRollerPower(INTAKE_POWER);
-                } else {
-                    _trap_subsystem->SetPosition(HOME_POSITION);
-                    _trap_subsystem->SetRollerPower(0);
+            if (_oi->EndgameToggle()&&_oi->ScoreTrap()){
+                _trap_subsystem->SetPosition(TRAP_POSITION);
+
+                if (_trap_subsystem->AtPosition()) {
+                    _trap_subsystem->SetRollerPower(EJECT_POWER);
+                }
+                
+            } else if (_oi->EndgameToggle()&&_oi->AmpTrap()) {
+                _trap_subsystem->SetPosition(AMP_POSITION);
+
+                if (_trap_subsystem->AtPosition()) {
+                    _trap_subsystem->SetRollerPower(EJECT_POWER);
+                } 
+
+            } else if (_oi->EndgameToggle()&&_oi->IntakeTrap()){
+                _trap_subsystem->SetPosition(INTAKE_POSITION);
+                _trap_subsystem->SetRollerPower(INTAKE_POWER);
+
+            } else {
+                _trap_subsystem->SetPosition(HOME_POSITION);
+                _trap_subsystem->SetRollerPower(0);
             }
         }
     }
@@ -49,3 +57,5 @@ void TeleopTrapCommand::End(bool interupted) {
 bool TeleopTrapCommand::IsFinished() {
     return false;
 }
+
+#endif

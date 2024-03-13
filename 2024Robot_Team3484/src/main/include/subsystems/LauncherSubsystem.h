@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 #ifndef LAUNCHER_H
 #define LAUNCHER_H
 
@@ -23,7 +19,6 @@ class LauncherSubsystem : public frc2::SubsystemBase {
             int left_motor_can_id, 
             int right_motor_can_id,
             int launch_sensor_di_ch,
-            int transfer_motor_id,
             SC::SC_PIDConstants _left_pidc,
             SC::SC_PIDConstants _right_pidc,
             double rpm_window
@@ -39,7 +34,6 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         bool _WithinRPMWindow();
         rev::CANSparkMax _left_motor;
         rev::CANSparkMax _right_motor;
-        rev::CANSparkMax _transfer_motor;
 
         rev::SparkRelativeEncoder* _left_launcher_encoder;
         rev::SparkRelativeEncoder* _right_launcher_encoder;
@@ -49,12 +43,11 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         bool _en_launch;
         frc::DigitalInput _launched_sensor;
 
-
         double _target_speed;
         int _counter_not_null_right;
         int _counter_not_null_left;
 
         double _rpm_window;
-
 };
+
 #endif

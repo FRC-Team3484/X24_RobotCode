@@ -5,7 +5,6 @@
 #include "units/time.h"
 #include <tuple>
 
-
 #define null nullptr
 
 namespace SC

@@ -8,7 +8,7 @@
 #include "subsystems/DrivetrainSubsystem.h"
 #include <frc/kinematics/SwerveModulePosition.h>
 #include "subsystems/Vision.h"
-class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand>{
+class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand> {
 
     public:
         explicit AutonAimCommand(DrivetrainSubsystem* drivetrain, Vision* vision);

@@ -14,6 +14,9 @@
 #include <Constants.h>
 #include "FRC3484_Lib/utils/SC_Datatypes.h"
 
+//Amp
+#include "ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h"
+
 class IntakeSubsystem : public frc2::SubsystemBase {
     public:
         IntakeSubsystem(
@@ -21,9 +24,11 @@ class IntakeSubsystem : public frc2::SubsystemBase {
             int drive_motor_can_id, 
             int piece_sensor_di_ch,
             int arm_sensor_di_ch,
+            int transfer_motor_id,
             SC::SC_PIDConstants pivot_pidc,
             double pid_output_range_max,
-            double pid_output_range_min
+            double pid_output_range_min,
+            int amp_motor_id
         );
 
         void Periodic() override;
@@ -36,11 +41,15 @@ class IntakeSubsystem : public frc2::SubsystemBase {
         bool AtSetPosition();
         void OpenLoopTestMotors(double pivot_power, double drive_power);
 
+        // Amp
+        void AmpMovement(double extend_power);
+
     private:
         bool _arm_sensor_hit = false;
-        
+
         rev::CANSparkMax _pivot_motor;
         rev::CANSparkMax _drive_motor;
+        rev::CANSparkMax _transfer_motor;
 
         frc::DigitalInput _piece_sensor;
         frc::DigitalInput _arm_sensor;
@@ -60,6 +69,17 @@ class IntakeSubsystem : public frc2::SubsystemBase {
         units::degree_t _target_position;
 
         frc::Timer _trapezoid_timer;
+
+        // Amp
+        ctre::phoenix::motorcontrol::can::WPI_TalonSRX _amp_motor;
+
+        SC::SC_MotorCurrents _amp_currents;
+        ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration _amp_currrent_limit{
+            _amp_currents.Current_Limit_Enable,
+            _amp_currents.Current_Limit_Motor,
+            _amp_currents.Motor_Current_Threshold,
+            _amp_currents.Motor_Current_Time
+        };
 };
 
 

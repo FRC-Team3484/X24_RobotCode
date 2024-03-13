@@ -1,9 +1,3 @@
-//
-// Intake Subsystem
-//
-// -Noah, Aidan  & Ethan
-//
-
 #include <subsystems/IntakeSubsystem.h>
 #include <units/angle.h>
 #include <FRC3484_Lib/utils/SC_Datatypes.h>
@@ -15,21 +9,35 @@ using namespace frc;
 IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intializer list
     int pivot_motor_can_id, 
     int drive_motor_can_id, 
-    int piece_sensor_di_ch, 
+    int piece_sensor_di_ch,
+    int transfer_motor_id,
     int arm_sensor_di_ch,
     SC::SC_PIDConstants pivot_pidc,
     double pid_output_range_max,
-    double pid_output_range_min
+    double pid_output_range_min,
+    int amp_motor_id
     ) :
         _pivot_motor{pivot_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
         _drive_motor{drive_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
+        _transfer_motor{transfer_motor_id, rev::CANSparkMax::MotorType::kBrushed},
         _piece_sensor{piece_sensor_di_ch},
-        _arm_sensor{arm_sensor_di_ch}
+        _arm_sensor{arm_sensor_di_ch},
+        _amp_motor{amp_motor_id}
     {
 
     _pivot_encoder = new rev::SparkRelativeEncoder(_pivot_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
     _pivot_pid_controller = new rev::SparkPIDController(_pivot_motor.GetPIDController());
     
+    // Amp Stuff
+    _amp_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, 255);
+    _amp_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_4_AinTempVbat_, 255);
+    _amp_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_12_Feedback1_, 255);
+    _amp_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_14_Turn_PIDF1_, 200);
+    _amp_motor.ConfigSupplyCurrentLimit(_amp_currrent_limit);
+    _amp_motor.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
+    _amp_motor.SetInverted(true);
+    _transfer_motor.SetInverted(TRANSFER_MOTOR_INVERTED);
+
     _pivot_motor.RestoreFactoryDefaults();
     _drive_motor.RestoreFactoryDefaults();
 
@@ -40,9 +48,10 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
 
     _target_position = STOW_POSITION;
 
-    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus4, 200);
-    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
-    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus6, 200);
+    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkLowLevel::PeriodicFrame::kStatus4, 200);
+    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkLowLevel::PeriodicFrame::kStatus5, 200);
+    _drive_motor.SetPeriodicFramePeriod(rev::CANSparkLowLevel::PeriodicFrame::kStatus6, 200);
+    _transfer_motor.SetPeriodicFramePeriod(rev::CANSparkMax::PeriodicFrame::kStatus5, 200);
     _drive_motor.SetSmartCurrentLimit(DRIVE_STALL_LIMIT, DRIVE_FREE_LIMIT);
 
     _pivot_pid_controller->SetP(pivot_pidc.Kp);
@@ -54,7 +63,7 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
 }
 
 void IntakeSubsystem::Periodic() {
-    if(frc::SmartDashboard::GetBoolean("Intake Diagnostics", false)){
+    if (frc::SmartDashboard::GetBoolean("Intake Diagnostics", false)) {
         SmartDashboard::PutNumber("Intake Angle (deg)", GetIntakePosition().value()*360);
         //SmartDashboard::PutNumber("Intake Velocity", _pivot_encoder->GetVelocity());
         SmartDashboard::PutBoolean("Arm Extened Sensor", ArmExtended());
@@ -70,25 +79,21 @@ void IntakeSubsystem::Periodic() {
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
         if (_arm_sensor_hit) {
-            if (_target_position == STOW_POSITION && !ArmExtended()){
+            if (_target_position == STOW_POSITION && !ArmExtended()) {
                 _pivot_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
                 _pivot_pid_controller->SetIAccum(0);
                 _pivot_encoder->SetPosition(IntakeConstants::STOW_POSITION.value());
-            }
-            else {
-                
-
+            } else {
                 units::turn_t linear_angle = _intake_trapezoid.Calculate(_trapezoid_timer.Get(), _current_state, _target_state).position;
                 #ifdef EN_DIAGNOSTICS
                 SmartDashboard::PutNumber(" Target Position (Trapezoid)", linear_angle.value()*360);
                 #endif
 
-                if (units::math::abs(linear_angle - GetIntakePosition()) >= 40_deg){
-                    SetIntakeAngle(_target_position, true);
-                } else {
-                    _pivot_pid_controller->SetReference(linear_angle.value()*GEAR_RATIO, rev::CANSparkMax::ControlType::kPosition);
-                }
-                    
+                // if (units::math::abs(linear_angle - GetIntakePosition()) >= 40_deg){
+                //     SetIntakeAngle(_target_position, true);
+                // } else {
+                _pivot_pid_controller->SetReference(linear_angle.value()*GEAR_RATIO, rev::CANSparkMax::ControlType::kPosition);
+                // }
             }
 
         } else {
@@ -98,8 +103,8 @@ void IntakeSubsystem::Periodic() {
                 _pivot_encoder->SetPosition(IntakeConstants::STOW_POSITION.value());
             }
         }
-    }
 
+    }
 }
 
 void IntakeSubsystem::SetIntakeAngle(units::degree_t angle, bool force_recalculate) {
@@ -112,12 +117,12 @@ void IntakeSubsystem::SetIntakeAngle(units::degree_t angle, bool force_recalcula
     
         _trapezoid_timer.Restart();
     }
-
 }
 
 void IntakeSubsystem::SetRollerPower(double power) {
     // Set the power level of the drive motor
     _drive_motor.Set(power);
+    _transfer_motor.Set(power);
 }
 
 bool IntakeSubsystem::HasPiece() {
@@ -154,4 +159,9 @@ void IntakeSubsystem::OpenLoopTestMotors(double pivot_power, double drive_power)
         _pivot_motor.Set(pivot_power);
         _drive_motor.Set(drive_power);
     }
+}
+
+//Amp
+void IntakeSubsystem::AmpMovement(double extend_power) {
+    _amp_motor.Set(extend_power);
 }
