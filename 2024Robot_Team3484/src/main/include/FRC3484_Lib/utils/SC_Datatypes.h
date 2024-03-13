@@ -43,8 +43,8 @@ namespace SC
 
 	} SC_SwerveCurrents;
 
-	using kv_unit = units::compound_unit<units::volts, units::inverse<units::radians_per_second>>;
-	using ka_unit = units::compound_unit<units::volts, units::inverse<units::radians_per_second_squared>>;
+	using kv_unit = units::compound_unit<units::volts, units::inverse<units::meters_per_second>>;
+	using ka_unit = units::compound_unit<units::volts, units::inverse<units::meters_per_second_squared>>;
 	typedef struct {
 		double Kp;
 		double Ki;

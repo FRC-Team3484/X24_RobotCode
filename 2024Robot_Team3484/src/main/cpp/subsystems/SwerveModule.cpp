@@ -94,17 +94,17 @@ SwerveModule::SwerveModule(SC_SwerveConfigs corner)
 void SwerveModule::SetDesiredState(SwerveModuleState state, bool open_loop, bool optimize) {
     Rotation2d encoder_rotation{_GetSteerAngle()};
 
-    //If the wheel needs to rotate over 90 degrees, rotate the other direction and flip the output
-    //This prevents the wheel from ever needing to rotate more than 90 degrees
+    // If the wheel needs to rotate over 90 degrees, rotate the other direction and flip the output
+    // This prevents the wheel from ever needing to rotate more than 90 degrees
     if (optimize)
         state = SwerveModuleState::Optimize(state, encoder_rotation);
 
-    //Scale the wheel speed down by the cosine of the angle error
-    //This prevents the wheel from accelerating before it has a chance to face the correct direction
+    // Scale the wheel speed down by the cosine of the angle error
+    // This prevents the wheel from accelerating before it has a chance to face the correct direction
     state.speed *= (state.angle - encoder_rotation).Cos();
 
-    //In open loop, treat speed as a percent power
-    //In closed loop, try to hit the acutal speed
+    // In open loop, treat speed as a percent power
+    // In closed loop, try to hit the acutal speed
     if (open_loop) {
         _drive_motor.Set(state.speed / MAX_WHEEL_SPEED);
     } else {
@@ -166,4 +166,5 @@ void SwerveModule::SetBrakeMode() {
     // _drive_motor.GetConfigurator().Apply(_drive_motor_config);
     _drive_motor.SetNeutralMode(motorcontrol::Brake);
 }
+
 WPI_UNIGNORE_DEPRECATED

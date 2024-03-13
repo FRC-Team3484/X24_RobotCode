@@ -1,9 +1,3 @@
-//
-// Intake Subsystem
-//
-// -Noah, Aidan  & Ethan
-//
-
 #include <subsystems/IntakeSubsystem.h>
 #include <units/angle.h>
 #include <FRC3484_Lib/utils/SC_Datatypes.h>
@@ -41,10 +35,6 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
     _amp_motor.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
     _amp_motor.SetInverted(true);
 
-
-
-
-
     _pivot_motor.RestoreFactoryDefaults();
     _drive_motor.RestoreFactoryDefaults();
 
@@ -69,7 +59,7 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
 }
 
 void IntakeSubsystem::Periodic() {
-    if(frc::SmartDashboard::GetBoolean("Intake Diagnostics", false)){
+    if (frc::SmartDashboard::GetBoolean("Intake Diagnostics", false)) {
         SmartDashboard::PutNumber("Intake Angle (deg)", GetIntakePosition().value()*360);
         //SmartDashboard::PutNumber("Intake Velocity", _pivot_encoder->GetVelocity());
         SmartDashboard::PutBoolean("Arm Extened Sensor", ArmExtended());
@@ -85,25 +75,21 @@ void IntakeSubsystem::Periodic() {
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
         if (_arm_sensor_hit) {
-            if (_target_position == STOW_POSITION && !ArmExtended()){
+            if (_target_position == STOW_POSITION && !ArmExtended()) {
                 _pivot_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
                 _pivot_pid_controller->SetIAccum(0);
                 _pivot_encoder->SetPosition(IntakeConstants::STOW_POSITION.value());
-            }
-            else {
-                
-
+            } else {
                 units::turn_t linear_angle = _intake_trapezoid.Calculate(_trapezoid_timer.Get(), _current_state, _target_state).position;
                 #ifdef EN_DIAGNOSTICS
                 SmartDashboard::PutNumber(" Target Position (Trapezoid)", linear_angle.value()*360);
                 #endif
 
-                /*if (units::math::abs(linear_angle - GetIntakePosition()) >= 40_deg){
-                    SetIntakeAngle(_target_position, true);
-                } else {*/
+                // if (units::math::abs(linear_angle - GetIntakePosition()) >= 40_deg){
+                //     SetIntakeAngle(_target_position, true);
+                // } else {
                 _pivot_pid_controller->SetReference(linear_angle.value()*GEAR_RATIO, rev::CANSparkMax::ControlType::kPosition);
-                /*}*/
-                    
+                // }
             }
 
         } else {
@@ -114,7 +100,6 @@ void IntakeSubsystem::Periodic() {
             }
         }
     }
-
 }
 
 void IntakeSubsystem::SetIntakeAngle(units::degree_t angle, bool force_recalculate) {
@@ -127,7 +112,6 @@ void IntakeSubsystem::SetIntakeAngle(units::degree_t angle, bool force_recalcula
     
         _trapezoid_timer.Restart();
     }
-
 }
 
 void IntakeSubsystem::SetRollerPower(double power) {

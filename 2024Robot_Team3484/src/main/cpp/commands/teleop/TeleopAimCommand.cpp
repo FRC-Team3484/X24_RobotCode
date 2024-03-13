@@ -31,12 +31,15 @@ void TeleopAimCommand::Initialize() {
             _limelight->SetLensHeight(CAMERA_HEIGHT);
             _limelight->SetTargetHeight(SPEAKER_TARGET_HEIGHT);
     }
-    _limelight->SetPipeline(0);
+    _limelight->SetPipeline(1);
 }
 
 void TeleopAimCommand::Execute() {
-    if (_oi_operator->LauncherToggle()) {
-        if (_oi_driver->AimSequenceIgnore()) {
+    if(_oi_operator->LauncherToggle()){
+        if(_limelight != NULL){
+           _limelight->SetPipeline(1); 
+        }
+        if (_limelight == NULL || _oi_driver->AimSequenceIgnore() || !_limelight->HasTarget()) {
             meters_per_second_t x_speed = -_oi_driver->GetThrottle() * MAX_LINEAR_SPEED;
             meters_per_second_t y_speed = -_oi_driver->GetStrafe() * MAX_LINEAR_SPEED;
             radians_per_second_t rotation = -_oi_driver->GetRotation() * MAX_ROTATION_SPEED;
@@ -51,6 +54,8 @@ void TeleopAimCommand::Execute() {
             _drivetrain->Drive(x_speed, y_speed, rotation, true);
         }
         else {
+
+    
             _oi_driver->SetRumble(DRIVER_RUMBLE_LOW);
             if (_aiming){
                 _drivetrain->Drive((_limelight->GetDistanceFromTarget() - TRAP_TARGET_DISTANCE)*DISTANCE_GAIN*MAX_LINEAR_SPEED,
@@ -60,6 +65,7 @@ void TeleopAimCommand::Execute() {
                         units::math::abs(_limelight->GetHorizontalDistance()) < TRAP_AIM_TOLERANCE && _limelight->GetDistanceFromTargetInch() > TRAP_DISTANCE_SMALL && _limelight->GetDistanceFromTargetInch() < TRAP_DISTANCE_LARGE) || !_limelight->HasTarget()) {
                     _aiming = false;
                 }
+                //_limelight->SetPipeline(0);
             }
             else {
                 _drivetrain->SetModuleStates(
@@ -88,8 +94,13 @@ void TeleopAimCommand::Execute() {
         SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
         #endif
     }
-    else {
-        if (_oi_driver->AimSequenceIgnore()) {
+    else{
+        if(_limelight != NULL){
+            _limelight->SetPipeline(0);
+        }
+        
+        if (_limelight == NULL || _oi_driver->AimSequenceIgnore()|| !_limelight->HasTarget()) {
+            
             meters_per_second_t x_speed = -_oi_driver->GetThrottle() * MAX_LINEAR_SPEED;
             meters_per_second_t y_speed = -_oi_driver->GetStrafe() * MAX_LINEAR_SPEED;
             radians_per_second_t rotation = -_oi_driver->GetRotation() * MAX_ROTATION_SPEED;
@@ -104,10 +115,12 @@ void TeleopAimCommand::Execute() {
             _drivetrain->Drive(x_speed, y_speed, rotation, true);
         } 
         else {
+            _limelight->SetPipeline(0);
             _oi_driver->SetRumble(DRIVER_RUMBLE_LOW);
-            if (_aiming) {
-                _drivetrain->Drive(0_mps, 0_mps, _limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
-                if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < SPEAKER_AIM_TOLERANCE_SMALL) || !_limelight->HasTarget()) {
+            if (_aiming){
+                //_limelight->SetPipeline(0);
+                _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
+                if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < SPEAKER_AIM_TOLERANCE_LARGE) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()) {
                     _aiming = false;
                 }
             }

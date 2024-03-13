@@ -1,13 +1,8 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 #ifndef ROBOT_H
 #define ROBOT_H
 
 #include "OI.h"
 #include "Constants.h"
-
 
 // Swerve Stuff
 #include "frc2/command/Commands.h"
@@ -20,7 +15,6 @@
 #include <frc/PowerDistribution.h>
 #include <frc/shuffleboard/ShuffleboardTab.h>
 #include <frc/shuffleboard/Shuffleboard.h>
-
 
 // Other Subsystems
 #include "subsystems/IntakeSubsystem.h"
@@ -46,6 +40,7 @@
 #include <frc/smartdashboard/SendableChooser.h>
 // Command Groups
 #include <frc2/command/SequentialCommandGroup.h>
+
 class Robot : public frc::TimedRobot {
     public:
         void RobotInit() override;
@@ -67,12 +62,11 @@ class Robot : public frc::TimedRobot {
         frc::PowerDistribution _agent_smith_pdp{1, frc::PowerDistribution::ModuleType::kRev};
         frc::ShuffleboardTab& _power_diagnostics = frc::Shuffleboard::GetTab("Power Diagnostics");
         
-
         // Interface OI
         Driver_Interface _oi_driver{};
         Operator_Interface _oi_operator{};
 
-        //Subsystems
+        // Subsystems
         #if defined (INTAKE_ENABLED) || defined (LAUNCHER_ENABLED)
         IntakeSubsystem _intake{IntakeConstants::PIVOT_MOTOR_CAN_ID, IntakeConstants::DRIVE_MOTOR_CAN_ID, IntakeConstants::PIECE_SENSOR_DI_CH, IntakeConstants::ARM_SENSOR_DI_CH, IntakeConstants::PIVOT_PID_CONSTANTS, IntakeConstants::PID_OUTPUTRANGE_MAX, IntakeConstants::PID_OUTPUTRANGE_MIN, 60};
         #endif
@@ -119,7 +113,6 @@ class Robot : public frc::TimedRobot {
         );
 
         // Variables
-
         std::optional<frc2::CommandPtr> _auton_command;
 
         // Pipeline Stuff

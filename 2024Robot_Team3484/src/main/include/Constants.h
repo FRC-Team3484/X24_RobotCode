@@ -29,7 +29,6 @@ namespace LauncherConstants {
     constexpr int RIGHT_MOTOR_CAN_ID = 41;
     constexpr int LAUNCH_SENSOR_DI_CH = 2; // Change to 2
 
-
     constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-5, 5e-7, 0, 0);
     constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-5, 5e-7, 0, 1.6e-4);
     //7e-8
@@ -41,12 +40,12 @@ namespace LauncherConstants {
 
     //constexpr bool IsLoaded = true;
     constexpr bool LEFT_MOTOR_INVERTED = false;
-     
+
     // Target RPM
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 4500_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
-    constexpr units::revolutions_per_minute_t AMP_RPM = 350_rpm;
-    constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
+    constexpr units::revolutions_per_minute_t AMP_RPM = 900_rpm;
+    constexpr units::revolutions_per_minute_t TRAP_RPM = 4000_rpm;
     constexpr units::second_t TIMEOUT = 5_s;
 }
 namespace IntakeConstants {
@@ -60,7 +59,6 @@ namespace IntakeConstants {
 
     // Amp
     constexpr int AMP_ID = 60;
-
 
     constexpr units::degrees_per_second_t MAX_VELOCITY = 250_deg_per_s;
     constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 1000_deg_per_s_sq;
@@ -104,18 +102,18 @@ namespace ClimberConstants {
 
 namespace SwerveConstants {
     namespace AutonNames {
-    const std::string AUTON_NONE = "Nothing";
-    const std::string AUTON_DISTANCE = "Drive 5 feet";
-    const std::string AUTON_ANGLE = "Turn 90 degrees";
-    const std::string AUTON_SEQUENCE = "Drive Sequence";
-    const std::string AUTON_NAMES[] = {
-        "A1", "B1", "B2", "B3",
-        "C1", "C2", "C3", "D0",
-        "ABack", "BBack", "CBack", "CBackNoPiece"
-    };
-    //Testing
-    
-    const std::string TWO_PIECE_AUTON = "Two Piece Auton";
+        const std::string AUTON_NONE = "Nothing";
+        const std::string AUTON_DISTANCE = "Drive 5 feet";
+        const std::string AUTON_ANGLE = "Turn 90 degrees";
+        const std::string AUTON_SEQUENCE = "Drive Sequence";
+        const std::string AUTON_NAMES[] = {
+            "A1", "B1", "B2", "B3",
+            "C1", "C2", "C3", "D0",
+            "ABack", "BBack", "CBack", "CBackNoPiece"
+        };
+
+        // Testing
+        const std::string TWO_PIECE_AUTON = "Two Piece Auton";
     }
 
     namespace ControllerConstants {
@@ -126,7 +124,6 @@ namespace SwerveConstants {
         constexpr double OPERATOR_RUMBLE_LOW = 0.2;
         
         constexpr double RUMBLE_STOP = 0;
-
     }
 
     namespace DrivetrainConstants {
@@ -173,9 +170,8 @@ namespace SwerveConstants {
             constexpr double Kd_Drive = 0.0;
             // Check SC_Datatypes for the struct
             // We still need to find the proper units types of V and A
-            static SC::SC_SwervePID LeftPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_rad_per_s, 1.1369e-06 * 1_V / 1_rad_per_s_sq, 0.67624_V};
-            static SC::SC_SwervePID RightPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_rad_per_s, 1.1369e-06 * 1_V / 1_rad_per_s_sq, 0.67624_V};
-
+            static SC::SC_SwervePID LeftPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_mps, 1.1369e-06 * 1_V / 1_mps_sq, 0.67624_V};
+            static SC::SC_SwervePID RightPID{1.4019e-06, 0, 0, 5.1566e-06 * 1_V / 1_mps, 1.1369e-06 * 1_V / 1_mps_sq, 0.67624_V};
         }
 // Check For Autons
         namespace DriveFeedForwardConstants {
@@ -183,6 +179,7 @@ namespace SwerveConstants {
             constexpr auto V = 0.8_V / 1.0_mps;
             constexpr auto A = 0.15_V / 1.0_mps_sq;
         }
+
         namespace SteerPIDConstants {
             constexpr double Kp_Steer = 0.5;
             constexpr double Ki_Steer = 0.0;
@@ -259,8 +256,8 @@ namespace TrapConstants {
     constexpr units::inch_t GEAR_RATIO = 1.0_in;
     constexpr double PID_MAX = 1;
     constexpr double PID_MIN = -1;
-
 }
+
 namespace UserInterface {
     namespace Driver {
         constexpr int DRIVER_CONTROLLER_PORT = 0;
@@ -278,7 +275,6 @@ namespace UserInterface {
 
         // Ignore
         constexpr int DRIVER_IGNORE = XBOX_Y;
-
     }
     namespace Operator {
         constexpr int OPERATOR_CONTROLLER_PORT = 1;
@@ -290,7 +286,7 @@ namespace UserInterface {
         constexpr int LAUNCHER_AMP = XBOX_Y;
         constexpr int LAUNCHER_INTAKE = XBOX_A; // In accordance with INTAKE_LAUNCHER
 
-        //Launcher
+        // Launcher
         constexpr int LAUNCHER_TOGGLE_HK = XBOX_LT;
         constexpr int INTAKE_LAUNCHER = XBOX_Y;
         constexpr int AIM_START = XBOX_X;
@@ -298,7 +294,7 @@ namespace UserInterface {
         // Climb
         // D-Pad: Hard Coded in OI
 
-        //Amp 
+        // Amp 
         constexpr int AMP_TOGGLE =XBOX_LT;
         constexpr int AMP_STICK = XBOX_LS_Y;
         constexpr double AMP_DEADBAND = XBOX_Y;
@@ -324,4 +320,5 @@ namespace UserInterface {
         }
     }
 }
+
 #endif
