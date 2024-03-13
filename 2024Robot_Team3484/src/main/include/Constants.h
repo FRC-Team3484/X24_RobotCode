@@ -56,6 +56,8 @@ namespace IntakeConstants {
     constexpr int ARM_SENSOR_DI_CH = 1;
     constexpr double GEAR_RATIO = 100.0/9.0;
 
+    constexpr units::second_t EJECT_TIMER = .25_s;
+
     // Amp
     constexpr int AMP_ID = 60;
 

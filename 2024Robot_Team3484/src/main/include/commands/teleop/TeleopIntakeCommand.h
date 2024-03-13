@@ -6,6 +6,7 @@
 #include "subsystems/IntakeSubsystem.h"
 #include "subsystems/LauncherSubsystem.h"
 #include "subsystems/ClimberSubsystem.h"
+#include <frc/Timer.h>
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
@@ -33,6 +34,8 @@ class TeleopIntakeCommand
         Operator_Interface* _operator_oi;
         Driver_Interface* _driver_oi;
         ClimberSubsystem* _climber_subsystem;
+        frc::Timer _intake_timer;
+
 };
 
 #endif
