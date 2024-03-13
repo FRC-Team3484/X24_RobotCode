@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0123174097463106,
-        "y": 4.411028112303021
+        "x": 2.056578885487193,
+        "y": 4.517239538857166
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.6329243724187514,
-        "y": 4.981886519525157
+        "x": 2.6136066848520314,
+        "y": 5.194777179562696
       },
       "prevControl": {
-        "x": 2.2799894864958574,
-        "y": 4.381286708943861
+        "x": 1.9550143314808923,
+        "y": 4.763896312872468
       },
       "nextControl": {
-        "x": 2.7396257050069956,
-        "y": 5.163463356209054
+        "x": 2.789846154473168,
+        "y": 5.310081001459011
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 4.18
       },
       "prevControl": {
-        "x": 2.2056362548394044,
-        "y": 4.3614592911987184
+        "x": 2.1146157734907933,
+        "y": 4.557139899359641
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": -114.48668093171608,
+      "rotationDegrees": -127.6004053401129,
       "rotateFast": false
     }
   ],
@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "Intake",
-      "waypointRelativePos": 0.3,
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "sequential",
         "data": {
@@ -64,6 +64,23 @@
               "type": "named",
               "data": {
                 "name": "IntakeCommand"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Spool",
+      "waypointRelativePos": 1.45,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "SpoolCommand"
               }
             }
           ]

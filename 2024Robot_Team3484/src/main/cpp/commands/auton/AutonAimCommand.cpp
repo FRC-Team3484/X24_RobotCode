@@ -52,6 +52,7 @@ void AutonAimCommand::Execute() {
             );
 
             if (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance())>SPEAKER_AIM_TOLERANCE_LARGE) {
+
                 _aiming = true;
             }
         }
