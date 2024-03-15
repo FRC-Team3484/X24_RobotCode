@@ -1,3 +1,4 @@
+
 #include "subsystems/LauncherSubsystem.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -20,7 +21,7 @@ LauncherSubsystem::LauncherSubsystem(
     _launched_sensor{launch_sensor_di_ch}
     {
         _rpm_window = rpm_window;
-
+      
         _left_launcher_encoder = new SparkRelativeEncoder(_left_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
         _right_launcher_encoder = new SparkRelativeEncoder(_right_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
 
@@ -32,7 +33,7 @@ LauncherSubsystem::LauncherSubsystem(
     if (_left_launcher_pid_controller !=NULL){    
         _left_launcher_pid_controller->SetFeedbackDevice(*_left_launcher_encoder);
     }
-    
+
     if (_right_launcher_pid_controller !=NULL){
         _right_launcher_pid_controller->SetFeedbackDevice(*_right_launcher_encoder);
     }
@@ -40,11 +41,14 @@ LauncherSubsystem::LauncherSubsystem(
     _left_motor.RestoreFactoryDefaults();
     _right_motor.RestoreFactoryDefaults();
     
-    _left_motor.SetInverted(LEFT_MOTOR_INVERTED);
+    _left_motor.SetInverted(!LEFT_MOTOR_INVERTED);
     _right_motor.SetInverted(!LEFT_MOTOR_INVERTED);
+    _left_motor.SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
+    _right_motor.SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
 
-    _left_motor.SetPeriodicFramePeriod(rev::CANSparkLowLevel::PeriodicFrame::kStatus5, 200);
-    _right_motor.SetPeriodicFramePeriod(rev::CANSparkLowLevel::PeriodicFrame::kStatus5, 200);
+    _left_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
+    _right_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
+
 
     if (_left_launcher_pid_controller !=NULL){
         _left_launcher_pid_controller->SetP(left_pidc.Kp);
@@ -53,8 +57,7 @@ LauncherSubsystem::LauncherSubsystem(
         _left_launcher_pid_controller->SetIZone(0);
         _left_launcher_pid_controller->SetFF(left_pidc.Kf);
         _left_launcher_pid_controller->SetOutputRange(-1, 1);
-    }
-
+        }
     if (_right_launcher_pid_controller !=NULL){
         _right_launcher_pid_controller->SetP(right_pidc.Kp);
         _right_launcher_pid_controller->SetI(right_pidc.Ki);
@@ -68,64 +71,71 @@ LauncherSubsystem::LauncherSubsystem(
 void LauncherSubsystem::setLauncherRPM(units::revolutions_per_minute_t speed){
     _target_speed = speed.value()*GEAR_RATIO;
 }
-
 bool LauncherSubsystem::LaunchingSensor(){
     return !_launched_sensor.Get();
 }
 
 void LauncherSubsystem::Periodic() {
-    if (frc::SmartDashboard::GetBoolean("Launcher Diagnostics",false)) {
+    if (frc::SmartDashboard::GetBoolean("Launcher Diagnostics",false)){
         SmartDashboard::PutNumber("Motor Speed Left (RPM)", _left_launcher_encoder->GetVelocity()/GEAR_RATIO);
         SmartDashboard::PutNumber("Motor Speed Right (RPM)", _right_launcher_encoder->GetVelocity()/GEAR_RATIO);
         SmartDashboard::PutBoolean("Launched Sensor", LaunchingSensor());
         SmartDashboard::PutBoolean("Launcher: At Target RPM", atTargetRPM());
     }
-
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
+        //if (_dbnc_launch_window != NULL) {
+            //_en_launch = _dbnc_launch_window->Calculate(_WithinRPMWindow());
+        //}else {
+            //_en_launch = _WithinRPMWindow();
+        //}
         _counter_not_null_right = 0;
         _counter_not_null_left = 0;
 
-        if (_left_launcher_pid_controller !=NULL) {
+
+        if (_left_launcher_pid_controller !=NULL){
             if (_target_speed == 0) {
                 _left_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
                 _left_launcher_pid_controller->SetIAccum(0);
-            } else if (_target_speed == 9999.0*GEAR_RATIO) {
-                _left_launcher_pid_controller->SetReference(1.0, rev::CANSparkMax::ControlType::kDutyCycle);
             } else {
                 _left_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
             }
             _counter_not_null_left++;
         }
-        if (_right_launcher_pid_controller !=NULL) {
+        if (_right_launcher_pid_controller !=NULL){
             if (_target_speed == 0) {
                 _right_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
                 _right_launcher_pid_controller->SetIAccum(0);
-            } else if (_target_speed == 9999.0*GEAR_RATIO) {
-                _right_launcher_pid_controller->SetReference(1.0, rev::CANSparkMax::ControlType::kDutyCycle); // no pid due to Duty Cycle
             } else {
                 _right_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
-            }
+            }    
             _counter_not_null_right++;
         }
+
     }
+
 }
 
 bool LauncherSubsystem::atTargetRPM() {
     if (_counter_not_null_left + _counter_not_null_right == 2){
-        if (_target_speed == 9999.0*GEAR_RATIO) return _left_launcher_encoder->GetVelocity() >= 5000.0 && _right_launcher_encoder->GetVelocity() >= 5000.0;
         return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window && std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
-        
-    } else if (_counter_not_null_left == 1) {
-        return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
-
-    } else if (_counter_not_null_right == 1) {
-        return std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
-
-    } else {
+    }
+    else if (_counter_not_null_left == 1) {
+        return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;   
+    }
+    else if (_counter_not_null_right == 1) {
+        return std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;   
+    }
+    else {
         return false;
     }
 }
+
+
+//bool LauncherSubsystem::atTargetRPM(){
+    //return _en_launch;
+
+//}
 
 void LauncherSubsystem::OpenLoopTestMotors(double power_left, double power_right) {
     if (frc::SmartDashboard::GetBoolean("testing",true)) {

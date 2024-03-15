@@ -31,9 +31,11 @@ void TeleopLauncherCommand::Initialize(){
         if (frc::SmartDashboard::GetBoolean("testing", true)) {
             _intake->SetRollerPower(0);
             _intake->OpenLoopTestMotors(0,0);
+            _intake->SetTransferPower(0);
         } else {
             _intake->SetIntakeAngle(STOW_POSITION);
             _intake->SetRollerPower(ROLLER_STOP);
+            _intake->SetTransferPower(ROLLER_STOP);
         }
     }
 }
@@ -57,6 +59,7 @@ void TeleopLauncherCommand::Execute(){
 
             if(_launching > 0) {
                 _intake->SetRollerPower(-ROLLER_POWER);
+                _intake->SetTransferPower(-ROLLER_POWER);
             }
 
             if (_launching == 1 && _launcher->LaunchingSensor()) {
@@ -75,6 +78,7 @@ void TeleopLauncherCommand::End(bool interrupted) {
         if (_launcher !=NULL && _intake != NULL) {
             _launcher->setLauncherRPM(0_rpm);
             _intake->SetRollerPower(ROLLER_STOP);
+            _intake->SetTransferPower(ROLLER_STOP);
             _oi->SetRumble(RUMBLE_STOP);
         }
     }

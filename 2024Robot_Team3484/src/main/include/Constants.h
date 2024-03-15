@@ -32,8 +32,9 @@ namespace LauncherConstants {
     constexpr int LAUNCH_SENSOR_DI_CH = 2; // Change to 2
 
 
-    constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-5, 5e-7, 0, 0);
-    constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-5, 5e-7, 0, 1.6e-4);
+
+    constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-6, 1.5e-7, 0, 1.25e-4);
+    constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-6, 1.5e-7, 0, 1.25e-4);
     //7e-8
     constexpr double GEAR_RATIO = 1.0;
     constexpr double RPM_WINDOW_RANGE = 50;
@@ -53,6 +54,7 @@ namespace LauncherConstants {
 }
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
+    constexpr int TRANSFER_MOTOR_ID = 42;
     constexpr int DRIVE_MOTOR_CAN_ID = 31;
     constexpr int PIECE_SENSOR_DI_CH = 0; // Change to 0
     constexpr int ARM_SENSOR_DI_CH = 1;
@@ -82,6 +84,7 @@ namespace IntakeConstants {
     constexpr double ROLLER_POWER = 0.8;
     constexpr double EJECT_POWER = -1.0;
     constexpr double INTAKE_SHOOTER_POWER = 0.4;
+    constexpr double TRANSFER_SHOOTER_POWER = 0.4;
 
     constexpr units::degree_t POSITION_TOLERANCE = 10_deg;
 
@@ -89,6 +92,8 @@ namespace IntakeConstants {
     constexpr uint PIVOT_FREE_LIMIT = 40;
     constexpr uint DRIVE_STALL_LIMIT = 60;
     constexpr uint DRIVE_FREE_LIMIT = 40;
+
+    constexpr bool TRANSFER_MOTOR_INVERTED = false;
 }
 
 namespace ClimberConstants {

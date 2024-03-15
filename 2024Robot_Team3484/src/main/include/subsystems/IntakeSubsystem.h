@@ -4,6 +4,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
 #include <rev/CANSparkMaxLowLevel.h>
+#include <ctre/phoenix/motorcontrol/can/VictorSPX.h>
 //#include <ctre/Phoenix.h>
 #include <frc/DigitalInput.h>
 #include <frc/trajectory/TrapezoidProfile.h>
@@ -24,6 +25,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
             int drive_motor_can_id, 
             int piece_sensor_di_ch,
             int arm_sensor_di_ch,
+            int transfer_motor_id,
             SC::SC_PIDConstants pivot_pidc,
             double pid_output_range_max,
             double pid_output_range_min,
@@ -33,21 +35,25 @@ class IntakeSubsystem : public frc2::SubsystemBase {
         void Periodic() override;
         void SetIntakeAngle(units::degree_t angle, bool force_recalculate=false);
         void SetRollerPower(double power);
+        void SetTransferPower(double power);
         bool HasPiece();
         bool ArmExtended();
         units::turn_t GetIntakePosition();
         units::revolutions_per_minute_t GetEncoderVelocity();
         bool AtSetPosition();
         void OpenLoopTestMotors(double pivot_power, double drive_power);
+        void OpenLoopTransferMotor(double tranfer_power);
 
         // Amp
         void AmpMovement(double extend_power);
 
     private:
         bool _arm_sensor_hit = false;
-        
+
+
         rev::CANSparkMax _pivot_motor;
         rev::CANSparkMax _drive_motor;
+        ctre::phoenix::motorcontrol::can::VictorSPX _transfer_motor;
 
         frc::DigitalInput _piece_sensor;
         frc::DigitalInput _arm_sensor;
