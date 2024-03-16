@@ -36,6 +36,9 @@ void Robot::RobotPeriodic() {
     frc::SmartDashboard::PutNumber("Climber Down", _oi_operator.ClimbDown());
     frc::SmartDashboard::PutNumber("POV", _oi_operator.RawPOV());
 
+
+    _vision.SetLEDMode(_intake.HasPiece() ? SC::SC_LEDMode::LED_ON : SC::SC_LEDMode::LED_OFF);
+
     if (frc::SmartDashboard::GetBoolean("Voltage Diagnostics", false)) {
         frc::Shuffleboard::SelectTab("Power Diagnostics");
         frc::SmartDashboard::PutNumber("Voltage", _agent_smith_pdp.GetVoltage());

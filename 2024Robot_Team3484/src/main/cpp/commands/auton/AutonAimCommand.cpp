@@ -66,7 +66,7 @@ void AutonAimCommand::Execute() {
 
 void AutonAimCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
-    _drivetrain->SetCoastMode();
+    _drivetrain->SetBrakeMode();
 }
 
 bool AutonAimCommand::IsFinished() {return false;}

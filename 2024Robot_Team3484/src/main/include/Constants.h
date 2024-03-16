@@ -46,7 +46,7 @@ namespace LauncherConstants {
     constexpr bool LEFT_MOTOR_INVERTED = false;
      
     // Target RPM
-    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 4500_rpm;
+    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 3000_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
     constexpr units::revolutions_per_minute_t AMP_RPM = 900_rpm;
     constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
@@ -151,10 +151,10 @@ namespace SwerveConstants {
         // DO NOT REMOVE STATIC CALLS
 
         // Drive, steer, encoder, magnet offset
-        static SC::SC_SwerveConfigs SWERVE_FRONT_LEFT{10,11,20, -92.505};
-        static SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21,-60.205};
-        static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22,160.654};
-        static SC::SC_SwerveConfigs SWERVE_BACK_RIGHT{16,17,23,-55.283};
+        static SC::SC_SwerveConfigs SWERVE_FRONT_LEFT{10,11,20, -90.527}; //-92.505
+        static SC::SC_SwerveConfigs SWERVE_FRONT_RIGHT{12,13,21, -58.096}; //-60.205
+        static SC::SC_SwerveConfigs SWERVE_BACK_LEFT{14,15,22, 160.225}; //160.654
+        static SC::SC_SwerveConfigs SWERVE_BACK_RIGHT{16,17,23, -55.898}; //-55.283
 
         // constexpr units::second_t X_BRAKE_TIMER = .5_s;
 
@@ -235,14 +235,14 @@ namespace SwerveConstants {
     }
 
 namespace VisionConstants {
-    constexpr units::inch_t MAX_LAUNCH_RANGE = 63.7_in;
+    constexpr units::inch_t MAX_LAUNCH_RANGE = 55.0_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_LARGE = 12_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_SMALL = 6_in;
     constexpr units::inch_t TRAP_DISTANCE_LARGE  = 35_in;
     constexpr units::inch_t TRAP_DISTANCE_SMALL = 30_in;
     constexpr units::inch_t TRAP_AIM_TOLERANCE = 2_in;
-    constexpr double CAMERA_ANGLE = 38.0;
-    constexpr double CAMERA_HEIGHT = 22.5;
+    constexpr double CAMERA_ANGLE = 51.5;
+    constexpr double CAMERA_HEIGHT = 18.625;
     constexpr double STEER_GAIN = -.01;
     constexpr double DISTANCE_GAIN = -.1;
     constexpr double TRAP_TARGET_DISTANCE = 32.5;
