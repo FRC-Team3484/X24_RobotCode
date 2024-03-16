@@ -3,6 +3,7 @@
 #include <FRC3484_Lib/utils/SC_Datatypes.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
+
 using namespace IntakeConstants;
 using namespace frc;
 using namespace ctre::phoenix;
@@ -68,6 +69,9 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
     _pivot_pid_controller->SetIZone(PID_IZ_ZONE);
     _pivot_pid_controller->SetFF(pivot_pidc.Kf);
     _pivot_pid_controller->SetOutputRange(pid_output_range_min, pid_output_range_max);
+
+    //_intake_dbnc = new Debouncer(INTAKE_DBNC_TIME, Debouncer::kRising);
+    //_intake_dbnc->Calculate(_pivot_motor.GetOutputCurrent() > INTAKE_DBNC_THRESHOLD)
 }
 
 void IntakeSubsystem::Periodic() {
@@ -86,6 +90,7 @@ void IntakeSubsystem::Periodic() {
 
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
+
         if (_arm_sensor_hit) {
             if (_target_position == STOW_POSITION && !ArmExtended()) {
                 _pivot_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);

@@ -14,6 +14,7 @@
 
 #include <Constants.h>
 #include "FRC3484_Lib/utils/SC_Datatypes.h"
+#include <frc/filter/Debouncer.h>
 
 //Amp
 #include "ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h"
@@ -71,6 +72,8 @@ class IntakeSubsystem : public frc2::SubsystemBase {
             0_deg_per_s
         };
         units::degree_t _target_position;
+
+        //frc::Debouncer* _intake_dbnc;
 
         frc::Timer _trapezoid_timer;
 

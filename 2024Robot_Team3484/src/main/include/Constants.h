@@ -48,7 +48,7 @@ namespace LauncherConstants {
     // Target RPM
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 3000_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
-    constexpr units::revolutions_per_minute_t AMP_RPM = 900_rpm;
+    constexpr units::revolutions_per_minute_t AMP_RPM = 5000_rpm;
     constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
     constexpr units::second_t TIMEOUT = 10_s;
 }
@@ -59,7 +59,9 @@ namespace IntakeConstants {
     constexpr int PIECE_SENSOR_DI_CH = 0; // Change to 0
     constexpr int ARM_SENSOR_DI_CH = 1;
     constexpr double GEAR_RATIO = 100.0/9.0;
+    constexpr units::second_t INTAKE_DBNC_TIME = 3_s;
 
+    constexpr double INTAKE_DBNC_THRESHOLD = 30.0;
     constexpr units::second_t EJECT_TIMER = .25_s;
 
     // Amp

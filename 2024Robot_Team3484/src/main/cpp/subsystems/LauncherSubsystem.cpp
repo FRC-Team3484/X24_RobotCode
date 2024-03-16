@@ -119,15 +119,18 @@ void LauncherSubsystem::Periodic() {
 bool LauncherSubsystem::atTargetRPM() {
     if (_counter_not_null_left + _counter_not_null_right == 2){
         return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window && std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
+        //return (_left_launcher_encoder->GetVelocity() >= (_target_speed - _rpm_window) && _right_launcher_encoder->GetVelocity()>= (_target_speed - _rpm_window)); 
     }
     else if (_counter_not_null_left == 1) {
-        return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;   
+        return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
+       //return _left_launcher_encoder->GetVelocity() >= (_target_speed - _rpm_window);
     }
     else if (_counter_not_null_right == 1) {
-        return std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;   
+        return std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
+       //return _right_launcher_encoder->GetVelocity()>= (_target_speed - _rpm_window);
     }
     else {
-        return false;
+       return false;
     }
 }
 
