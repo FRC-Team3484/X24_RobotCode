@@ -35,7 +35,7 @@ void TeleopLauncherCommand::Initialize(){
         } else {
             _intake->SetIntakeAngle(STOW_POSITION);
             _intake->SetRollerPower(ROLLER_STOP);
-            _intake->SetTransferPower(ROLLER_STOP);
+            _intake->SetTransferPower(TRANSFER_STOP);
         }
     }
 }
@@ -59,7 +59,7 @@ void TeleopLauncherCommand::Execute(){
 
             if(_launching > 0) {
                 _intake->SetRollerPower(-ROLLER_POWER);
-                _intake->SetTransferPower(-ROLLER_POWER);
+                _intake->SetTransferPower(-TRANSFER_POWER);
             }
 
             if (_launching == 1 && _launcher->LaunchingSensor()) {
@@ -78,7 +78,7 @@ void TeleopLauncherCommand::End(bool interrupted) {
         if (_launcher !=NULL && _intake != NULL) {
             _launcher->setLauncherRPM(0_rpm);
             _intake->SetRollerPower(ROLLER_STOP);
-            _intake->SetTransferPower(ROLLER_STOP);
+            _intake->SetTransferPower(TRANSFER_STOP);
             _oi->SetRumble(RUMBLE_STOP);
         }
     }

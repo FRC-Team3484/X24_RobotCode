@@ -84,6 +84,9 @@ namespace IntakeConstants {
     constexpr double ROLLER_POWER = 0.8;
     constexpr double EJECT_POWER = -1.0;
     constexpr double INTAKE_SHOOTER_POWER = 0.4;
+
+    constexpr double TRANSFER_POWER = 0.8;
+    constexpr int TRANSFER_STOP = 0;
     constexpr double TRANSFER_SHOOTER_POWER = 0.4;
 
     constexpr units::degree_t POSITION_TOLERANCE = 10_deg;

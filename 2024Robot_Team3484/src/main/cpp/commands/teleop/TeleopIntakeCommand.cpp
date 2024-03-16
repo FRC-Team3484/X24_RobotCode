@@ -46,7 +46,7 @@ void TeleopIntakeCommand::Execute() {
                 if (_intake_timer.Get() == 0_s) {
                     _intake_timer.Start();
                 }if (_intake_timer.Get() < EJECT_TIMER){
-                    _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER);
+                    _intake_subsystem->SetRollerPower(IntakeConstants::TRANSFER_POWER);
                 }else {
                     if (_intake_subsystem->AtSetPosition()) {
                         _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
@@ -77,6 +77,7 @@ void TeleopIntakeCommand::Execute() {
                     _launcher_subsystem->setLauncherRPM(LauncherConstants::TRAP_RPM);
                     if (_intake_subsystem->AtSetPosition() && _launcher_subsystem->atTargetRPM()) {
                         _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER*-1);
+                        _intake_subsystem->SetTransferPower(IntakeConstants::TRANSFER_POWER*-1);
                     }
                     //if (_intake_subsystem->HasPiece()) {
                     //    _operator_oi->SetRumble(SwerveConstants::ControllerConstants::OPERATOR_RUMBLE_HIGH);
@@ -92,6 +93,7 @@ void TeleopIntakeCommand::Execute() {
                     
                     if (_intake_subsystem->AtSetPosition() && _launcher_subsystem->atTargetRPM()) {
                         _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER*-1);
+                        _intake_subsystem->SetTransferPower(IntakeConstants::TRANSFER_POWER*-1);
                     }
                 }
             } else {
