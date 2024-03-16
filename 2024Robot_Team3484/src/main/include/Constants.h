@@ -48,7 +48,7 @@ namespace LauncherConstants {
     // Target RPM
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 3000_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
-    constexpr units::revolutions_per_minute_t AMP_RPM = 5000_rpm;
+    constexpr units::revolutions_per_minute_t AMP_RPM = 9999_rpm;
     constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
     constexpr units::second_t TIMEOUT = 10_s;
 }
