@@ -62,8 +62,11 @@ frc2::CommandPtr AutonGenerator::GetAutonomousCommand() {
 
   return frc2::cmd::Sequence(
     _GetCommand(_auton_chooser_initial.GetSelected()),
+    frc2::cmd::Wait(.25_s),
     _GetCommand(_auton_chooser_piece_2.GetSelected()),
+    frc2::cmd::Wait(.25_s),
     _GetCommand(_auton_chooser_piece_3.GetSelected()),
+    frc2::cmd::Wait(.25_s),
     _GetCommand(_auton_chooser_piece_4.GetSelected()),
     AutonStopCommand(_drivetrain).ToPtr()
     //std::move(_auton_map.at(_auton_chooser_initial.GetSelected())),

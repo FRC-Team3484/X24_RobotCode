@@ -59,5 +59,5 @@ void AutonLauncherCommand::End(bool interrupted) {
     }
 }
 bool  AutonLauncherCommand::IsFinished(){
- return (_timer.HasElapsed(TIMEOUT) || (_launching == 2 && !_launcher->LaunchingSensor())) || (_launching == 2 && !_intake->HasPiece() && !_intake->ArmExtended());
+ return (_timer.HasElapsed(TIMEOUT) || (_launching == 2 && !_launcher->LaunchingSensor())) || (_launching == 0 && !_intake->HasPiece() && !_intake->ArmExtended());
 }

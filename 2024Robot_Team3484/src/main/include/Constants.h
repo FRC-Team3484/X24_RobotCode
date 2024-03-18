@@ -240,6 +240,8 @@ namespace VisionConstants {
     constexpr units::inch_t MAX_LAUNCH_RANGE = 55.0_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_LARGE = 12_in;
     constexpr units::inch_t SPEAKER_AIM_TOLERANCE_SMALL = 6_in;
+    constexpr units::inch_t SPEAKER_AIM_TOLERANCE_SMALL_AUTON = 12_in;
+    constexpr units::inch_t SPEAKER_AIM_TOLERANCE_LARGE_AUTON = 20_in;
     constexpr units::inch_t TRAP_DISTANCE_LARGE  = 35_in;
     constexpr units::inch_t TRAP_DISTANCE_SMALL = 30_in;
     constexpr units::inch_t TRAP_AIM_TOLERANCE = 2_in;
