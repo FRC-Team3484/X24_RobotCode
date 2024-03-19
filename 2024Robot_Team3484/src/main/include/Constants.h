@@ -37,7 +37,7 @@ namespace LauncherConstants {
     constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-6, 1.5e-7, 0, 1.25e-4);
     //7e-8
     constexpr double GEAR_RATIO = 1.0;
-    constexpr double RPM_WINDOW_RANGE = 50;
+    constexpr double RPM_WINDOW_RANGE = 100;
 
     constexpr units::second_t WINDOW_TIME = .25_s;
     // Set logic as if hit -50 window, may run too early
@@ -245,7 +245,7 @@ namespace VisionConstants {
     constexpr units::inch_t TRAP_DISTANCE_LARGE  = 35_in;
     constexpr units::inch_t TRAP_DISTANCE_SMALL = 30_in;
     constexpr units::inch_t TRAP_AIM_TOLERANCE = 2_in;
-    constexpr double CAMERA_ANGLE = 51.5;
+    constexpr double CAMERA_ANGLE = 37.0;
     constexpr double CAMERA_HEIGHT = 18.625;
     constexpr double STEER_GAIN = -.01;
     constexpr double DISTANCE_GAIN = -.1;

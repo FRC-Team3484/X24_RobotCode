@@ -72,6 +72,7 @@ void Robot::DisabledPeriodic() {}
 
 void Robot::AutonomousInit() {
     _auton_command = _auton_generator.GetAutonomousCommand();
+    _drivetrain.SetBrakeMode();
 
     if (_auton_command) {
         _auton_command->Schedule();
