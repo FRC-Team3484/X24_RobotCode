@@ -187,8 +187,8 @@ namespace SwerveConstants {
         namespace DrivePIDConstants {
             // Check SC_Datatypes for the struct
             // We still need to find the proper units types of V and A
-            static SC::SC_SwervePID LeftPID{4, 0, 0, 2.0974 * 1_V / 1_mps, 0.46723 * 1_V / 1_mps_sq, 0.16185_V};
-            static SC::SC_SwervePID RightPID{4, 0, 0, 2.0482 * 1_V / 1_mps, 0.4729 * 1_V / 1_mps_sq, 0.17662_V};
+            static SC::SC_SwervePID LeftPID{2, 0, 0, 2.0715 * 1_V / 1_mps, 0.17977 * 1_V / 1_mps_sq, 0.77607_V};
+            static SC::SC_SwervePID RightPID{2, 0, 0, 2.0802 * 1_V / 1_mps, 0.30693 * 1_V / 1_mps_sq, 0.73235_V};
 
             // static SC::SC_SwervePID LeftPID{0.37509, 0, 0, 2.0974 * 1_V / 1_mps, 0.46723 * 1_V / 1_mps_sq, 0.16185_V};
             // static SC::SC_SwervePID RightPID{0.39614, 0, 0, 2.0482 * 1_V / 1_mps, 0.4729 * 1_V / 1_mps_sq, 0.17662_V};
@@ -245,7 +245,7 @@ namespace VisionConstants {
     constexpr units::inch_t TRAP_DISTANCE_LARGE  = 35_in;
     constexpr units::inch_t TRAP_DISTANCE_SMALL = 30_in;
     constexpr units::inch_t TRAP_AIM_TOLERANCE = 2_in;
-    constexpr double CAMERA_ANGLE = 51.5;
+    constexpr double CAMERA_ANGLE = 37.0;
     constexpr double CAMERA_HEIGHT = 18.625;
     constexpr double STEER_GAIN = -.01;
     constexpr double DISTANCE_GAIN = -.1;
