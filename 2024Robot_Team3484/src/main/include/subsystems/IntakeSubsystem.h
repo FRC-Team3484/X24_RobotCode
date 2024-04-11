@@ -51,7 +51,6 @@ class IntakeSubsystem : public frc2::SubsystemBase {
     private:
         bool _arm_sensor_hit = false;
 
-
         rev::CANSparkMax _pivot_motor;
         rev::CANSparkMax _drive_motor;
         ctre::phoenix::motorcontrol::can::VictorSPX _transfer_motor;

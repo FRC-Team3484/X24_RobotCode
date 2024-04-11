@@ -21,24 +21,26 @@ TeleopAimCommand::TeleopAimCommand(DrivetrainSubsystem* drivetrain, Driver_Inter
 }
 
 void TeleopAimCommand::Initialize() {
-    // natural default is to break
+    // Natural default is to break
     _aiming = false;
     if (_limelight == NULL) {
         fmt::print("Limelight is Null");
+
+    } else {
+        _limelight->SetCameraAngle(CAMERA_ANGLE);
+        _limelight->SetLensHeight(CAMERA_HEIGHT);
+        _limelight->SetTargetHeight(SPEAKER_TARGET_HEIGHT);
     }
-    else {
-            _limelight->SetCameraAngle(CAMERA_ANGLE);
-            _limelight->SetLensHeight(CAMERA_HEIGHT);
-            _limelight->SetTargetHeight(SPEAKER_TARGET_HEIGHT);
-    }
+
     _limelight->SetPipeline(1);
 }
 
 void TeleopAimCommand::Execute() {
-    if(_oi_operator->LauncherToggle()){
-        if(_limelight != NULL){
-           _limelight->SetPipeline(1); 
+    if (_oi_operator->LauncherToggle()) {
+        if (_limelight != NULL) {
+            _limelight->SetPipeline(1); 
         }
+
         if (_limelight == NULL || _oi_driver->AimSequenceIgnore() || !_limelight->HasTarget()) {
             meters_per_second_t x_speed = -_oi_driver->GetThrottle() * MAX_LINEAR_SPEED;
             meters_per_second_t y_speed = -_oi_driver->GetStrafe() * MAX_LINEAR_SPEED;
@@ -52,15 +54,14 @@ void TeleopAimCommand::Execute() {
             _oi_driver->SetRumble(RUMBLE_STOP);
         
             _drivetrain->Drive(x_speed, y_speed, rotation, true);
-        }
-        else {
 
-    
+        } else {
             _oi_driver->SetRumble(DRIVER_RUMBLE_LOW);
-            if (_aiming){
+            if (_aiming) {
                 _drivetrain->Drive((_limelight->GetDistanceFromTarget() - TRAP_TARGET_DISTANCE)*DISTANCE_GAIN*MAX_LINEAR_SPEED,
                                     0_mps,
                                     _limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
+
                 if ((_limelight->HasTarget() &&
                         units::math::abs(_limelight->GetHorizontalDistance()) < TRAP_AIM_TOLERANCE && _limelight->GetDistanceFromTargetInch() > TRAP_DISTANCE_SMALL && _limelight->GetDistanceFromTargetInch() < TRAP_DISTANCE_LARGE) || !_limelight->HasTarget()) {
                     _aiming = false;
@@ -93,9 +94,8 @@ void TeleopAimCommand::Execute() {
         SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());
         SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
         #endif
-    }
-    else{
-        if(_limelight != NULL){
+    } else {
+        if (_limelight != NULL) {
             _limelight->SetPipeline(0);
         }
         
@@ -113,18 +113,17 @@ void TeleopAimCommand::Execute() {
             _oi_driver->SetRumble(RUMBLE_STOP);
             
             _drivetrain->Drive(x_speed, y_speed, rotation, true);
-        } 
-        else {
+        } else {
             _limelight->SetPipeline(0);
             _oi_driver->SetRumble(DRIVER_RUMBLE_LOW);
-            if (_aiming){
+            if (_aiming) {
                 //_limelight->SetPipeline(0);
                 _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
+
                 if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < SPEAKER_AIM_TOLERANCE_LARGE) ||!_limelight->HasTarget() || _oi_operator->IgnoreVision()) {
                     _aiming = false;
                 }
-            }
-            else {
+            } else {
                 _drivetrain->SetModuleStates(
                     {
                     SwerveModuleState{0_mps, 45_deg},
@@ -156,4 +155,6 @@ void TeleopAimCommand::End(bool interrupted) {
     _oi_driver->SetRumble(RUMBLE_STOP);
 }
 
-bool TeleopAimCommand::IsFinished() {return false;}
+bool TeleopAimCommand::IsFinished() {
+    return false;
+}

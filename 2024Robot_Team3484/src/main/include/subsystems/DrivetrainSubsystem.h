@@ -60,8 +60,6 @@ class DrivetrainSubsystem : public frc2::SubsystemBase {
         // Check if can be placed in constants
         SwerveModule* _modules[4];
             
-
-
         AHRS* _gyro;
         units::degree_t _gyro_offset = 0_deg;
 

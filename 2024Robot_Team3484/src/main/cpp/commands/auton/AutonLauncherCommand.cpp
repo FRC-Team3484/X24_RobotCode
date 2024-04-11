@@ -16,7 +16,7 @@ void AutonLauncherCommand::Initialize() {
     _timer.Reset();
     _timer.Start();
 
-    if(_intake !=NULL){
+    if (_intake !=NULL) {
         _intake->SetIntakeAngle(STOW_POSITION);
         _intake->SetRollerPower(ROLLER_STOP);
         _intake->SetTransferPower(TRANSFER_STOP);
@@ -44,6 +44,7 @@ void AutonLauncherCommand::Execute() {
             _intake->SetRollerPower(-ROLLER_POWER);
             _intake->SetTransferPower(-TRANSFER_POWER);
         }
+        
         if (_launching == 1 && _launcher->LaunchingSensor()) {
             _launching = 2;
         }
@@ -58,6 +59,6 @@ void AutonLauncherCommand::End(bool interrupted) {
         _intake->SetTransferPower(TRANSFER_STOP);
     }
 }
-bool  AutonLauncherCommand::IsFinished(){
- return (_timer.HasElapsed(TIMEOUT) || (_launching == 2 && !_launcher->LaunchingSensor())) || (_launching == 0 && !_intake->HasPiece() && !_intake->ArmExtended());
+bool  AutonLauncherCommand::IsFinished() {
+    return (_timer.HasElapsed(TIMEOUT) || (_launching == 2 && !_launcher->LaunchingSensor())) || (_launching == 0 && !_intake->HasPiece() && !_intake->ArmExtended());
 }

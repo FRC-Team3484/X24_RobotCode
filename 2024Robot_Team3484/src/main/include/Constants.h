@@ -20,7 +20,6 @@
 #include <units/angular_acceleration.h>
 #include <frc/geometry/Pose2d.h>
 
-
 // #include <ctre/Phoenix.h>
 
 #include <FRC3484_Lib/utils/SC_ControllerMaps.h>
@@ -30,8 +29,6 @@ namespace LauncherConstants {
     constexpr int LEFT_MOTOR_CAN_ID = 40;
     constexpr int RIGHT_MOTOR_CAN_ID = 41;
     constexpr int LAUNCH_SENSOR_DI_CH = 2; // Change to 2
-
-
 
     constexpr SC::SC_PIDConstants LEFT_PID_CONSTANTS(5e-6, 1.5e-7, 0, 1.25e-4);
     constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-6, 1.5e-7, 0, 1.25e-4);
@@ -44,7 +41,7 @@ namespace LauncherConstants {
 
     //constexpr bool IsLoaded = true;
     constexpr bool LEFT_MOTOR_INVERTED = false;
-     
+    
     // Target RPM
     constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 3000_rpm;
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
@@ -52,6 +49,7 @@ namespace LauncherConstants {
     constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
     constexpr units::second_t TIMEOUT = 10_s;
 }
+
 namespace IntakeConstants {
     constexpr int PIVOT_MOTOR_CAN_ID = 30;
     constexpr int TRANSFER_MOTOR_ID = 42;
@@ -66,7 +64,6 @@ namespace IntakeConstants {
 
     // Amp
     constexpr int AMP_ID = 60;
-
 
     constexpr units::degrees_per_second_t MAX_VELOCITY = 250_deg_per_s;
     constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 1000_deg_per_s_sq;
@@ -337,4 +334,5 @@ namespace UserInterface {
         }
     }
 }
+
 #endif

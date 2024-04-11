@@ -101,8 +101,9 @@ void SwerveModule::SetDesiredState(SwerveModuleState state, bool open_loop, bool
 
     // If the wheel needs to rotate over 90 degrees, rotate the other direction and flip the output
     // This prevents the wheel from ever needing to rotate more than 90 degrees
-    if (optimize)
+    if (optimize) {
         state = SwerveModuleState::Optimize(state, encoder_rotation);
+    }
 
     // Scale the wheel speed down by the cosine of the angle error
     // This prevents the wheel from accelerating before it has a chance to face the correct direction
@@ -116,7 +117,6 @@ void SwerveModule::SetDesiredState(SwerveModuleState state, bool open_loop, bool
         volt_t drive_output = volt_t{_drive_pid_controller.Calculate(meters_per_second_t{_GetWheelSpeed()}.value(), state.speed.value())};
         volt_t drive_feed_forward = _drive_feed_forward.Calculate(state.speed);
         _drive_motor.SetVoltage(drive_output + drive_feed_forward);
-
     }
 
     double steer_output = _steer_pid_controller.Calculate(_GetSteerAngle(), state.angle.Radians());

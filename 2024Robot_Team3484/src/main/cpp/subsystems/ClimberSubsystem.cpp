@@ -32,7 +32,7 @@ ClimberSubsystem::ClimberSubsystem(
 }
 
 void ClimberSubsystem::Periodic() {
-    if(frc::SmartDashboard::GetBoolean("Climber Diagnostics", false)){
+    if (frc::SmartDashboard::GetBoolean("Climber Diagnostics", false)) {
         SmartDashboard::PutNumber("Climber Power Right", GetRightSensor());
         SmartDashboard::PutNumber("Climber Power Left", GetLeftSensor());
     }
@@ -50,15 +50,17 @@ bool ClimberSubsystem::GetRightSensor() {
 
 void ClimberSubsystem::SetClimberPower(double power) {
     // Sets the Climber power
-    if (power < 0 && GetRightSensor()) 
+    if (power < 0 && GetRightSensor()) {
         _right_climber_motor.Set(ClimberConstants::MOTOR_STOP);
-    else
+    } else {
         _right_climber_motor.Set(power);
+    }
 
-    if (power < 0 && GetLeftSensor()) 
+    if (power < 0 && GetLeftSensor()) { 
         _left_climber_motor.Set(ClimberConstants::MOTOR_STOP);
-    else    
+    } else {    
         _left_climber_motor.Set(power);
+    }
 }
 
 void ClimberSubsystem::OpenLoopTestMotors(double power_left, double power_right) {

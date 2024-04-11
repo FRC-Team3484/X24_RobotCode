@@ -3,7 +3,6 @@
 #include <FRC3484_Lib/utils/SC_Datatypes.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-
 using namespace IntakeConstants;
 using namespace frc;
 using namespace ctre::phoenix;
@@ -47,7 +46,6 @@ IntakeSubsystem::IntakeSubsystem( // Reference constants in Robot.h in the intia
     _transfer_motor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_14_Turn_PIDF1_, 200);
     _transfer_motor.SetInverted(!TRANSFER_MOTOR_INVERTED);
 
-
     _pivot_motor.RestoreFactoryDefaults();
     _drive_motor.RestoreFactoryDefaults();
 
@@ -90,7 +88,6 @@ void IntakeSubsystem::Periodic() {
 
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
-
         if (_arm_sensor_hit) {
             if (_target_position == STOW_POSITION && !ArmExtended()) {
                 _pivot_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
@@ -116,7 +113,6 @@ void IntakeSubsystem::Periodic() {
                 _pivot_encoder->SetPosition(IntakeConstants::STOW_POSITION.value());
             }
         }
-
     }
 }
 
@@ -164,7 +160,6 @@ units::revolutions_per_minute_t IntakeSubsystem::GetEncoderVelocity() {
 bool IntakeSubsystem::AtSetPosition() {
     if (_arm_sensor_hit) {
         return units::math::abs(GetIntakePosition() - _target_position) < IntakeConstants::POSITION_TOLERANCE;
-
     } else {
         return false;
     }
@@ -179,7 +174,6 @@ void IntakeSubsystem::OpenLoopTestMotors(double pivot_power, double drive_power)
 
 void IntakeSubsystem::OpenLoopTransferMotor(double tranfer_power) {
     _transfer_motor.Set(motorcontrol::VictorSPXControlMode::PercentOutput, tranfer_power);
-
 }
 
 //Amp

@@ -44,9 +44,7 @@ void TeleopDriveCommand::Execute() {
             _drivetrain->SetCoastMode();
         }
 
-        if(_oi->GetBrake()) {
-
-            
+        if (_oi->GetBrake()) {
             _drivetrain->SetModuleStates(
                 {
                 SwerveModuleState{(_initial_positions[FL].distance - current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
@@ -72,10 +70,9 @@ void TeleopDriveCommand::Execute() {
             
             _drivetrain->Drive(x_speed, y_speed, rotation, true);
         }
-
     }
-
 }
+
 void TeleopDriveCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
 }

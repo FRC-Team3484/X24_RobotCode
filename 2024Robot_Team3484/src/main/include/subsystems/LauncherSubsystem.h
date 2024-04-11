@@ -8,7 +8,6 @@
 #include <rev/CANSparkMax.h>
 #include <frc/DigitalInput.h>
 
-
 #include <units/angle.h>
 #include <units/angular_velocity.h>
 #include <frc/filter/Debouncer.h>
@@ -28,7 +27,6 @@ class LauncherSubsystem : public frc2::SubsystemBase {
         bool atTargetRPM();
         void OpenLoopTestMotors(double power_left, double power_right);
         bool LaunchingSensor();
-
 
     private:
         bool _WithinRPMWindow();

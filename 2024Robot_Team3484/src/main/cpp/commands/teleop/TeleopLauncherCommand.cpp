@@ -13,13 +13,13 @@ TeleopLauncherCommand::TeleopLauncherCommand(LauncherSubsystem* launcher_subsyst
     AddRequirements(_launcher), AddRequirements(_intake);
 }
 
-void TeleopLauncherCommand::Initialize(){
-    if (frc::SmartDashboard::GetBoolean("Launcher Diagnostics",false)){
+void TeleopLauncherCommand::Initialize() {
+    if (frc::SmartDashboard::GetBoolean("Launcher Diagnostics",false)) {
         //SmartDashboard::PutNumber("Distance to Target", _limelight->GetDistanceFromTarget());
     }
     _launching = 0;
 
-    if(_launcher != NULL) {
+    if (_launcher != NULL) {
         if (frc::SmartDashboard::GetBoolean("testing",true)) {
             _launcher->OpenLoopTestMotors(0,0);
         } else {
@@ -27,7 +27,7 @@ void TeleopLauncherCommand::Initialize(){
         }
     }
     
-    if(_intake != NULL) {
+    if (_intake != NULL) {
         if (frc::SmartDashboard::GetBoolean("testing", true)) {
             _intake->SetRollerPower(0);
             _intake->OpenLoopTestMotors(0,0);
@@ -40,15 +40,14 @@ void TeleopLauncherCommand::Initialize(){
     }
 }
 
-void TeleopLauncherCommand::Execute(){
-    if (_launcher !=NULL && _intake != NULL){
+void TeleopLauncherCommand::Execute() {
+    if (_launcher !=NULL && _intake != NULL) {
         if (frc::SmartDashboard::GetBoolean("testing",true)) {
-                if(_oi->LauncherHotKey() &&  frc::SmartDashboard::GetBoolean("testing",true)) {
-                    _launcher->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
-                }
-        }
-        else {
-            if(_launcher->atTargetRPM() 
+            if (_oi->LauncherHotKey() &&  frc::SmartDashboard::GetBoolean("testing",true)) {
+                _launcher->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
+            }
+        } else {
+            if (_launcher->atTargetRPM() 
             && _intake->AtSetPosition() 
             && ( _limelight == NULL 
                 || (_oi != NULL && _oi->IgnoreVision()) 
@@ -57,7 +56,7 @@ void TeleopLauncherCommand::Execute(){
                 _launching = 1;
             }
 
-            if(_launching > 0) {
+            if (_launching > 0) {
                 _intake->SetRollerPower(-ROLLER_POWER);
                 _intake->SetTransferPower(-TRANSFER_POWER);
             }

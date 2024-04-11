@@ -17,13 +17,11 @@ void TeleopTrapCommand::Initialize() {}
 void TeleopTrapCommand::Execute() {
     if (_oi != NULL) {
         if (frc::SmartDashboard::GetBoolean("testing",true)) {
-            if(_oi->IntakeHotKey() ) {
+            if (_oi->IntakeHotKey()) {
                 _trap_subsystem->OpenLoopTestMotors(_oi->OpenLoopControlLeft(), _oi->OpenLoopControlRight());
             }
-        }
-
-        else {
-            if (_oi->EndgameToggle()&&_oi->ScoreTrap()){
+        } else {
+            if (_oi->EndgameToggle()&&_oi->ScoreTrap()) {
                 _trap_subsystem->SetPosition(TRAP_POSITION);
 
                 if (_trap_subsystem->AtPosition()) {
@@ -37,7 +35,7 @@ void TeleopTrapCommand::Execute() {
                     _trap_subsystem->SetRollerPower(EJECT_POWER);
                 } 
 
-            } else if (_oi->EndgameToggle()&&_oi->IntakeTrap()){
+            } else if (_oi->EndgameToggle()&&_oi->IntakeTrap()) {
                 _trap_subsystem->SetPosition(INTAKE_POSITION);
                 _trap_subsystem->SetRollerPower(INTAKE_POWER);
 

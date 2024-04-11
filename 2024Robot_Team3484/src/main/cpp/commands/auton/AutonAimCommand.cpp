@@ -16,10 +16,10 @@ AutonAimCommand::AutonAimCommand(DrivetrainSubsystem* drivetrain, Vision* vision
 void AutonAimCommand::Initialize() {
     _aiming = false;
     _initial_positions = _drivetrain->GetModulePositions();
+
     if (_limelight == NULL) {
         fmt::print("Limelight is Null");
-    }
-    else {
+    } else {
         _limelight->SetCameraAngle(CAMERA_ANGLE);
         _limelight->SetLensHeight(CAMERA_HEIGHT);
         _limelight->SetTargetHeight(SPEAKER_TARGET_HEIGHT);
@@ -36,9 +36,7 @@ void AutonAimCommand::Execute() {
                 _aiming = false;
                 _initial_positions = _drivetrain->GetModulePositions();
             }
-        }
-        else {
-
+        } else {
             wpi::array<frc::SwerveModulePosition, 4> _current_positions = _drivetrain->GetModulePositions();
             _drivetrain->SetModuleStates(
                 {            
@@ -52,10 +50,10 @@ void AutonAimCommand::Execute() {
             );
 
             if (_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance())>SPEAKER_AIM_TOLERANCE_LARGE_AUTON) {
-
                 _aiming = true;
             }
         }
+
         #ifdef EN_DIAGNOSTICS
             SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has April Tag", _limelight->HasTarget());
             SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());

@@ -54,12 +54,11 @@ DrivetrainSubsystem::DrivetrainSubsystem(SC_SwerveConfigs swerve_config_array[4]
 void DrivetrainSubsystem::Periodic() {
     if (_odometry == NULL) {
         fmt::print("Error: odometry accessed in Periodic before initialization");
-
     } else {
         _odometry->Update(GetHeading(), GetModulePositions());
     }
 
-    if(frc::SmartDashboard::GetBoolean("Drivetrain Diagnostics", false)){
+    if (frc::SmartDashboard::GetBoolean("Drivetrain Diagnostics", false)) {
         SmartDashboard::PutNumber("FL Encoder", _modules[FL]->GetPosition().angle.Degrees().value());
         SmartDashboard::PutNumber("FR Encoder", _modules[FR]->GetPosition().angle.Degrees().value());
         SmartDashboard::PutNumber("BL Encoder", _modules[BL]->GetPosition().angle.Degrees().value());
@@ -82,7 +81,6 @@ void DrivetrainSubsystem::SetModuleStates(wpi::array<SwerveModuleState, 4> desir
     for (int i = 0; i < 4; i++) {
         if (_modules[i] == NULL) {
             fmt::print("Error: Swerve Module accessed in Periodic before initialization");
-
         } else {
             _modules[i]->SetDesiredState(desired_states[i], open_loop, optimize);
         }
@@ -100,8 +98,6 @@ Rotation2d DrivetrainSubsystem::GetHeading() {
     }
 }
 
-
-
 void DrivetrainSubsystem::SetHeading(degree_t heading) {
     ResetOdometry(Pose2d(_odometry->GetPose().Translation(), Rotation2d(heading)));
     fmt::print("Reset Head!!!!!!\n");
@@ -111,7 +107,6 @@ degrees_per_second_t DrivetrainSubsystem::GetTurnRate() {
     if (_gyro == NULL) {
         fmt::print("Error: gyro accessed in GetTurnRate before initialization");
         return 0_deg_per_s;
-
     } else {
         return degrees_per_second_t{_gyro->GetRate()};
     }
@@ -121,7 +116,6 @@ Pose2d DrivetrainSubsystem::GetPose() {
     if (_odometry == NULL) {
         fmt::print("Error: odometry accesed in GetPose before initialization");
         return Pose2d{0_m, 0_m, 0_deg};
-
     } else {
         return _odometry->GetPose();
     }
@@ -140,25 +134,24 @@ void DrivetrainSubsystem::ResetOdometry(Pose2d pose) {
         _gyro->ZeroYaw();
         _odometry->ResetPosition(GetHeading(), GetModulePositions(), pose);
     }
-    
 }
-
-
 
 wpi::array<SwerveModulePosition, 4> DrivetrainSubsystem::GetModulePositions() {
     int checkNull = CheckNotNullModule();
-    if (checkNull == 4)
+    if (checkNull == 4) {
         return {_modules[FL]->GetPosition(), _modules[FR]->GetPosition(), _modules[BL]->GetPosition(), _modules[BR]->GetPosition()};
-    else
-        return {SwerveModulePosition(0_m, 0_deg),SwerveModulePosition(0_m, 0_deg),SwerveModulePosition(0_m, 0_deg),SwerveModulePosition(0_m, 0_deg)};
+    } else {
+        return {SwerveModulePosition(0_m, 0_deg), SwerveModulePosition(0_m, 0_deg), SwerveModulePosition(0_m, 0_deg), SwerveModulePosition(0_m, 0_deg)};
+    }
 }
 
 ChassisSpeeds DrivetrainSubsystem::GetChassisSpeeds() {
     int checkNull = CheckNotNullModule();
-    if (checkNull == 4)
+    if (checkNull == 4) {
         return kinematics.ToChassisSpeeds({_modules[FL]->GetState(), _modules[FR]->GetState(), _modules[BL]->GetState(), _modules[BR]->GetState()});
-    else
+    } else {
         return kinematics.ToChassisSpeeds({SwerveModuleState(0_mps, 0_deg), SwerveModuleState(0_mps, 0_deg), SwerveModuleState(0_mps, 0_deg), SwerveModuleState(0_mps, 0_deg)});
+    }
 }
 
 void DrivetrainSubsystem::StopMotors() {
@@ -224,7 +217,7 @@ void DrivetrainSubsystem::SetBrakeMode() {
 
 int DrivetrainSubsystem::CheckNotNullModule() {
     int counter = 0;
-    for (int i = 0; i < 4; i++){
+    for (int i = 0; i < 4; i++) {
         if (_modules[i] != NULL) {
             counter++;
         }
