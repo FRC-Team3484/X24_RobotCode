@@ -47,7 +47,7 @@ namespace LauncherConstants {
     constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
     constexpr units::revolutions_per_minute_t AMP_RPM = 9999_rpm;
     constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
-    constexpr units::second_t TIMEOUT = 10_s;
+    constexpr units::second_t TIMEOUT = 3_s;
 }
 
 namespace IntakeConstants {
@@ -69,7 +69,7 @@ namespace IntakeConstants {
     constexpr units::degrees_per_second_squared_t MAX_ACCELERATION = 1000_deg_per_s_sq;
 
     constexpr units::degree_t STOW_POSITION = 0_deg;
-    constexpr units::degree_t INTAKE_POSITION = 163_deg;
+    constexpr units::degree_t INTAKE_POSITION = 169_deg;
     constexpr units::degree_t EJECT_POSITION = 90_deg;
 
     constexpr double HOME_POWER = -0.25; 
@@ -200,7 +200,7 @@ namespace SwerveConstants {
         }
 
         namespace JoystickScaling {
-            constexpr double LOW_SCALE = 0.2;
+            constexpr double LOW_SCALE = 0.35;
         }
     }
 
