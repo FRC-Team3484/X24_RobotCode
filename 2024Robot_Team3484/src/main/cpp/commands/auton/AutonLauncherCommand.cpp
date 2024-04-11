@@ -36,7 +36,8 @@ void AutonLauncherCommand::Execute() {
             && _intake->HasPiece()
             && ( _limelight == NULL 
                 || (_limelight->HasTarget() 
-                && units::math::abs(_limelight->GetHorizontalDistance()) < SPEAKER_AIM_TOLERANCE_LARGE) )) {
+                && units::math::abs(_limelight->GetHorizontalDistance()) < SPEAKER_AIM_TOLERANCE_LARGE)
+                || !_limelight->HasTarget())) {
             _launching = 1;
         }
 
