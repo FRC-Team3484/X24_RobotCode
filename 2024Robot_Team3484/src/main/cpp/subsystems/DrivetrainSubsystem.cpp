@@ -49,6 +49,8 @@ DrivetrainSubsystem::DrivetrainSubsystem(SC_SwerveConfigs swerve_config_array[4]
     _gyro = new AHRS{SPI::Port::kMXP};
     _odometry = new SwerveDriveOdometry<4>{kinematics, GetHeading(), GetModulePositions()};
     SetBrakeMode();
+    SmartDashboard::PutNumber("Middle School Safety", 1);
+    SmartDashboard::PutBoolean("Middle School Toggle", false);
 }
 
 void DrivetrainSubsystem::Periodic() {
@@ -64,6 +66,7 @@ void DrivetrainSubsystem::Periodic() {
         SmartDashboard::PutNumber("BL Encoder", _modules[BL]->GetPosition().angle.Degrees().value());
         SmartDashboard::PutNumber("BR Encoder", _modules[BR]->GetPosition().angle.Degrees().value());
         SmartDashboard::PutNumber("Gyro Heading", GetHeading().Degrees().value());
+        //SmartDashboard::GetBoolean("Middle School Safety", false);
     }
 }
 
