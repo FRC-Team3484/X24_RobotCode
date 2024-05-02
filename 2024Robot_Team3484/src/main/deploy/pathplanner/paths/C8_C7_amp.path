@@ -39,6 +39,38 @@
         "x": 4.6125936104704115,
         "y": 0.23111809450169168
       },
+      "nextControl": {
+        "x": 2.7747824389452767,
+        "y": 2.439948775860704
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 9.97,
+        "y": 1.7
+      },
+      "prevControl": {
+        "x": 7.545125019356399,
+        "y": 1.7558619216196762
+      },
+      "nextControl": {
+        "x": 12.394874980643602,
+        "y": 1.6441380783803237
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.693688024707844,
+        "y": 1.3355334351811978
+      },
+      "prevControl": {
+        "x": 6.790500095524969,
+        "y": 0.7374708139600126
+      },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
@@ -49,6 +81,16 @@
       "waypointRelativePos": 1.0,
       "rotationDegrees": 180.0,
       "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 89.79415966558109,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": -179.61974391915507,
+      "rotateFast": false
     }
   ],
   "constraintZones": [],
@@ -56,6 +98,23 @@
     {
       "name": "Intake",
       "waypointRelativePos": 0.55,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeCommand"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Intake",
+      "waypointRelativePos": 2.55,
       "command": {
         "type": "sequential",
         "data": {
