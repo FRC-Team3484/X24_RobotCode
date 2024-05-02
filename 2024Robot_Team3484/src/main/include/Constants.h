@@ -34,19 +34,21 @@ namespace LauncherConstants {
     constexpr SC::SC_PIDConstants RIGHT_PID_CONSTANTS(5e-6, 1.5e-7, 0, 1.25e-4);
     //7e-8
     constexpr double GEAR_RATIO = 1.0;
-    constexpr double RPM_WINDOW_RANGE = 100;
+    constexpr double RPM_WINDOW_RANGE = 50;
 
     constexpr units::second_t WINDOW_TIME = .25_s;
     // Set logic as if hit -50 window, may run too early
 
     //constexpr bool IsLoaded = true;
-    constexpr bool LEFT_MOTOR_INVERTED = false;
+    constexpr bool BOTTOM_MOTOR_INVERTED = true;
+    constexpr bool TOP_MOTOR_INVERTED = true;
     
     // Target RPM
-    constexpr units::revolutions_per_minute_t TARGET_RPM/*place holder*/ = 3000_rpm;
-    constexpr units::revolutions_per_minute_t REVERSE_RPM = -300_rpm; // make a command that tuns this value to rue an drunss the command 
-    constexpr units::revolutions_per_minute_t AMP_RPM = 9999_rpm;
-    constexpr units::revolutions_per_minute_t TRAP_RPM = 750_rpm;
+    constexpr SC::SC_LauncherSpeed SPEAKER_SPEED(1.0, 3000_rpm, 1.0, 3000_rpm);
+    constexpr SC::SC_LauncherSpeed AMP_SPEED(0.0, -450_rpm, 0.0, 2150_rpm);
+    constexpr SC::SC_LauncherSpeed INTAKE_SPEED(0, -300_rpm, 0.0, -300_rpm);
+    constexpr SC::SC_LauncherSpeed FULL_SPEED(1.0, 5000_rpm, 1.0, 5000_rpm);
+    constexpr SC::SC_LauncherSpeed ZERO_SPEED(0.0, 0_rpm, 0.0, 0_rpm);
     constexpr units::second_t TIMEOUT = 3_s;
 }
 

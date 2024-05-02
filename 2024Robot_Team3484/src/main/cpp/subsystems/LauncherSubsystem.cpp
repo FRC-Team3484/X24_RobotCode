@@ -8,66 +8,66 @@ using namespace rev;
 using namespace frc;
 
 LauncherSubsystem::LauncherSubsystem(
-        int left_motor_can_id,
-        int right_motor_can_id,
+        int bottom_motor_can_id,
+        int top_motor_can_id,
         int launch_sensor_di_ch,
-        SC::SC_PIDConstants left_pidc,
-        SC::SC_PIDConstants right_pidc,
+        SC::SC_PIDConstants bottom_pidc,
+        SC::SC_PIDConstants top_pidc,
         double rpm_window
     ):
-    _left_motor{left_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
-    _right_motor{right_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
+    _bottom_motor{bottom_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
+    _top_motor{top_motor_can_id, rev::CANSparkMax::MotorType::kBrushless},
     _launched_sensor{launch_sensor_di_ch}
     {
         _rpm_window = rpm_window;
 
-        _left_launcher_encoder = new SparkRelativeEncoder(_left_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
-        _right_launcher_encoder = new SparkRelativeEncoder(_right_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
+        _bottom_launcher_encoder = new SparkRelativeEncoder(_bottom_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
+        _top_launcher_encoder = new SparkRelativeEncoder(_top_motor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor));
 
-        _left_launcher_pid_controller = new SparkPIDController(_left_motor.GetPIDController());
+        _bottom_launcher_pid_controller = new SparkPIDController(_bottom_motor.GetPIDController());
 
-        _right_launcher_pid_controller = new SparkPIDController(_right_motor.GetPIDController());
+        _top_launcher_pid_controller = new SparkPIDController(_top_motor.GetPIDController());
         
-    if (_left_launcher_pid_controller !=NULL) {    
-        _left_launcher_pid_controller->SetFeedbackDevice(*_left_launcher_encoder);
+    if (_bottom_launcher_pid_controller !=NULL) {    
+        _bottom_launcher_pid_controller->SetFeedbackDevice(*_bottom_launcher_encoder);
     }
 
-    if (_right_launcher_pid_controller !=NULL) {
-        _right_launcher_pid_controller->SetFeedbackDevice(*_right_launcher_encoder);
+    if (_top_launcher_pid_controller !=NULL) {
+        _top_launcher_pid_controller->SetFeedbackDevice(*_top_launcher_encoder);
     }
 
-    _left_motor.RestoreFactoryDefaults();
-    _right_motor.RestoreFactoryDefaults();
+    _bottom_motor.RestoreFactoryDefaults();
+    _top_motor.RestoreFactoryDefaults();
     
-    _left_motor.SetInverted(!LEFT_MOTOR_INVERTED);
-    _right_motor.SetInverted(!LEFT_MOTOR_INVERTED);
-    _left_motor.SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
-    _right_motor.SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
+    _bottom_motor.SetInverted(BOTTOM_MOTOR_INVERTED);
+    _top_motor.SetInverted(TOP_MOTOR_INVERTED);
+    _bottom_motor.SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
+    _top_motor.SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
 
-    _left_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
-    _right_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
+    _bottom_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
+    _top_motor.SetPeriodicFramePeriod(rev::CANSparkMaxLowLevel::PeriodicFrame::kStatus5, 200);
 
-    if (_left_launcher_pid_controller !=NULL) {
-        _left_launcher_pid_controller->SetP(left_pidc.Kp);
-        _left_launcher_pid_controller->SetI(left_pidc.Ki);
-        _left_launcher_pid_controller->SetD(left_pidc.Kd);
-        _left_launcher_pid_controller->SetIZone(0);
-        _left_launcher_pid_controller->SetFF(left_pidc.Kf);
-        _left_launcher_pid_controller->SetOutputRange(-1, 1);
+    if (_bottom_launcher_pid_controller !=NULL) {
+        _bottom_launcher_pid_controller->SetP(bottom_pidc.Kp);
+        _bottom_launcher_pid_controller->SetI(bottom_pidc.Ki);
+        _bottom_launcher_pid_controller->SetD(bottom_pidc.Kd);
+        _bottom_launcher_pid_controller->SetIZone(0);
+        _bottom_launcher_pid_controller->SetFF(bottom_pidc.Kf);
+        _bottom_launcher_pid_controller->SetOutputRange(-1, 1);
     }
 
-    if (_right_launcher_pid_controller !=NULL) {
-        _right_launcher_pid_controller->SetP(right_pidc.Kp);
-        _right_launcher_pid_controller->SetI(right_pidc.Ki);
-        _right_launcher_pid_controller->SetD(right_pidc.Kd);
-        _right_launcher_pid_controller->SetIZone(0);
-        _right_launcher_pid_controller->SetFF(right_pidc.Kf);
-        _right_launcher_pid_controller->SetOutputRange(-1, 1);
+    if (_top_launcher_pid_controller !=NULL) {
+        _top_launcher_pid_controller->SetP(top_pidc.Kp);
+        _top_launcher_pid_controller->SetI(top_pidc.Ki);
+        _top_launcher_pid_controller->SetD(top_pidc.Kd);
+        _top_launcher_pid_controller->SetIZone(0);
+        _top_launcher_pid_controller->SetFF(top_pidc.Kf);
+        _top_launcher_pid_controller->SetOutputRange(-1, 1);
     }
 }
 
-void LauncherSubsystem::setLauncherRPM(units::revolutions_per_minute_t speed) {
-    _target_speed = speed.value()*GEAR_RATIO;
+void LauncherSubsystem::setLauncherSpeed(SC::SC_LauncherSpeed speed) {
+    _target_speed = SC::SC_LauncherSpeed(speed.Top_Power, speed.Top_Speed*GEAR_RATIO, speed.Bottom_Power, speed.Bottom_Speed*GEAR_RATIO);
 }
 
 bool LauncherSubsystem::LaunchingSensor() {
@@ -76,8 +76,8 @@ bool LauncherSubsystem::LaunchingSensor() {
 
 void LauncherSubsystem::Periodic() {
     if (frc::SmartDashboard::GetBoolean("Launcher Diagnostics",false)) {
-        SmartDashboard::PutNumber("Motor Speed Left (RPM)", _left_launcher_encoder->GetVelocity()/GEAR_RATIO);
-        SmartDashboard::PutNumber("Motor Speed Right (RPM)", _right_launcher_encoder->GetVelocity()/GEAR_RATIO);
+        SmartDashboard::PutNumber("Motor Speed Bottom (RPM)", _bottom_launcher_encoder->GetVelocity()/GEAR_RATIO);
+        SmartDashboard::PutNumber("Motor Speed top (RPM)", _top_launcher_encoder->GetVelocity()/GEAR_RATIO);
         SmartDashboard::PutBoolean("Launched Sensor", LaunchingSensor());
         SmartDashboard::PutBoolean("Launcher: At Target RPM", atTargetRPM());
     }
@@ -89,60 +89,76 @@ void LauncherSubsystem::Periodic() {
         //}else {
             //_en_launch = _WithinRPMWindow();
         //}
-        _counter_not_null_right = 0;
-        _counter_not_null_left = 0;
+        _counter_not_null_top = 0;
+        _counter_not_null_bottom = 0;
 
 
-        if (_left_launcher_pid_controller !=NULL) {
-            if (_target_speed == 0) {
-                _left_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
-                _left_launcher_pid_controller->SetIAccum(0);
-            } else if (_target_speed > 0){//== 9999.0*GEAR_RATIO) {
-                _left_launcher_pid_controller->SetReference(1.0, rev::CANSparkMax::ControlType::kDutyCycle);
+        if (_bottom_launcher_pid_controller !=NULL) {
+            if (_target_speed.Bottom_Power == 0 && _target_speed.Bottom_Speed == 0_rpm) {
+                _bottom_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
+                _bottom_launcher_pid_controller->SetIAccum(0);
+            } else if (_target_speed.Bottom_Power != 0) {
+                _bottom_launcher_pid_controller->SetReference(_target_speed.Bottom_Power, rev::CANSparkMax::ControlType::kDutyCycle); 
+
             } else {
-                _left_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
+                _bottom_launcher_pid_controller->SetReference(_target_speed.Bottom_Speed.value(), rev::CANSparkMax::ControlType::kVelocity);
             }
-            _counter_not_null_left++;
+            _counter_not_null_bottom++;
         }
-        if (_right_launcher_pid_controller !=NULL) {
-            if (_target_speed == 0) {
-                _right_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
-                _right_launcher_pid_controller->SetIAccum(0);
-            } else if (_target_speed > 0){//== 9999.0*GEAR_RATIO) {
-                _right_launcher_pid_controller->SetReference(1.0, rev::CANSparkMax::ControlType::kDutyCycle);
+
+        if (_top_launcher_pid_controller !=NULL) {
+            if (_target_speed.Top_Power == 0 && _target_speed.Top_Speed == 0_rpm) {
+                _top_launcher_pid_controller->SetReference(0, rev::CANSparkMax::ControlType::kDutyCycle);
+                _top_launcher_pid_controller->SetIAccum(0);
+            } else if (_target_speed.Top_Power != 0) {
+                _top_launcher_pid_controller->SetReference(_target_speed.Top_Power, rev::CANSparkMax::ControlType::kDutyCycle); 
+
             } else {
-                _right_launcher_pid_controller->SetReference(_target_speed, rev::CANSparkMax::ControlType::kVelocity);
-            }    
-            _counter_not_null_right++;
+                _top_launcher_pid_controller->SetReference(_target_speed.Top_Speed.value(), rev::CANSparkMax::ControlType::kVelocity);
+            }
+            _counter_not_null_top++;
         }
     }
 }
 
 bool LauncherSubsystem::atTargetRPM() {
-    if (_counter_not_null_left + _counter_not_null_right == 2) {
-        if (_target_speed > 0) /*== 9999.0*GEAR_RATIO)*/ return _left_launcher_encoder->GetVelocity() >= std::min(5000.0, _target_speed) && _right_launcher_encoder->GetVelocity() >= std::min(5000.0, _target_speed);
-        return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window && std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
-        //return (_left_launcher_encoder->GetVelocity() >= (_target_speed - _rpm_window) && _right_launcher_encoder->GetVelocity()>= (_target_speed - _rpm_window)); 
-    } else if (_counter_not_null_left == 1) {
-        return std::abs(_left_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
-       //return _left_launcher_encoder->GetVelocity() >= (_target_speed - _rpm_window);
-    } else if (_counter_not_null_right == 1) {
-        return std::abs(_right_launcher_encoder->GetVelocity()-_target_speed) < _rpm_window;
-       //return _right_launcher_encoder->GetVelocity()>= (_target_speed - _rpm_window);
+    bool bottom_at_speed = false;
+    bool top_at_speed = false;
+
+    if (_counter_not_null_bottom > 0) {
+        if (_target_speed.Bottom_Power != 0) {
+            bottom_at_speed = (_bottom_launcher_encoder->GetVelocity()-_target_speed.Bottom_Speed.value()) * (_target_speed.Bottom_Speed.value() >= 0 ? 1 : -1) > 0;
+        } else if (_target_speed.Bottom_Speed.value() != 0) {
+            bottom_at_speed = std::abs(_bottom_launcher_encoder->GetVelocity()-_target_speed.Bottom_Speed.value()) < _rpm_window;
+        } else {
+            bottom_at_speed = true;
+        }
     } else {
-        return false;
+            bottom_at_speed = true;
     }
+
+
+
+    if (_counter_not_null_top > 0) {
+        if (_target_speed.Top_Power != 0) {
+            top_at_speed = (_top_launcher_encoder->GetVelocity()-_target_speed.Top_Speed.value()) * (_target_speed.Top_Speed.value() >= 0 ? 1 : -1) > 0;
+        } else if (_target_speed.Top_Speed.value() != 0) {
+            top_at_speed = std::abs(_top_launcher_encoder->GetVelocity()-_target_speed.Top_Speed.value()) < _rpm_window;
+        } else {
+            top_at_speed = true;
+        }
+    } else {
+            top_at_speed = true;
+    }
+
+
+    return bottom_at_speed && top_at_speed;
 }
-
-//bool LauncherSubsystem::atTargetRPM(){
-    //return _en_launch;
-
-//}
 
 void LauncherSubsystem::OpenLoopTestMotors(double power_left, double power_right) {
     if (frc::SmartDashboard::GetBoolean("testing",true)) {
-        _left_motor.Set(power_left);
-        _right_motor.Set(power_right);
+        _bottom_motor.Set(power_left);
+        _top_motor.Set(power_right);
     }
 }
 

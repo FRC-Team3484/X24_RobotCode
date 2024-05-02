@@ -23,7 +23,7 @@ void TeleopLauncherCommand::Initialize() {
         if (frc::SmartDashboard::GetBoolean("testing",true)) {
             _launcher->OpenLoopTestMotors(0,0);
         } else {
-            _launcher->setLauncherRPM(TARGET_RPM);
+            _launcher->setLauncherSpeed(SPEAKER_SPEED);
         }
     }
     
@@ -75,7 +75,7 @@ void TeleopLauncherCommand::End(bool interrupted) {
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
         if (_launcher !=NULL && _intake != NULL) {
-            _launcher->setLauncherRPM(0_rpm);
+            _launcher->setLauncherSpeed(ZERO_SPEED);
             _intake->SetRollerPower(ROLLER_STOP);
             _intake->SetTransferPower(TRANSFER_STOP);
             _oi->SetRumble(RUMBLE_STOP);

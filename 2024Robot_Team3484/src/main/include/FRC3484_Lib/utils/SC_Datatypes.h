@@ -22,6 +22,8 @@
 
 namespace SC
 {
+	typedef struct {double Top_Power; units::revolutions_per_minute_t Top_Speed; double Bottom_Power; units::revolutions_per_minute_t Bottom_Speed;} SC_LauncherSpeed;
+
 	typedef struct {double Kp; double Ki; double Kd; double Kf;} SC_PIDConstants;
 
 	typedef struct {int CtrlID; frc::PneumaticsModuleType CtrlType; int Channel;} SC_Solenoid;

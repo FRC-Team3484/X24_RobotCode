@@ -25,7 +25,7 @@ void AutonLauncherCommand::Initialize() {
     _launching = 0;
 
     if (_launcher !=NULL) {
-        _launcher->setLauncherRPM(TARGET_RPM);
+        _launcher->setLauncherSpeed(SPEAKER_SPEED);
     }
 }
 
@@ -55,7 +55,7 @@ void AutonLauncherCommand::Execute() {
 void AutonLauncherCommand::End(bool interrupted) {
     _timer.Stop();
     if (_launcher !=NULL && _intake != NULL) {
-        _launcher->setLauncherRPM(0_rpm);
+        _launcher->setLauncherSpeed(ZERO_SPEED);
         _intake->SetRollerPower(ROLLER_STOP);
         _intake->SetTransferPower(TRANSFER_STOP);
     }

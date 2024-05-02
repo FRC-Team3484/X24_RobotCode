@@ -9,7 +9,7 @@ AutonSpoolCommand::AutonSpoolCommand(LauncherSubsystem* launcher_subsystem)
 }
 
 void AutonSpoolCommand::Initialize() {
-    _launcher_subsystem->setLauncherRPM(LauncherConstants::TARGET_RPM);
+    _launcher_subsystem->setLauncherSpeed(LauncherConstants::SPEAKER_SPEED);
 }
 
 void AutonSpoolCommand::Execute() {}

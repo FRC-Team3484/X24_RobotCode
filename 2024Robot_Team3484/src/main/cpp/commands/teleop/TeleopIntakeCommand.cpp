@@ -68,10 +68,10 @@ void TeleopIntakeCommand::Execute() {
                     _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
                     _intake_subsystem->SetRollerPower(IntakeConstants::INTAKE_SHOOTER_POWER);
                     _intake_subsystem->SetTransferPower(IntakeConstants::TRANSFER_SHOOTER_POWER);
-                    _launcher_subsystem->setLauncherRPM(LauncherConstants::REVERSE_RPM);
+                    _launcher_subsystem->setLauncherSpeed(LauncherConstants::INTAKE_SPEED);
 
                 } else {
-                    _launcher_subsystem->setLauncherRPM(0_rpm);
+                    _launcher_subsystem->setLauncherSpeed(LauncherConstants::ZERO_SPEED);
                     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
                     _intake_subsystem->SetTransferPower(IntakeConstants::ROLLER_STOP);
                 }
@@ -81,7 +81,7 @@ void TeleopIntakeCommand::Execute() {
                 if (_operator_oi->LauncherTrap()) {
                     fmt::print("Laucher Trap EXECUTING");
                     _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
-                    _launcher_subsystem->setLauncherRPM(LauncherConstants::TRAP_RPM);
+                    _launcher_subsystem->setLauncherSpeed(LauncherConstants::FULL_SPEED);
                     if (_intake_subsystem->AtSetPosition() && _launcher_subsystem->atTargetRPM()) {
                         _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER*-1);
                         _intake_subsystem->SetTransferPower(IntakeConstants::TRANSFER_POWER*-1);
@@ -94,7 +94,7 @@ void TeleopIntakeCommand::Execute() {
                 } else if (_operator_oi->LauncherAmp()) {
                     fmt::print("Laucher Amp EXECUTING");
                     _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
-                    _launcher_subsystem->setLauncherRPM(LauncherConstants::AMP_RPM);
+                    _launcher_subsystem->setLauncherSpeed(LauncherConstants::AMP_SPEED);
                     
                     if (_intake_subsystem->AtSetPosition() && _launcher_subsystem->atTargetRPM()) {
                         _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER*-1);
@@ -112,9 +112,9 @@ void TeleopIntakeCommand::Execute() {
                 _driver_oi->SetRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
 
                 if (_operator_oi->LauncherSpeaker()) {
-                    _launcher_subsystem->setLauncherRPM(LauncherConstants::TARGET_RPM);
+                    _launcher_subsystem->setLauncherSpeed(LauncherConstants::SPEAKER_SPEED);
                 } else {
-                    _launcher_subsystem->setLauncherRPM(0_rpm);
+                    _launcher_subsystem->setLauncherSpeed(LauncherConstants::ZERO_SPEED);
                 }
             }
         }
@@ -128,7 +128,7 @@ void TeleopIntakeCommand::End(bool inturrupted) {
         _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);
         _intake_subsystem->SetTransferPower(IntakeConstants::ROLLER_STOP);
 
-        _launcher_subsystem->setLauncherRPM(0_rpm);
+        _launcher_subsystem->setLauncherSpeed(LauncherConstants::ZERO_SPEED);
 
         _operator_oi->SetRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
         _driver_oi->SetRumble(SwerveConstants::ControllerConstants::RUMBLE_STOP);
