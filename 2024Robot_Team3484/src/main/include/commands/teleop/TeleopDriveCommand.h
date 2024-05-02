@@ -20,6 +20,8 @@ class TeleopDriveCommand: public frc2::CommandHelper<frc2::Command, TeleopDriveC
     private:
         DrivetrainSubsystem* _drivetrain;
         Driver_Interface* _oi;
+        bool _aiming;
+
         wpi::array<frc::SwerveModulePosition, 4> _initial_positions = {
             frc::SwerveModulePosition{0_m, 0_rad},
             frc::SwerveModulePosition{0_m, 0_rad},
@@ -27,6 +29,5 @@ class TeleopDriveCommand: public frc2::CommandHelper<frc2::Command, TeleopDriveC
             frc::SwerveModulePosition{0_m, 0_rad}
         };
 };
-
 
 #endif

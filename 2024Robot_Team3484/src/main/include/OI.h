@@ -1,12 +1,10 @@
 #ifndef OI_H
 #define OI_H
 
-
 #include "Constants.h"
 #include <frc/XboxController.h>
 
 class Driver_Interface {
-    
     public:
         Driver_Interface();
         //  Swerve Controllers
@@ -25,8 +23,6 @@ class Driver_Interface {
         void SetRumble(double Rumble);
 
         bool AimSequenceIgnore();
-
-
         // Operator Controllers
 
     private:
@@ -36,19 +32,21 @@ class Driver_Interface {
 class Operator_Interface{
     public:
         Operator_Interface();
-        //joystick
+
+        // Joystick
         double OpenLoopControlLeft();
         double OpenLoopControlRight();
+
         // Hotkeys
         bool LauncherHotKey();
         bool IntakeHotKey();
         bool TrapHotKey();
         bool ClimberHotKey();
+
         // Launcher
         bool LauncherLeftMotorTest();
         bool LauncherRightMotorTest();
         bool LauncherSensorTest();
-
         
         // Intake
         bool IntakeAngleStowTest();
@@ -66,17 +64,22 @@ class Operator_Interface{
         bool LauncherTrap();
         bool LauncherAmp();
         bool LauncherIntake();
+
         // Trap
-        bool EndgameToggle();
-        bool IntakeTrap();
-        bool ScoreTrap();
-        bool AmpTrap();
+        //bool TrapLunacher();
+        //bool EndgameToggle();
+        //bool IntakeTrap();
+        //bool ScoreTrap();
+        //bool AmpTrap();
+
         // Climber
         bool ClimbUp();
         bool ClimbDown();
+
         // Intake
         bool EjectIntake();
         bool ExtendIntake();
+        
 
         // Ignores
         bool IgnoreVision();

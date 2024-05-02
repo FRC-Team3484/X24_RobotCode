@@ -3,6 +3,7 @@
 // Its a Trap!!!!!!!!!!!!!!!!!!!!!!!!
 using namespace frc;
 using namespace TrapConstants;
+
 TrapSubsystem::TrapSubsystem(
     int _extension_motor_can_id,
     int _roller_motor_can_id,
@@ -32,9 +33,10 @@ TrapSubsystem::TrapSubsystem(
 }
 
 void TrapSubsystem::Periodic() {
-    if( frc::SmartDashboard::PutBoolean("trap Diagnostics", false)){
+    if ( frc::SmartDashboard::PutBoolean("trap Diagnostics", false)) {
         SmartDashboard::PutNumber("Trap Extension (in)", _extension_encoder->GetPosition() * GEAR_RATIO.value());
     }
+
     if (frc::SmartDashboard::GetBoolean("testing",true)) {}
     else {
         const frc::TrapezoidProfile<units::inch>::State current_state(
@@ -47,27 +49,30 @@ void TrapSubsystem::Periodic() {
         );
         const units::inch_t linear_position = _extension_trapezoid.Calculate(20_ms, current_state, target_state).position;
         _extension_pid_controller->SetReference(linear_position.value(), rev::CANSparkMax::ControlType::kPosition);
-
     }
 }
+
 void TrapSubsystem::SetRollerPower(double power) {
     _roller_motor.Set(power);
-
 }
+
 void TrapSubsystem::SetPosition(units::inch_t position){
     _target_position = position;
 }
-bool TrapSubsystem::AtPosition(){
+
+bool TrapSubsystem::AtPosition() {
     return units::math::abs(GetExtension() - _target_position) < POSITION_TOLORANCE;
 }
 
-units::inch_t TrapSubsystem::GetExtension(){
+units::inch_t TrapSubsystem::GetExtension() {
     return _extension_encoder->GetPosition() * GEAR_RATIO;
 }
-units::feet_per_second_t TrapSubsystem::GetExtensionVelocity(){
+
+units::feet_per_second_t TrapSubsystem::GetExtensionVelocity() {
     return _extension_encoder->GetVelocity() * GEAR_RATIO / 1.0_min;
 }
- void TrapSubsystem::OpenLoopTestMotors(double extension_motor, double roller_motor) {
+
+void TrapSubsystem::OpenLoopTestMotors(double extension_motor, double roller_motor) {
     if (frc::SmartDashboard::GetBoolean("testing",true)) {
         _extension_motor.Set(extension_motor);
         _roller_motor.Set(roller_motor);
