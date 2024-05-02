@@ -19,6 +19,7 @@ TeleopDriveCommand::TeleopDriveCommand(DrivetrainSubsystem* drivetrain, Driver_I
 
 void TeleopDriveCommand::Initialize() {
     _drivetrain->SetBrakeMode();
+
 }
 
 void TeleopDriveCommand::Execute() {
@@ -45,18 +46,21 @@ void TeleopDriveCommand::Execute() {
         }
 
         if(_oi->GetBrake()) {
+
+            
             _drivetrain->SetModuleStates(
                 {
-                SwerveModuleState{-(_initial_positions[FL].distance - current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
-                SwerveModuleState{-(_initial_positions[FR].distance - current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BL].distance - current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BR].distance - current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
+                SwerveModuleState{(_initial_positions[FL].distance - current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
+                SwerveModuleState{(_initial_positions[FR].distance - current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
+                SwerveModuleState{(_initial_positions[BL].distance - current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
+                SwerveModuleState{(_initial_positions[BR].distance - current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
                 },
                 true,
                 false
             );
             
         } else {
+
 
             // Logic for actual joystick movements
             meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED;
@@ -73,10 +77,11 @@ void TeleopDriveCommand::Execute() {
         }
 
     }
-}
 
+}
 void TeleopDriveCommand::End(bool interrupted) {
     _drivetrain->StopMotors();
+   
 }
 
 bool TeleopDriveCommand::IsFinished() {return false;}

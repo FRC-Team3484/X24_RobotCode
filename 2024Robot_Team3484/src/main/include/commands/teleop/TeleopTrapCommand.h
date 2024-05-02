@@ -1,8 +1,11 @@
 #ifndef TELEOP_TRAP_COMMAND_H
 #define TELEOP_TRAP_COMMAND_H
+#include "Constants.h"
+
+
+#ifdef TRAP_ENABLED
 
 #include "OI.h"
-#include "Constants.h"
 #include "subsystems/TrapSubsystem.h"
 
 #include <frc2/command/Command.h>
@@ -28,4 +31,5 @@ class TeleopTrapCommand
 
     };
 
+#endif
 #endif

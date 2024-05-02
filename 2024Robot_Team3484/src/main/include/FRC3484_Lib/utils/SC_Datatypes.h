@@ -10,6 +10,15 @@
 #include "units/time.h"
 #include "units/math.h"
 
+#include <units/voltage.h>
+#include <units/length.h>
+#include <units/velocity.h>
+#include <units/acceleration.h>
+#include <units/angular_velocity.h>
+#include <units/angular_acceleration.h>
+#include <frc/controller/ArmFeedforward.h>
+
+//using Acceleration = units::compound_unit<units::radians_per_second, units::inverse<units::seconds>>
 
 namespace SC
 {
@@ -34,12 +43,41 @@ namespace SC
 
 	} SC_SwerveCurrents;
 
+	using kv_unit = units::compound_unit<units::volts, units::inverse<units::meters_per_second>>;
+	using ka_unit = units::compound_unit<units::volts, units::inverse<units::meters_per_second_squared>>;
+	typedef struct {
+		double Kp;
+		double Ki;
+		double Kd;
+		units::unit_t<kv_unit> V;
+		units::unit_t<ka_unit> A;
+		units::volt_t S;
+	} SC_SwervePID;
+
 	typedef struct {
 		int CAN_ID;
 		int SteerMotorPort;
 		int EncoderPort;
 		double EncoderOffset;
 	} SC_SwerveConfigs;
+
+	// Amp Configurations
+	typedef struct {
+		double Motor_Current_Threshold = 50;
+		double Motor_Current_Time = 0.1;
+		bool Motor_Motor_Reversed = true;
+		bool Encoder_Reversed = false;
+		bool Current_Limit_Enable = true;
+		double Current_Limit_Motor = 20;
+
+	} SC_MotorCurrents;
+
+	typedef struct {
+		int CAN_ID;
+		int SteerMotorPort;
+		int EncoderPort;
+		double EncoderOffset;
+	} SC_MotorConfigs;
 
 	// PID loop Integral Anti-Windup calculation modes
 	enum SC_PID_AW_MODE { OFF, /*

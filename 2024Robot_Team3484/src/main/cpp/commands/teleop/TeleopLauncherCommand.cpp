@@ -57,7 +57,7 @@ void TeleopLauncherCommand::Execute(){
                 && ( _limelight == NULL 
                     || (_oi != NULL && _oi->IgnoreVision()) 
                     || (_limelight->HasTarget() 
-                        && units::math::abs(_limelight->GetHorizontalDistance()) < AIM_TOLERANCE_LARGE) )) {
+                        && units::math::abs(_limelight->GetHorizontalDistance()) < SPEAKER_AIM_TOLERANCE_LARGE) )) {
                     _launching = 1;
                 }
 

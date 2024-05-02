@@ -11,6 +11,7 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/Timer.h>
 
 
 class AutonLauncherCommand: public frc2::CommandHelper<frc2::Command, AutonLauncherCommand>{
@@ -28,7 +29,7 @@ class AutonLauncherCommand: public frc2::CommandHelper<frc2::Command, AutonLaunc
         Vision* _limelight;
         int _launching; 
         bool _loaded;
-
+        frc::Timer _timer;
 };
 
 #endif
