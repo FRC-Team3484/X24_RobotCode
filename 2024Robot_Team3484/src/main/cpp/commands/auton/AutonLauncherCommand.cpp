@@ -59,6 +59,7 @@ void AutonLauncherCommand::End(bool interrupted) {
         _intake->SetRollerPower(ROLLER_STOP);
         _intake->SetTransferPower(TRANSFER_STOP);
     }
+    
 }
 bool  AutonLauncherCommand::IsFinished() {
     return (_timer.HasElapsed(TIMEOUT) || (_launching == 2 && !_launcher->LaunchingSensor())) || (_launching == 0 && !_intake->HasPiece() && !_intake->ArmExtended());

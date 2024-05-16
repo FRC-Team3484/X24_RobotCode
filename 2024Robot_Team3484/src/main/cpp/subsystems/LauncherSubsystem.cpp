@@ -137,8 +137,6 @@ bool LauncherSubsystem::atTargetRPM() {
             bottom_at_speed = true;
     }
 
-
-
     if (_counter_not_null_top > 0) {
         if (_target_speed.Top_Power != 0) {
             top_at_speed = (_top_launcher_encoder->GetVelocity()-_target_speed.Top_Speed.value()) * (_target_speed.Top_Speed.value() >= 0 ? 1 : -1) > 0;
@@ -150,7 +148,6 @@ bool LauncherSubsystem::atTargetRPM() {
     } else {
             top_at_speed = true;
     }
-
 
     return bottom_at_speed && top_at_speed;
 }

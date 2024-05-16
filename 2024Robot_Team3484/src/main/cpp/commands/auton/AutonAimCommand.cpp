@@ -32,7 +32,7 @@ void AutonAimCommand::Execute() {
     } else {
         if (_aiming){
             _drivetrain->Drive(0_mps,0_mps,_limelight->GetOffsetX()*STEER_GAIN*MAX_ROTATION_SPEED, true);
-            if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < SPEAKER_AIM_TOLERANCE_SMALL_AUTON) ||!_limelight->HasTarget()){
+            if ((_limelight->HasTarget() && units::math::abs(_limelight->GetHorizontalDistance()) < SPEAKER_AIM_TOLERANCE_SMALL_AUTON) ||!_limelight->HasTarget()) {
                 _aiming = false;
                 _initial_positions = _drivetrain->GetModulePositions();
             }

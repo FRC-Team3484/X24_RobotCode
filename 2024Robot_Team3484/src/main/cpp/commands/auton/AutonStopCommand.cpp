@@ -11,6 +11,7 @@ AutonStopCommand::AutonStopCommand(DrivetrainSubsystem* drivetrain_subsystem)
 void AutonStopCommand::Initialize() {
     _drivetrain_subsystem->StopMotors();
     auto alliance = DriverStation::GetAlliance();
+    
     if (alliance) {
         if (alliance.value() == DriverStation::Alliance::kRed) {
             _drivetrain_subsystem->SetHeading(_drivetrain_subsystem->GetPose().Rotation().Degrees() + 180_deg);

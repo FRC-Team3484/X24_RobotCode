@@ -52,8 +52,6 @@ void TeleopTrapCommand::End(bool interupted) {
     _trap_subsystem->SetRollerPower(0);
 }
 
-bool TeleopTrapCommand::IsFinished() {
-    return false;
-}
+bool TeleopTrapCommand::IsFinished() {return false;}
 
 #endif

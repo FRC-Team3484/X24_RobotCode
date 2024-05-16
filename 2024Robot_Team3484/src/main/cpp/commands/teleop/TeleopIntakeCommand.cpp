@@ -19,8 +19,8 @@ void TeleopIntakeCommand::Execute() {
     if (_operator_oi != NULL && _intake_subsystem != NULL) {
         if (frc::SmartDashboard::GetBoolean("testing",true)) {
             if (_operator_oi->IntakeHotKey()) {
-               _intake_subsystem->OpenLoopTestMotors(_operator_oi->OpenLoopControlLeft(), _operator_oi->OpenLoopControlRight());
-               //_intake_subsystem->OpenLoopTransferMotor(_operator_oi->OpenLoopControlRight());
+                _intake_subsystem->OpenLoopTestMotors(_operator_oi->OpenLoopControlLeft(), _operator_oi->OpenLoopControlRight());
+                //_intake_subsystem->OpenLoopTransferMotor(_operator_oi->OpenLoopControlRight());
             }
         } else {        
             if (_operator_oi->ExtendIntake()) {
@@ -42,22 +42,7 @@ void TeleopIntakeCommand::Execute() {
 
             } else if (_operator_oi->EjectIntake()) {
                 _intake_subsystem->SetIntakeAngle(IntakeConstants::EJECT_POSITION);
-                /*
-                if (_intake_timer.Get() == 0_s) {
-                    _intake_timer.Start();
-                }
-                
-                if (_intake_timer.Get() < EJECT_TIMER) {
-                    _intake_subsystem->SetRollerPower(IntakeConstants::TRANSFER_POWER);
-                } else {
-                    if (_intake_subsystem->AtSetPosition()) {
-                        _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
-                        
-                    } else {
-                        _intake_subsystem->SetRollerPower(0);
-                    }
-                }
-                */
+
                 if (_intake_subsystem->AtSetPosition()) {
                     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER * -1);
                     
@@ -86,11 +71,7 @@ void TeleopIntakeCommand::Execute() {
                         _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_POWER*-1);
                         _intake_subsystem->SetTransferPower(IntakeConstants::TRANSFER_POWER*-1);
                     }
-                    //if (_intake_subsystem->HasPiece()) {
-                    //    _operator_oi->SetRumble(SwerveConstants::ControllerConstants::OPERATOR_RUMBLE_HIGH);
-                    //    _driver_oi->SetRumble(SwerveConstants::ControllerConstants::DRIVER_RUMBLE_HIGH);
 
-                    //}
                 } else if (_operator_oi->LauncherAmp()) {
                     fmt::print("Laucher Amp EXECUTING");
                     _intake_subsystem->SetIntakeAngle(IntakeConstants::STOW_POSITION);

@@ -67,8 +67,7 @@ void TeleopAimCommand::Execute() {
                     _aiming = false;
                 }
                 //_limelight->SetPipeline(0);
-            }
-            else {
+            } else {
                 _drivetrain->SetModuleStates(
                     {
                     SwerveModuleState{0_mps, 45_deg},
@@ -90,9 +89,9 @@ void TeleopAimCommand::Execute() {
             }
         }
         #ifdef EN_DIAGNOSTICS
-        SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has Piece", _limelight->HasTarget());
-        SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());
-        SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
+            SmartDashboard::PutBoolean("Swerve: Drivetrain Aim Has Piece", _limelight->HasTarget());
+            SmartDashboard::PutNumber("Swerve: Horizontal Distance", _limelight->GetHorizontalDistance().value());
+            SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
         #endif
     } else {
         if (_limelight != NULL) {
@@ -100,7 +99,6 @@ void TeleopAimCommand::Execute() {
         }
         
         if (_limelight == NULL || _oi_driver->AimSequenceIgnore()|| !_limelight->HasTarget()) {
-            
             meters_per_second_t x_speed = -_oi_driver->GetThrottle() * MAX_LINEAR_SPEED;
             meters_per_second_t y_speed = -_oi_driver->GetStrafe() * MAX_LINEAR_SPEED;
             radians_per_second_t rotation = -_oi_driver->GetRotation() * MAX_ROTATION_SPEED;
@@ -146,7 +144,6 @@ void TeleopAimCommand::Execute() {
             SmartDashboard::PutNumber("Swerve: Horizontal Angle", _limelight->GetOffsetX());
         #endif
     }
-    
 }
 
 void TeleopAimCommand::End(bool interrupted) {
@@ -155,6 +152,4 @@ void TeleopAimCommand::End(bool interrupted) {
     _oi_driver->SetRumble(RUMBLE_STOP);
 }
 
-bool TeleopAimCommand::IsFinished() {
-    return false;
-}
+bool TeleopAimCommand::IsFinished() {return false;}

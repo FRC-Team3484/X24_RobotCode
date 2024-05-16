@@ -120,19 +120,16 @@ namespace SwerveConstants {
         constexpr frc::Pose2d POSE_C = {.83_m, 4.18_m, 120.00_deg};
     }
     namespace AutonNames {
-    const std::string AUTON_NONE = "Nothing";
-    const std::string AUTON_DISTANCE = "Drive 5 feet";
-    const std::string AUTON_ANGLE = "Turn 90 degrees";
-    const std::string AUTON_SEQUENCE = "Drive Sequence";
-    const std::string AUTON_NAMES[] = {
-        "A1", "B1", "B2", "B3",
-        "C1", "C2", "C3", "D0", "C8", "C8_score", "C8_C7_amp",
-        "ABack", "BBack", "CBack", "CBackNoPiece", "CFar",
-        "A_stay", "B_stay", "C_stay"
-    };
-    //Testing
-    
-    const std::string TWO_PIECE_AUTON = "Two Piece Auton";
+        const std::string AUTON_NONE = "Nothing";
+        const std::string AUTON_DISTANCE = "Drive 5 feet";
+        const std::string AUTON_ANGLE = "Turn 90 degrees";
+        const std::string AUTON_SEQUENCE = "Drive Sequence";
+        const std::string AUTON_NAMES[] = {
+            "A1", "B1", "B2", "B3",
+            "C1", "C2", "C3", "D0", "C8",
+            "ABack", "BBack", "CBack", "CBackNoPiece", "CFar",
+            "A_stay", "B_stay", "C_stay"
+        };
     }
 
     namespace ControllerConstants {
@@ -143,7 +140,6 @@ namespace SwerveConstants {
         constexpr double OPERATOR_RUMBLE_LOW = 0.2;
         
         constexpr double RUMBLE_STOP = 0;
-
     }
 
     namespace DrivetrainConstants {
@@ -192,7 +188,6 @@ namespace SwerveConstants {
 
             // static SC::SC_SwervePID LeftPID{0.37509, 0, 0, 2.0974 * 1_V / 1_mps, 0.46723 * 1_V / 1_mps_sq, 0.16185_V};
             // static SC::SC_SwervePID RightPID{0.39614, 0, 0, 2.0482 * 1_V / 1_mps, 0.4729 * 1_V / 1_mps_sq, 0.17662_V};
-
         }
         namespace SteerPIDConstants {
             constexpr double Kp_Steer = 0.5;
