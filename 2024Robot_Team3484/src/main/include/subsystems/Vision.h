@@ -1,11 +1,11 @@
 #ifndef VISION_H
 #define VISION_H
 
-#include "FRC3484_Lib/components/SC_Limelight.h"
+#include "FRC3484_Lib/components/SC_PhotonVision.h"
 #include <units/length.h>
 #include <units/angle.h>
 
-class Vision: public SC::SC_Limelight {
+class Vision: public SC::SC_PhotonVision {
     public:
         Vision(double Angle, double LensHeight, double TargetHeight);
         units::inch_t GetHorizontalDistance();
