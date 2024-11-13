@@ -1,0 +1,25 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7265953387770381,
+      "y": 4.416956658519093
+    },
+    "rotation": 120.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C_stay"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "C",
+  "choreoAuto": false
+}
