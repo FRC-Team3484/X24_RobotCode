@@ -4,11 +4,12 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 #include "Constants.h"
+#include "subsystems/IntakeSubsystem.h"
 
 #include "subsystems/DrivetrainSubsystem.h"
 #include <frc/kinematics/SwerveModulePosition.h>
 #include "subsystems/Vision.h"
-class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand>{
+class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand> {
 
     public:
         explicit AutonAimCommand(DrivetrainSubsystem* drivetrain, Vision* vision);
@@ -27,6 +28,7 @@ class AutonAimCommand: public frc2::CommandHelper<frc2::Command, AutonAimCommand
         };
 
         Vision* _limelight;
+        
         bool _aiming;
 };
 

@@ -27,44 +27,40 @@ ClimberSubsystem::ClimberSubsystem(
     _left_climber_motor.SetNeutralMode(motorcontrol::Brake);
     _right_climber_motor.SetNeutralMode(motorcontrol::Brake);
 
-
-
-
     _left_climber_motor.SetInverted(ClimberConstants::MOTOR_INVERTED);
     _right_climber_motor.SetInverted(!ClimberConstants::MOTOR_INVERTED);
 }
 
 void ClimberSubsystem::Periodic() {
-    if(frc::SmartDashboard::GetBoolean("Climber Diagnostics", false)){
+    if (frc::SmartDashboard::GetBoolean("Climber Diagnostics", false)) {
         SmartDashboard::PutNumber("Climber Power Right", GetRightSensor());
         SmartDashboard::PutNumber("Climber Power Left", GetLeftSensor());
     }
-
 }
 
 bool ClimberSubsystem::GetLeftSensor() {
     // Returns the value of the left limit switch
     return false;
-    //return !_left_motor_sensor.Get();
 }
 
 bool ClimberSubsystem::GetRightSensor() {
     // Returns the value of the right limit sensor
     return false;
-    //return !_right_motor_sensor.Get();
 }
 
 void ClimberSubsystem::SetClimberPower(double power) {
     // Sets the Climber power
-    if (power < 0 && GetRightSensor()) 
+    if (power < 0 && GetRightSensor()) {
         _right_climber_motor.Set(ClimberConstants::MOTOR_STOP);
-    else
+    } else {
         _right_climber_motor.Set(power);
+    }
 
-    if (power < 0 && GetLeftSensor()) 
+    if (power < 0 && GetLeftSensor()) { 
         _left_climber_motor.Set(ClimberConstants::MOTOR_STOP);
-    else    
+    } else {    
         _left_climber_motor.Set(power);
+    }
 }
 
 void ClimberSubsystem::OpenLoopTestMotors(double power_left, double power_right) {

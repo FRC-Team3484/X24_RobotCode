@@ -25,6 +25,7 @@ void AutonIntakeCommand::Execute() {
 void AutonIntakeCommand::End(bool inturrupted) {
     _intake_subsystem->SetIntakeAngle(STOW_POSITION);
     _intake_subsystem->SetRollerPower(IntakeConstants::ROLLER_STOP);
+    fmt::print("Intake Command has Finished");
 }
 
 bool AutonIntakeCommand::IsFinished() {

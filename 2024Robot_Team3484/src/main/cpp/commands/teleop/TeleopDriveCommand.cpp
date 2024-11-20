@@ -44,20 +44,19 @@ void TeleopDriveCommand::Execute() {
             _drivetrain->SetCoastMode();
         }
 
-        if(_oi->GetBrake()) {
+        if (_oi->GetBrake()) {
             _drivetrain->SetModuleStates(
                 {
-                SwerveModuleState{-(_initial_positions[FL].distance - current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
-                SwerveModuleState{-(_initial_positions[FR].distance - current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BL].distance - current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
-                SwerveModuleState{-(_initial_positions[BR].distance - current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
+                SwerveModuleState{(_initial_positions[FL].distance - current_positions[FL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg},
+                SwerveModuleState{(_initial_positions[FR].distance - current_positions[FR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
+                SwerveModuleState{(_initial_positions[BL].distance - current_positions[BL].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, -45_deg},
+                SwerveModuleState{(_initial_positions[BR].distance - current_positions[BR].distance) * DYNAMIC_BRAKE_SCALING * MAX_LINEAR_SPEED, 45_deg}
                 },
                 true,
                 false
             );
             
         } else {
-
             // Logic for actual joystick movements
             meters_per_second_t x_speed = -_oi->GetThrottle() * MAX_LINEAR_SPEED;
             meters_per_second_t y_speed = -_oi->GetStrafe() * MAX_LINEAR_SPEED;
@@ -71,7 +70,6 @@ void TeleopDriveCommand::Execute() {
             
             _drivetrain->Drive(x_speed, y_speed, rotation, true);
         }
-
     }
 }
 

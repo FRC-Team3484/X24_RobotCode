@@ -25,7 +25,6 @@ class TrapSubsystem : public frc2::SubsystemBase {
         units::feet_per_second_t GetExtensionVelocity();
         void OpenLoopTestMotors(double extension_motor, double roller_motor);
 
-
     private: 
         rev::CANSparkMax _extension_motor;
         rev::CANSparkMax _roller_motor;    
@@ -35,6 +34,6 @@ class TrapSubsystem : public frc2::SubsystemBase {
 
         frc::TrapezoidProfile<units::inches> _extension_trapezoid{{TrapConstants::MAX_VELOCITY, TrapConstants::MAX_ACCELERATION}};
         units::inch_t _target_position;
-
 };
+
 #endif

@@ -14,10 +14,8 @@ class Vision: public SC::SC_Limelight {
         units::degree_t GetOffsetYDeg();
 
     private:
-//     std::shared_ptr<nt::NetworkTable> inst;
-//     double _targetHeight, _lensHeight;
+        // std::shared_ptr<nt::NetworkTable> inst;
+        // double _targetHeight, _lensHeight
 };
-
-
 
 #endif
