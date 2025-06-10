@@ -8,7 +8,7 @@
 // #define TRAP_ENABLED
 #define INTAKE_ENABLED
 #define DRIVE_ENABLED
-#define AIM_ENABLED
+// #define AIM_ENABLED
 #define LAUNCHER_ENABLED
 
 #include <units/voltage.h>
@@ -47,7 +47,10 @@ namespace LauncherConstants {
     constexpr SC::SC_LauncherSpeed SPEAKER_SPEED(1.0, 3000_rpm, 1.0, 3000_rpm);
     constexpr SC::SC_LauncherSpeed AMP_SPEED(0.0, -450_rpm, 0.0, 2150_rpm);
     constexpr SC::SC_LauncherSpeed INTAKE_SPEED(0, -300_rpm, 0.0, -300_rpm);
-    constexpr SC::SC_LauncherSpeed FULL_SPEED(1.0, 5000_rpm, 1.0, 5000_rpm);
+    // Speed reduced for friday night uptown
+    // constexpr SC::SC_LauncherSpeed FULL_SPEED(1.0, 5000_rpm, 1.0, 5000_rpm);
+    // TODO: Restore speed later
+    constexpr SC::SC_LauncherSpeed FULL_SPEED(0.0, 1500_rpm, 0.0, 1500_rpm);
     constexpr SC::SC_LauncherSpeed ZERO_SPEED(0.0, 0_rpm, 0.0, 0_rpm);
     constexpr units::second_t TIMEOUT = 3_s;
 }
