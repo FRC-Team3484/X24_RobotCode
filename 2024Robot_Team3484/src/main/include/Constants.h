@@ -4,7 +4,7 @@
 #include "units/time.h"
 #define EN_TESTING
 
-#define CLIMBER_ENABLED
+// #define CLIMBER_ENABLED
 // #define TRAP_ENABLED
 #define INTAKE_ENABLED
 #define DRIVE_ENABLED

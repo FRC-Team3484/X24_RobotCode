@@ -18,7 +18,6 @@ class TeleopIntakeCommand
         explicit TeleopIntakeCommand(
             IntakeSubsystem* intake_subsystem,
             LauncherSubsystem* launcher_subsystem,
-            ClimberSubsystem* climber_subsystem,
             Operator_Interface* operator_oi,
             Driver_Interface* driver_oi
         );
@@ -33,7 +32,6 @@ class TeleopIntakeCommand
         LauncherSubsystem* _launcher_subsystem;
         Operator_Interface* _operator_oi;
         Driver_Interface* _driver_oi;
-        ClimberSubsystem* _climber_subsystem;
         frc::Timer _intake_timer;
 
 };

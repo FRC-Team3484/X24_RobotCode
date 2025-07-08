@@ -4,8 +4,8 @@
 
 using namespace IntakeConstants;
 
-TeleopIntakeCommand::TeleopIntakeCommand(IntakeSubsystem* intake_subsystem, LauncherSubsystem* launcher_subsystem, ClimberSubsystem* climber_subsystem, Operator_Interface* operator_oi, Driver_Interface* driver_oi)
-    : _intake_subsystem{intake_subsystem}, _launcher_subsystem{launcher_subsystem}, _climber_subsystem{climber_subsystem}, _operator_oi{operator_oi}, _driver_oi{driver_oi} {
+TeleopIntakeCommand::TeleopIntakeCommand(IntakeSubsystem* intake_subsystem, LauncherSubsystem* launcher_subsystem, Operator_Interface* operator_oi, Driver_Interface* driver_oi)
+    : _intake_subsystem{intake_subsystem}, _launcher_subsystem{launcher_subsystem}, _operator_oi{operator_oi}, _driver_oi{driver_oi} {
         AddRequirements(_intake_subsystem);
         AddRequirements(_launcher_subsystem);
 }
